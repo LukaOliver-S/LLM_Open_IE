@@ -1,0 +1,393 @@
+
+# Extração de Relações Open Information Extraction (Open IE)
+
+## Objetivo
+
+
+Você receberá uma **lista de objetos JSON**, onde cada objeto contém uma sentença em português.
+
+```json
+[
+  {"sentence": "..."},
+  {"sentence": "..."},
+  {"sentence": "..."}
+]
+```
+
+Cada objeto da lista deve ser processado de forma independente. Não deve haver mistura de informações entre sentenças diferentes.
+
+---
+
+Você receberá **sentenças em português**.
+
+Sua tarefa é extrair **todas** as relações Open Information Extraction (Open IE) presentes em cada sentença.
+
+Toda saída deve permanecer associada à **sentença original** da qual as relações foram extraídas. Todas as relações em `relations` devem corresponder exclusivamente à sentença armazenada em `sentence`.
+
+Cada relação deve ser representada por uma tripla no formato:
+
+```json
+{
+  "arg1": "...",
+  "rel": "...",
+  "arg2": "..."
+}
+```
+
+---
+
+
+Uma sentença pode conter nenhuma, uma ou várias relações. Sempre que houver múltiplas relações válidas, extraia todas elas.
+
+Siga rigorosamente as regras abaixo.
+
+---
+
+# Regras Estruturais
+
+## E1. Estrutura Fundamental da Tripla
+
+Cada tripla deve conter:
+
+* **ARG1:** entidade que exerce o papel de sujeito da relação;
+* **REL:** verbo principal ou expressão verbal que estabelece a relação;
+* **ARG2:** complemento principal da relação.
+
+A relação deve corresponder a uma estrutura sintaticamente válida presente na sentença.
+
+Deve existir uma dependência sintática clara entre ARG1, REL e ARG2.
+
+---
+
+## E2. Concordância
+
+Preserve integralmente a concordância de número, gênero e pessoa presente na sentença original.
+
+Não altere flexões verbais ou nominais durante a construção da tripla.
+
+---
+
+## E3. Construção dos Argumentos
+
+Os argumentos devem representar sintagmas nominais completos.
+
+Inclua:
+
+* núcleo nominal;
+* artigos;
+* pronomes;
+* numerais;
+* adjetivos restritivos;
+* modificadores nominais;
+* adjuntos adnominais essenciais para identificar a entidade.
+
+Não inclua elementos que não sejam essenciais para identificar o participante da relação, como orações relativas explicativas ou modificadores acessórios.
+
+**Exemplo**
+
+Sentença:
+`O novo presidente da empresa anunciou o projeto.`
+
+Saída:
+
+```json
+{
+  "arg1": "O novo presidente da empresa",
+  "rel": "anunciou",
+  "arg2": "o projeto"
+}
+```
+
+---
+
+## E4. Preposições Regidas pelo Verbo
+
+Quando o verbo exigir uma preposição para introduzir ARG2, essa preposição deve fazer parte da relação (REL).
+
+**Exemplo**
+
+Sentença:
+`João gosta de livros.`
+
+Saída:
+
+```json
+{
+  "arg1": "João",
+  "rel": "gosta de",
+  "arg2": "livros"
+}
+```
+
+---
+
+## E4.1 Contrações
+
+Quando houver contração entre preposição e artigo, separe ambos.
+
+A preposição permanece em REL.
+
+O artigo passa a fazer parte de ARG2.
+
+**Exemplo**
+
+Sentença:
+`João gosta do livro.`
+
+Saída:
+
+```json
+{
+  "arg1": "João",
+  "rel": "gosta de",
+  "arg2": "o livro"
+}
+```
+
+---
+
+## E4.2 Locuções Prepositivas
+
+Locuções prepositivas lexicalizadas não devem ser fragmentadas.
+
+Devem permanecer completas dentro da relação.
+
+Exemplos:
+
+* ao longo de
+* de acordo com
+* em frente de
+
+---
+
+## E5. Natureza dos Argumentos
+
+Pelo menos um dos argumentos deve corresponder a um sintagma nominal cujo núcleo seja um substantivo ou pronome.
+
+Os argumentos devem referir-se a entidades, objetos, pessoas, organizações, conceitos ou eventos claramente identificáveis.
+
+---
+
+## E6. Relações N-árias
+
+Quando uma relação possuir mais de dois argumentos principais, decomponha-a em múltiplas relações binárias sempre que essa decomposição preservar o significado original.
+
+Priorize relações mais atômicas.
+
+**Exemplo**
+
+Sentença:
+`Ele viajou para a Rússia no dia 19 de junho.`
+
+Saída possível:
+
+```json
+[
+  {
+    "arg1": "Ele",
+    "rel": "viajou para",
+    "arg2": "a Rússia"
+  },
+  {
+    "arg1": "Ele",
+    "rel": "viajou em",
+    "arg2": "no dia 19 de junho"
+  }
+]
+```
+
+---
+
+## E7. Coordenação
+
+Quando uma coordenação unir múltiplos participantes da mesma relação, prefira gerar uma tripla independente para cada elemento coordenado.
+
+Caso a decomposição prejudique o significado da sentença, a coordenação poderá permanecer dentro do argumento correspondente.
+
+**Exemplo**
+
+Sentença:
+`João comprou pão, leite e queijo.`
+
+Saída possível:
+
+```json
+[
+  {
+    "arg1": "João",
+    "rel": "comprou",
+    "arg2": "pão"
+  },
+  {
+    "arg1": "João",
+    "rel": "comprou",
+    "arg2": "leite"
+  },
+  {
+    "arg1": "João",
+    "rel": "comprou",
+    "arg2": "queijo"
+  }
+]
+```
+
+---
+
+## E8. Argumentos Oracionais
+
+Os argumentos podem ser constituídos por orações inteiras quando estas desempenharem função sintática de argumento da relação.
+
+A existência da oração subordinada como argumento não implica que seu conteúdo seja factual.
+
+A factualidade deve ser avaliada separadamente.
+
+**Exemplo**
+
+Sentença:
+`Maria disse que João venceu a competição.`
+
+Saída possível:
+
+```json
+[
+  {
+    "arg1": "Maria",
+    "rel": "disse",
+    "arg2": "que João venceu a competição"
+  },
+  {
+    "arg1": "João",
+    "rel": "venceu",
+    "arg2": "a competição"
+  }
+]
+```
+
+---
+
+## E9. Expressões Multipalavra
+
+Expressões multipalavra lexicalizadas devem ser tratadas como unidades.
+
+Quando fizerem parte da relação verbal, devem permanecer integralmente em REL.
+
+Quando modificarem um argumento, devem permanecer integralmente dentro do argumento correspondente.
+
+---
+
+# Regras Semânticas
+
+## S1. Factualidade
+
+Extraia apenas relações afirmadas ou diretamente implicadas pela sentença.
+
+Não considere como fatos:
+
+* possibilidades;
+* hipóteses;
+* condicionais;
+* crenças;
+* opiniões;
+* relatos;
+* conteúdo de discurso indireto;
+* fatos negados.
+
+Quando apropriado, a própria relação de crença, fala ou negação pode ser extraída.
+
+**Exemplo**
+
+Sentença:
+`João não comprou o livro.`
+
+Saída possível:
+
+```json
+{
+  "arg1": "João",
+  "rel": "não comprou",
+  "arg2": "o livro"
+}
+```
+
+---
+
+## S2. Delimitação Semântica dos Argumentos
+
+Escolha a extensão dos argumentos de acordo com a necessidade de identificar corretamente a entidade participante da relação.
+
+Evite argumentos excessivamente curtos que percam informação essencial.
+
+Evite argumentos excessivamente longos que incluam informações pertencentes a outras relações.
+
+---
+
+## S3. Evitar Relações Aninhadas
+
+Não incorpore dentro de um argumento uma segunda relação que possa ser extraída independentemente.
+
+Sempre que possível, decomponha relações complexas em múltiplas triplas mais simples.
+
+---
+
+## S4. Consistência Linguística
+
+Baseie toda extração em uma interpretação sintática e semântica consistente da sentença.
+
+Quando houver ambiguidade, selecione a interpretação mais plausível segundo o contexto linguístico da própria sentença.
+
+---
+
+## S5. Ausência de Inferência Externa
+
+Não utilize conhecimento de mundo, inferências lógicas ou informações externas ao texto.
+
+Extraia apenas relações explicitamente expressas ou diretamente implicadas pela sentença.
+
+Não derive fatos por transitividade, conhecimento enciclopédico ou deduções não presentes no texto.
+
+---
+
+# Formato da Resposta
+
+Retorne exclusivamente um objeto JSON válido.
+
+O objeto deve possuir obrigatoriamente os campos:
+
+* **sentence:** exatamente a sentença de entrada, sem qualquer modificação, correção, normalização ou reescrita.
+* **relations:** um array contendo todas as relações extraídas.
+
+As relações devem aparecer, sempre que possível, na mesma ordem em que surgem na sentença.
+
+Caso nenhuma relação válida seja encontrada, retorne `relations` como array vazio.
+
+Não inclua explicações, comentários, Markdown ou qualquer texto adicional.
+
+Formato esperado:
+
+```json
+{
+  "sentence": "A universidade é afiliada à Congregação de Santa Cruz.",
+  "relations": [
+    {
+      "arg1": "A universidade",
+      "rel": "é",
+      "arg2": "afiliada à Congregação de Santa Cruz"
+    },
+    {
+      "arg1": "A universidade",
+      "rel": "é afiliada a",
+      "arg2": "a Congregação de Santa Cruz"
+    }
+  ]
+}
+```
+
+Caso não exista nenhuma relação Open IE válida:
+
+```json
+{
+  "sentence": "A universidade é afiliada à Congregação de Santa Cruz.",
+  "relations": []
+}
+```
+
