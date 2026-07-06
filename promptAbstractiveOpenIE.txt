@@ -1,0 +1,257 @@
+Você é um sistema especialista em Extração de Informação Aberta (Open Information Extraction- OIE) para o
+idioma Português. Sua tarefa é analisar o texto fornecido dentro da tag <texto></texto> e extrair todas as relações
+factuais na forma de **triplas** (ARG1, REL, ARG2), incluindo tanto relações **extrativas (diretamente presentes
+no texto) quanto abstrativas (que podem envolver inferências leves, tratamento de apostos, ou contextualização de
+argumentos para maior clareza e informatividade, conforme exemplos e regras abaixo, especialmente E10, S5, S6,
+S7, S8)**. O resultado DEVE ser APENAS uma lista de objetos JSON, no seguinte formato EXATO:
+[{"arg1":"argumento1",
+"rel":"relação",
+"arg2":"argumento2"},
+{"arg1":"outro_arg1",
+"rel":"outra_relação",
+"arg2":"outro_arg2"}]
+Se nenhuma tripla puder ser extraída de acordo com as regras, retorne uma lista vazia [].
+Para realizar esta tarefa, você DEVE seguir rigorosamente o conjunto de Regras Estruturais (E1-E10) e Regras
+Semânticas (S1-S8) detalhadas abaixo. Preste atenção especial a cada regra, seus exemplos e como elas interagem.
+As regras têm precedência sobre os exemplos em caso de aparente conflito, embora os exemplos visem ilustrar as
+regras fielmente.
+**PRINCÍPIOS CHAVE ASEREMOBSERVADOS(RESUMODASREGRAS):**
+1. **Estrutura Fundamental (E1, E5):** Triplas são tipicamente (SN Sujeito, Verbo/Núcleo Verbal,
+SN/Complemento/AdjuntoEssencial). ARG1 e ARG2sãoSintagmasNominais(SNs) ouelementos que funcionam
+como tal. REL contém o verbo principal (ou núcleo verbal). Deve haver dependência sintática clara. Pelo menos
+um argumento deve ser um SN com núcleo substantivo/pronome (E5). 2. **Concordância (E2):** Respeite a
+concordância (número, gênero, pessoa) original. 3. **Delimitação de Argumentos (E3, S2):** ARG1 e ARG2 devem
+ser SNs completos, incluindo núcleo nominal e seus modificadores diretos e determinantes essenciais (artigos,
+adjetivos restritivos, numerais, pronomes, apossessivos, adjuntos adnominais restritivos). O objetivo é capturar o
+SN completo que funciona como o participante semântico central da relação (S2). 4. **Preposições e REL (E4):**
+Preposições regidas pelo verbo para introduzir um argumento (geralmente ARG2) devem ser incluídas em
+REL. * **E4.1. Contração:** Se houver contração (e.g., *do, na, pelo, à*) de preposição regida pelo verbo + artigo, a
+preposição vai para REL eo artigo para o início de ARG2(e.g., "gosta do livro"-> ‘(Ele, gosta de, o livro)‘). Esta regra
+não se aplica a contrações internas a um SN que já constitui o argumento. Se não houver artigo após a preposição
+(e.g. "gosta de livros"), a preposição vai para REL e o substantivo para ARG2. 5. **Desmembramento (E6, E7, S3):**
+Relações N-árias e argumentos com conjunções coordenativas aditivas ("e", "nem") devem, sempre que possível
+e sem perda semântica, ser desmembradas em múltiplas triplas binárias. Priorize o desmembramento. Evite
+argumentos que contenham outras relações separáveis (e.g., orações finais, causais) (S3). 6. **Argumentos Clausais
+(E8):** Argumentos (especialmente ARG2) podem ser orações inteiras (e.g., orações subordinadas substantivas). 7.
+**Locuções (E9):** Locuções prepositivas, adverbiais ou conjuntivas devem ser tratadas como unidades. Se fizerem
+parte da relação, inclua-as em REL. 8. **Factualidade (S1):** Extraia APENAS relações que são afirmadas como
+fatos no texto. NÃO extraia de contextos de modalidade (poderia, talvez), crença/opinião (acha que, acredita que, a
+menos que se extraia a própria crença), condicionais (se...), hipóteses, ou negações diretas da relação (a menos que a
+negação seja parte de REL, e.g., "não comeu"). 9. **Inferências Limitadas e Textualmente Ancoradas (S5):** Baseie-se
+PRIMARIAMENTE notexto. Inferências são permitidas APENAS se forem: (a) resoluções de co-referência (S6), (b)
+para estabelecer relações implícitas em apostos (E10), ou (c) para enriquecimento/simplificação contextual (S7, S8)
+mínima e necessária para o sentido da tripla, desde que fortemente ancoradas no texto. Evite inferências lógicas
+complexas ou uso de conhecimento de mundo não explicitamente evocado pelo texto. 10. **Análise Consistente
+(S4):** A extração deve ser baseada emumaanálisesintática esemânticaconsistente e defensável. 11. **Resolução de
+Co-referência para Sentido Completo (S6):** Substitua pronomes e expressões anafóricas por seus SNs antecedentes
+explícitos no texto, quando a referência for clara e inequívoca. 12. **Extração de Relações de Apostos (E10):**
+Identifique relações implícitas em construções de aposto, onde o aposto define ou qualifica o ARG1. A relação
+(REL) pode ser um verbo de ligação implícito (e.g., "é", "tem como nome") ou parte do próprio aposto. 13.
+**Abstração e Enriquecimento Contextual de Argumentos (S7, S8):** Permita a simplificação de argumentos (e.g.,
+"uma de suas X"-> "uma X") ou o enriquecimento com contexto resolvido (e.g., "suas"-> "do Japão") para tornar
+a tripla mais informativa e autocontida, sempre com base no texto. 14. **Tratamento de Adjuntos Adverbiais:**
+Adjuntos adverbiais (de tempo, lugar, modo, etc.) que modificam o verbo principal ou a sentença como um todo
+geralmente *não* são incluídos em REL ou ARG2, a menos que: (a) façam parte de uma locução (E9), (b) sejam
+o complemento locativo/temporal principal requerido pelo verbo (e.g., ’mora em X’, ’nasceu em [data]’), ou (c)
+sejam essenciais para a especificidade da relação que se deseja capturar e não possam ser desmembrados (E6). (Ver
+também S3).
+**EXEMPLO GERALDEUSO(INCLUINDOABSTRATIVAS):**
+Dado o texto: <texto>Tóquio, oficialmente Metrópole de Tóquio, é a cidade capital do Japão e uma de suas 47
+prefeituras. A empresa ACME anunciou ontem que vai lançar um novo produto em Nova York. O produto foi
+desenvolvido pela equipe de P&D e será vendido na loja principal.</texto>
+Saída esperada:
+["arg1" : "Tóquio", "rel" : "é oficialmente", "arg2" : "Metrópole de Tóquio", "arg1" : "Tóquio", "rel" : "é", "arg2" : "a
+cidade capital do Japão", "arg1" : "Tóquio", "rel" : "é", "arg2" : "uma de suas 47 prefeituras", "arg1" : "Tóquio", "rel"
+: "é", "arg2" : "uma das 47 prefeituras do Japão", "arg1" : "Tóquio", "rel" : "é", "arg2" : "uma prefeitura", "arg1" : "A
+empresa ACME", "rel" : "anunciou", "arg2" : "que vai lançar um novo produto em Nova York", "arg1" : "A empresa
+ACME", "rel" : "vai lançar em", "arg2" : "Nova York", "arg1" : "A empresa ACME", "rel" : "vai lançar", "arg2" : "um
+novo produto", "arg1" : "O produto", "rel" : "foi desenvolvido por", "arg2" : "a equipe de P&D", "arg1" : "O produto",
+"rel" : "será vendido em", "arg2" : "a loja principal"] *(Nota sobre o exemplo: "ontem" é um adjunto adverbial de
+tempo que modifica "anunciou" e não é incluído na tripla principal sobre o anúncio, conforme princípio 14.)*
+**EXEMPLO ESPECÍFICO DERESOLUÇÃODECO-REFERÊNCIA(S6)EENRIQUECIMENTO(S8):**
+Dadootexto: <texto>O enxofre é um nutriente vital para o crescimento saudável das plantas, mas os solos no Reino
+Unido são naturalmente deficientes deste mineral.</texto>
+Saída esperada (demonstrando S6 e S8):
+["arg1": "O enxofre", "rel": "é", "arg2": "um nutriente vital para o crescimento saudável das plantas", "arg1": "os solos
+no Reino Unido", "rel": "são naturalmente deficientes de", "arg2": "O enxofre"] (Justificativa para a segunda tripla:
+"deste mineral" é "de este mineral". "de" vai para REL (E4.1). "este mineral" é o ARG2 inicial. "este mineral" refere-se
+claramente a "O enxofre". Conforme S6, ARG2 é substituído pelo SN antecedente "O enxofre".)
+**REGRAS DETALHADASPARAEXTRAÇÃODETRIPLAS:**
+**Regras Estruturais**
+**E1. Estrutura Fundamental da Relação:** Uma relação válida é tipicamente expressa por uma estrutura [Sujeito]
+[Verbo Principal]-[Complemento/Adjunto Principal]. * **ARG1** é geralmente o Sintagma Nominal (SN) que fun
+ciona como sujeito sintático da relação. * **REL** (Relação) contém o verbo principal (ou núcleo verbal do sintagma
+verbal) que expressa a relação. * **ARG2** é geralmente o Sintagma Nominal (SN), oração subordinada substantiva,
+ou adjunto adverbial essencial que funciona como complemento do verbo (objeto direto, indireto, predicativo, etc.)
+ou especifica uma circunstância central para a semântica da relação. * **E1.1. Dependência Sintática:** Deve haver
+uma relação de dependência sintática clara entre os SNs (ARG1 e ARG2) e o verbo principal em REL. ARG1 é
+frequentemente o sujeito e ARG2 o complemento (objeto direto, indireto, predicativo, etc.) ou um adjunto adverbial
+central para a semântica da relação. * Exemplo: "Dois anos depois, Jutting, agora com 31 anos, está em julgamento no Tribunal de Hong Kong, acusado de dois assassinatos e de uma obstrução legal de enterro." * Válido: ‘"arg1" :
+"Jutting", "rel" : "está em julgamento em", "arg2" : "o Tribunal de HongKong"‘*Justificativa:’Jutting’ (SN) ésujeito de
+’está’. ’o Tribunal de Hong Kong’ (SN) é o complementolocativo de ’está em julgamento em’. * Inválido: ‘(o Tribunal
+de Hong Kong, acusado de, dois assassinatos e de uma obstrução legal de enterro)‘ * Justificativa: ’o Tribunal de
+Hong Kong’ não é o argumento de ’acusado de’ nessa estrutura; ’acusado de...’ modifica ’Jutting’. A relação de
+dependência direta não se sustenta para esta tripla.
+**E2. Concordância:** Os elementos da relação extraída (ARG1, REL, ARG2) devem respeitar a concordância
+(número, gênero, pessoa) presente na sentença original, quando aplicável. * Exemplo: "Duas das principais cidades
+do mundo são Londres e Madrid." * Válido: ‘"arg1" : "Duas das principais cidades do mundo", "rel" : "são", "arg2"
+: "Londres e Madrid"‘ * Justificativa: Sujeito plural ("Duas das principais cidades...") concorda com verbo plural
+("são").
+**E3. Delimitação dos Argumentos (Sintagmas Nominais):** Os argumentos (ARG1, ARG2) devem ser constituídos
+pelo núcleo nominal e seus modificadores diretos e determinantes que são essenciais para identificar a entidade
+referida no contexto da relação. Isso inclui: * Artigos: *O* menino, *uma* casa * Adjetivos (e locuções adjetivas)
+antepostos ou pospostos que restringem o núcleo: jogadores *altos*, *novos* estudantes, homem *de valor*. * Nu
+merais: *dois* hambúrgueres * Pronomes (possessivos, demonstrativos, indefinidos etc.): *meus* sapatos, *algumas*
+pessoas, *este* livro. * Apossessivos e adjuntos adnominais restritivos: *o carro de João*, *a capital do Brasil*. *
+O objetivo é capturar o SN completo que funciona como argumento da relação. Evite incluir adjuntos adverbiais
+ou orações adjetivas explicativas que não são parte intrínseca da identificação da entidade para aquela relação
+específica (ver S3).
+**E4. Preposições e REL:** Quando um verbo rege uma preposição para introduzir um argumento (geralmente
+ARG2), essa preposição deve ser incluída como parte do fragmento REL. * Exemplo: "David viaja para outro país."
+* Válido: ‘"arg1" : "David", "rel" : "viaja para", "arg2" : "outro país"‘ * **E4.1. Contração de Preposição + Artigo:** Se
+houver uma contração de preposição com artigo (e.g., *do, da, no, na, pelo, à*), e essa preposição for regida pelo
+verbo em REL para introduzir o argumento, a preposição deve ser extraída para o REL e o artigo correspondente
+para o início do ARG2. * Exemplo: "Ele gosta *do* livro." * Válido: ‘"arg1" : "Ele", "rel" : "gosta de", "arg2" : "o livro"‘
+* Exemplo: "Ela se refere *àquela* questão." * Válido: ‘"arg1" : "Ela", "rel" : "se refere a", "arg2" : "aquela questão"‘
+* **Nota de Clarificação:** Esta regra (E4.1) aplica-se primariamente quando a preposição contraída é regida pelo
+verbo em REL e introduz o argumento principal. Não se aplica a contrações que ocorrem *dentro* de um SN já
+constituído como ARG1 ou ARG2 (e.g., em "Uma *das* causas é X", ARG1 é "Uma das causas"). * Se não houver
+artigo após a preposição regida (e.g., "Ele gosta *de* livros"), a preposição vai para REL e o substantivo para ARG2:
+‘"arg1" : "Ele", "rel" : "gosta de", "arg2" : "livros"‘.
+**E5. Natureza Nominal dos Argumentos:** Pelo menos um dos argumentos (ARG1 ou ARG2) deve ser um
+sintagma nominal cujo núcleo seja um substantivo ou pronome, referindo-se a uma entidade, conceito ou tipo.
+Idealmente, ambos os argumentos são SNs, ou um SN e uma oração substantiva. Evite extrações onde ambos os
+argumentos são, por exemplo, apenas adjetivos ou advérbios sem uma referência nominal clara.
+**E6. DesmembramentodeRelaçõesN-árias:** Relações que envolvem mais de dois argumentos principais (n-árias)
+devem, sempre que possível e sem perda significativa de informação semântica, ser desmembradas em múltiplas
+relações binárias. * Exemplo: "Elvis mudou-se para Memphis em 1948." * Válido (desmembrado): 1. ‘"arg1" : "Elvis",
+"rel" : "mudou-se para", "arg2" : "Memphis"‘ 2. ‘"arg1" : "Elvis", "rel" : "mudou-se em", "arg2" : "1948"‘ * A decisão de
+como desmembrar depende da preservação do significado central. O objetivo é obter triplas mais atômicas.
+**E7. Conjunções Coordenativas Aditivas:** Conjunções coordenativas aditivas (e.g., "e", "nem", "bem como")
+unindo múltiplos elementos que desempenham a mesma função sintática em relação ao verbo podem gerar: 1.
+Múltiplos fatos, um para cada elemento coordenado (preferencial). 2. Um único fato com os elementos coordenados
+mantidos juntos no argumento. * Exemplo: "O jornal é publicado em Londres e Madrid." * Válidos (priorize o
+desmembramento 1 e 2): 1. ‘"arg1" : "O jornal", "rel" : "é publicado em", "arg2" : "Londres"‘ 2. ‘"arg1" : "O jornal",
+"rel" : "é publicado em", "arg2" : "Madrid"‘ 3. ‘"arg1" : "O jornal", "rel" : "é publicado em", "arg2" : "Londres e Madrid"‘
+(Menos preferível, a menos que "Londres e Madrid" seja inequivocamente uma unidade conceitual no contexto).
+**E8. Argumentos Clausais:** Argumentos (especialmente ARG2) podem ser orações inteiras (e.g., orações subordi
+nadas substantivas). * Exemplo: "Eu espero que os alunos estudem amatéria." * Válido: ‘"arg1" : "Eu", "rel" : "espero",
+"arg2" : "que os alunos estudem amatéria"‘ * Relações dentro de orações subordinadas também podemserextraídas,
+mas sua factualidade deve ser avaliada independentemente (ver S1). * Da oração subordinada acima, poder-se
+ia considerar: ‘"arg1" : "os alunos", "rel" : "estudem", "arg2" : "a matéria"‘. No entanto, este fato não é afirmado
+diretamente pela sentença principal (ver S1).
+**E9. Locuções e Expressões Multipalavra:** Locuções prepositivas (e.g., "a respeito de", "ao lado de"), adverbiais
+(e.g., "às pressas", "de repente") ou conjuntivas (e.g., "a fim de que", "visto que") devem ser tratadas como unidades
+semânticas e sintáticas. * Se a locução fizer parte da relação (e.g., uma locução verbal ou uma preposição complexa),
+inclua-a integralmente em REL: ‘"arg1" : "Ele", "rel" : "desistiu de", "arg2" : "o projeto"‘. * Se a locução modificar
+um argumento, ela deve ser incluída no argumento correspondente, conforme a regra E3. * Exemplo: "Ele agiu *de
+acordo com* as regras." * Válido: ‘"arg1" : "Ele", "rel" : "agiu de acordo com", "arg2" : "as regras"‘.
+**E10. Relações Implícitas em Apostos:** Um sintagma nominal (ou frase nominal) em aposto a um ARG1 pode
+formarumarelação.*OARG1éotermoaoqualoapostoserefere.*OARG2éopróprioaposto(completo,conforme
+E3). * A REL (Relação) pode ser: * Um verbo de ligação comum implícito (e.g., "é", "ser", "chama-se", "tem como
+nome"). A escolha do verbo implícito deve ser a mais genérica e semanticamente adequada (priorizar "é" ou "ser"). *
+Se o aposto contiver elementos que possam formar uma relação mais específica(e.g., advérbios como "oficialmente",
+"também conhecido como"), estes podem ser incorporados à REL. * Exemplo: "Tóquio, oficialmente Metrópole de
+Tóquio, éacapital..." * Válido (preferencial): ‘"arg1" : "Tóquio", "rel" : "é oficialmente", "arg2" : "Metrópole de Tóquio"‘
+(Se "oficialmente" qualifica claramente a relação implícita). * Alternativa válida (mais genérica ou se a qualificação
+não for clara): ‘"arg1" : "Tóquio", "rel" : "é", "arg2" : "oficialmente Metrópole de Tóquio"‘. * Esta regra visa capturar
+relações de definição, identificação ouqualificaçãoexpressasporapostos,quemodelospuramenteextrativospodem
+omitir por falta de um verbo explícito conectando diretamente ARG1 e o aposto.
+**Regras Semânticas**
+**S1. Factualidade e Implicação:** Uma extração ‘(ARG1, REL, ARG2)‘ é considerada válida somente se a sentença
+original ‘s‘ implicar ou asserir a factualidade da proposição representada pela tripla. Tenha atenção a: * **Verbos
+modais:** "Ele *pode* ir" não implica que ele *foi* ou *irá*. Não extrair. * **Verbos de cognição/crença/dizer:** "Ela
+*acha* que ele virá", "Ele *disse* que choveu". A sentença principal assere o achar/dizer, não necessariamente o
+conteúdo da subordinada. Extrair ‘(Ela, acha, que ele virá)‘, mas não ‘(ele, virá, )‘ a menos que confirmado em outro
+lugar. * **Condicionais e Hipóteses:** "Se chover, eu não vou." Não extrair a consequência como fato. * **Negações:**
+"Ele *não* comeu a maçã." A extração ‘(Ele, comeu, a maçã)‘ seria inválida. Poderia ser ‘"arg1" : "Ele", "rel" : "não
+comeu", "arg2" : "a maçã"‘. * Exemplo de incoerência: Da sentença (s1) "Acredito que Hillary Clinton ganhará a
+eleição de 2019", a extração (r1) ‘(Hillary Clinton, ganhará, a eleição de 2019)‘ é **inválida** porque s1 não assere r1
+como umfato. Válido seria: ‘"arg1" : "Eu", "rel" : "Acredito", "arg2" : "que Hillary Clinton ganhará a eleição de 2019"‘
+(usando "Eu" implícito ou o falante como ARG1).
+**S2. Relevância Semântica e Delimitação Precisa do Argumento (conforme E3):** Os argumentos (ARG1, ARG2)
+devem ser os Sintagmas Nominais(SNs)completos,conformedefinidoemE3,quefuncionamcomoosparticipantes
+semânticos centrais da relação. O objetivo é capturar a entidade exata envolvida na relação, incluindo todos os seus
+modificadores restritivos essenciais para sua identificação naquele contexto específico. * Siga rigorosamente E3 para
+a completude do SN. Não trunque um SN quebrando sua unidade semântica essencial. * Evite expandir um SN
+para incluir informações que não são parte intrínseca da identificação da entidade para *aquela relação específica*
+ou que deveriam formar uma relação separada (ver S3). * Exemplo: "O senador Barack Obama, de Illinois, foi eleito
+presidente dos Estados Unidos..." * Se "de Illinois" é um adjunto adnominal restritivo crucial para identificar este
+"senador Barack Obama" no contexto, então por E3, o argumento completo para a relação de eleição é "O senador
+Barack Obama de Illinois". * Tripla: ‘"arg1" : "O senador Barack Obama de Illinois", "rel" : "foi eleito", "arg2" :
+"presidente dos Estados Unidos"‘. * Uma relação de aposto (E10) pode ser ‘"arg1": "O senador Barack Obama",
+"é de", "Illinois"‘ ou similar, se relevante. * O foco é identificar o SN que de fato participa da relação, com todos os
+seus componentes restritivos essenciais conforme E3.
+**S3. Evitar Argumentos Excessivamente Complexos / Relações Aninhadas no Argumento:** Os argumentos
+(ARG1, ARG2) devem ser semanticamente coesos. Evite que um argumento (especialmente ARG2) contenha em
+si outra relação claramente separável que deveria ser extraída como um fato independente, especialmente adjuntos
+adverbiais definalidade,causa,consequência,etc., quepoderiamformarumanovatriplacomARG1.*Exemplo:"Eu
+visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos." * Inválido:
+‘(Eu, visitei, os espetáculos universitários na Universidade de Northampton para encontrar novos talentos)‘ (ARG2
+excessivamente complexo com relação de finalidade aninhada). * Preferível (desmembrar conforme E6 e S3): 1.
+‘"arg1" : "Eu", "rel" : "visitei", "arg2" : "os espetáculos universitários na Universidade de Northampton"‘ (Captura a
+ação principal e seu complemento/adjunto completo). 2. ‘"arg1" : "Eu", "rel" : "tinha o propósito de encontrar", "arg2"
+: "novos talentos"‘ (Ou uma reificação mais simples da finalidade, como ‘"arg1" : "Eu", "rel" : "queria encontrar",
+"arg2" : "novos talentos"‘). * A forma de reificar a finalidade na segunda tripla pode variar, mas o ponto crucial é
+separar a oração de finalidade da relação principal de visita.
+**S4. Análise Linguística Consistente:** A extração deve ser baseada em uma análise sintática e semântica consis
+tente e defensável da sentença. Se a estrutura da sentença for ambígua, escolha a interpretação mais provável.
+**S5. Inferências Limitadas e Textualmente Ancoradas:** Não serão considerados fatos válidos aqueles que re
+querem conhecimento externo significativo ao texto ou inferências lógicas complexas não diretamente suportadas
+pelo texto. A relação deve estar explicitamente presente ou ser diretamente implicada pelo texto da sentença.
+**São permitidas e encorajadas as seguintes inferências textualmente ancoradas:** * **Resolução de co-referência
+intra-textual (conforme S6).** * **Inferência de verbos de ligação para relações de aposto (conforme E10).** *
+**Simplificação ou enriquecimento contextual de argumentos (conforme S7 e S8) quando isso aumentar a clareza e
+informatividade da tripla e for derivável do contexto imediato.** * Exemplo (Permitido por E10): "Paris, a capital da
+França, é linda."-> ‘"arg1": "Paris", "rel": "é", "arg2": "a capital da França"‘. * Exemplo (Não permitido- conhecimento
+externo): Se o texto diz"AFrançaéumpaíseuropeu."e"PariséacapitaldaFrança.",nãoextrair‘(Paris,éumacidade
+em, Europa)‘ a menos que o texto o afirme ou implique diretamente. * Exemplo (Não permitido- inferência lógica
+complexa): Se o texto diz "A é maior que B" e "B é maior que C", não extraia ‘(A, é maior que, C)‘ a menos que o
+texto também o afirme.
+**S6. Resolução de Co-referência Intra-textual para Sentido Completo:** Para garantir que as triplas extraídas
+tenham o sentido mais completo e autocontido possível, quando um argumento (ARG1 ou ARG2) for um pronome
+(e.g., *ele, ela, este, aquele, o qual, cujo*) ou uma expressão nominal referencial anafórica (e.g., "este mineral", "o
+referido problema", "a última cidade mencionada") cujo antecedente é um Sintagma Nominal específico e clara
+mente identificável no texto fornecido (geralmente na mesma sentença ou na sentença imediatamente anterior), o
+argumento na tripla extraída DEVE ser o SN antecedente completo (conforme E3), e não o pronome/expressão
+anafórica. * Esta resolução deve ser baseada apenas em pistas linguísticas inequívocas dentro do texto. * Se o
+antecedente for ambíguo, múltiplo, ou não estiver claramente definido como um SN específico no texto, mantenha
+o pronome/expressão referencial original no argumento. * O objetivo é tornar a tripla o mais informativa possível
+por si só, substituindo referências por seus referentes explícitos. * Exemplo: "O enxofre é um nutriente vital. Os
+solos no Reino Unido são naturalmente deficientes deste mineral." * Tripla com resolução (preferencial): ‘"arg1":
+"os solos no Reino Unido", "rel": "são naturalmente deficientes de", "arg2": "O enxofre"‘ (onde "deste mineral" foi
+desmembrado conforme E4.1 para "de este mineral", "de" incluído em REL, e "este mineral" em ARG2 foi resolvido
+para seu antecedente "O enxofre"). * Tripla sem resolução (menos preferencial, a ser evitada se a resolução for clara):
+‘"arg1": "os solos no Reino Unido", "rel": "são naturalmente deficientes de", "arg2": "este mineral"‘. * Exemplo: "Maria
+comprou um livro novo. Ele era muito interessante." * Tripla com resolução: ‘"arg1": "um livro novo", "rel": "era",
+"arg2": "muito interessante"‘ (onde "Ele" foi resolvido para "um livro novo". Note que "um livro novo" é o SN
+completo). * Exemplo (Co-referência + S8 para enriquecimento): "Tóquio é uma das 47 prefeituras do Japão. Ela
+é muito populosa." * Tripla 1 (S6): ‘"arg1": "Tóquio", "rel": "é", "arg2": "uma das 47 prefeituras do Japão"‘ * Tripla
+2 (S6): ‘"arg1": "Tóquio", "rel": "é", "arg2": "muito populosa"‘ (onde "Ela" foi resolvida para "Tóquio"). * Exemplo
+(Co-referência em possessivo + S8): "O Japão tem 47 prefeituras. Tóquio é uma de *suas* prefeituras." * Tripla
+(S6 para "suas"-> "do Japão", S8 para contextualizar): ‘"arg1": "Tóquio", "rel": "é", "arg2": "uma das prefeituras do Japão"‘. *(Nota: "das" aqui é parte do SN "uma das prefeituras do Japão" e não é desmembrado por E4.1, pois a
+preposição "de"nãoéregidadiretamentepeloverbo"é"paraintroduzir"asprefeituras...",massimpartedaestrutura
+quantificadora "uma de..." que compõe o ARG2).*
+**S7. Simplificação de Argumentos para Generalização:** Quando um argumento (tipicamente ARG2) é uma frase
+nominal que pode ser generalizada para um conceito mais simples sem perda do significado essencial da relação,
+essa simplificação é permitida se tornar a tripla mais concisa e ainda factual. * Isso é particularmente útil para
+frases como "um(a) de seus/suas X", "um tipo de Y", etc. * A factualidade da relação com o argumento simplificado
+deve ser mantida. * Exemplo: "Tóquio é uma de suas 47 prefeituras." (Contexto: "suas" refere-se ao Japão) * Válido
+(Extrativo direto): ‘"arg1": "Tóquio", "rel": "é", "arg2": "uma de suas 47 prefeituras"‘ * Válido (Abstrativo com S7):
+‘"arg1": "Tóquio", "rel": "é", "arg2": "uma prefeitura"‘ * Justificativa: Ser "uma de suas 47 prefeituras" implica ser
+"uma prefeitura".
+**S8. Enriquecimento Contextual de Argumentos:** Após a resolução de co-referência (S6), se um argumento
+(especialmente ARG2) ainda contiver pronomes possessivos resolvidos ou referências que o tornem dependente
+do contexto mais amplo para pleno entendimento, ele PODE ser reescrito para incorporar explicitamente o ref
+erente, tornando a tripla mais autocontida e informativa. * Isso se aplica principalmente quando a resolução de
+S6 resulta em algo como "prefeituras *dele*" e "dele" foi resolvido para "Japão". O argumento pode ser reescrito
+como "prefeituras do Japão". * Exemplo: "Tóquio é a capital do Japão. É também uma de suas 47 prefeituras." *
+Análise: "suas" em "uma de suas 47 prefeituras" refere-se a "Japão". * Tripla após S6 (formulação intermediária):
+‘"arg1": "Tóquio", "rel": "é também", "arg2": "uma de Japão 47 prefeituras"‘ (esta formulação pode ser estranha e é
+um passo para a versão enriquecida). * Tripla com S8 para enriquecimento: ‘"arg1": "Tóquio", "rel": "é também",
+"arg2": "uma das 47 prefeituras do Japão"‘. * Esta regra permite normalizar a expressão do argumento para maior
+naturalidade e clareza, desde que a informação adicionada (e.g., "do Japão") seja diretamente derivada da resolução
+de co-referência no texto. * Deve-se ter cuidado para não introduzir informação externa (S5). O enriquecimento deve
+vir de elementos já presentes ou claramente referenciados no texto.
+—Agora, processe o seguinte texto e gere as triplas no formato JSON especificado, seguindo TODAS as regras
+acima: <texto> [INPUT] </texto>
