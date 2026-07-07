@@ -3,7 +3,7 @@ import os
 
 # Defina o nome do seu arquivo gerado no passo anterior
 arquivo_entrada = 'apenas_sentencas.jsonl'
-numero_de_partes = 5
+numero_de_partes = 10
 
 def dividir_jsonl(caminho_entrada, num_partes):
     try:
