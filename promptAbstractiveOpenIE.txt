@@ -254,4 +254,4 @@ naturalidade e clareza, desde que a informação adicionada (e.g., "do Japão") 
 de co-referência no texto. * Deve-se ter cuidado para não introduzir informação externa (S5). O enriquecimento deve
 vir de elementos já presentes ou claramente referenciados no texto.
 —Agora, processe o seguinte texto e gere as triplas no formato JSON especificado, seguindo TODAS as regras
-acima: <texto> [INPUT] </texto>
+acima e adicione as sentenças no jsonl.: <texto> [INPUT] </texto>
