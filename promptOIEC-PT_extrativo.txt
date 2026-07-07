@@ -6,12 +6,12 @@
 
 Você receberá uma **lista de objetos JSON**, onde cada objeto contém uma sentença em português.
 
-```json
-[
+```jsonl
+
   {"sentence": "..."},
   {"sentence": "..."},
   {"sentence": "..."}
-]
+
 ```
 
 Cada objeto da lista deve ser processado de forma independente. Não deve haver mistura de informações entre sentenças diferentes.

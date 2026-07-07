@@ -1,427 +1,852 @@
 
+
 # Extração de Relações Open Information Extraction (Open IE)
+
+
 
 ## Objetivo
 
+
+
 Você receberá uma **lista de objetos JSON**, onde cada objeto contém uma sentença em português.
 
-```json
-[
+
+
+```jsonl
+
+
+
   {"sentence": "..."},
+
   {"sentence": "..."},
+
   {"sentence": "..."}
-]
+
+
+
 ```
 
-Cada objeto da lista deve ser processado de forma independente. Não deve haver mistura de informações entre sentenças diferentes.
+
+
+Cada objeto da lista deve ser processado de forma independente. Não deve haver mistura de informações entre sentenças diferentes e todas as sentenças devem ser analisadas. 
+
+
 
 ---
+
+
 
 Você receberá **sentenças em português**.
 
+
+
 Sua tarefa é extrair **todas** as relações Open Information Extraction (Open IE) presentes em cada sentença.
+
+
 
 Toda saída deve permanecer associada à **sentença original** da qual as relações foram extraídas. Todas as relações em `relations` devem corresponder exclusivamente à sentença armazenada em `sentence`.
 
+
+
 Cada relação deve ser representada por uma tripla no formato:
 
+
+
 ```json
+
 {
+
   "arg1": "...",
+
   "rel": "...",
+
   "arg2": "..."
+
 }
+
 ```
 
+
+
 ---
+
+
+
 
 
 Uma sentença pode conter nenhuma, uma ou várias relações. Sempre que houver múltiplas relações válidas, extraia todas elas.
 
+
+
 Siga rigorosamente as regras abaixo.
 
+
+
 ---
+
+
 
 # Regras Estruturais
 
+
+
 ## E1. Estrutura Fundamental da Tripla
+
+
 
 Cada tripla deve conter:
 
+
+
 * **ARG1:** sujeito ou entidade principal da relação;
+
 * **REL:** relação verbal que conecta os argumentos;
+
 * **ARG2:** complemento principal da relação.
+
+
 
 Toda tripla deve representar uma relação sintaticamente válida presente na sentença.
 
+
+
 ---
+
+
 
 ## E2. Construção de ARG1
 
+
+
 ARG1 deve corresponder ao sujeito da oração, tanto em construções na voz ativa quanto na voz passiva.
+
+
 
 Além do núcleo do sujeito, inclua todos os elementos pertencentes ao sintagma nominal que sejam relevantes para identificá-lo, tais como:
 
+
+
 * modificadores numéricos;
+
 * modificadores adverbiais;
+
 * modificadores nominais;
+
 * modificadores adjetivais;
+
 * dependentes sintáticos;
+
 * objetos associados;
+
 * elementos coordenados;
+
 * apostos, apenas quando representarem expressões numéricas identificadas pelo analisador morfossintático.
+
+
 
 O objetivo é representar o sujeito da forma mais completa possível.
 
+
+
 ---
+
+
 
 ## E3. Construção da Relação (REL)
 
+
+
 REL deve ser construída a partir do verbo principal da oração.
+
+
 
 Quando houver uma construção participial, ela também poderá constituir a relação principal.
 
+
+
 Inclua na relação:
+
+
 
 ### Antes do verbo principal
 
+
+
 * verbos auxiliares;
+
 * verbos auxiliares da voz passiva;
+
 * verbos copulativos;
+
 * objetos diretos e indiretos, quando fizerem parte da construção verbal;
+
 * modificadores adverbiais;
+
 * pronomes expletivos;
+
 * marcadores subordinativos.
+
+
 
 ### Depois do verbo principal
 
+
+
 * pronomes expletivos;
+
 * construções participiais.
 
+
+
 ---
+
+
 
 ## E4. Construção de ARG2
 
+
+
 ARG2 deve corresponder ao complemento principal da relação.
+
+
 
 Devem ser incorporados:
 
+
+
 ### Objetos
 
+
+
 * objetos diretos;
+
 * objetos indiretos.
+
+
 
 ### Modificadores
 
+
+
 * modificadores nominais;
+
 * modificadores numéricos;
+
 * modificadores adverbiais;
+
 * modificadores adjetivais.
+
+
 
 ### Complementos
 
+
+
 * complementos verbais abertos, isto é, complementos que não possuem sujeito próprio.
+
+
 
 ### Orações
 
+
+
 * orações subordinadas completivas;
+
 * orações subordinadas adverbiais, desde que não possuam sujeito próprio explícito.
+
+
 
 ### Outros elementos
 
+
+
 * orações relativas;
+
 * elementos coordenados;
+
 * apostos;
+
 * construções participiais;
+
 * outros dependentes sintáticos.
+
+
 
 O objetivo é representar o complemento da relação da forma mais completa possível.
 
+
+
 ---
+
+
 
 ## E5. Tratamento das Preposições
 
+
+
 As preposições regidas pelo verbo devem permanecer incorporadas ao ARG2.
+
+
 
 Elas não devem ser deslocadas para REL.
 
+
+
 As locuções prepositivas lexicalizadas devem permanecer intactas, sem fragmentação.
 
+
+
 ---
+
+
 
 ## E6. Extração por Busca em Profundidade (DFS)
 
+
+
 Considere a construção da tripla seguindo a lógica de uma busca em profundidade:
 
+
+
 1. identificar ARG1;
+
 2. identificar REL;
+
 3. identificar todos os argumentos dependentes da relação (ARG2).
+
+
 
 A extração deve continuar até atingir os elementos folha relevantes da estrutura.
 
+
+
 Quando dois ARG2 distintos puderem ser combinados para produzir um complemento mais informativo sem alterar o significado da relação, ambos poderão compor o mesmo ARG2.
 
+
+
 ---
+
+
 
 ## E7. Não Duplicação
 
+
+
 Não produza triplas idênticas.
+
+
 
 Caso diferentes regras resultem exatamente na mesma tripla `(ARG1, REL, ARG2)`, mantenha apenas uma ocorrência.
 
+
+
 ---
+
+
 
 # Regras Semânticas
 
+
+
 ## S1. Coordenação
+
+
 
 Coordenações introduzidas pelas conjunções **"e"** ou **"ou"** devem gerar novas relações independentes.
 
+
+
 ### Coordenação verbal
+
+
 
 Quando houver verbos coordenados, gere uma nova tripla para cada verbo coordenado.
 
+
+
 **Exemplo**
 
+
+
 Sentença:
+
 `Eu compro e vendo banana, maçã e pera.`
+
+
 
 Saída:
 
+
+
 ```json
+
 {
+
   "sentence": "Eu compro e vendo banana, maçã e pera.",
+
   "relations": [
+
     {
+
       "arg1": "Eu",
+
       "rel": "compro",
+
       "arg2": "banana"
+
     },
+
     {
+
       "arg1": "Eu",
+
       "rel": "compro",
+
       "arg2": "maçã"
+
     },
+
     {
+
       "arg1": "Eu",
+
       "rel": "compro",
+
       "arg2": "pera"
+
     },
+
     {
+
       "arg1": "Eu",
+
       "rel": "vendo",
+
       "arg2": "banana"
+
     },
+
     {
+
       "arg1": "Eu",
+
       "rel": "vendo",
+
       "arg2": "maçã"
+
     },
+
     {
+
       "arg1": "Eu",
+
       "rel": "vendo",
+
       "arg2": "pera"
+
     }
+
   ]
+
 }
+
 ```
+
+
 
 ### Coordenação de argumentos
 
+
+
 Quando ARG1 ou ARG2 contiver elementos coordenados, gere uma tripla independente para cada elemento coordenado, sempre que isso preservar o sentido.
 
+
+
 ---
+
+
 
 ## S2. Orações Subordinadas
 
+
+
 ### S2.1 Orações Relativas
+
+
 
 Quando um pronome relativo exercer a função de sujeito da oração relativa, substitua-o pelo seu antecedente explícito.
 
+
+
 Utilize o antecedente como ARG1.
+
+
 
 **Exemplo**
 
+
+
 Sentença:
+
 `A espada, que estava em casa, foi levada ontem.`
+
+
 
 Saída:
 
+
+
 ```json
+
 {
+
   "sentence": "A espada, que estava em casa, foi levada ontem.",
+
   "relations": [
+
     {
+
       "arg1": "A espada",
+
       "rel": "estava",
+
       "arg2": "em casa"
+
     },
+
     {
+
       "arg1": "A espada",
+
       "rel": "foi levada",
+
       "arg2": "ontem"
+
     }
+
   ]
+
 }
+
 ```
 
+
+
 ---
+
+
 
 ### S2.2 Orações Subordinadas Completivas
 
+
+
 Quando uma oração subordinada completar semanticamente outra oração, gere uma tripla para a oração principal e outra para a oração subordinada.
+
+
 
 A conjunção **"que"**, quando presente, deve permanecer como parte de ARG2 da oração principal.
 
+
+
 Aplique esta regra apenas quando ambas as orações possuírem sujeito explícito.
+
+
 
 **Exemplo**
 
+
+
 Sentença:
+
 `Ele afirmou que o cidadão se comportou bem.`
+
+
 
 Saída:
 
+
+
 ```json
+
 {
+
   "sentence": "Ele afirmou que o cidadão se comportou bem.",
+
   "relations": [
+
     {
+
       "arg1": "Ele",
+
       "rel": "afirmou",
+
       "arg2": "que o cidadão se comportou bem"
+
     },
+
     {
+
       "arg1": "o cidadão",
+
       "rel": "se comportou",
+
       "arg2": "bem"
+
     }
+
   ]
+
 }
+
 ```
+
+
 
 Se a oração subordinada não possuir sujeito explícito, não gere o encadeamento entre a oração principal e a subordinada; nesse caso, mantenha a subordinada em ARG2 da oração principal.
 
+
+
 ---
+
+
 
 ### S2.3 Orações Subordinadas Adverbiais
 
+
+
 Orações subordinadas adverbiais devem receber o mesmo tratamento das orações subordinadas completivas, preservando a relação entre as duas orações.
 
+
+
 ---
+
+
 
 ## S3. Relações de Aposto
 
+
+
 Quando um aposto corresponder a um nome próprio, gere uma nova tripla sintética utilizando o verbo **"é"** como REL.
+
+
 
 O termo principal constitui ARG1.
 
+
+
 O aposto constitui ARG2.
+
+
 
 **Exemplo**
 
+
+
 Sentença:
+
 `O diretor do hospital, Júlio, vendeu sua fazenda.`
+
+
 
 Saída:
 
+
+
 ```json
+
 {
+
   "sentence": "O diretor do hospital, Júlio, vendeu sua fazenda.",
+
   "relations": [
+
     {
+
       "arg1": "O diretor do hospital",
+
       "rel": "vendeu",
+
       "arg2": "sua fazenda"
+
     },
+
     {
+
       "arg1": "O diretor do hospital",
+
       "rel": "é",
+
       "arg2": "Júlio"
+
     },
+
     {
+
       "arg1": "Júlio",
+
       "rel": "é",
+
       "arg2": "O diretor do hospital"
+
     },
+
     {
+
       "arg1": "Júlio",
+
       "rel": "vendeu",
+
       "arg2": "sua fazenda"
+
     }
+
   ]
+
 }
+
 ```
 
+
+
 ---
+
+
 
 ## S4. Transitividade de Apostos
 
+
+
 Considere o termo principal e seu aposto como semanticamente equivalentes.
+
+
 
 Após extrair as triplas principais, gere novas triplas substituindo o termo principal pelo aposto, ou o aposto pelo termo principal, sempre que essa substituição preservar o significado da relação.
 
+
+
 ---
+
+
 
 ## S5. Coerência e Minimalidade
 
+
+
 Extraia apenas relações que possuam interpretação semântica completa e coerente.
+
+
 
 Priorize fatos minimais que não embutam, sem necessidade, outra relação separável dentro de ARG1 ou ARG2.
 
+
+
 Quando uma relação mais completa puder ser decomposta em fatos menores sem perda relevante de significado, gere também as versões mais atômicas.
 
+
+
 ---
+
+
 
 ## S6. Ausência de Inferência Externa
 
+
+
 Não utilize conhecimento de mundo, inferência lógica externa ou informação não expressa na sentença.
+
+
 
 Extraia apenas relações explicitamente presentes ou diretamente implicadas pelo texto.
 
+
+
 ---
+
+
 
 # Formato da Resposta
 
+
+
 Retorne **exclusivamente um objeto JSON válido**.
+
+
 
 O objeto deve possuir obrigatoriamente os seguintes campos:
 
+
+
 * **sentence:** deve conter exatamente a sentença de entrada, sem qualquer modificação, correção, normalização ou reescrita.
+
 * **relations:** um array contendo todas as triplas Open IE extraídas da sentença.
+
+
 
 As relações devem ser retornadas, sempre que possível, na mesma ordem em que aparecem na sentença.
 
+
+
 Caso nenhuma relação válida seja encontrada, retorne `relations` como array vazio.
+
+
 
 Não inclua explicações, comentários, Markdown ou qualquer texto adicional.
 
+
+
 Formato esperado:
 
+
+
 ```json
+
 {
+
   "sentence": "A universidade é afiliada à Congregação de Santa Cruz.",
+
   "relations": [
+
     {
+
       "arg1": "A universidade",
+
       "rel": "é",
+
       "arg2": "afiliada à Congregação de Santa Cruz"
+
     },
+
     {
+
       "arg1": "A universidade",
+
       "rel": "é afiliada a",
+
       "arg2": "a Congregação de Santa Cruz"
+
     }
+
   ]
+
 }
+
 ```
+
+
 
 Caso não exista nenhuma relação Open IE válida:
 
+
+
 ```json
+
 {
+
   "sentence": "A universidade é afiliada à Congregação de Santa Cruz.",
+
   "relations": []
+
 }
+
 ```
 
