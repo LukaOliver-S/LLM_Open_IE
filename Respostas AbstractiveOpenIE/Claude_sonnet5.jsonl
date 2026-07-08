@@ -1,4 +1,4 @@
-[
+
 {
   "sentence": "A universidade é afiliada a a Congregação de a Santa Cruz (em latim Congregatio a Sancta Cruce, pós-nominais abreviados",
   "relations": [
@@ -258,9 +258,7 @@
     {"arg1": "o iPod Nano de sétima geração", "rel": "tinha", "arg2": "o conector Relâmpago"}
   ]
 }
-]
 
-[
 {
   "sentence": "As versões de seis e sete faixas de a trilha sonora de o jogo foram lançadas em 19 de novembro de 2006, como parte de uma promoção de o Nintendo Power e acompanhadas de réplicas de a Master Sword e de o Hylian Shield.",
   "relations": [
@@ -509,9 +507,7 @@
     {"arg1": "os jadidistas", "rel": "se estabeleceram durante", "arg2": "o final do século XIX"}
   ]
 }
-]
 
-[
 {
   "sentence": "1916, quando manifestantes atacaram soldados russos em Khujand por uma ameaça de recrutamento forçado durante a Primeira Guerra Mundial.",
   "relations": [
@@ -736,9 +732,7 @@
     {"arg1": "O budismo", "rel": "postula que", "arg2": "divindades mundanas como Mahabrahma são mal interpretadas como criador"}
   ]
 }
-]
 
-[
 {
   "sentence": "A segunda verdade é que a origem de dukkha pode ser conhecida.",
   "relations": [
@@ -946,9 +940,7 @@
     {"arg1": "A biografia de dois volumes de Whitehead de Victor Lowe", "rel": "é", "arg2": "a apresentação mais definitiva da vida de Whitehead"}
   ]
 }
-]
 
-[
 {
   "sentence": "Embora a corrida tenha sido um fator que contribuiu para o momento de a morte de o IndyMac, a causa subjacente de a falha foi a maneira insegura e insalubre por a qual a economia foi operada.",
   "relations": [
@@ -1179,9 +1171,7 @@
     {"arg1": "a Ariola Records", "rel": "foi mais tarde conhecida como", "arg2": "BMG"}
   ]
 }
-]
 
-[
 {
   "sentence": "A Universidade Nazarena de o Sul, fundada por a Igreja de o Nazareno, é uma universidade localizada em o subúrbio de Betânia, cercada pelos limites de a cidade de Oklahoma City.",
   "relations": [
@@ -1406,9 +1396,7 @@
     {"arg1": "as consoantes em Wahgi", "rel": "são aspiradas apenas em", "arg2": "a posição final"}
   ]
 }
-]
 
-[
 {
   "sentence": "O termo aspiração às vezes se refere a a mudança sonora de a desescalização, em a qual uma consoante é lenitizada (enfraquecida) para se tornar uma parada glótica ou fricativa [ ʔ h ɦ ].",
   "relations": [
@@ -1636,8 +1624,8 @@
     {"arg1": "as línguas não padronizadas da França", "rel": "incluem", "arg2": "basco"}
   ]
 }
-]
-[
+
+
 {
   "sentence": "O ensino de o catalão é obrigatório em todas as escolas, mas é possível usar o espanhol para estudar em o sistema de ensino público de a Catalunha em duas situações, se o professor designado para uma turma optar por usar o espanhol ou durante o processo de aprendizagem de um ou mais alunos.",
   "relations": [
@@ -1864,8 +1852,9 @@
     {"arg1": "os pingüins", "rel": "foram transportados para Tristão da Cunha para", "arg2": "limpeza"}
   ]
 }
-]
-[
+
+
+
 {
   "sentence": "O primeiro colono permanente foi Jonathan Lambert, de Salem, Massachusetts, Estados Unidos, que chegou às ilhas em Dezembro de 1810 com dois outros homens.",
   "relations": [
@@ -2088,9 +2077,7 @@
     {"arg1": "Marija", "rel": "era", "arg2": "eslovena"}
   ]
 }
-]
 
-[
 {
   "sentence": "Na Segunda Guerra Mundial, os Estados Unidos, durante a campanha de Gilbert e Marshall, invadiram e ocuparam as ilhas em 1944, destruindo ou isolando as guarnições japonesas.",
   "relations": [
@@ -2248,4 +2235,3 @@
     {"arg1": "a população da Guiné-Bissau", "rel": "era de", "arg2": "518.000 em 1950"}
   ]
 }
-]
