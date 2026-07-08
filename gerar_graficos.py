@@ -14,17 +14,30 @@ Gráficos gerados (para CADA csv de entrada):
   2. <base>_prec_rec_f1.png/.pdf  -> barras agrupadas Precisão/Recall/F1 (lexical)
   3. <base>_lexical_vs_exact.png/.pdf -> barras agrupadas F1 lexical vs F1 exato
 
-Se você passar MAIS DE UM csv (ex.: um por pasta/tarefa: Abstractive,
-ExtrativoDPTO-IE, ExtrativoOIEC-PT), também gera:
+Se você passar MAIS DE UM csv da MESMA pasta de lote (ex.: um por
+tarefa: Abstractive, ExtrativoDPTO-IE, ExtrativoOIEC-PT), também gera:
   4. comparativo_tarefas_f1_lexical.png/.pdf -> um gráfico só comparando
      todos os modelos em todas as tarefas lado a lado.
 
+SAÍDA
+-----
+Por padrão (sem --saida), os gráficos de cada CSV vão para
+`<pasta_do_csv>/graficos_lexical/` -- ou seja, um csv em
+`Outputs/metricas/10_batches/resultados_Respostas_X.csv` gera gráficos em
+`Outputs/metricas/10_batches/graficos_lexical/`. Csvs de pastas de lote
+diferentes (10_batches, 15_batches, ...) caem em pastas `graficos_lexical`
+diferentes, e a comparação entre tarefas (gráfico 4) é feita separadamente
+para cada uma dessas pastas.
+
 USO
 ----
-    # Um csv só
-    python3 gerar_graficos.py resultados_Respostas_AbstractiveOpenIE.csv
+    # Um csv só -> gráficos em Outputs/metricas/10_batches/graficos_lexical/
+    python3 gerar_graficos.py Outputs/metricas/10_batches/resultados_Respostas_AbstractiveOpenIE.csv
 
-    # Vários csvs (compara também entre tarefas)
+    # Vários csvs do mesmo lote (gera também a comparação entre tarefas)
+    python3 gerar_graficos.py Outputs/metricas/10_batches/resultados_*.csv
+
+    # Forçar uma pasta de saída fixa (ignora a regra automática acima)
     python3 gerar_graficos.py resultados_*.csv --saida figuras/
 
     # Escolher quais métricas focar / ordenar
@@ -38,7 +51,7 @@ from __future__ import annotations
 import argparse
 import sys
 from pathlib import Path
-from typing import List
+from typing import Dict, List
 
 import matplotlib
 
@@ -78,6 +91,8 @@ NOME_METRICA_EN = {
     "recall_exact": "Recall (Exact Match)",
 }
 
+NOME_PASTA_SAIDA = "graficos_lexical"
+
 
 def rotulo_metrica(metrica: str) -> str:
     return NOME_METRICA_EN.get(metrica, metrica.replace("_", " ").title())
@@ -93,18 +108,18 @@ def salvar(fig: plt.Figure, caminho_base: Path) -> None:
     print(f"   -> {caminho_base.with_suffix('.pdf')}")
 
 
-def rotular_barras(ax, barras, formato="{:.3f}", offset=0.01):
-    """Escreve o valor no topo/ponta de cada barra."""
+def rotular_barras(ax, barras, formato="{:.3f}", offset=0.01, orientacao="v"):
+    """Escreve o valor no topo/ponta de cada barra.
+    orientacao='h' para ax.barh (barras horizontais), 'v' para ax.bar (verticais)."""
     for b in barras:
-        largura = b.get_width()
-        altura = b.get_height()
-        if largura and not altura:  # barra horizontal
+        if orientacao == "h":
+            largura = b.get_width()
             ax.text(largura + offset, b.get_y() + b.get_height() / 2,
                      formato.format(largura), va="center", fontsize=9)
-        elif altura:  # barra vertical
+        else:
+            altura = b.get_height()
             ax.text(b.get_x() + b.get_width() / 2, altura + offset,
                      formato.format(altura), ha="center", fontsize=9)
-
 
 # --------------------------------------------------------------------------- #
 # GRÁFICO 1: F1 lexical, barras horizontais ordenadas
@@ -114,7 +129,7 @@ def grafico_f1_ordenado(df: pd.DataFrame, metrica: str, titulo: str, caminho_bas
     d = df.sort_values(metrica, ascending=True)
     fig, ax = plt.subplots(figsize=(7, 0.55 * len(d) + 1.2))
     barras = ax.barh(d["modelo"], d[metrica], color=PALETA[1], edgecolor="#1a2530", linewidth=0.6)
-    rotular_barras(ax, barras)
+    rotular_barras(ax, barras, orientacao="h")
     ax.set_xlabel(titulo)
     ax.set_xlim(0, max(d[metrica].max() * 1.2, 0.1))
     ax.set_title(titulo)
@@ -174,7 +189,7 @@ def grafico_lexical_vs_exact(df: pd.DataFrame, caminho_base: Path):
 
 
 # --------------------------------------------------------------------------- #
-# GRÁFICO 4 (múltiplos csvs): comparação entre tarefas
+# GRÁFICO 4 (múltiplos csvs do mesmo lote): comparação entre tarefas
 # --------------------------------------------------------------------------- #
 
 def grafico_comparativo_tarefas(dfs_por_tarefa: dict, metrica: str, caminho_base: Path):
@@ -210,16 +225,19 @@ def grafico_comparativo_tarefas(dfs_por_tarefa: dict, metrica: str, caminho_base
 def main():
     parser = argparse.ArgumentParser(description="Gera gráficos para artigo a partir dos CSVs do resultados.py")
     parser.add_argument("csvs", nargs="+", help="Um ou mais arquivos resultados_*.csv")
-    parser.add_argument("--saida", default="figuras", help="Pasta de saída (default: ./figuras)")
+    parser.add_argument(
+        "--saida", default=None,
+        help=f"Pasta de saída fixa (opcional). Sem isso, os gráficos de cada csv vão para "
+             f"'<pasta_do_csv>/{NOME_PASTA_SAIDA}/'.",
+    )
     parser.add_argument("--metrica", default="f1_lexical",
                          help="Métrica usada no gráfico de barras ordenado e na comparação entre tarefas "
                               "(default: f1_lexical). Ex.: f1_exact, precisao_lexical, recall_lexical")
     args = parser.parse_args()
 
-    pasta_saida = Path(args.saida)
-    pasta_saida.mkdir(parents=True, exist_ok=True)
-
-    dfs_por_tarefa = {}
+    # Agrupa por pasta de saída, para que a comparação entre tarefas (gráfico 4)
+    # só junte csvs que caíram na MESMA pasta de lote.
+    dfs_por_pasta: Dict[Path, Dict[str, pd.DataFrame]] = {}
 
     for caminho_csv in args.csvs:
         caminho_csv = Path(caminho_csv)
@@ -227,9 +245,12 @@ def main():
             print(f"❌ Not found, skipping: {caminho_csv}")
             continue
 
+        pasta_saida = Path(args.saida) if args.saida else caminho_csv.parent / NOME_PASTA_SAIDA
+        pasta_saida.mkdir(parents=True, exist_ok=True)
+
         df = pd.read_csv(caminho_csv)
         nome_tarefa = caminho_csv.stem.replace("resultados_", "").replace("_", " ")
-        print(f"\n📊 Generating charts for: {nome_tarefa}")
+        print(f"\n📊 Generating charts for: {nome_tarefa}  -> {pasta_saida}")
 
         base = pasta_saida / caminho_csv.stem
         grafico_f1_ordenado(df, args.metrica, f"{rotulo_metrica(args.metrica)} — {nome_tarefa}",
@@ -238,13 +259,16 @@ def main():
         grafico_prf_agrupado(df, base.with_name(base.name + "_prec_rec_f1_exact"), sufixo="exact")
         grafico_lexical_vs_exact(df, base.with_name(base.name + "_lexical_vs_exact"))
 
-        dfs_por_tarefa[nome_tarefa] = df
+        dfs_por_pasta.setdefault(pasta_saida, {})[nome_tarefa] = df
 
-    if len(dfs_por_tarefa) > 1:
-        print(f"\n📊 Generating cross-task comparison chart across {len(dfs_por_tarefa)} tasks...")
-        grafico_comparativo_tarefas(dfs_por_tarefa, args.metrica, pasta_saida / f"comparativo_tarefas_{args.metrica}")
+    for pasta_saida, dfs_por_tarefa in dfs_por_pasta.items():
+        if len(dfs_por_tarefa) > 1:
+            print(f"\n📊 Generating cross-task comparison chart in: {pasta_saida}")
+            grafico_comparativo_tarefas(
+                dfs_por_tarefa, args.metrica, pasta_saida / f"comparativo_tarefas_{args.metrica}"
+            )
 
-    print(f"\n✅ All charts saved to: {pasta_saida.resolve()}")
+    print("\n✅ Done.")
 
 
 if __name__ == "__main__":

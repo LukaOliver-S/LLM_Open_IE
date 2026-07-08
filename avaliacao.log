@@ -143,3 +143,85 @@
 2026-07-08 17:50:02,145 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1ProOIEC.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
 2026-07-08 17:50:02,153 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\por_batch\resultados_batch_Respostas_ExtrativoOIEC-PT.csv
 2026-07-08 17:50:02,300 | INFO | openie_eval | Gráfico salvo em Outputs\metricas\10_batches\por_batch\grafico_f1_lexical_Respostas_ExtrativoOIEC-PT.png
+2026-07-08 18:22:38,984 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-08 18:22:39,018 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-08 18:22:39,031 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_AbstractiveOpenIE.csv
+
+2026-07-08 18:22:39,031 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-08 18:22:39,045 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostaGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-08 18:22:39,065 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_ExtrativoDPTO-IE.csv
+
+2026-07-08 18:22:39,065 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-08 18:22:39,093 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1ProOIEC.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-08 18:22:39,098 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_ExtrativoOIEC-PT.csv
+
+2026-07-08 18:28:57,688 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-08 18:28:57,726 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-08 18:28:57,739 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_AbstractiveOpenIE.csv
+2026-07-08 18:28:58,330 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-08 18:28:58,344 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostaGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-08 18:28:58,364 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_ExtrativoDPTO-IE.csv
+2026-07-08 18:28:58,677 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-08 18:28:58,705 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1ProOIEC.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-08 18:28:58,716 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_ExtrativoOIEC-PT.csv
+2026-07-08 18:30:39,205 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-08 18:30:39,241 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-08 18:30:39,253 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_AbstractiveOpenIE.csv
+2026-07-08 18:30:39,675 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-08 18:30:39,689 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostaGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-08 18:30:39,709 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_ExtrativoDPTO-IE.csv
+2026-07-08 18:30:40,025 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-08 18:30:40,053 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1ProOIEC.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-08 18:30:40,059 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_ExtrativoOIEC-PT.csv
+2026-07-08 18:41:27,484 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-08 18:41:27,519 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-08 18:41:27,531 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_AbstractiveOpenIE.csv
+2026-07-08 18:41:27,531 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-08 18:41:27,544 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostaGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-08 18:41:27,564 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_ExtrativoDPTO-IE.csv
+2026-07-08 18:41:27,564 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-08 18:41:27,592 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1ProOIEC.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-08 18:41:27,599 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_ExtrativoOIEC-PT.csv
+2026-07-08 18:54:21,284 | INFO | openie_eval | === Avaliando pasta: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-08 18:54:21,768 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-08 18:54:21,768 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-08 18:54:21,770 | WARNING | openie_eval | [respostas_gpt5.5_mini] Nº de frases difere: gold=262, pred=255. O casamento agora é feito pelo texto da sentença, não pela posição.
+2026-07-08 18:54:21,771 | WARNING | openie_eval | [respostaGrok4.0Fast] Sentença da predição #204 não encontrada no gold: 'atualmente, o nome completo de o governo de nanjing é governo popular de a cidad...'
+2026-07-08 18:54:21,771 | WARNING | openie_eval | [respostaGrok4.0Fast] Sentença da predição #217 não encontrada no gold: 'durante a segunda guerra mundial, o kansas foi uma de as 131 faculdades e univer...'
+2026-07-08 18:54:21,771 | WARNING | openie_eval | [respostaGrok4.0Fast] Sentença da predição #223 não encontrada no gold: 'no caso de a áfrica, um de os fatores para esse comportamento foi a instabilidad...'
+2026-07-08 18:54:21,772 | WARNING | openie_eval | [respostaGrok4.0Fast] 3 sentenças da predição não casaram com o gold; 3 sentenças do gold nunca foram cobertas por nenhuma predição.
+2026-07-08 18:54:21,772 | INFO | openie_eval | Concluído: respostaGrok4.0Fast.jsonl
+2026-07-08 18:54:21,773 | WARNING | openie_eval | [respostasGemini3.1Pro] Nº de frases difere: gold=262, pred=212. O casamento agora é feito pelo texto da sentença, não pela posição.
+2026-07-08 18:54:21,775 | WARNING | openie_eval | [respostas_gpt5.5_mini] 0 sentenças da predição não casaram com o gold; 7 sentenças do gold nunca foram cobertas por nenhuma predição.
+2026-07-08 18:54:21,775 | INFO | openie_eval | Concluído: respostas_gpt5.5_mini.jsonl
+2026-07-08 18:54:21,776 | WARNING | openie_eval | [respostasGemini3.1Pro] Sentença da predição #110 não encontrada no gold: 'os títulos lastreados em hipotecas comerciais, os lastreados em ativos e os cdos...'
+2026-07-08 18:54:21,776 | WARNING | openie_eval | [respostasGemini3.1Pro] Sentença da predição #156 não encontrada no gold: 'em um discurso de junho de 2008, o presidente e ceo de o banco de a reserva fede...'
+2026-07-08 18:54:21,776 | WARNING | openie_eval | [respostasGemini3.1Pro] Sentença da predição #158 não encontrada no gold: 'os títulos lastreados em hipotecas comerciais, os lastreados em ativos e os cdos...'
+2026-07-08 18:54:21,776 | WARNING | openie_eval | [respostasGemini3.1Pro] Sentença da predição #159 não encontrada no gold: 'uma vela de cera doces produz cerca de 13 lúmens, uma lâmpada incandescente de 6...'
+2026-07-08 18:54:21,777 | WARNING | openie_eval | [respostasGemini3.1Pro] Sentença da predição #161 não encontrada no gold: 'oklahoma city é servida por dois aeroportos principais, o will rogers world airp...'
+2026-07-08 18:54:21,777 | WARNING | openie_eval | [respostasGemini3.1Pro] Sentença da predição #162 não encontrada no gold: 'em 1865, when a família bell se mudou para londres, bell retornou a weston house...'
+2026-07-08 18:54:21,777 | WARNING | openie_eval | [respostasGemini3.1Pro] Sentença da predição #163 não encontrada no gold: 'em 1840, santa helena tornou-se uma estação de abastecimento de o esquadrão brit...'
+2026-07-08 18:54:21,777 | WARNING | openie_eval | [respostasGemini3.1Pro] 7 sentenças da predição não casaram com o gold; 57 sentenças do gold nunca foram cobertas por nenhuma predição.
+2026-07-08 18:54:21,778 | INFO | openie_eval | Concluído: respostasGemini3.1Pro.jsonl
+2026-07-08 18:54:21,798 | INFO | openie_eval | Relatório salvo em Outputs\metricas\10_batches\resultados_Respostas_AbstractiveOpenIE.csv
+
+2026-07-08 18:54:21,798 | INFO | openie_eval | === Avaliando pasta: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-08 18:54:21,887 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-08 18:54:21,889 | INFO | openie_eval | Concluído: respostaGrok4.0Fast.jsonl
+2026-07-08 18:54:21,892 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-08 18:54:21,893 | INFO | openie_eval | Concluído: respostas_gpt5.5_mini.jsonl
+2026-07-08 18:54:21,895 | WARNING | openie_eval | [respostasGemini3.1Pro] Sentença da predição #111 não encontrada no gold: 'os títulos lastreados em hipotecas comerciais, os lastreados em ativos e os cdos...'
+2026-07-08 18:54:21,898 | WARNING | openie_eval | [respostasGemini3.1Pro] 1 sentenças da predição não casaram com o gold; 1 sentenças do gold nunca foram cobertas por nenhuma predição.
+2026-07-08 18:54:21,898 | INFO | openie_eval | Concluído: respostasGemini3.1Pro.jsonl
+2026-07-08 18:54:21,911 | INFO | openie_eval | Relatório salvo em Outputs\metricas\10_batches\resultados_Respostas_ExtrativoDPTO-IE.csv
+
+2026-07-08 18:54:21,911 | INFO | openie_eval | === Avaliando pasta: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-08 18:54:21,999 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-08 18:54:22,001 | INFO | openie_eval | Concluído: respostaGrok4.0Fast.jsonl
+2026-07-08 18:54:22,002 | WARNING | openie_eval | [respostas_gpt5.5_mini] Sentença da predição #128 não encontrada no gold: 'como os americanos tinham uma força aérea muito maior que a união soviética e os...'
+2026-07-08 18:54:22,003 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-08 18:54:22,004 | WARNING | openie_eval | [respostas_gpt5.5_mini] 1 sentenças da predição não casaram com o gold; 1 sentenças do gold nunca foram cobertas por nenhuma predição.
+2026-07-08 18:54:22,004 | INFO | openie_eval | Concluído: respostas_gpt5.5_mini.jsonl
+2026-07-08 18:54:22,009 | INFO | openie_eval | Concluído: respostasGemini3.1Pro.jsonl
+2026-07-08 18:54:22,022 | INFO | openie_eval | Relatório salvo em Outputs\metricas\10_batches\resultados_Respostas_ExtrativoOIEC-PT.csv
+
