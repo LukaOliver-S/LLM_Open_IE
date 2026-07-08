@@ -293,6 +293,13 @@ class Contadores:
         return (2 * p * r) / (p + r) if (p + r) else 0.0
 
 
+def _normalizar_sentenca(s: Any) -> str:
+    """Normaliza uma sentença para uso como chave de casamento gold/pred
+    (colapsa espaços, remove bordas, ignora maiúsculas/minúsculas)."""
+    return " ".join(str(s or "").split()).strip().lower()
+
+
+
 def comparar_triplas(
     gold_triplas: List[Triple], pred_triplas: List[Triple], matcher: TripleMatcher
 ) -> Contadores:
@@ -363,11 +370,14 @@ class RelatorioAvaliacao:
     recall_exact: float
     f1_exact: float
     n_erros_parsing: int
-
+    n_pred_sem_match: int
+    n_gold_sem_cobertura: int
 
 def avaliar_par(caminho_gold: str, caminho_pred: str, limiar_lexical: float = 0.5) -> RelatorioAvaliacao:
-    """Avalia um único arquivo de predições contra o gold, retornando um
-    relatório estruturado (fácil de agregar em pandas depois)."""
+    """Avalia um único arquivo de predições contra o gold, casando cada
+    predição com a sua sentença correspondente no gold (por texto, não por
+    posição na lista), o que evita corromper silenciosamente a avaliação
+    quando o modelo reordena, pula ou duplica sentenças."""
     nome_modelo = Path(caminho_pred).stem
 
     leitor_gold = RobustJSONLReader(Path(caminho_gold))
@@ -382,21 +392,40 @@ def avaliar_par(caminho_gold: str, caminho_pred: str, limiar_lexical: float = 0.
     if len(golds) != len(preds):
         log.warning(
             "[%s] Nº de frases difere: gold=%d, pred=%d. "
-            "O alinhamento é feito por índice — revise se houver arquivos truncados.",
+            "O casamento agora é feito pelo texto da sentença, não pela posição.",
             nome_modelo, len(golds), len(preds),
         )
 
+    gold_por_sentenca: Dict[str, Any] = {
+        _normalizar_sentenca(g.get("sentence", "") if isinstance(g, dict) else ""): g
+        for g in golds
+    }
+
     matcher_lex = LexicalMatcher(limiar=limiar_lexical)
     matcher_ex = ExactMatcher()
-
     c_lex, c_ex = Contadores(), Contadores()
 
-    for i, (item_gold, item_pred) in enumerate(zip(golds, preds)):
+    pareadas: set = set()
+    n_pred_sem_match = 0
+
+    for i, item_pred in enumerate(preds):
+        chave = _normalizar_sentenca(item_pred.get("sentence", "") if isinstance(item_pred, dict) else "")
+        item_gold = gold_por_sentenca.get(chave)
+
+        if item_gold is None:
+            n_pred_sem_match += 1
+            log.warning(
+                "[%s] Sentença da predição #%d não encontrada no gold: '%.80s...'",
+                nome_modelo, i, chave,
+            )
+            continue
+
+        pareadas.add(chave)
         try:
             gold_triplas = extrair_triplas(item_gold)
             pred_triplas = extrair_triplas(item_pred)
         except Exception as e:
-            log.error("[%s] Falha ao extrair triplas na frase %d: %s", nome_modelo, i, e)
+            log.error("[%s] Falha ao extrair triplas na predição #%d: %s", nome_modelo, i, e)
             continue
 
         r_lex = comparar_triplas(gold_triplas, pred_triplas, matcher_lex)
@@ -404,6 +433,24 @@ def avaliar_par(caminho_gold: str, caminho_pred: str, limiar_lexical: float = 0.
 
         c_lex.vp += r_lex.vp; c_lex.fp += r_lex.fp; c_lex.fn += r_lex.fn
         c_ex.vp += r_ex.vp; c_ex.fp += r_ex.fp; c_ex.fn += r_ex.fn
+
+    # Sentenças do gold que nenhuma predição cobriu: penaliza o recall
+    # integralmente (antes, essas triplas eram simplesmente ignoradas).
+    n_gold_sem_cobertura = 0
+    for chave, item_gold in gold_por_sentenca.items():
+        if chave in pareadas:
+            continue
+        n_gold_sem_cobertura += 1
+        gold_triplas = extrair_triplas(item_gold)
+        c_lex.fn += len(gold_triplas)
+        c_ex.fn += len(gold_triplas)
+
+    if n_pred_sem_match or n_gold_sem_cobertura:
+        log.warning(
+            "[%s] %d sentenças da predição não casaram com o gold; "
+            "%d sentenças do gold nunca foram cobertas por nenhuma predição.",
+            nome_modelo, n_pred_sem_match, n_gold_sem_cobertura,
+        )
 
     return RelatorioAvaliacao(
         modelo=nome_modelo,
@@ -416,8 +463,9 @@ def avaliar_par(caminho_gold: str, caminho_pred: str, limiar_lexical: float = 0.
         recall_exact=c_ex.recall(),
         f1_exact=c_ex.f1(),
         n_erros_parsing=len(res_pred.erros),
+        n_pred_sem_match=n_pred_sem_match,
+        n_gold_sem_cobertura=n_gold_sem_cobertura,
     )
-
 
 def _worker(args: Tuple[str, str, float]) -> RelatorioAvaliacao:
     """Função de topo de módulo (necessária para ProcessPoolExecutor no Windows/macOS)."""
