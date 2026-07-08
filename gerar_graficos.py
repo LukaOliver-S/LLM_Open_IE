@@ -68,6 +68,20 @@ plt.rcParams.update({
 
 PALETA = ["#2c3e50", "#2980b9", "#27ae60", "#e67e22", "#c0392b", "#8e44ad", "#16a085"]
 
+# Rótulos amigáveis (em inglês) para as colunas do CSV, usados nos títulos/eixos.
+NOME_METRICA_EN = {
+    "f1_lexical": "F1-Score (Lexical Match)",
+    "f1_exact": "F1-Score (Exact Match)",
+    "precisao_lexical": "Precision (Lexical Match)",
+    "recall_lexical": "Recall (Lexical Match)",
+    "precisao_exact": "Precision (Exact Match)",
+    "recall_exact": "Recall (Exact Match)",
+}
+
+
+def rotulo_metrica(metrica: str) -> str:
+    return NOME_METRICA_EN.get(metrica, metrica.replace("_", " ").title())
+
 
 def salvar(fig: plt.Figure, caminho_base: Path) -> None:
     """Salva a figura em PNG (300dpi, para Word/PowerPoint) e PDF (vetorial,
@@ -120,16 +134,17 @@ def grafico_prf_agrupado(df: pd.DataFrame, caminho_base: Path, sufixo="lexical")
     largura = 0.25
 
     fig, ax = plt.subplots(figsize=(max(7, 1.1 * len(modelos)), 4.5))
-    b1 = ax.bar([i - largura for i in x], d[f"precisao_{sufixo}"], largura, label="Precisão", color=PALETA[0])
+    b1 = ax.bar([i - largura for i in x], d[f"precisao_{sufixo}"], largura, label="Precision", color=PALETA[0])
     b2 = ax.bar(list(x), d[f"recall_{sufixo}"], largura, label="Recall", color=PALETA[1])
     b3 = ax.bar([i + largura for i in x], d[f"f1_{sufixo}"], largura, label="F1", color=PALETA[2])
 
+    tipo_match = "Lexical Match" if sufixo == "lexical" else "Exact Match"
     ax.set_xticks(list(x))
     ax.set_xticklabels(modelos, rotation=30, ha="right")
-    ax.set_ylabel(f"Pontuação ({'Casamento Lexical' if sufixo == 'lexical' else 'Casamento Exato'})")
+    ax.set_ylabel(f"Score ({tipo_match})")
     ax.set_ylim(0, 1.0)
     ax.legend(loc="upper right", ncol=3)
-    ax.set_title(f"Precisão, Recall e F1 por modelo — {'Casamento Lexical' if sufixo == 'lexical' else 'Casamento Exato'}")
+    ax.set_title(f"Precision, Recall and F1 by Model — {tipo_match}")
     fig.tight_layout()
     salvar(fig, caminho_base)
 
@@ -145,15 +160,15 @@ def grafico_lexical_vs_exact(df: pd.DataFrame, caminho_base: Path):
     largura = 0.35
 
     fig, ax = plt.subplots(figsize=(max(7, 1.1 * len(modelos)), 4.5))
-    b1 = ax.bar([i - largura / 2 for i in x], d["f1_lexical"], largura, label="F1 (Lexical > 50%)", color=PALETA[1])
-    b2 = ax.bar([i + largura / 2 for i in x], d["f1_exact"], largura, label="F1 (Exato)", color=PALETA[4])
+    b1 = ax.bar([i - largura / 2 for i in x], d["f1_lexical"], largura, label="F1 (Lexical Match > 50%)", color=PALETA[1])
+    b2 = ax.bar([i + largura / 2 for i in x], d["f1_exact"], largura, label="F1 (Exact Match)", color=PALETA[4])
 
     ax.set_xticks(list(x))
     ax.set_xticklabels(modelos, rotation=30, ha="right")
     ax.set_ylabel("F1-Score")
     ax.set_ylim(0, 1.0)
     ax.legend(loc="upper right")
-    ax.set_title("F1-Score: Casamento Lexical vs. Casamento Exato")
+    ax.set_title("F1-Score: Lexical Match vs. Exact Match")
     fig.tight_layout()
     salvar(fig, caminho_base)
 
@@ -180,10 +195,10 @@ def grafico_comparativo_tarefas(dfs_por_tarefa: dict, metrica: str, caminho_base
 
     ax.set_xticks(list(x))
     ax.set_xticklabels(modelos, rotation=30, ha="right")
-    ax.set_ylabel(metrica.replace("_", " ").title())
+    ax.set_ylabel(rotulo_metrica(metrica))
     ax.set_ylim(0, 1.0)
-    ax.legend(loc="upper right", title="Tarefa")
-    ax.set_title(f"Comparação entre tarefas — {metrica.replace('_', ' ').title()}")
+    ax.legend(loc="upper right", title="Task")
+    ax.set_title(f"Cross-Task Comparison — {rotulo_metrica(metrica)}")
     fig.tight_layout()
     salvar(fig, caminho_base)
 
@@ -209,15 +224,15 @@ def main():
     for caminho_csv in args.csvs:
         caminho_csv = Path(caminho_csv)
         if not caminho_csv.exists():
-            print(f"❌ Não encontrado, pulando: {caminho_csv}")
+            print(f"❌ Not found, skipping: {caminho_csv}")
             continue
 
         df = pd.read_csv(caminho_csv)
         nome_tarefa = caminho_csv.stem.replace("resultados_", "").replace("_", " ")
-        print(f"\n📊 Gerando gráficos para: {nome_tarefa}")
+        print(f"\n📊 Generating charts for: {nome_tarefa}")
 
         base = pasta_saida / caminho_csv.stem
-        grafico_f1_ordenado(df, args.metrica, f"{args.metrica.replace('_', ' ').title()} — {nome_tarefa}",
+        grafico_f1_ordenado(df, args.metrica, f"{rotulo_metrica(args.metrica)} — {nome_tarefa}",
                              base.with_name(base.name + f"_{args.metrica}_ordenado"))
         grafico_prf_agrupado(df, base.with_name(base.name + "_prec_rec_f1_lexical"), sufixo="lexical")
         grafico_prf_agrupado(df, base.with_name(base.name + "_prec_rec_f1_exact"), sufixo="exact")
@@ -226,10 +241,10 @@ def main():
         dfs_por_tarefa[nome_tarefa] = df
 
     if len(dfs_por_tarefa) > 1:
-        print(f"\n📊 Gerando gráfico comparativo entre {len(dfs_por_tarefa)} tarefas...")
+        print(f"\n📊 Generating cross-task comparison chart across {len(dfs_por_tarefa)} tasks...")
         grafico_comparativo_tarefas(dfs_por_tarefa, args.metrica, pasta_saida / f"comparativo_tarefas_{args.metrica}")
 
-    print(f"\n✅ Todos os gráficos foram salvos em: {pasta_saida.resolve()}")
+    print(f"\n✅ All charts saved to: {pasta_saida.resolve()}")
 
 
 if __name__ == "__main__":
