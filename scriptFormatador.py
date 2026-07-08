@@ -1,8 +1,8 @@
 import json
 
 
-arquivo_entrada = 'bia_gold_sentences.jsonl' 
-arquivo_saida = 'apenas_sentencas.jsonl' 
+arquivo_entrada = 'dados/bia_gold_sentences.jsonl'
+arquivo_saida = 'dados/apenas_sentencas.jsonl'
 
 def extrair_sentencas_para_jsonl(caminho_entrada, caminho_saida):
     try:

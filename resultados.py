@@ -465,15 +465,19 @@ def avaliar_diretorio(
 # Ajuste estes dois valores para o seu projeto. Usados apenas quando o script
 # é executado SEM nenhum argumento de linha de comando (ex.: dando play na IDE),
 # reproduzindo o hábito do script original de ter os caminhos "fixos" no arquivo.
-GOLD_PADRAO = "bia_gold_sentences.jsonl"
-PREFIXO_PASTAS_PADRAO = "Respostas"  # varre toda pasta do diretório atual que comece assim
+GOLD_PADRAO = "dados/bia_gold_sentences.jsonl"
+PASTA_RESPOSTAS_PADRAO = "Respostas"                   # pasta raiz com as sub-pastas "N_batches"
+PASTA_METRICAS_PADRAO = Path("Outputs") / "metricas"   # onde os CSVs de saída são salvos
+PREFIXO_PASTAS_PADRAO = "Respostas"                    # prefixo das pastas de modelo dentro de cada "N_batches"
 
 
 def rodar_modo_padrao(workers: int = 4, limiar_lexical: float = 0.5) -> None:
-    """Executa sem precisar de argumentos: procura, no diretório atual,
+    """Executa sem precisar de argumentos: procura, em `Respostas/`, todas as
+    pastas de lote (ex.: '10_batches', '15_batches', ...) e, dentro de cada uma,
     todas as pastas que começam com `PREFIXO_PASTAS_PADRAO` (ex.:
-    'Respostas AbstractiveOpenIE', 'Respostas ExtrativoDPTO-IE', ...),
-    avalia cada uma contra `GOLD_PADRAO` e salva um CSV por pasta.
+    'Respostas AbstractiveOpenIE', 'Respostas ExtrativoDPTO-IE', ...).
+    Avalia cada uma contra `GOLD_PADRAO` e salva um CSV por pasta em
+    'Outputs/metricas/<lote>/'.
     """
     if not Path(GOLD_PADRAO).exists():
         log.error(
@@ -483,26 +487,37 @@ def rodar_modo_padrao(workers: int = 4, limiar_lexical: float = 0.5) -> None:
         )
         sys.exit(1)
 
-    pastas = sorted(p for p in Path(".").iterdir() if p.is_dir() and p.name.startswith(PREFIXO_PASTAS_PADRAO))
-    if not pastas:
-        log.error(
-            "Nenhuma pasta iniciada em '%s' encontrada em %s.", PREFIXO_PASTAS_PADRAO, Path.cwd()
-        )
+    raiz_respostas = Path(PASTA_RESPOSTAS_PADRAO)
+    if not raiz_respostas.is_dir():
+        log.error("Pasta '%s' não encontrada em %s.", PASTA_RESPOSTAS_PADRAO, Path.cwd())
         sys.exit(1)
 
-    for pasta in pastas:
-        log.info("=== Avaliando pasta: %s ===", pasta.name)
-        try:
-            df = avaliar_diretorio(GOLD_PADRAO, str(pasta), workers=workers, limiar_lexical=limiar_lexical)
-        except Exception as e:
-            log.error("Falha ao avaliar a pasta '%s': %s", pasta.name, e)
-            continue
-        print(f"\n--- {pasta.name} ---")
-        print(df.to_string(index=False))
-        saida = f"resultados_{pasta.name.replace(' ', '_')}.csv"
-        df.to_csv(saida, index=False)
-        log.info("Relatório salvo em %s\n", saida)
+    lotes = sorted(p for p in raiz_respostas.iterdir() if p.is_dir() and p.name.endswith("_batches"))
+    if not lotes:
+        log.error("Nenhuma pasta '*_batches' encontrada em %s.", raiz_respostas)
+        sys.exit(1)
 
+    for lote in lotes:
+        pastas = sorted(p for p in lote.iterdir() if p.is_dir() and p.name.startswith(PREFIXO_PASTAS_PADRAO))
+        if not pastas:
+            log.warning("Nenhuma pasta iniciada em '%s' encontrada em %s.", PREFIXO_PASTAS_PADRAO, lote)
+            continue
+
+        pasta_saida = PASTA_METRICAS_PADRAO / lote.name
+        pasta_saida.mkdir(parents=True, exist_ok=True)
+
+        for pasta in pastas:
+            log.info("=== Avaliando pasta: %s/%s ===", lote.name, pasta.name)
+            try:
+                df = avaliar_diretorio(GOLD_PADRAO, str(pasta), workers=workers, limiar_lexical=limiar_lexical)
+            except Exception as e:
+                log.error("Falha ao avaliar a pasta '%s/%s': %s", lote.name, pasta.name, e)
+                continue
+            print(f"\n--- {lote.name}/{pasta.name} ---")
+            print(df.to_string(index=False))
+            saida = pasta_saida / f"resultados_{pasta.name.replace(' ', '_')}.csv"
+            df.to_csv(saida, index=False)
+            log.info("Relatório salvo em %s\n", saida)
 
 # --------------------------------------------------------------------------- #
 # CLI
