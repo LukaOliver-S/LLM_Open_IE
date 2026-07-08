@@ -4,7 +4,7 @@ factuais na forma de **triplas** (ARG1, REL, ARG2), incluindo tanto relações *
 no texto) quanto abstrativas (que podem envolver inferências leves, tratamento de apostos, ou contextualização de
 argumentos para maior clareza e informatividade, conforme exemplos e regras abaixo, especialmente E10, S5, S6,
 S7, S8)**. O resultado DEVE ser APENAS uma lista de objetos JSON, no seguinte formato EXATO:
-[{"arg1":"argumento1",
+[{sentence:"sentença",arg1":"argumento1",
 "rel":"relação",
 "arg2":"argumento2"},
 {"arg1":"outro_arg1",
