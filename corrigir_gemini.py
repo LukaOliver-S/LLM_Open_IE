@@ -36,10 +36,13 @@ O QUE ESSE SCRIPT FAZ
    apareceram por causa dos blocos repetidos.
 5. Escreve um novo arquivo `.jsonl` no formato agrupado esperado pelo
    `resultados.py` (uma lista JSON de objetos "sentence" + "relations").
+6. (Opcional, com --gold) Reordena e completa a saída para bater EXATAMENTE
+   com a ordem e quantidade de frases do arquivo gold, preenchendo com
+   relations=[] as frases que o Gemini não extraiu.
 
 USO
 ----
-    python3 corrigir_gemini.py entrada.jsonl saida_corrigida.jsonl
+    python3 corrigir_gemini.py entrada.jsonl [saida_corrigida.jsonl] [--gold caminho_gold.jsonl]
 
 Se você não passar o segundo argumento, o script cria automaticamente
 "<nome_original>_corrigido.jsonl" na mesma pasta.
@@ -184,22 +187,73 @@ def agrupar_por_frase(itens: List[Any]) -> "list[dict]":
     return resultado
 
 
+def carregar_frases_gold_em_ordem(caminho_gold: Path) -> List[str]:
+    """Lê o arquivo gold e devolve a lista de frases (texto original,
+    não normalizado) NA ORDEM EM QUE APARECEM. Usada para reordenar a
+    saída corrigida do Gemini de forma que o alinhamento POSICIONAL do
+    resultados.py (zip por índice) volte a fazer sentido.
+    """
+    objetos = ler_todos_os_objetos_json(caminho_gold)
+    itens = achatar(objetos)
+    frases = []
+    for item in itens:
+        if isinstance(item, dict) and "sentence" in item:
+            frases.append(item["sentence"])
+    return frases
+
+
+def reordenar_por_gold(agrupado: List[dict], frases_gold: List[str]) -> List[dict]:
+    """Reordena (e completa) a lista agrupada para ficar na MESMA ORDEM
+    e MESMA QUANTIDADE do gold, casando pelo texto normalizado da frase.
+    Frases do gold sem predição correspondente entram com relations=[].
+    Frases da predição que não existem no gold são descartadas (e avisadas).
+    """
+    por_chave = {normalizar_frase(x["sentence"]): x for x in agrupado}
+    chaves_gold = {normalizar_frase(f) for f in frases_gold}
+
+    saida = []
+    n_faltando = 0
+    for frase in frases_gold:
+        chave = normalizar_frase(frase)
+        item = por_chave.get(chave)
+        if item is None:
+            n_faltando += 1
+            saida.append({"sentence": frase, "relations": []})
+        else:
+            saida.append({"sentence": frase, "relations": item["relations"]})
+
+    extras = [x for x in agrupado if normalizar_frase(x["sentence"]) not in chaves_gold]
+    if n_faltando:
+        print(f"⚠️  {n_faltando} frase(s) do gold não têm nenhuma predição correspondente no Gemini (ficaram com relations=[]).")
+    if extras:
+        print(f"⚠️  {len(extras)} frase(s) da predição do Gemini não existem no gold e foram DESCARTADAS (para manter o alinhamento posicional): {[e['sentence'][:50] for e in extras[:3]]}")
+
+    return saida
+
+
 # --------------------------------------------------------------------------- #
 # 3. CLI
 # --------------------------------------------------------------------------- #
 
 def main():
     if len(sys.argv) < 2:
-        print("Uso: python3 corrigir_gemini.py entrada.jsonl [saida_corrigida.jsonl]")
+        print("Uso: python3 corrigir_gemini.py entrada.jsonl [saida_corrigida.jsonl] [--gold caminho_gold.jsonl]")
         sys.exit(1)
 
-    caminho_entrada = Path(sys.argv[1])
+    args = sys.argv[1:]
+    caminho_gold = None
+    if "--gold" in args:
+        idx_gold = args.index("--gold")
+        caminho_gold = Path(args[idx_gold + 1])
+        del args[idx_gold: idx_gold + 2]
+
+    caminho_entrada = Path(args[0])
     if not caminho_entrada.exists():
         print(f"❌ Arquivo não encontrado: {caminho_entrada}")
         sys.exit(1)
 
-    if len(sys.argv) >= 3:
-        caminho_saida = Path(sys.argv[2])
+    if len(args) >= 2:
+        caminho_saida = Path(args[1])
     else:
         caminho_saida = caminho_entrada.with_name(caminho_entrada.stem + "_corrigido.jsonl")
 
@@ -211,6 +265,18 @@ def main():
     agrupado = agrupar_por_frase(itens)
     total_triplas = sum(len(x["relations"]) for x in agrupado)
     print(f"-> Agrupado em {len(agrupado)} frase(s) únicas, totalizando {total_triplas} tripla(s) (após deduplicação).")
+
+    if caminho_gold is not None:
+        if not caminho_gold.exists():
+            print(f"❌ Arquivo gold não encontrado: {caminho_gold}")
+            sys.exit(1)
+        print(f"Reordenando pela ordem de: {caminho_gold} ...")
+        frases_gold = carregar_frases_gold_em_ordem(caminho_gold)
+        agrupado = reordenar_por_gold(agrupado, frases_gold)
+        print(f"-> Saída final alinhada: {len(agrupado)} frase(s), na mesma ordem/quantidade do gold.")
+    else:
+        print("ℹ️  Nenhum --gold informado: a ordem das frases na saída é a ordem de primeira "
+              "aparição no próprio arquivo do Gemini (pode não bater com a ordem do gold).")
 
     with open(caminho_saida, "w", encoding="utf-8") as f:
         json.dump(agrupado, f, ensure_ascii=False, indent=2)
