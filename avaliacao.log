@@ -1,0 +1,86 @@
+2026-07-08 16:17:23,885 | INFO | openie_eval | === Avaliando pasta: Respostas AbstractiveOpenIE ===
+2026-07-08 16:17:29,573 | INFO | openie_eval | Concluído: Claude_sonnet5.jsonl
+2026-07-08 16:17:29,583 | WARNING | openie_eval | [resposta_gpt5.5_mini] Nº de frases difere: gold=262, pred=255. O alinhamento é feito por índice — revise se houver arquivos truncados.
+2026-07-08 16:17:29,592 | INFO | openie_eval | Concluído: respostaDeepSeekV3Thinking.jsonl
+2026-07-08 16:17:29,595 | DEBUG | openie_eval | Arquivo Respostas AbstractiveOpenIE/respostaGrok4Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-08 16:17:29,604 | INFO | openie_eval | Concluído: respostaGrok4Fast.jsonl
+2026-07-08 16:17:29,604 | INFO | openie_eval | Concluído: resposta_gpt5.5_mini.jsonl
+2026-07-08 16:17:29,623 | DEBUG | openie_eval | Arquivo Respostas AbstractiveOpenIE/respostaGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 555 column 1 (char 30594)); tentando varredura.
+2026-07-08 16:17:29,624 | WARNING | openie_eval | [respostaGemini3.1Pro] Nº de frases difere: gold=262, pred=479. O alinhamento é feito por índice — revise se houver arquivos truncados.
+2026-07-08 16:17:29,625 | INFO | openie_eval | Concluído: respostaGemini3.1Pro.jsonl
+2026-07-08 16:17:29,798 | INFO | openie_eval | Relatório salvo em resultados_Respostas_AbstractiveOpenIE.csv
+
+2026-07-08 16:17:29,798 | INFO | openie_eval | === Avaliando pasta: Respostas ExtrativoDPTO-IE ===
+2026-07-08 16:17:29,860 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-08 16:17:29,866 | WARNING | openie_eval | [respostaDeepSeekV3Thinking] Nº de frases difere: gold=262, pred=27. O alinhamento é feito por índice — revise se houver arquivos truncados.
+2026-07-08 16:17:29,868 | INFO | openie_eval | Concluído: respostaDeepSeekV3Thinking.jsonl
+2026-07-08 16:17:29,875 | INFO | openie_eval | Concluído: respostas_gpt5.5_mini_DPTO-IE.jsonl
+2026-07-08 16:17:29,894 | DEBUG | openie_eval | Arquivo Respostas ExtrativoDPTO-IE/respostaGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-08 16:17:29,902 | INFO | openie_eval | Concluído: respostaGemini3.1Pro.jsonl
+2026-07-08 16:17:29,914 | INFO | openie_eval | Concluído: respostaGrok4Fast.jsonl
+2026-07-08 16:17:29,925 | INFO | openie_eval | Relatório salvo em resultados_Respostas_ExtrativoDPTO-IE.csv
+
+2026-07-08 16:17:29,925 | INFO | openie_eval | === Avaliando pasta: Respostas ExtrativoOIEC-PT ===
+2026-07-08 16:17:29,978 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-08 16:17:29,989 | INFO | openie_eval | Concluído: respostas_gpt5.5_mini_OIEC-PT.jsonl
+2026-07-08 16:17:30,002 | INFO | openie_eval | Concluído: respostaGrok4.0Fast.jsonl
+2026-07-08 16:17:30,028 | DEBUG | openie_eval | Arquivo Respostas ExtrativoOIEC-PT/respostasGemini3.1ProOIEC.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-08 16:17:30,039 | INFO | openie_eval | Concluído: respostasGemini3.1ProOIEC.jsonl
+2026-07-08 16:17:30,052 | INFO | openie_eval | Relatório salvo em resultados_Respostas_ExtrativoOIEC-PT.csv
+
+2026-07-08 16:17:59,009 | INFO | openie_eval | === Avaliando pasta: Respostas AbstractiveOpenIE ===
+2026-07-08 16:17:59,291 | DEBUG | openie_eval | Arquivo Respostas AbstractiveOpenIE/respostaGrok4Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-08 16:17:59,293 | WARNING | openie_eval | [resposta_gpt5.5_mini] Nº de frases difere: gold=262, pred=255. O alinhamento é feito por índice — revise se houver arquivos truncados.
+2026-07-08 16:17:59,296 | INFO | openie_eval | Concluído: respostaGrok4Fast.jsonl
+2026-07-08 16:17:59,297 | DEBUG | openie_eval | Arquivo Respostas AbstractiveOpenIE/respostaGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 555 column 1 (char 30594)); tentando varredura.
+2026-07-08 16:17:59,298 | WARNING | openie_eval | [respostaGemini3.1Pro] Nº de frases difere: gold=262, pred=479. O alinhamento é feito por índice — revise se houver arquivos truncados.
+2026-07-08 16:17:59,300 | INFO | openie_eval | Concluído: resposta_gpt5.5_mini.jsonl
+2026-07-08 16:17:59,300 | INFO | openie_eval | Concluído: respostaGemini3.1Pro.jsonl
+2026-07-08 16:17:59,301 | INFO | openie_eval | Concluído: Claude_sonnet5.jsonl
+2026-07-08 16:17:59,312 | INFO | openie_eval | Relatório salvo em resultados_Respostas_AbstractiveOpenIE.csv
+
+2026-07-08 16:17:59,313 | INFO | openie_eval | === Avaliando pasta: Respostas ExtrativoDPTO-IE ===
+2026-07-08 16:17:59,359 | DEBUG | openie_eval | Arquivo Respostas ExtrativoDPTO-IE/respostaGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-08 16:17:59,362 | INFO | openie_eval | Concluído: respostaGrok4Fast.jsonl
+2026-07-08 16:17:59,367 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-08 16:17:59,367 | INFO | openie_eval | Concluído: respostaGemini3.1Pro.jsonl
+2026-07-08 16:17:59,370 | INFO | openie_eval | Concluído: respostas_gpt5.5_mini_DPTO-IE.jsonl
+2026-07-08 16:17:59,380 | INFO | openie_eval | Relatório salvo em resultados_Respostas_ExtrativoDPTO-IE.csv
+
+2026-07-08 16:17:59,380 | INFO | openie_eval | === Avaliando pasta: Respostas ExtrativoOIEC-PT ===
+2026-07-08 16:17:59,430 | DEBUG | openie_eval | Arquivo Respostas ExtrativoOIEC-PT/respostasGemini3.1ProOIEC.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-08 16:17:59,433 | INFO | openie_eval | Concluído: respostaGrok4.0Fast.jsonl
+2026-07-08 16:17:59,434 | INFO | openie_eval | Concluído: respostas_gpt5.5_mini_OIEC-PT.jsonl
+2026-07-08 16:17:59,438 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-08 16:17:59,445 | INFO | openie_eval | Concluído: respostasGemini3.1ProOIEC.jsonl
+2026-07-08 16:17:59,454 | INFO | openie_eval | Relatório salvo em resultados_Respostas_ExtrativoOIEC-PT.csv
+
+2026-07-08 16:32:18,870 | INFO | openie_eval | === Avaliando pasta: Respostas AbstractiveOpenIE ===
+2026-07-08 16:32:19,153 | DEBUG | openie_eval | Arquivo Respostas AbstractiveOpenIE/respostaGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 555 column 1 (char 30594)); tentando varredura.
+2026-07-08 16:32:19,153 | DEBUG | openie_eval | Arquivo Respostas AbstractiveOpenIE/respostaGrok4Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-08 16:32:19,153 | WARNING | openie_eval | [respostaGemini3.1Pro_corrigido] Nº de frases difere: gold=262, pred=212. O alinhamento é feito por índice — revise se houver arquivos truncados.
+2026-07-08 16:32:19,154 | WARNING | openie_eval | [respostaGemini3.1Pro] Nº de frases difere: gold=262, pred=479. O alinhamento é feito por índice — revise se houver arquivos truncados.
+2026-07-08 16:32:19,156 | INFO | openie_eval | Concluído: respostaGemini3.1Pro.jsonl
+2026-07-08 16:32:19,158 | INFO | openie_eval | Concluído: respostaGemini3.1Pro_corrigido.jsonl
+2026-07-08 16:32:19,158 | INFO | openie_eval | Concluído: respostaGrok4Fast.jsonl
+2026-07-08 16:32:19,162 | INFO | openie_eval | Concluído: Claude_sonnet5.jsonl
+2026-07-08 16:32:19,165 | WARNING | openie_eval | [resposta_gpt5.5_mini] Nº de frases difere: gold=262, pred=255. O alinhamento é feito por índice — revise se houver arquivos truncados.
+2026-07-08 16:32:19,171 | INFO | openie_eval | Concluído: resposta_gpt5.5_mini.jsonl
+2026-07-08 16:32:19,183 | INFO | openie_eval | Relatório salvo em resultados_Respostas_AbstractiveOpenIE.csv
+
+2026-07-08 16:32:19,183 | INFO | openie_eval | === Avaliando pasta: Respostas ExtrativoDPTO-IE ===
+2026-07-08 16:32:19,231 | DEBUG | openie_eval | Arquivo Respostas ExtrativoDPTO-IE/respostaGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-08 16:32:19,236 | INFO | openie_eval | Concluído: respostaGrok4Fast.jsonl
+2026-07-08 16:32:19,237 | INFO | openie_eval | Concluído: respostas_gpt5.5_mini_DPTO-IE.jsonl
+2026-07-08 16:32:19,238 | INFO | openie_eval | Concluído: respostaGemini3.1Pro.jsonl
+2026-07-08 16:32:19,239 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-08 16:32:19,247 | INFO | openie_eval | Relatório salvo em resultados_Respostas_ExtrativoDPTO-IE.csv
+
+2026-07-08 16:32:19,247 | INFO | openie_eval | === Avaliando pasta: Respostas ExtrativoOIEC-PT ===
+2026-07-08 16:32:19,294 | DEBUG | openie_eval | Arquivo Respostas ExtrativoOIEC-PT/respostasGemini3.1ProOIEC.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-08 16:32:19,295 | INFO | openie_eval | Concluído: respostaGrok4.0Fast.jsonl
+2026-07-08 16:32:19,298 | INFO | openie_eval | Concluído: respostas_gpt5.5_mini_OIEC-PT.jsonl
+2026-07-08 16:32:19,300 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-08 16:32:19,301 | INFO | openie_eval | Concluído: respostasGemini3.1ProOIEC.jsonl
+2026-07-08 16:32:19,311 | INFO | openie_eval | Relatório salvo em resultados_Respostas_ExtrativoOIEC-PT.csv
+
