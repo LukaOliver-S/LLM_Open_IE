@@ -32,7 +32,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from resultados import (
+from scripts.Validacao.resultados import (
     log,
     RobustJSONLReader,
     achatar_predicoes,
@@ -218,7 +218,7 @@ def main() -> None:
 
         pasta_saida = PASTA_METRICAS_PADRAO / lote.name
         pasta_saida.mkdir(parents=True, exist_ok=True)
-        pasta_graficos = pasta_saida / "graficos_relations"
+        pasta_graficos = pasta_saida / "graficos_triplas"
         pasta_graficos.mkdir(parents=True, exist_ok=True)
 
         for pasta in pastas:

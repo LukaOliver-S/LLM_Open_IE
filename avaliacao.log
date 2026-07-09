@@ -225,3 +225,29 @@
 2026-07-08 18:54:22,009 | INFO | openie_eval | Concluído: respostasGemini3.1Pro.jsonl
 2026-07-08 18:54:22,022 | INFO | openie_eval | Relatório salvo em Outputs\metricas\10_batches\resultados_Respostas_ExtrativoOIEC-PT.csv
 
+2026-07-09 15:15:53,494 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-09 15:15:53,526 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-09 15:15:53,564 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_AbstractiveOpenIE.csv
+2026-07-09 15:15:54,147 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-09 15:15:54,204 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-09 15:15:54,210 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_ExtrativoDPTO-IE.csv
+2026-07-09 15:15:54,549 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-09 15:15:54,613 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-09 15:15:54,618 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_ExtrativoOIEC-PT.csv
+2026-07-09 15:18:02,590 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-09 15:18:02,603 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-09 15:18:02,630 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_AbstractiveOpenIE.csv
+2026-07-09 15:18:03,049 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-09 15:18:03,077 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-09 15:18:03,084 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_ExtrativoDPTO-IE.csv
+2026-07-09 15:18:03,423 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-09 15:18:03,452 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-09 15:18:03,458 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_ExtrativoOIEC-PT.csv
+2026-07-09 15:39:24,720 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-09 15:39:24,772 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-09 15:39:24,810 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-09 15:39:25,978 | INFO | openie_eval | Gráficos e CSV salvos em Outputs\metricas\10_batches\graficos_resumo
+2026-07-09 16:06:15,222 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-09 16:06:15,275 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-09 16:06:15,314 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-09 16:06:15,957 | INFO | openie_eval | Gráficos e CSV salvos em Outputs\metricas\10_batches\graficos_resumo
