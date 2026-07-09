@@ -20,7 +20,7 @@ from typing import Dict
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from scripts.Validacao.resultados import (
+from resultados import (
     log,
     RobustJSONLReader,
     achatar_predicoes,

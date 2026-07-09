@@ -32,7 +32,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from scripts.Validacao.resultados import (
+from resultados import (
     log,
     RobustJSONLReader,
     achatar_predicoes,
