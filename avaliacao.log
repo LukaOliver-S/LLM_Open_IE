@@ -20,3 +20,39 @@
 2026-07-09 16:15:59,119 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas ExtrativoOIEC-PT ===
 2026-07-09 16:15:59,148 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
 2026-07-09 16:15:59,154 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_ExtrativoOIEC-PT.csv
+2026-07-09 16:23:45,717 | INFO | openie_eval | === Consenso: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-09 16:23:45,730 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-09 16:23:45,964 | INFO | openie_eval | Resultados salvos em Outputs\metricas\10_batches\consenso
+2026-07-09 16:23:45,964 | INFO | openie_eval | === Consenso: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-09 16:23:45,990 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-09 16:23:46,152 | INFO | openie_eval | Resultados salvos em Outputs\metricas\10_batches\consenso
+2026-07-09 16:23:46,152 | INFO | openie_eval | === Consenso: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-09 16:23:46,177 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-09 16:23:46,335 | INFO | openie_eval | Resultados salvos em Outputs\metricas\10_batches\consenso
+2026-07-09 16:23:46,336 | INFO | openie_eval | === Consenso: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-09 16:23:46,348 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-09 16:23:46,504 | INFO | openie_eval | Resultados salvos em Outputs\metricas\10_batches\consenso
+2026-07-09 16:23:46,504 | INFO | openie_eval | === Consenso: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-09 16:23:46,528 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-09 16:23:46,681 | INFO | openie_eval | Resultados salvos em Outputs\metricas\10_batches\consenso
+2026-07-09 16:23:46,681 | INFO | openie_eval | === Consenso: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-09 16:23:46,706 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-09 16:23:46,861 | INFO | openie_eval | Resultados salvos em Outputs\metricas\10_batches\consenso
+2026-07-09 16:28:12,406 | INFO | openie_eval | === Consenso: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-09 16:28:12,421 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-09 16:28:12,653 | INFO | openie_eval | Resultados salvos em Outputs\metricas\10_batches\consenso
+2026-07-09 16:28:12,654 | INFO | openie_eval | === Consenso: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-09 16:28:12,680 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-09 16:28:12,839 | INFO | openie_eval | Resultados salvos em Outputs\metricas\10_batches\consenso
+2026-07-09 16:28:12,839 | INFO | openie_eval | === Consenso: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-09 16:28:12,865 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-09 16:28:13,018 | INFO | openie_eval | Resultados salvos em Outputs\metricas\10_batches\consenso
+2026-07-09 16:28:13,018 | INFO | openie_eval | === Consenso: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-09 16:28:13,032 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-09 16:28:13,190 | INFO | openie_eval | Resultados salvos em Outputs\metricas\10_batches\consenso
+2026-07-09 16:28:13,190 | INFO | openie_eval | === Consenso: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-09 16:28:13,216 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-09 16:28:13,384 | INFO | openie_eval | Resultados salvos em Outputs\metricas\10_batches\consenso
+2026-07-09 16:28:13,384 | INFO | openie_eval | === Consenso: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-09 16:28:13,410 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-09 16:28:13,561 | INFO | openie_eval | Resultados salvos em Outputs\metricas\10_batches\consenso
