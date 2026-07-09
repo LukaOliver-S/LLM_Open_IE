@@ -204,6 +204,7 @@ COR_LEXICAL = "4CAF50"   # verde
 COR_FALSO_POSITIVO = "C0392B"  # vermelho
 COR_NAO_RECUPERADO = "C0392B"  # vermelho (gold nunca extraído por ninguém)
 COR_CINZA = "888888"
+COR_CONSENSO = "B8860B"  # dourado/amarelo escuro (legível em fundo branco) - consenso fora do gold
 
 FONTE_NORMAL = InlineFont(rFont=FONTE, sz=10)
 FONTE_EXATO = InlineFont(rFont=FONTE, sz=10, b=True, color=COR_EXATO)
@@ -211,6 +212,7 @@ FONTE_LEXICAL = InlineFont(rFont=FONTE, sz=10, color=COR_LEXICAL)
 FONTE_FP = InlineFont(rFont=FONTE, sz=10, color=COR_FALSO_POSITIVO)
 FONTE_NAO_RECUPERADO = InlineFont(rFont=FONTE, sz=10, b=True, color=COR_NAO_RECUPERADO)
 FONTE_VAZIO = InlineFont(rFont=FONTE, sz=10, i=True, color=COR_CINZA)
+FONTE_CONSENSO = InlineFont(rFont=FONTE, sz=10, b=True, color=COR_CONSENSO)
 
 
 def montar_celula_gold(gold_triplas: List[dict], recuperadas: set) -> CellRichText:
@@ -232,7 +234,12 @@ def montar_celula_predicao(pred_triplas: List[dict], status: List[str]) -> CellR
     if not pred_triplas:
         return CellRichText([TextBlock(FONTE_VAZIO, "(nenhuma extração)")])
     blocos = []
-    simbolo_fonte = {"exact": ("✓✓ ", FONTE_EXATO), "lexical": ("✓ ", FONTE_LEXICAL), "none": ("✗ ", FONTE_FP)}
+    simbolo_fonte = {
+        "exact": ("✓✓ ", FONTE_EXATO),
+        "lexical": ("✓ ", FONTE_LEXICAL),
+        "none": ("✗ ", FONTE_FP),
+        "consenso": ("🟡 ", FONTE_CONSENSO),
+    }
     for i, p in enumerate(pred_triplas):
         prefixo, fonte = simbolo_fonte[status[i]]
         texto = f"{prefixo}{p['arg1']} → {p['rel']} → {p['arg2']}"
@@ -240,6 +247,39 @@ def montar_celula_predicao(pred_triplas: List[dict], status: List[str]) -> CellR
             blocos.append("\n")
         blocos.append(TextBlock(fonte, texto))
     return CellRichText(blocos)
+
+
+def marcar_consenso_fora_do_gold(status_por_modelo: Dict[str, Tuple[List[dict], List[str]]]) -> None:
+    """Detecta triplas que TODOS os modelos extraíram (mesmo arg1/rel/arg2,
+    normalizados) mas que NENHUM bateu com o gold (status == "none") — ou
+    seja, todas as IAs concordam entre si só que discordam do gabarito.
+    Modifica `status_por_modelo` in-place, trocando "none" por "consenso"
+    nesses casos. Só é acionado com 2+ modelos na aba (com 1 só modelo,
+    "consenso" não tem sentido).
+    """
+    total_modelos = len(status_por_modelo)
+    if total_modelos < 2:
+        return
+
+    contagem: Dict[Tuple[str, str, str], set] = {}
+    for nome_modelo, (pred_triplas, status) in status_por_modelo.items():
+        for p, s in zip(pred_triplas, status):
+            if s != "none":
+                continue
+            assinatura = (normalizar_frase(p["arg1"]), normalizar_frase(p["rel"]), normalizar_frase(p["arg2"]))
+            contagem.setdefault(assinatura, set()).add(nome_modelo)
+
+    assinaturas_consenso = {a for a, modelos_ in contagem.items() if len(modelos_) == total_modelos}
+    if not assinaturas_consenso:
+        return
+
+    for nome_modelo, (pred_triplas, status) in status_por_modelo.items():
+        for i, p in enumerate(pred_triplas):
+            if status[i] != "none":
+                continue
+            assinatura = (normalizar_frase(p["arg1"]), normalizar_frase(p["rel"]), normalizar_frase(p["arg2"]))
+            if assinatura in assinaturas_consenso:
+                status[i] = "consenso"
 
 
 def gerar_aba(wb: Workbook, nome_aba: str, gold_ordenado: List[dict],
@@ -276,6 +316,8 @@ def gerar_aba(wb: Workbook, nome_aba: str, gold_ordenado: List[dict],
             status, usados = classificar_predicoes(gold_triplas, pred_triplas, limiar)
             recuperadas_por_qualquer_modelo |= usados
             status_por_modelo[nome_modelo] = (pred_triplas, status)
+
+        marcar_consenso_fora_do_gold(status_por_modelo)
 
         ws.cell(row=linha_idx, column=1, value=frase).font = Font(name=FONTE, size=10)
         ws.cell(row=linha_idx, column=1).alignment = Alignment(wrap_text=True, vertical="top")
@@ -459,7 +501,9 @@ def main():
 
     wb.save(caminho_saida)
     print(f"\n✅ Planilha salva em: {caminho_saida.resolve()}")
-    print("   Legenda: ✓✓ = casamento exato | ✓ = casamento lexical (>50%) | ✗ = falso positivo | ⚠ (no gold) = nunca recuperado por nenhum modelo")
+    print("   Legenda: ✓✓ = casamento exato | ✓ = casamento lexical (>50%) | ✗ = falso positivo")
+    print("            🟡 = TODOS os modelos extraíram a mesma tripla, mas não está no gold (possível falha do gabarito)")
+    print("            ⚠ (no gold) = tripla do gabarito nunca recuperada por nenhum modelo")
 
 
 if __name__ == "__main__":
