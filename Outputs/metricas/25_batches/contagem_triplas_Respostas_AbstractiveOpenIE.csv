@@ -1,0 +1,3 @@
+modelo,n_frases_gold_total,n_frases_pred,n_frases_pareadas,n_triplas_gold_total,n_triplas_gold_pareadas,n_triplas_pred,media_triplas_gold_por_frase,media_triplas_pred_por_frase,razao_pred_gold
+Claude_Sonnet5,262,262,262,427,427,1003,1.6297709923664123,3.8282442748091605,2.348946135831382
+Grok4.0Fast,262,262,262,427,427,368,1.6297709923664123,1.4045801526717556,0.8618266978922716

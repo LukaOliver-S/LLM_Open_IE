@@ -13,6 +13,7 @@ Uso: `python graficos_resumo.py` (sem argumentos).
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 from typing import Any, Dict
 import re
@@ -33,6 +34,10 @@ from resultados import (
 MARCADORES = ["o", "s", "^", "D", "v", "P"]
 _RE_PREFIXO_MODELO = re.compile(r"^respostas?_?", re.IGNORECASE)
 
+parser = argparse.ArgumentParser()
+parser.add_argument("--lotes", type=int, default=None,
+                    help="Processar só este tamanho de lote (ex.: 25). Se omitido, processa todos.")
+args = parser.parse_args()
 
 def _nome_curto(modelo: str) -> str:
     """Remove o prefixo redundante 'resposta(s)_' dos nomes de modelo."""
@@ -151,6 +156,10 @@ def main() -> None:
     raiz_metricas = Path("Outputs") / "metricas"
 
     lotes = sorted(p for p in raiz_respostas.iterdir() if p.is_dir() and p.name.endswith("_batches"))
+    if args.lotes is not None:
+     lotes = [p for p in lotes if p.name == f"{args.lotes}_batches"]
+    if not lotes:
+        raise FileNotFoundError(f"Pasta 'Respostas/{args.lotes}_batches' não encontrada.")
     for lote in lotes:
         pastas = sorted(p for p in lote.iterdir() if p.is_dir() and p.name.startswith("Respostas"))
         if not pastas:

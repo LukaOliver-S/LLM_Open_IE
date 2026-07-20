@@ -13,6 +13,7 @@ cwd na raiz do projeto (mesma convenção dos outros scripts).
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 from typing import Dict, List
 
@@ -28,7 +29,10 @@ from resultados import (
     LexicalMatcher,
     _normalizar_sentenca,
 )
-
+parser = argparse.ArgumentParser()
+parser.add_argument("--lotes", type=int, default=None,
+                        help="Processar só este tamanho de lote (ex.: 25). Se omitido, processa todos.")
+args = parser.parse_args()
 
 def triplas_falsos_positivos(gold_triplas: List[Triple], pred_triplas: List[Triple], matcher: LexicalMatcher) -> List[Triple]:
     """Mesma lógica gulosa 1-para-1 de `comparar_triplas`, devolvendo as
@@ -148,6 +152,10 @@ def main() -> None:
     raiz_metricas = Path("Outputs") / "metricas"
 
     lotes = sorted(p for p in raiz_respostas.iterdir() if p.is_dir() and p.name.endswith("_batches"))
+    if args.lotes is not None:
+        lotes = [p for p in lotes if p.name == f"{args.lotes}_batches"]
+    if not lotes:
+        raise FileNotFoundError(f"Pasta 'Respostas/{args.lotes}_batches' não encontrada.")
     for lote in lotes:
         pastas = sorted(p for p in lote.iterdir() if p.is_dir() and p.name.startswith("Respostas"))
         if not pastas:
@@ -172,10 +180,6 @@ def main() -> None:
                 detalhe_forte.to_csv(pasta_saida / f"consenso_forte_{nome_base}.csv", index=False)
 
             log.info("Resultados salvos em %s", pasta_saida)
-
-
-if __name__ == "__main__":
-    main()
 
 
 if __name__ == "__main__":

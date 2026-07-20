@@ -1,0 +1,3 @@
+modelo,total_falsos_positivos,com_consenso_de_outro_modelo,pct_com_consenso
+Claude_Sonnet5,786,100,12.72264631043257
+Grok4.0Fast,198,100,50.505050505050505

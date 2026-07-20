@@ -242,7 +242,7 @@ def main():
     for caminho_csv in args.csvs:
         caminho_csv = Path(caminho_csv)
         if not caminho_csv.exists():
-            print(f"❌ Not found, skipping: {caminho_csv}")
+            print(f"Not found, skipping: {caminho_csv}")
             continue
 
         pasta_saida = Path(args.saida) if args.saida else caminho_csv.parent / NOME_PASTA_SAIDA
@@ -250,7 +250,7 @@ def main():
 
         df = pd.read_csv(caminho_csv)
         nome_tarefa = caminho_csv.stem.replace("resultados_", "").replace("_", " ")
-        print(f"\n📊 Generating charts for: {nome_tarefa}  -> {pasta_saida}")
+        print(f"\nGenerating charts for: {nome_tarefa}  -> {pasta_saida}")
 
         base = pasta_saida / caminho_csv.stem
         grafico_f1_ordenado(df, args.metrica, f"{rotulo_metrica(args.metrica)} — {nome_tarefa}",
@@ -263,12 +263,12 @@ def main():
 
     for pasta_saida, dfs_por_tarefa in dfs_por_pasta.items():
         if len(dfs_por_tarefa) > 1:
-            print(f"\n📊 Generating cross-task comparison chart in: {pasta_saida}")
+            print(f"\nGenerating cross-task comparison chart in: {pasta_saida}")
             grafico_comparativo_tarefas(
                 dfs_por_tarefa, args.metrica, pasta_saida / f"comparativo_tarefas_{args.metrica}"
             )
 
-    print("\n✅ Done.")
+    print("\nDone.")
 
 
 if __name__ == "__main__":
