@@ -7116,3 +7116,300 @@
 2026-07-21 20:51:55,042 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
 2026-07-21 20:51:55,116 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
 2026-07-21 20:51:55,192 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-22 18:18:33,361 | INFO | openie_eval | === Avaliando pasta: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-22 18:18:33,362 | ERROR | openie_eval | Falha ao avaliar a pasta '10_batches/Respostas AbstractiveOpenIE': No module named 'pandas'
+2026-07-22 18:18:33,362 | INFO | openie_eval | === Avaliando pasta: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-22 18:18:33,363 | ERROR | openie_eval | Falha ao avaliar a pasta '10_batches/Respostas ExtrativoDPTO-IE': No module named 'pandas'
+2026-07-22 18:18:33,363 | INFO | openie_eval | === Avaliando pasta: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-22 18:18:33,363 | ERROR | openie_eval | Falha ao avaliar a pasta '10_batches/Respostas ExtrativoOIEC-PT': No module named 'pandas'
+2026-07-22 18:18:33,364 | INFO | openie_eval | === Avaliando pasta: 25_batches/Respostas AbstractiveOpenIE ===
+2026-07-22 18:18:33,364 | ERROR | openie_eval | Falha ao avaliar a pasta '25_batches/Respostas AbstractiveOpenIE': No module named 'pandas'
+2026-07-22 18:18:33,365 | INFO | openie_eval | === Avaliando pasta: 25_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-22 18:18:33,365 | ERROR | openie_eval | Falha ao avaliar a pasta '25_batches/Respostas ExtrativoDPTO-IE': No module named 'pandas'
+2026-07-22 18:18:33,365 | INFO | openie_eval | === Avaliando pasta: 25_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-22 18:18:33,366 | ERROR | openie_eval | Falha ao avaliar a pasta '25_batches/Respostas ExtrativoOIEC-PT': No module named 'pandas'
+2026-07-22 18:19:50,503 | INFO | openie_eval | === Avaliando pasta: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-22 18:19:56,152 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-22 18:19:56,154 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\Gemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14526: 'FIM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo f...'
+2026-07-22 18:19:56,154 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\Gemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14527: 'IM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo fo...'
+2026-07-22 18:19:56,154 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\Gemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14528: 'M\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo for...'
+2026-07-22 18:19:56,155 | WARNING | openie_eval | [respostas_gpt5.5_mini] Nº de frases difere: gold=262, pred=255. O casamento agora é feito pelo texto da sentença, não pela posição.
+2026-07-22 18:19:56,158 | WARNING | openie_eval | [respostaGrok4.0Fast] Sentença da predição #204 não encontrada no gold: 'atualmente, o nome completo de o governo de nanjing é governo popular de a cidad...'
+2026-07-22 18:19:56,158 | WARNING | openie_eval | [respostaGrok4.0Fast] Sentença da predição #217 não encontrada no gold: 'durante a segunda guerra mundial, o kansas foi uma de as 131 faculdades e univer...'
+2026-07-22 18:19:56,159 | WARNING | openie_eval | [respostaGrok4.0Fast] Sentença da predição #223 não encontrada no gold: 'no caso de a áfrica, um de os fatores para esse comportamento foi a instabilidad...'
+2026-07-22 18:19:56,160 | WARNING | openie_eval | [respostaGrok4.0Fast] 3 sentenças da predição não casaram com o gold; 3 sentenças do gold nunca foram cobertas por nenhuma predição.
+2026-07-22 18:19:56,160 | INFO | openie_eval | Concluído: respostaGrok4.0Fast.jsonl
+2026-07-22 18:19:56,164 | WARNING | openie_eval | [respostas_gpt5.5_mini] 0 sentenças da predição não casaram com o gold; 7 sentenças do gold nunca foram cobertas por nenhuma predição.
+2026-07-22 18:19:56,166 | INFO | openie_eval | Concluído: respostas_gpt5.5_mini.jsonl
+2026-07-22 18:19:56,167 | INFO | openie_eval | Concluído: Claude_sonnet5.jsonl
+2026-07-22 18:19:56,168 | INFO | openie_eval | Concluído: Gemini3.1Pro.jsonl
+2026-07-22 18:19:56,226 | INFO | openie_eval | Relatório salvo em Outputs\metricas\10_batches\resultados_Respostas_AbstractiveOpenIE.csv
+
+2026-07-22 18:19:56,226 | INFO | openie_eval | === Avaliando pasta: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-22 18:19:56,587 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-22 18:19:56,592 | INFO | openie_eval | Concluído: respostaGrok4.0Fast.jsonl
+2026-07-22 18:19:56,594 | WARNING | openie_eval | [respostasGemini3.1Pro] Sentença da predição #111 não encontrada no gold: 'os títulos lastreados em hipotecas comerciais, os lastreados em ativos e os cdos...'
+2026-07-22 18:19:56,594 | INFO | openie_eval | Concluído: respostas_gpt5.5_mini.jsonl
+2026-07-22 18:19:56,596 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-22 18:19:56,598 | WARNING | openie_eval | [respostasGemini3.1Pro] 1 sentenças da predição não casaram com o gold; 1 sentenças do gold nunca foram cobertas por nenhuma predição.
+2026-07-22 18:19:56,599 | INFO | openie_eval | Concluído: respostasGemini3.1Pro.jsonl
+2026-07-22 18:19:56,628 | INFO | openie_eval | Relatório salvo em Outputs\metricas\10_batches\resultados_Respostas_ExtrativoDPTO-IE.csv
+
+2026-07-22 18:19:56,628 | INFO | openie_eval | === Avaliando pasta: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-22 18:19:56,937 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-22 18:19:56,939 | WARNING | openie_eval | [respostas_gpt5.5_mini] Sentença da predição #128 não encontrada no gold: 'como os americanos tinham uma força aérea muito maior que a união soviética e os...'
+2026-07-22 18:19:56,941 | INFO | openie_eval | Concluído: respostaGrok4.0Fast.jsonl
+2026-07-22 18:19:56,943 | WARNING | openie_eval | [respostas_gpt5.5_mini] 1 sentenças da predição não casaram com o gold; 1 sentenças do gold nunca foram cobertas por nenhuma predição.
+2026-07-22 18:19:56,943 | INFO | openie_eval | Concluído: respostas_gpt5.5_mini.jsonl
+2026-07-22 18:19:56,946 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-22 18:19:56,948 | INFO | openie_eval | Concluído: respostasGemini3.1Pro.jsonl
+2026-07-22 18:19:56,977 | INFO | openie_eval | Relatório salvo em Outputs\metricas\10_batches\resultados_Respostas_ExtrativoOIEC-PT.csv
+
+2026-07-22 18:19:56,978 | INFO | openie_eval | === Avaliando pasta: 25_batches/Respostas AbstractiveOpenIE ===
+2026-07-22 18:19:57,133 | WARNING | openie_eval | Arquivo Respostas\25_batches\Respostas AbstractiveOpenIE\Grok4.0Fast.jsonl: Objeto JSON inválido a partir do offset 58749: '{"sentence":"O rio Charles separa Boston de Watertown e a maioria de Cambridge,...'
+2026-07-22 18:19:57,141 | INFO | openie_eval | Concluído: Grok4.0Fast.jsonl
+2026-07-22 18:19:57,142 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-22 18:19:57,163 | INFO | openie_eval | Relatório salvo em Outputs\metricas\25_batches\resultados_Respostas_AbstractiveOpenIE.csv
+
+2026-07-22 18:19:57,164 | INFO | openie_eval | === Avaliando pasta: 25_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-22 18:19:57,322 | INFO | openie_eval | Concluído: Grok4.0Fast.jsonl
+2026-07-22 18:19:57,330 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-22 18:19:57,382 | INFO | openie_eval | Relatório salvo em Outputs\metricas\25_batches\resultados_Respostas_ExtrativoDPTO-IE.csv
+
+2026-07-22 18:19:57,382 | INFO | openie_eval | === Avaliando pasta: 25_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-22 18:19:57,543 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-22 18:19:57,570 | INFO | openie_eval | Concluído: Grok4.0Fast.jsonl
+2026-07-22 18:19:57,665 | INFO | openie_eval | Relatório salvo em Outputs\metricas\25_batches\resultados_Respostas_ExtrativoOIEC-PT.csv
+
+2026-07-22 18:22:13,048 | INFO | openie_eval | === Por batch: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-22 18:22:13,086 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\Gemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14526: 'FIM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo f...'
+2026-07-22 18:22:13,086 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\Gemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14527: 'IM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo fo...'
+2026-07-22 18:22:13,087 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\Gemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14528: 'M\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo for...'
+2026-07-22 18:22:13,108 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-22 18:22:13,144 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\por_batch\resultados_batch_Respostas_AbstractiveOpenIE.csv
+2026-07-22 18:22:16,088 | INFO | openie_eval | Gráfico salvo em Outputs\metricas\10_batches\por_batch\grafico_f1_lexical_Respostas_AbstractiveOpenIE.png
+2026-07-22 18:22:16,088 | INFO | openie_eval | === Por batch: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-22 18:22:16,175 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-22 18:22:16,188 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\por_batch\resultados_batch_Respostas_ExtrativoDPTO-IE.csv
+2026-07-22 18:22:16,462 | INFO | openie_eval | Gráfico salvo em Outputs\metricas\10_batches\por_batch\grafico_f1_lexical_Respostas_ExtrativoDPTO-IE.png
+2026-07-22 18:22:16,462 | INFO | openie_eval | === Por batch: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-22 18:22:16,540 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-22 18:22:16,553 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\por_batch\resultados_batch_Respostas_ExtrativoOIEC-PT.csv
+2026-07-22 18:22:16,837 | INFO | openie_eval | Gráfico salvo em Outputs\metricas\10_batches\por_batch\grafico_f1_lexical_Respostas_ExtrativoOIEC-PT.png
+2026-07-22 18:22:17,658 | INFO | openie_eval | === Por batch: 25_batches/Respostas AbstractiveOpenIE ===
+2026-07-22 18:22:17,695 | WARNING | openie_eval | Arquivo Respostas\25_batches\Respostas AbstractiveOpenIE\Grok4.0Fast.jsonl: Objeto JSON inválido a partir do offset 58749: '{"sentence":"O rio Charles separa Boston de Watertown e a maioria de Cambridge,...'
+2026-07-22 18:22:17,705 | INFO | openie_eval | CSV salvo em Outputs\metricas\25_batches\por_batch\resultados_batch_Respostas_AbstractiveOpenIE.csv
+2026-07-22 18:22:17,999 | INFO | openie_eval | Gráfico salvo em Outputs\metricas\25_batches\por_batch\grafico_f1_lexical_Respostas_AbstractiveOpenIE.png
+2026-07-22 18:22:17,999 | INFO | openie_eval | === Por batch: 25_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-22 18:22:18,047 | INFO | openie_eval | CSV salvo em Outputs\metricas\25_batches\por_batch\resultados_batch_Respostas_ExtrativoDPTO-IE.csv
+2026-07-22 18:22:18,336 | INFO | openie_eval | Gráfico salvo em Outputs\metricas\25_batches\por_batch\grafico_f1_lexical_Respostas_ExtrativoDPTO-IE.png
+2026-07-22 18:22:18,336 | INFO | openie_eval | === Por batch: 25_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-22 18:22:18,380 | INFO | openie_eval | CSV salvo em Outputs\metricas\25_batches\por_batch\resultados_batch_Respostas_ExtrativoOIEC-PT.csv
+2026-07-22 18:22:18,672 | INFO | openie_eval | Gráfico salvo em Outputs\metricas\25_batches\por_batch\grafico_f1_lexical_Respostas_ExtrativoOIEC-PT.png
+2026-07-22 18:22:32,398 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-22 18:22:32,433 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\Gemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14526: 'FIM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo f...'
+2026-07-22 18:22:32,433 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\Gemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14527: 'IM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo fo...'
+2026-07-22 18:22:32,433 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\Gemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14528: 'M\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo for...'
+2026-07-22 18:22:32,449 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-22 18:22:32,506 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_AbstractiveOpenIE.csv
+2026-07-22 18:22:33,884 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-22 18:22:33,947 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-22 18:22:33,993 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_ExtrativoDPTO-IE.csv
+2026-07-22 18:22:34,694 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-22 18:22:34,758 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-22 18:22:34,797 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_ExtrativoOIEC-PT.csv
+2026-07-22 18:22:35,466 | INFO | openie_eval | === Contando triplas: 25_batches/Respostas AbstractiveOpenIE ===
+2026-07-22 18:22:35,495 | WARNING | openie_eval | Arquivo Respostas\25_batches\Respostas AbstractiveOpenIE\Grok4.0Fast.jsonl: Objeto JSON inválido a partir do offset 58749: '{"sentence":"O rio Charles separa Boston de Watertown e a maioria de Cambridge,...'
+2026-07-22 18:22:35,504 | INFO | openie_eval | CSV salvo em Outputs\metricas\25_batches\contagem_triplas_Respostas_AbstractiveOpenIE.csv
+2026-07-22 18:22:36,099 | INFO | openie_eval | === Contando triplas: 25_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-22 18:22:36,147 | INFO | openie_eval | CSV salvo em Outputs\metricas\25_batches\contagem_triplas_Respostas_ExtrativoDPTO-IE.csv
+2026-07-22 18:22:36,723 | INFO | openie_eval | === Contando triplas: 25_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-22 18:22:36,768 | INFO | openie_eval | CSV salvo em Outputs\metricas\25_batches\contagem_triplas_Respostas_ExtrativoOIEC-PT.csv
+2026-07-22 18:22:51,605 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\Gemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14526: 'FIM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo f...'
+2026-07-22 18:22:51,605 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\Gemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14527: 'IM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo fo...'
+2026-07-22 18:22:51,605 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\Gemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14528: 'M\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo for...'
+2026-07-22 18:22:51,624 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-22 18:22:51,721 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-22 18:22:51,800 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-22 18:22:53,110 | INFO | openie_eval | Gráficos e CSV salvos em Outputs\metricas\10_batches\graficos_resumo
+2026-07-22 18:23:04,776 | INFO | openie_eval | === Consenso: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-22 18:23:04,810 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\Gemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14526: 'FIM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo f...'
+2026-07-22 18:23:04,810 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\Gemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14527: 'IM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo fo...'
+2026-07-22 18:23:04,810 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\Gemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14528: 'M\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo for...'
+2026-07-22 18:23:04,829 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-22 18:23:05,219 | INFO | openie_eval | Resultados salvos em Outputs\metricas\10_batches\consenso
+2026-07-22 18:23:05,220 | INFO | openie_eval | === Consenso: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-22 18:23:05,290 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-22 18:23:05,609 | INFO | openie_eval | Resultados salvos em Outputs\metricas\10_batches\consenso
+2026-07-22 18:23:05,609 | INFO | openie_eval | === Consenso: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-22 18:23:05,666 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-22 18:23:05,947 | INFO | openie_eval | Resultados salvos em Outputs\metricas\10_batches\consenso
+2026-07-22 18:26:57,494 | INFO | openie_eval | === Avaliando pasta: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-22 18:26:58,145 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-22 18:26:58,152 | WARNING | openie_eval | [respostaGrok4.0Fast] Sentença da predição #204 não encontrada no gold: 'atualmente, o nome completo de o governo de nanjing é governo popular de a cidad...'
+2026-07-22 18:26:58,153 | WARNING | openie_eval | [respostaGrok4.0Fast] Sentença da predição #217 não encontrada no gold: 'durante a segunda guerra mundial, o kansas foi uma de as 131 faculdades e univer...'
+2026-07-22 18:26:58,153 | WARNING | openie_eval | [respostaGrok4.0Fast] Sentença da predição #223 não encontrada no gold: 'no caso de a áfrica, um de os fatores para esse comportamento foi a instabilidad...'
+2026-07-22 18:26:58,154 | WARNING | openie_eval | [respostaGrok4.0Fast] 3 sentenças da predição não casaram com o gold; 3 sentenças do gold nunca foram cobertas por nenhuma predição.
+2026-07-22 18:26:58,154 | INFO | openie_eval | Concluído: respostaGrok4.0Fast.jsonl
+s difere: gold=262, pred=255. O casamento agora é feito pelo texto da sentença, não pela posição.
+2026-07-22 18:26:58,156 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-22 18:26:58,157 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostasGemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14526: 'FIM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo f...'
+2026-07-22 18:26:58,157 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostasGemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14527: 'IM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo fo...'
+2026-07-22 18:26:58,157 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostasGemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14528: 'M\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo for...'
+2026-07-22 18:26:58,164 | WARNING | openie_eval | [respostas_gpt5.5_mini] 0 sentenças da predição não casaram com o gold; 7 sentenças do gold nunca foram cobertas por nenhuma predição.
+2026-07-22 18:26:58,165 | INFO | openie_eval | Concluído: respostas_gpt5.5_mini.jsonl
+2026-07-22 18:26:58,169 | INFO | openie_eval | Concluído: respostasGemini3.1Pro.jsonl
+2026-07-22 18:26:58,204 | INFO | openie_eval | Relatório salvo em Outputs\metricas\10_batches\resultados_Respostas_AbstractiveOpenIE.csv
+
+2026-07-22 18:26:58,204 | INFO | openie_eval | === Avaliando pasta: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-22 18:26:58,362 | INFO | openie_eval | Concluído: respostaGrok4.0Fast.jsonl
+2026-07-22 18:26:58,364 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-22 18:26:58,365 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-22 18:26:58,369 | INFO | openie_eval | Concluído: respostas_gpt5.5_mini.jsonl
+2026-07-22 18:26:58,370 | WARNING | openie_eval | [respostasGemini3.1Pro] Sentença da predição #111 não encontrada no gold: 'os títulos lastreados em hipotecas comerciais, os lastreados em ativos e os cdos...'
+2026-07-22 18:26:58,375 | WARNING | openie_eval | [respostasGemini3.1Pro] 1 sentenças da predição não casaram com o gold; 1 sentenças do gold nunca foram cobertas por nenhuma predição.
+2026-07-22 18:26:58,376 | INFO | openie_eval | Concluído: respostasGemini3.1Pro.jsonl
+2026-07-22 18:26:58,407 | INFO | openie_eval | Relatório salvo em Outputs\metricas\10_batches\resultados_Respostas_ExtrativoDPTO-IE.csv
+
+2026-07-22 18:26:58,407 | INFO | openie_eval | === Avaliando pasta: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-22 18:26:58,563 | INFO | openie_eval | Concluído: respostaGrok4.0Fast.jsonl
+2026-07-22 18:26:58,564 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-22 18:26:58,565 | WARNING | openie_eval | [respostas_gpt5.5_mini] Sentença da predição #128 não encontrada no gold: 'como os americanos tinham uma força aérea muito maior que a união soviética e os...'
+2026-07-22 18:26:58,568 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-22 18:26:58,569 | WARNING | openie_eval | [respostas_gpt5.5_mini] 1 sentenças da predição não casaram com o gold; 1 sentenças do gold nunca foram cobertas por nenhuma predição.
+2026-07-22 18:26:58,569 | INFO | openie_eval | Concluído: respostas_gpt5.5_mini.jsonl
+2026-07-22 18:26:58,579 | INFO | openie_eval | Concluído: respostasGemini3.1Pro.jsonl
+2026-07-22 18:26:58,605 | INFO | openie_eval | Relatório salvo em Outputs\metricas\10_batches\resultados_Respostas_ExtrativoOIEC-PT.csv
+
+2026-07-22 18:26:58,606 | INFO | openie_eval | === Avaliando pasta: 25_batches/Respostas AbstractiveOpenIE ===
+2026-07-22 18:26:58,750 | WARNING | openie_eval | Arquivo Respostas\25_batches\Respostas AbstractiveOpenIE\Grok4.0Fast.jsonl: Objeto JSON inválido a partir do offset 58749: '{"sentence":"O rio Charles separa Boston de Watertown e a maioria de Cambridge,...'
+2026-07-22 18:26:58,758 | INFO | openie_eval | Concluído: Grok4.0Fast.jsonl
+2026-07-22 18:26:58,759 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-22 18:26:58,781 | INFO | openie_eval | Relatório salvo em Outputs\metricas\25_batches\resultados_Respostas_AbstractiveOpenIE.csv
+
+2026-07-22 18:26:58,781 | INFO | openie_eval | === Avaliando pasta: 25_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-22 18:26:58,928 | INFO | openie_eval | Concluído: Grok4.0Fast.jsonl
+2026-07-22 18:26:58,934 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-22 18:26:58,953 | INFO | openie_eval | Relatório salvo em Outputs\metricas\25_batches\resultados_Respostas_ExtrativoDPTO-IE.csv
+
+2026-07-22 18:26:58,954 | INFO | openie_eval | === Avaliando pasta: 25_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-22 18:26:59,102 | INFO | openie_eval | Concluído: Grok4.0Fast.jsonl
+2026-07-22 18:26:59,106 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-22 18:26:59,124 | INFO | openie_eval | Relatório salvo em Outputs\metricas\25_batches\resultados_Respostas_ExtrativoOIEC-PT.csv
+
+2026-07-22 18:27:56,948 | INFO | openie_eval | === Avaliando pasta: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-22 18:27:57,679 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-22 18:27:57,686 | WARNING | openie_eval | [respostaGrok4.0Fast] Sentença da predição #204 não encontrada no gold: 'atualmente, o nome completo de o governo de nanjing é governo popular de a cidad...'
+2026-07-22 18:27:57,686 | WARNING | openie_eval | [respostaGrok4.0Fast] Sentença da predição #217 não encontrada no gold: 'durante a segunda guerra mundial, o kansas foi uma de as 131 faculdades e univer...'
+2026-07-22 18:27:57,686 | WARNING | openie_eval | [respostaGrok4.0Fast] Sentença da predição #223 não encontrada no gold: 'no caso de a áfrica, um de os fatores para esse comportamento foi a instabilidad...'
+2026-07-22 18:27:57,687 | WARNING | openie_eval | [respostaGrok4.0Fast] 3 sentenças da predição não casaram com o gold; 3 sentenças do gold nunca foram cobertas por nenhuma predição.
+2026-07-22 18:27:57,687 | WARNING | openie_eval | [respostas_gpt5.5_mini] Nº de frases difere: gold=262, pred=255. O casamento agora é feito pelo texto da sentença, não pela posição.
+2026-07-22 18:27:57,688 | INFO | openie_eval | Concluído: respostaGrok4.0Fast.jsonl
+2026-07-22 18:27:57,689 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-22 18:27:57,690 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostasGemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14526: 'FIM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo f...'
+2026-07-22 18:27:57,690 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostasGemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14527: 'IM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo fo...'
+2026-07-22 18:27:57,690 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostasGemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14528: 'M\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo for...'
+2026-07-22 18:27:57,696 | WARNING | openie_eval | [respostas_gpt5.5_mini] 0 sentenças da predição não casaram com o gold; 7 sentenças do gold nunca foram cobertas por nenhuma predição.
+2026-07-22 18:27:57,697 | INFO | openie_eval | Concluído: respostas_gpt5.5_mini.jsonl
+2026-07-22 18:27:57,702 | INFO | openie_eval | Concluído: respostasGemini3.1Pro.jsonl
+2026-07-22 18:27:57,750 | INFO | openie_eval | Relatório salvo em Outputs\metricas\10_batches\resultados_Respostas_AbstractiveOpenIE.csv
+
+2026-07-22 18:27:57,750 | INFO | openie_eval | === Avaliando pasta: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-22 18:27:58,065 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-22 18:27:58,068 | INFO | openie_eval | Concluído: respostaGrok4.0Fast.jsonl
+2026-07-22 18:27:58,074 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-22 18:27:58,080 | INFO | openie_eval | Concluído: respostas_gpt5.5_mini.jsonl
+2026-07-22 18:27:58,082 | WARNING | openie_eval | [respostasGemini3.1Pro] Sentença da predição #111 não encontrada no gold: 'os títulos lastreados em hipotecas comerciais, os lastreados em ativos e os cdos...'
+2026-07-22 18:27:58,088 | WARNING | openie_eval | [respostasGemini3.1Pro] 1 sentenças da predição não casaram com o gold; 1 sentenças do gold nunca foram cobertas por nenhuma predição.
+2026-07-22 18:27:58,089 | INFO | openie_eval | Concluído: respostasGemini3.1Pro.jsonl
+2026-07-22 18:27:58,118 | INFO | openie_eval | Relatório salvo em Outputs\metricas\10_batches\resultados_Respostas_ExtrativoDPTO-IE.csv
+
+2026-07-22 18:27:58,119 | INFO | openie_eval | === Avaliando pasta: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-22 18:27:58,307 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-22 18:27:58,311 | WARNING | openie_eval | [respostas_gpt5.5_mini] Sentença da predição #128 não encontrada no gold: 'como os americanos tinham uma força aérea muito maior que a união soviética e os...'
+2026-07-22 18:27:58,312 | INFO | openie_eval | Concluído: respostaGrok4.0Fast.jsonl
+2026-07-22 18:27:58,314 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-22 18:27:58,315 | WARNING | openie_eval | [respostas_gpt5.5_mini] 1 sentenças da predição não casaram com o gold; 1 sentenças do gold nunca foram cobertas por nenhuma predição.
+2026-07-22 18:27:58,316 | INFO | openie_eval | Concluído: respostas_gpt5.5_mini.jsonl
+2026-07-22 18:27:58,328 | INFO | openie_eval | Concluído: respostasGemini3.1Pro.jsonl
+2026-07-22 18:27:58,368 | INFO | openie_eval | Relatório salvo em Outputs\metricas\10_batches\resultados_Respostas_ExtrativoOIEC-PT.csv
+
+2026-07-22 18:27:58,369 | INFO | openie_eval | === Avaliando pasta: 25_batches/Respostas AbstractiveOpenIE ===
+2026-07-22 18:27:58,523 | WARNING | openie_eval | Arquivo Respostas\25_batches\Respostas AbstractiveOpenIE\Grok4.0Fast.jsonl: Objeto JSON inválido a partir do offset 58749: '{"sentence":"O rio Charles separa Boston de Watertown e a maioria de Cambridge,...'
+2026-07-22 18:27:58,531 | INFO | openie_eval | Concluído: Grok4.0Fast.jsonl
+2026-07-22 18:27:58,534 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-22 18:27:58,558 | INFO | openie_eval | Relatório salvo em Outputs\metricas\25_batches\resultados_Respostas_AbstractiveOpenIE.csv
+
+2026-07-22 18:27:58,558 | INFO | openie_eval | === Avaliando pasta: 25_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-22 18:27:58,825 | INFO | openie_eval | Concluído: Grok4.0Fast.jsonl
+2026-07-22 18:27:58,830 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-22 18:27:58,853 | INFO | openie_eval | Relatório salvo em Outputs\metricas\25_batches\resultados_Respostas_ExtrativoDPTO-IE.csv
+
+2026-07-22 18:27:58,854 | INFO | openie_eval | === Avaliando pasta: 25_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-22 18:27:59,033 | INFO | openie_eval | Concluído: Claude_Sonnet5.jsonl
+2026-07-22 18:27:59,035 | INFO | openie_eval | Concluído: Grok4.0Fast.jsonl
+2026-07-22 18:27:59,063 | INFO | openie_eval | Relatório salvo em Outputs\metricas\25_batches\resultados_Respostas_ExtrativoOIEC-PT.csv
+
+2026-07-22 18:28:03,336 | INFO | openie_eval | === Por batch: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-22 18:28:03,377 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-22 18:28:03,424 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostasGemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14526: 'FIM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo f...'
+2026-07-22 18:28:03,425 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostasGemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14527: 'IM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo fo...'
+2026-07-22 18:28:03,425 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostasGemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14528: 'M\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo for...'
+2026-07-22 18:28:03,443 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\por_batch\resultados_batch_Respostas_AbstractiveOpenIE.csv
+2026-07-22 18:28:03,845 | INFO | openie_eval | Gráfico salvo em Outputs\metricas\10_batches\por_batch\grafico_f1_lexical_Respostas_AbstractiveOpenIE.png
+2026-07-22 18:28:03,845 | INFO | openie_eval | === Por batch: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-22 18:28:03,940 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-22 18:28:03,954 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\por_batch\resultados_batch_Respostas_ExtrativoDPTO-IE.csv
+2026-07-22 18:28:04,302 | INFO | openie_eval | Gráfico salvo em Outputs\metricas\10_batches\por_batch\grafico_f1_lexical_Respostas_ExtrativoDPTO-IE.png
+2026-07-22 18:28:04,302 | INFO | openie_eval | === Por batch: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-22 18:28:04,401 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-22 18:28:04,416 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\por_batch\resultados_batch_Respostas_ExtrativoOIEC-PT.csv
+2026-07-22 18:28:04,732 | INFO | openie_eval | Gráfico salvo em Outputs\metricas\10_batches\por_batch\grafico_f1_lexical_Respostas_ExtrativoOIEC-PT.png
+2026-07-22 18:28:04,743 | INFO | openie_eval | === Por batch: 25_batches/Respostas AbstractiveOpenIE ===
+2026-07-22 18:28:04,783 | WARNING | openie_eval | Arquivo Respostas\25_batches\Respostas AbstractiveOpenIE\Grok4.0Fast.jsonl: Objeto JSON inválido a partir do offset 58749: '{"sentence":"O rio Charles separa Boston de Watertown e a maioria de Cambridge,...'
+2026-07-22 18:28:04,795 | INFO | openie_eval | CSV salvo em Outputs\metricas\25_batches\por_batch\resultados_batch_Respostas_AbstractiveOpenIE.csv
+2026-07-22 18:28:05,142 | INFO | openie_eval | Gráfico salvo em Outputs\metricas\25_batches\por_batch\grafico_f1_lexical_Respostas_AbstractiveOpenIE.png
+2026-07-22 18:28:05,142 | INFO | openie_eval | === Por batch: 25_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-22 18:28:05,191 | INFO | openie_eval | CSV salvo em Outputs\metricas\25_batches\por_batch\resultados_batch_Respostas_ExtrativoDPTO-IE.csv
+2026-07-22 18:28:05,497 | INFO | openie_eval | Gráfico salvo em Outputs\metricas\25_batches\por_batch\grafico_f1_lexical_Respostas_ExtrativoDPTO-IE.png
+2026-07-22 18:28:05,497 | INFO | openie_eval | === Por batch: 25_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-22 18:28:05,542 | INFO | openie_eval | CSV salvo em Outputs\metricas\25_batches\por_batch\resultados_batch_Respostas_ExtrativoOIEC-PT.csv
+2026-07-22 18:28:05,889 | INFO | openie_eval | Gráfico salvo em Outputs\metricas\25_batches\por_batch\grafico_f1_lexical_Respostas_ExtrativoOIEC-PT.png
+2026-07-22 18:28:11,073 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-22 18:28:11,105 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-22 18:28:11,139 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostasGemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14526: 'FIM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo f...'
+2026-07-22 18:28:11,139 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostasGemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14527: 'IM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo fo...'
+2026-07-22 18:28:11,139 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostasGemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14528: 'M\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo for...'
+2026-07-22 18:28:11,154 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_AbstractiveOpenIE.csv
+2026-07-22 18:28:12,000 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-22 18:28:12,064 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-22 18:28:12,073 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_ExtrativoDPTO-IE.csv
+2026-07-22 18:28:12,871 | INFO | openie_eval | === Contando triplas: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-22 18:28:12,936 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-22 18:28:12,950 | INFO | openie_eval | CSV salvo em Outputs\metricas\10_batches\contagem_triplas_Respostas_ExtrativoOIEC-PT.csv
+2026-07-22 18:28:13,624 | INFO | openie_eval | === Contando triplas: 25_batches/Respostas AbstractiveOpenIE ===
+2026-07-22 18:28:13,653 | WARNING | openie_eval | Arquivo Respostas\25_batches\Respostas AbstractiveOpenIE\Grok4.0Fast.jsonl: Objeto JSON inválido a partir do offset 58749: '{"sentence":"O rio Charles separa Boston de Watertown e a maioria de Cambridge,...'
+2026-07-22 18:28:13,662 | INFO | openie_eval | CSV salvo em Outputs\metricas\25_batches\contagem_triplas_Respostas_AbstractiveOpenIE.csv
+2026-07-22 18:28:14,416 | INFO | openie_eval | === Contando triplas: 25_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-22 18:28:14,496 | INFO | openie_eval | CSV salvo em Outputs\metricas\25_batches\contagem_triplas_Respostas_ExtrativoDPTO-IE.csv
+2026-07-22 18:28:15,113 | INFO | openie_eval | === Contando triplas: 25_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-22 18:28:15,184 | INFO | openie_eval | CSV salvo em Outputs\metricas\25_batches\contagem_triplas_Respostas_ExtrativoOIEC-PT.csv
+2026-07-22 18:28:21,433 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-22 18:28:21,472 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostasGemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14526: 'FIM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo f...'
+2026-07-22 18:28:21,473 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostasGemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14527: 'IM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo fo...'
+2026-07-22 18:28:21,473 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostasGemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14528: 'M\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo for...'
+2026-07-22 18:28:21,555 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-22 18:28:21,636 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-22 18:28:22,874 | INFO | openie_eval | Gráficos e CSV salvos em Outputs\metricas\10_batches\graficos_resumo
+2026-07-22 18:28:40,626 | INFO | openie_eval | === Consenso: 10_batches/Respostas AbstractiveOpenIE ===
+2026-07-22 18:28:40,660 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostaGrok4.0Fast.jsonl: array JSON completo falhou (Extra data: line 56 column 1 (char 24658)); tentando varredura.
+2026-07-22 18:28:40,691 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostasGemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14526: 'FIM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo f...'
+2026-07-22 18:28:40,691 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostasGemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14527: 'IM\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo fo...'
+2026-07-22 18:28:40,691 | WARNING | openie_eval | Arquivo Respostas\10_batches\Respostas AbstractiveOpenIE\respostasGemini3.1Pro.jsonl: Objeto JSON inválido a partir do offset 14528: 'M\n{"sentence":"As versões de seis e sete faixas de a trilha sonora de o jogo for...'
+2026-07-22 18:28:41,100 | INFO | openie_eval | Resultados salvos em Outputs\metricas\10_batches\consenso
+2026-07-22 18:28:41,101 | INFO | openie_eval | === Consenso: 10_batches/Respostas ExtrativoDPTO-IE ===
+2026-07-22 18:28:41,213 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoDPTO-IE\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1243 column 1 (char 33622)); tentando varredura.
+2026-07-22 18:28:41,515 | INFO | openie_eval | Resultados salvos em Outputs\metricas\10_batches\consenso
+2026-07-22 18:28:41,516 | INFO | openie_eval | === Consenso: 10_batches/Respostas ExtrativoOIEC-PT ===
+2026-07-22 18:28:41,573 | DEBUG | openie_eval | Arquivo Respostas\10_batches\Respostas ExtrativoOIEC-PT\respostasGemini3.1Pro.jsonl: array JSON completo falhou (Extra data: line 1058 column 1 (char 33743)); tentando varredura.
+2026-07-22 18:28:41,966 | INFO | openie_eval | Resultados salvos em Outputs\metricas\10_batches\consenso
