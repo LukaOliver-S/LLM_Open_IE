@@ -108,16 +108,8 @@ Roughly **60–80% of "false positives" have at least one other independent mode
 
 A follow-up idea (comparing these consensus candidates against gold via a similarity score) was considered and **deliberately dropped**: picking a new "near-miss" threshold to label results as "probably a threshold issue" vs. "probably missing from gold" was recognized as the same category of judgment call as the groundedness check in §4.5 point 1 — also needs professor sign-off before adopting.
 
-## 5. Literature (for methodology write-up)
 
-Found while investigating whether lexical/exact matching against a single fixed gold is "honest" for comparing an abstractive method:
-- Bhardwaj, Aggarwal & Mausam, ["CaRB: A Crowdsourced Benchmark for Open IE"](https://aclanthology.org/D19-1651.pdf), EMNLP 2019 — multi-match evaluation addressing exactly the single-reference-penalizes-valid-variation problem.
-- Stanovsky & Dagan, ["Creating a Large Benchmark for Open Information Extraction"](https://gabrielstanovsky.github.io/assets/papers/emnlp16a/paper.pdf), EMNLP 2016 (OIE2016) — origin of the greedy 1-to-1 matching style this pipeline follows.
-- ["Beyond Exact Match: Semantically Reassessing Event Extraction by Large Language Models"](https://arxiv.org/pdf/2410.09418) — most directly on-topic: LLMs are abstractive and shouldn't be scored by token-exact match alone.
-- ["Analysing Errors of Open Information Extraction Systems"](https://arxiv.org/pdf/1707.07499) — alternative matching strategies (e.g. containment match).
-- ["BenchIEFL: A Manually Re-Annotated Fact-Based Open Information Extraction Benchmark"](https://arxiv.org/pdf/2407.16860) — benchmark design attacking gold-incompleteness directly.
-
-## 6. Open items / not yet done
+## 5. Open items / not yet done
 
 - **Path fragility**: every script assumes cwd = project root; breaks under IDE "run current file." Proposed fix (anchor paths via `Path(__file__).resolve().parents[2]`) not yet applied to any script.
 - **Groundedness check** (§4.5, point 1): designed but not implemented, pending professor approval.
