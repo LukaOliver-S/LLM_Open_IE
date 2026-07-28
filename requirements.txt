@@ -1,0 +1,4 @@
+pandas>=2.2
+matplotlib>=3.10
+pyperclip>=1.8
+openpyxl>=1.2
