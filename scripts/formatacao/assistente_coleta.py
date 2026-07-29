@@ -41,8 +41,12 @@ TAREFAS = {
         "categoria": "Respostas ExtrativoOIEC-PT",
         "placeholder": None,
     },
+    "ptoiedp": {
+        "prompt": RAIZ / "prompts" / "promptPTOIE-dp_extrativo.txt",
+        "categoria": "Respostas ExtrativoPTOIE-DP",
+        "placeholder": None,
+    },
 }
-
 
 def carregar_sentencas(caminho: Path) -> list[dict]:
     texto = caminho.read_text(encoding="utf-8").strip()
@@ -112,10 +116,15 @@ def main() -> None:
     parser.add_argument("--apenas-lotes", default=None,
                          help="Lista de números de lote a (re)coletar, separados por vírgula "
                               "(ex.: 1,2,3,5,7,9,21). Se omitido, roda todos os que ainda faltam.")
+    parser.add_argument("--sentencas-base", default="sentencas",
+                         help="Pasta base dos lotes (ex.: 'sentencas_oiecpt' para o corpus OIEC-PT-GOLD).")
+    parser.add_argument("--respostas-base", default="Respostas",
+                         help="Pasta base onde salvar as respostas (deve casar com --sentencas-base "
+                              "para não misturar corpora diferentes).")
     args = parser.parse_args()
 
     tarefa = TAREFAS[args.tarefa]
-    pasta_lotes = RAIZ / "sentencas" / f"{args.lotes}_sentencas"
+    pasta_lotes = RAIZ / args.sentencas_base / f"{args.lotes}_sentencas"
     arquivos_lote = sorted(
         pasta_lotes.glob("sentencas_parte_*.jsonl"),
         key=lambda p: int(p.stem.rsplit("_", 1)[1]),
@@ -126,10 +135,10 @@ def main() -> None:
     # a pasta bruta é isolada por TAREFA também -- sem isso, lotes já
     # coletados para uma tarefa seriam confundidos com os de outra tarefa
     # que usa o mesmo modelo e o mesmo tamanho de lote
-    pasta_bruto = RAIZ / "Respostas" / f"{args.lotes}_batches" / "_bruto" / args.tarefa / args.modelo
+    pasta_bruto = RAIZ / args.respostas_base / f"{args.lotes}_batches" / "_bruto" / args.tarefa / args.modelo
     pasta_bruto.mkdir(parents=True, exist_ok=True)
 
-    pasta_final = RAIZ / "Respostas" / f"{args.lotes}_batches" / tarefa["categoria"]
+    pasta_final = RAIZ / args.respostas_base / f"{args.lotes}_batches" / tarefa["categoria"]
     pasta_final.mkdir(parents=True, exist_ok=True)
     caminho_final = pasta_final / f"{args.modelo}.jsonl"
 

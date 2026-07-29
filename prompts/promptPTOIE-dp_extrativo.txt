@@ -1,0 +1,310 @@
+# Extração de Relações Open Information Extraction (Open IE)
+
+## Objetivo
+
+Você receberá uma **lista de objetos JSON**, onde cada objeto contém uma sentença em português.
+
+```jsonl
+
+  {"sentence": "..."},
+  {"sentence": "..."},
+  {"sentence": "..."}
+
+```
+
+Cada objeto da lista deve ser processado de forma independente. Não deve haver mistura de informações entre sentenças diferentes.
+
+---
+
+Você receberá **sentenças em português**.
+
+Sua tarefa é extrair **todas** as relações Open Information Extraction (Open IE) presentes em cada sentença.
+
+Toda saída deve permanecer associada à **sentença original** da qual as relações foram extraídas. Todas as relações em `relations` devem corresponder exclusivamente à sentença armazenada em `sentence`.
+
+Cada relação deve ser representada por uma tripla no formato:
+
+```json
+{
+  "arg1": "...",
+  "rel": "...",
+  "arg2": "..."
+}
+```
+
+---
+
+Uma sentença pode conter nenhuma, uma ou várias relações. Sempre que houver múltiplas relações válidas, extraia todas elas.
+
+Siga rigorosamente as regras abaixo.
+
+---
+
+# Regras Estruturais
+
+## E1. Estrutura Fundamental da Tripla
+
+Cada tripla é composta por sujeito (ARG1), relação (REL) e complemento (ARG2). Todo verbo da sentença é considerado núcleo potencial de uma relação.
+
+Uma tripla só é válida quando possui os três elementos. **Se não houver complemento (ARG2), a tripla não deve ser gerada.** Não emita triplas com ARG2 vazio.
+
+---
+
+## E2. Identificação do Sujeito (ARG1)
+
+O núcleo do sujeito corresponde ao sujeito da oração, na voz ativa, passiva ou oracional (`nsubj`, `nsubj:pass`, `csubj`).
+
+Ao núcleo somam-se os dependentes que ajudam a identificá-lo: determinantes, preposições internas, adjetivos, modificadores nominais e numéricos, elementos coordenados e apostos (`det`, `case`, `amod`, `nmod`, `nummod`, `conj`, `appos`).
+
+Quando um pronome relativo (como "que") atua como sujeito de uma oração adjetiva, **resolva-o diretamente ao seu antecedente**, que passa a ocupar o ARG1 — substituindo o pronome no texto, sem parênteses, colchetes ou qualquer anotação.
+
+**Exemplo**
+
+Sentença:
+`O homem que chegou cumprimentou a todos.`
+
+Saída:
+
+```json
+{
+  "sentence": "O homem que chegou cumprimentou a todos.",
+  "relations": [
+    {"arg1": "O homem", "rel": "chegou", "arg2": "a todos"},
+    {"arg1": "O homem", "rel": "cumprimentou", "arg2": "a todos"}
+  ]
+}
+```
+
+---
+
+## E3. Sujeito de Existenciais e Voz Passiva
+
+Em construções de voz passiva e com verbos existenciais como "haver" e "existir", localize o sujeito lógico na posição de objeto.
+
+**Exemplo**
+
+Sentença:
+`Há muitas pessoas na festa.`
+
+Saída:
+
+```json
+{
+  "sentence": "Há muitas pessoas na festa.",
+  "relations": [
+    {"arg1": "muitas pessoas", "rel": "há", "arg2": "na festa"}
+  ]
+}
+```
+
+---
+
+## E4. Construção da Relação (REL)
+
+A relação é construída a partir do verbo principal, incorporando:
+
+* verbos auxiliares e copulativos (`aux`, `aux:pass`, `cop`);
+* modificadores adverbiais que alteram o sentido da ação, em especial advérbios de negação ("não", "jamais");
+* clíticos e pronomes expletivos (`expl:pv`).
+
+Isso preserva nuances de polaridade e modalidade.
+
+**Exemplo**
+
+Sentença:
+`Ele não gosta de pizza.`
+
+Saída:
+
+```json
+{
+  "sentence": "Ele não gosta de pizza.",
+  "relations": [
+    {"arg1": "Ele", "rel": "não gosta", "arg2": "de pizza"}
+  ]
+}
+```
+
+---
+
+## E5. Construção do Complemento (ARG2)
+
+O núcleo do complemento corresponde a objetos diretos e indiretos, oblíquos e complementos oracionais (`obj`, `iobj`, `obl`, `xcomp`, `ccomp`).
+
+À sua expansão somam-se determinantes, preposições, adjetivos, modificadores nominais e numéricos, elementos coordenados, apostos e orações dependentes (`det`, `case`, `amod`, `nmod`, `nummod`, `conj`, `appos`, `advcl`, `acl`).
+
+O complemento deve ser o mais completo possível, sem embutir outra relação separável.
+
+---
+
+## E6. Preposições
+
+As preposições regidas pelo verbo permanecem incorporadas ao **ARG2**. **Não devem ser deslocadas para REL.**
+
+As locuções prepositivas lexicalizadas (ex.: "ao longo de", "de acordo com") não devem ser fragmentadas.
+
+---
+
+# Regras de Fenômenos Complexos
+
+## E7. Conjunções Coordenativas
+
+Coordenações introduzidas por "e" ou "ou" geram triplas independentes.
+
+* **Propagação de preposição:** em estruturas coordenadas, a preposição regida é propagada para cada elemento coordenado.
+* **Distribuição de complemento compartilhado:** quando verbos coordenados compartilham um mesmo complemento, ele é distribuído para cada verbo.
+
+**Exemplo (propagação de preposição)**
+
+Sentença:
+`Gosto de maçãs e peras.`
+
+Saída:
+
+```json
+{
+  "sentence": "Gosto de maçãs e peras.",
+  "relations": [
+    {"arg1": "Eu", "rel": "gosto", "arg2": "de maçãs"},
+    {"arg1": "Eu", "rel": "gosto", "arg2": "de peras"}
+  ]
+}
+```
+
+**Exemplo (distribuição de complemento)**
+
+Sentença:
+`O governo comprou, limpou e vendeu a propriedade.`
+
+Saída:
+
+```json
+{
+  "sentence": "O governo comprou, limpou e vendeu a propriedade.",
+  "relations": [
+    {"arg1": "O governo", "rel": "comprou", "arg2": "a propriedade"},
+    {"arg1": "O governo", "rel": "limpou", "arg2": "a propriedade"},
+    {"arg1": "O governo", "rel": "vendeu", "arg2": "a propriedade"}
+  ]
+}
+```
+
+---
+
+## E8. Orações Subordinadas
+
+Ao encontrar uma oração subordinada (`advcl`, `ccomp`), verifique se ela possui sujeito explícito.
+
+* **Com sujeito explícito:** realize uma extração recursiva a partir do verbo subordinado, gerando uma tripla própria para a subordinada além da tripla da principal. A subordinada permanece como ARG2 da principal.
+* **Sem sujeito explícito:** trate a oração como complemento verbal da principal, mantendo-a no ARG2, sem gerar tripla separada.
+
+A subextração da subordinada só deve ser gerada quando ela própria possuir um complemento (ARG2); do contrário, siga a regra E1.
+
+**Exemplo**
+
+Sentença:
+`O diretor afirmou que a empresa cresceu em 2020.`
+
+Saída:
+
+```json
+{
+  "sentence": "O diretor afirmou que a empresa cresceu em 2020.",
+  "relations": [
+    {"arg1": "O diretor", "rel": "afirmou", "arg2": "que a empresa cresceu em 2020"},
+    {"arg1": "a empresa", "rel": "cresceu", "arg2": "em 2020"}
+  ]
+}
+```
+
+---
+
+## E9. Apostos
+
+Um aposto produz uma relação sintética com o verbo "é", capturando fatos de identidade ou tipificação. O termo principal constitui ARG1 e o aposto constitui ARG2.
+
+**Exemplo**
+
+Sentença:
+`Lula, o ex-presidente, viajou para a Europa.`
+
+Saída:
+
+```json
+{
+  "sentence": "Lula, o ex-presidente, viajou para a Europa.",
+  "relations": [
+    {"arg1": "Lula", "rel": "viajou", "arg2": "para a Europa"},
+    {"arg1": "Lula", "rel": "é", "arg2": "o ex-presidente"}
+  ]
+}
+```
+
+---
+
+## E10. Inferência por Transitividade
+
+A partir das relações extraídas de um aposto, infira novas triplas por transitividade: se foram extraídas ⟨A, é, B⟩ e ⟨A, R, C⟩, deduza ⟨B, R, C⟩.
+
+**Exemplo**
+
+Sentença:
+`Lula, o ex-presidente, viajou para a Europa.`
+
+Saída (incluindo a tripla inferida):
+
+```json
+{
+  "sentence": "Lula, o ex-presidente, viajou para a Europa.",
+  "relations": [
+    {"arg1": "Lula", "rel": "viajou", "arg2": "para a Europa"},
+    {"arg1": "Lula", "rel": "é", "arg2": "o ex-presidente"},
+    {"arg1": "o ex-presidente", "rel": "viajou", "arg2": "para a Europa"}
+  ]
+}
+```
+
+---
+
+# Regra de Sanitização
+
+## E11. Sanitização
+
+Ao final, limpe cada elemento da tripla: remova pontuações e conectores soltos, e descarte extrações que não possuam verbo na relação.
+
+---
+
+# Formato da Resposta
+
+Retorne **exclusivamente JSON válido**, sem explicações, comentários, Markdown ou qualquer texto adicional.
+
+Para uma lista de sentenças na entrada, retorne um **array** de objetos, um por sentença, na mesma ordem da entrada. Cada objeto deve possuir obrigatoriamente:
+
+* **sentence:** exatamente a sentença de entrada, sem qualquer modificação, correção, normalização ou reescrita;
+* **relations:** um array contendo todas as triplas Open IE extraídas da sentença.
+
+As relações devem ser retornadas, sempre que possível, na mesma ordem em que aparecem na sentença.
+
+Caso nenhuma relação válida seja encontrada para uma sentença, retorne `relations` como array vazio.
+
+Formato esperado:
+
+```json
+{
+  "sentence": "Lula, o ex-presidente, viajou para a Europa.",
+  "relations": [
+    {"arg1": "Lula", "rel": "viajou", "arg2": "para a Europa"},
+    {"arg1": "Lula", "rel": "é", "arg2": "o ex-presidente"},
+    {"arg1": "o ex-presidente", "rel": "viajou", "arg2": "para a Europa"}
+  ]
+}
+```
+
+Caso não exista nenhuma relação Open IE válida:
+
+```json
+{
+  "sentence": "Exemplo sem relação extraível.",
+  "relations": []
+}
+```

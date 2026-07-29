@@ -177,3 +177,59 @@ Sempre que um argumento for um pronome ou expressão anafórica com antecedente 
 
 **S8. Enriquecimento Contextual de Argumentos**
 Após a resolução de co-referência, os argumentos podem ser reescritos para incorporar explicitamente o contexto necessário ao entendimento da tripla, desde que toda a informação adicionada seja diretamente derivada do próprio texto.
+
+---
+## Regras do PTOIE-Dep
+
+## Regras Estruturais
+
+### E1. Estrutura Fundamental da Tripla
+
+Cada tripla é composta por sujeito (ARG1), relação (REL) e complemento (ARG2), extraídos a partir da árvore de dependências. Todo verbo da sentença é considerado núcleo potencial de uma relação. Uma tripla só é válida quando possui os três elementos; se não houver complemento (ARG2), a tripla não deve ser gerada.
+
+### E2. Identificação do Sujeito (ARG1)
+
+O núcleo do sujeito corresponde às dependências `nsubj`, `nsubj:pass` (passivo) ou `csubj` (oracional). Ao núcleo somam-se, como expansão, os dependentes `det`, `case`, `amod`, `nmod`, `nummod`, `conj` e `appos`. Quando um pronome relativo (como "que") atua como sujeito de uma oração adjetiva, ele é resolvido diretamente ao seu antecedente (head), que passa a ocupar o ARG1 — sem parênteses ou anotações.
+
+### E3. Sujeito de Existenciais e Voz Passiva
+
+Em construções de voz passiva (`aux:pass`) e com verbos existenciais como "haver" e "existir", o sujeito lógico é localizado na posição de objeto. Exemplo: de "Há muitas pessoas na festa", extrai-se ⟨muitas pessoas, há, na festa⟩.
+
+### E4. Construção da Relação (REL)
+
+A relação é expandida a partir do verbo principal, incorporando verbos auxiliares e copulativos (`aux`, `aux:pass`, `cop`), modificadores adverbiais que alteram o sentido da ação — em especial advérbios de negação ("não", "jamais") — e clíticos (`expl:pv`). Isso preserva nuances de polaridade e modalidade, distinguindo ⟨ele, gosta, de pizza⟩ de ⟨ele, não gosta, de pizza⟩.
+
+### E5. Construção do Complemento (ARG2)
+
+O núcleo do complemento corresponde a `obj`, `iobj`, `obl`, `xcomp` ou `ccomp`. À sua expansão somam-se os dependentes `det`, `case`, `amod`, `nmod`, `nummod`, `conj`, `appos`, `advcl` e `acl`. O complemento deve ser o mais completo possível sem embutir outra relação separável.
+
+### E6. Preposições
+
+As preposições regidas pelo verbo permanecem incorporadas ao ARG2, não sendo deslocadas para REL. Locuções prepositivas lexicalizadas não devem ser fragmentadas.
+
+## Regras de Fenômenos Complexos
+
+### E7. Conjunções Coordenativas (CC)
+
+Coordenações introduzidas por "e" ou "ou" geram triplas independentes. Duas operações são aplicadas:
+
+* **Propagação de preposição:** em estruturas coordenadas, a preposição regida é propagada para cada elemento coordenado, garantindo correção gramatical (ex.: "gosto de maçãs e peras" gera um complemento preposicionado para cada fruta).
+* **Distribuição de complemento compartilhado:** quando verbos coordenados compartilham um mesmo complemento, ele é distribuído para cada verbo (ex.: "O governo comprou, limpou e vendeu a propriedade" gera uma tripla por verbo, todas com o mesmo complemento).
+
+### E8. Orações Subordinadas (SC)
+
+Ao encontrar uma oração subordinada (`advcl`, `ccomp`), verifica-se se ela possui sujeito explícito. Se possui, realiza-se uma extração recursiva a partir do verbo subordinado, gerando uma tripla própria para a subordinada além da tripla da principal (ex.: "O diretor afirmou que a empresa cresceu" gera ⟨O diretor, afirmou, que a empresa cresceu⟩ e a tripla da subordinada). Se não possui sujeito explícito, a oração é tratada como complemento verbal da principal, permanecendo no ARG2.
+
+### E9. Apostos
+
+Um aposto (`appos`) produz uma relação sintética com o verbo "é", capturando fatos de identidade ou tipificação. Exemplo: de "Lula, o ex-presidente, ...", extrai-se ⟨Lula, é, o ex-presidente⟩.
+
+### E10. Inferência por Transitividade
+
+A partir das relações já extraídas de um aposto, novas triplas são inferidas por transitividade: se o método extrai ⟨A, é, B⟩ e ⟨A, R, C⟩, então deduz ⟨B, R, C⟩. Exemplo: de "Lula, o ex-presidente, viajou para a Europa", além das triplas diretas, gera-se ⟨o ex-presidente, viajou, para a Europa⟩.
+
+## Sanitização
+
+### E11. Sanitização
+
+Cada elemento da tripla é limpo ao final: removem-se pontuações e conectores soltos, e descartam-se extrações sem verbo na relação.
