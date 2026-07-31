@@ -1,0 +1,2 @@
+modelo,n_frases_gold,n_frases_pred,precisao_lexical,recall_lexical,f1_lexical,precisao_exact,recall_exact,f1_exact,n_erros_parsing,n_pred_sem_match,n_gold_sem_cobertura
+respostaDPTOIE-PY,262,260,0.5,0.00234192037470726,0.004662004662004662,0.5,0.00234192037470726,0.004662004662004662,0,258,260

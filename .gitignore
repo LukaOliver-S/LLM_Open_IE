@@ -1,14 +1,9 @@
-# Ambiente virtual (não versionar — milhares de arquivos)
+@"
 .venv/
 venv/
-
-# Cache do Python
 __pycache__/
 *.pyc
 *.pyo
-
-# Modelos grandes / downloads (ex.: final-model.pt)
 *.pt
-
-# Logs
 *.log
+"@ | Set-Content -Encoding utf8 .gitignore

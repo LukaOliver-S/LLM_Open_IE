@@ -1,0 +1,2 @@
+modelo,n_frases_gold_total,n_frases_pred,n_frases_pareadas,n_triplas_gold_total,n_triplas_gold_pareadas,n_triplas_pred,media_triplas_gold_por_frase,media_triplas_pred_por_frase,razao_pred_gold
+PTOIE-Flair,262,262,262,427,427,231,1.6297709923664123,0.8816793893129771,0.5409836065573771
