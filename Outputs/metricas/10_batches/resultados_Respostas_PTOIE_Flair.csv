@@ -1,2 +1,0 @@
-modelo,n_frases_gold,n_frases_pred,precisao_lexical,recall_lexical,f1_lexical,precisao_exact,recall_exact,f1_exact,n_erros_parsing,n_pred_sem_match,n_gold_sem_cobertura
-PTOIE-Flair,262,262,0.5800865800865801,0.31381733021077285,0.4072948328267477,0.4805194805194805,0.25995316159250587,0.3373860182370821,0,0,0

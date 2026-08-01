@@ -1,2 +1,0 @@
-modelo,n_frases_gold_total,n_frases_pred,n_frases_pareadas,n_triplas_gold_total,n_triplas_gold_pareadas,n_triplas_pred,media_triplas_gold_por_frase,media_triplas_pred_por_frase,razao_pred_gold
-respostaDPTOIE-PY,262,260,2,427,3,2,1.5,1.0,0.6666666666666666

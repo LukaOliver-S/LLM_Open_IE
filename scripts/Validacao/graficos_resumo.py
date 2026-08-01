@@ -42,7 +42,6 @@ args = parser.parse_args()
 def _nome_curto(modelo: str) -> str:
     """Remove o prefixo redundante 'resposta(s)_' dos nomes de modelo."""
     return _RE_PREFIXO_MODELO.sub("", modelo)
-
 def avaliar_condicional(caminho_gold: str, caminho_pred: str, limiar_lexical: float = 0.5) -> Dict[str, Any]:
     """Como `avaliar_par`, mas SEM penalizar sentenças do gold nunca cobertas
     -- mede a qualidade só onde o modelo respondeu; a cobertura é reportada
@@ -66,8 +65,11 @@ def avaliar_condicional(caminho_gold: str, caminho_pred: str, limiar_lexical: fl
         item_gold = gold_por_sentenca.get(chave)
         if item_gold is None:
             continue
+        triplas_pred = extrair_triplas(item_pred)
+        if not triplas_pred:            # devolveu a frase mas SEM tripla -> nao conta como coberta
+            continue
         n_pareadas += 1
-        r = comparar_triplas(extrair_triplas(item_gold), extrair_triplas(item_pred), matcher_lex)
+        r = comparar_triplas(extrair_triplas(item_gold), triplas_pred, matcher_lex)
         c_lex.vp += r.vp; c_lex.fp += r.fp; c_lex.fn += r.fn
 
     n_frases_gold = len(golds)
