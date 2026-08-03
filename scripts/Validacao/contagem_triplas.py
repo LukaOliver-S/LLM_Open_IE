@@ -22,6 +22,7 @@ e salva, por pasta, um CSV e dois gráficos em
 
 from __future__ import annotations
 
+import argparse
 import sys
 from pathlib import Path
 from typing import Any, Dict
@@ -38,12 +39,12 @@ from resultados import (
     achatar_predicoes,
     extrair_triplas,
     _normalizar_sentenca,
+    CORPORA,
+    CORPUS_PADRAO,
+    resolver_corpus,
 )
 
-GOLD_PADRAO = "dados/bia_gold_sentences.jsonl"
-PASTA_RESPOSTAS_PADRAO = "Respostas"
-PASTA_METRICAS_PADRAO = Path("Outputs") / "metricas"
-PREFIXO_PASTAS_PADRAO = "Respostas"
+PREFIXO_PASTAS_PADRAO = "Respostas"   # prefixo das pastas de tarefa dentro de cada "N_batches"
 
 # --------------------------------------------------------------------------- #
 # ESTILO "PAPER" (mesmo estilo de gerar_graficos.py)
@@ -197,16 +198,26 @@ def grafico_razao_pred_gold(df: pd.DataFrame, titulo: str, caminho_base: Path) -
 # --------------------------------------------------------------------------- #
 
 def main() -> None:
-    if not Path(GOLD_PADRAO).exists():
-        log.error("Gold padrão '%s' não encontrado em %s.", GOLD_PADRAO, Path.cwd())
+    parser = argparse.ArgumentParser(description="Contagem de triplas (gold vs pred) por pasta")
+    parser.add_argument("--corpus", default=CORPUS_PADRAO, choices=list(CORPORA),
+                        help="Corpus (define gold + pastas). Default: %(default)s")
+    parser.add_argument("--lotes", type=int, default=None, help="Filtra um tamanho de lote (ex.: 10)")
+    args = parser.parse_args()
+
+    cfg = resolver_corpus(args.corpus)
+    gold = cfg["gold"]
+    if not Path(gold).exists():
+        log.error("Gold do corpus '%s' não encontrado: '%s' (cwd=%s).", args.corpus, gold, Path.cwd())
         sys.exit(1)
 
-    raiz_respostas = Path(PASTA_RESPOSTAS_PADRAO)
+    raiz_respostas = Path(cfg["respostas"])
     if not raiz_respostas.is_dir():
-        log.error("Pasta '%s' não encontrada em %s.", PASTA_RESPOSTAS_PADRAO, Path.cwd())
+        log.error("Pasta de respostas '%s' não encontrada em %s.", cfg["respostas"], Path.cwd())
         sys.exit(1)
 
     lotes = sorted(p for p in raiz_respostas.iterdir() if p.is_dir() and p.name.endswith("_batches"))
+    if args.lotes is not None:
+        lotes = [p for p in lotes if p.name == f"{args.lotes}_batches"]
     if not lotes:
         log.error("Nenhuma pasta '*_batches' encontrada em %s.", raiz_respostas)
         sys.exit(1)
@@ -216,7 +227,7 @@ def main() -> None:
         if not pastas:
             continue
 
-        pasta_saida = PASTA_METRICAS_PADRAO / lote.name
+        pasta_saida = cfg["saida"] / lote.name
         pasta_saida.mkdir(parents=True, exist_ok=True)
         pasta_graficos = pasta_saida / "graficos_triplas"
         pasta_graficos.mkdir(parents=True, exist_ok=True)
@@ -224,7 +235,7 @@ def main() -> None:
         for pasta in pastas:
             log.info("=== Contando triplas: %s/%s ===", lote.name, pasta.name)
             try:
-                df = contar_diretorio(GOLD_PADRAO, str(pasta))
+                df = contar_diretorio(gold, str(pasta))
             except Exception as e:
                 log.error("Falha ao processar a pasta '%s/%s': %s", lote.name, pasta.name, e)
                 continue

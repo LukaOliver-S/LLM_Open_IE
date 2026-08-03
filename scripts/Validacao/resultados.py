@@ -510,34 +510,54 @@ def avaliar_diretorio(
 # MODO PADRÃO (SEM ARGUMENTOS) -> varre automaticamente pastas "Respostas *"
 # --------------------------------------------------------------------------- #
 
-# Ajuste estes dois valores para o seu projeto. Usados apenas quando o script
-# é executado SEM nenhum argumento de linha de comando (ex.: dando play na IDE),
-# reproduzindo o hábito do script original de ter os caminhos "fixos" no arquivo.
-GOLD_PADRAO = "dados/bia_gold_sentences.jsonl"
-PASTA_RESPOSTAS_PADRAO = "Respostas"                   # pasta raiz com as sub-pastas "N_batches"
-PASTA_METRICAS_PADRAO = Path("Outputs") / "metricas"   # onde os CSVs de saída são salvos
-PREFIXO_PASTAS_PADRAO = "Respostas"                    # prefixo das pastas de modelo dentro de cada "N_batches"
+# CORPORA — cada corpus tem seu gold, sua pasta de respostas e sua de saída.
+# Usado no modo padrão (sem --pred/--pred-dir). Troque com --corpus <nome>.
+CORPORA = {
+    "bia": dict(
+        gold="dados/bia_gold_sentences.jsonl",
+        respostas="Respostas/bia",
+        saida=Path("Outputs") / "metricas" / "bia",
+        sentencas="sentencas",            # usado pelo comparação_batches (mapa lote->frase)
+    ),
+    "oiec_pt": dict(
+        gold="dados/oiec_pt_gold_sentences.jsonl",
+        respostas="Respostas/oiec_pt",
+        saida=Path("Outputs") / "metricas" / "oiec_pt",
+        sentencas="sentencas_oiecpt",
+    ),
+}
+CORPUS_PADRAO = "bia"
+PREFIXO_PASTAS_PADRAO = "Respostas"   # prefixo das pastas de tarefa dentro de cada "N_batches"
 
 
-def rodar_modo_padrao(workers: int = 4, limiar_lexical: float = 0.5) -> None:
-    """Executa sem precisar de argumentos: procura, em `Respostas/`, todas as
-    pastas de lote (ex.: '10_batches', '15_batches', ...) e, dentro de cada uma,
-    todas as pastas que começam com `PREFIXO_PASTAS_PADRAO` (ex.:
-    'Respostas AbstractiveOpenIE', 'Respostas ExtrativoDPTO-IE', ...).
-    Avalia cada uma contra `GOLD_PADRAO` e salva um CSV por pasta em
-    'Outputs/metricas/<lote>/'.
+def resolver_corpus(nome: str = CORPUS_PADRAO) -> dict:
+    """Devolve o config (gold/respostas/saida) de um corpus."""
+    if nome not in CORPORA:
+        raise SystemExit(f"Corpus desconhecido: '{nome}'. Opções: {', '.join(CORPORA)}")
+    return CORPORA[nome]
+
+
+# Compatibilidade: outros scripts ainda importam GOLD_PADRAO (default do --gold).
+GOLD_PADRAO = CORPORA[CORPUS_PADRAO]["gold"]
+
+
+def rodar_modo_padrao(corpus: str = CORPUS_PADRAO, workers: int = 4, limiar_lexical: float = 0.5) -> None:
+    """Executa sem precisar de --pred: para o `corpus` escolhido, procura em
+    `<respostas>/` todas as pastas de lote ('10_batches', ...) e, dentro de cada
+    uma, todas as pastas que começam com `PREFIXO_PASTAS_PADRAO`. Avalia cada uma
+    contra o gold do corpus e salva um CSV por pasta em `<saida>/<lote>/`.
     """
-    if not Path(GOLD_PADRAO).exists():
-        log.error(
-            "Nenhum argumento foi passado e o gold padrão '%s' não existe no diretório atual (%s). "
-            "Rode com --gold/--pred (ou --pred-dir) explicitamente, ou ajuste GOLD_PADRAO no topo do script.",
-            GOLD_PADRAO, Path.cwd(),
-        )
+    cfg = resolver_corpus(corpus)
+    gold = cfg["gold"]
+
+    if not Path(gold).exists():
+        log.error("Gold do corpus '%s' não existe: '%s' (cwd=%s).", corpus, gold, Path.cwd())
         sys.exit(1)
 
-    raiz_respostas = Path(PASTA_RESPOSTAS_PADRAO)
+    raiz_respostas = Path(cfg["respostas"])
     if not raiz_respostas.is_dir():
-        log.error("Pasta '%s' não encontrada em %s.", PASTA_RESPOSTAS_PADRAO, Path.cwd())
+        log.error("Pasta de respostas do corpus '%s' não encontrada: '%s' (cwd=%s).",
+                  corpus, cfg["respostas"], Path.cwd())
         sys.exit(1)
 
     lotes = sorted(p for p in raiz_respostas.iterdir() if p.is_dir() and p.name.endswith("_batches"))
@@ -551,17 +571,17 @@ def rodar_modo_padrao(workers: int = 4, limiar_lexical: float = 0.5) -> None:
             log.warning("Nenhuma pasta iniciada em '%s' encontrada em %s.", PREFIXO_PASTAS_PADRAO, lote)
             continue
 
-        pasta_saida = PASTA_METRICAS_PADRAO / lote.name
+        pasta_saida = cfg["saida"] / lote.name
         pasta_saida.mkdir(parents=True, exist_ok=True)
 
         for pasta in pastas:
-            log.info("=== Avaliando pasta: %s/%s ===", lote.name, pasta.name)
+            log.info("=== [%s] Avaliando pasta: %s/%s ===", corpus, lote.name, pasta.name)
             try:
-                df = avaliar_diretorio(GOLD_PADRAO, str(pasta), workers=workers, limiar_lexical=limiar_lexical)
+                df = avaliar_diretorio(gold, str(pasta), workers=workers, limiar_lexical=limiar_lexical)
             except Exception as e:
                 log.error("Falha ao avaliar a pasta '%s/%s': %s", lote.name, pasta.name, e)
                 continue
-            print(f"\n--- {lote.name}/{pasta.name} ---")
+            print(f"\n--- [{corpus}] {lote.name}/{pasta.name} ---")
             print(df.to_string(index=False))
             saida = pasta_saida / f"resultados_{pasta.name.replace(' ', '_')}.csv"
             df.to_csv(saida, index=False)
@@ -572,13 +592,10 @@ def rodar_modo_padrao(workers: int = 4, limiar_lexical: float = 0.5) -> None:
 # --------------------------------------------------------------------------- #
 
 def main():
-    # Sem nenhum argumento -> modo padrão (varre pastas "Respostas *" automaticamente)
-    if len(sys.argv) == 1:
-        rodar_modo_padrao()
-        return
-
     parser = argparse.ArgumentParser(description="Avaliação de OpenIE (LLM vs. Gold Standard)")
-    parser.add_argument("--gold", required=True, help="Caminho do arquivo gold (.jsonl)")
+    parser.add_argument("--corpus", default=CORPUS_PADRAO, choices=list(CORPORA),
+                        help="Corpus no modo padrão (define gold + pastas). Default: %(default)s")
+    parser.add_argument("--gold", help="Gold (.jsonl). Sobrepõe o gold do corpus.")
     parser.add_argument("--pred", help="Caminho de um único arquivo de predições (.jsonl)")
     parser.add_argument("--pred-dir", help="Diretório com vários .jsonl de modelos, avaliados em paralelo")
     parser.add_argument("--output", default=None, help="CSV de saída (apenas no modo --pred-dir)")
@@ -586,14 +603,20 @@ def main():
     parser.add_argument("--limiar", type=float, default=0.5, help="Limiar de overlap lexical")
     args = parser.parse_args()
 
+    # Sem --pred/--pred-dir -> modo padrão (varre as pastas do corpus)
+    if not args.pred and not args.pred_dir:
+        rodar_modo_padrao(corpus=args.corpus, workers=args.workers, limiar_lexical=args.limiar)
+        return
+
+    gold = args.gold or resolver_corpus(args.corpus)["gold"]
     if args.pred_dir:
-        df = avaliar_diretorio(args.gold, args.pred_dir, workers=args.workers, limiar_lexical=args.limiar)
+        df = avaliar_diretorio(gold, args.pred_dir, workers=args.workers, limiar_lexical=args.limiar)
         print("\n" + df.to_string(index=False))
         if args.output:
             df.to_csv(args.output, index=False)
             log.info("Relatório salvo em %s", args.output)
     elif args.pred:
-        r = avaliar_par(args.gold, args.pred, limiar_lexical=args.limiar)
+        r = avaliar_par(gold, args.pred, limiar_lexical=args.limiar)
         print("\n" + "=" * 42)
         print(f" RESULTADOS: {r.modelo}")
         print("=" * 42)

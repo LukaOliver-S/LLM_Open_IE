@@ -28,8 +28,13 @@ from resultados import (
     Triple,
     LexicalMatcher,
     _normalizar_sentenca,
+    CORPORA,
+    CORPUS_PADRAO,
+    resolver_corpus,
 )
 parser = argparse.ArgumentParser()
+parser.add_argument("--corpus", default=CORPUS_PADRAO, choices=list(CORPORA),
+                    help="Corpus (define gold + pastas). Default: %(default)s")
 parser.add_argument("--lotes", type=int, default=None,
                         help="Processar só este tamanho de lote (ex.: 25). Se omitido, processa todos.")
 args = parser.parse_args()
@@ -147,9 +152,10 @@ def plotar_consenso(df: pd.DataFrame, caminho_png: Path) -> None:
 
 
 def main() -> None:
-    gold = "dados/bia_gold_sentences.jsonl"
-    raiz_respostas = Path("Respostas")
-    raiz_metricas = Path("Outputs") / "metricas"
+    cfg = resolver_corpus(args.corpus)
+    gold = cfg["gold"]
+    raiz_respostas = Path(cfg["respostas"])
+    raiz_metricas = cfg["saida"]
 
     lotes = sorted(p for p in raiz_respostas.iterdir() if p.is_dir() and p.name.endswith("_batches"))
     if args.lotes is not None:

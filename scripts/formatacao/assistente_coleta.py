@@ -25,6 +25,11 @@ except ImportError:
 
 RAIZ = Path(__file__).resolve().parents[2]  # LLM_Open_IE/
 
+# Registro de corpora (fonte única: resultados.py) para o atalho --corpus.
+import sys as _sys
+_sys.path.insert(0, str(RAIZ / "scripts" / "Validacao"))
+from resultados import CORPORA  # noqa: E402
+
 TAREFAS = {
     "abstractive": {
         "prompt": RAIZ / "prompts" / "promptAbstractiveOpenIE.txt",
@@ -116,15 +121,20 @@ def main() -> None:
     parser.add_argument("--apenas-lotes", default=None,
                          help="Lista de números de lote a (re)coletar, separados por vírgula "
                               "(ex.: 1,2,3,5,7,9,21). Se omitido, roda todos os que ainda faltam.")
-    parser.add_argument("--sentencas-base", default="sentencas",
-                         help="Pasta base dos lotes (ex.: 'sentencas_oiecpt' para o corpus OIEC-PT-GOLD).")
-    parser.add_argument("--respostas-base", default="Respostas",
-                         help="Pasta base onde salvar as respostas (deve casar com --sentencas-base "
-                              "para não misturar corpora diferentes).")
+    parser.add_argument("--corpus", default="bia", choices=list(CORPORA),
+                         help="Corpus (define sentencas-base e respostas-base). Default: bia")
+    parser.add_argument("--sentencas-base", default=None,
+                         help="Sobrepõe a pasta base dos lotes do corpus (ex.: 'sentencas_oiecpt').")
+    parser.add_argument("--respostas-base", default=None,
+                         help="Sobrepõe a pasta base onde salvar as respostas do corpus.")
     args = parser.parse_args()
 
+    cfg = CORPORA[args.corpus]
+    sentencas_base = args.sentencas_base or cfg["sentencas"]
+    respostas_base = args.respostas_base or cfg["respostas"]
+
     tarefa = TAREFAS[args.tarefa]
-    pasta_lotes = RAIZ / args.sentencas_base / f"{args.lotes}_sentencas"
+    pasta_lotes = RAIZ / sentencas_base / f"{args.lotes}_sentencas"
     arquivos_lote = sorted(
         pasta_lotes.glob("sentencas_parte_*.jsonl"),
         key=lambda p: int(p.stem.rsplit("_", 1)[1]),
@@ -135,10 +145,10 @@ def main() -> None:
     # a pasta bruta é isolada por TAREFA também -- sem isso, lotes já
     # coletados para uma tarefa seriam confundidos com os de outra tarefa
     # que usa o mesmo modelo e o mesmo tamanho de lote
-    pasta_bruto = RAIZ / args.respostas_base / f"{args.lotes}_batches" / "_bruto" / args.tarefa / args.modelo
+    pasta_bruto = RAIZ / respostas_base / f"{args.lotes}_batches" / "_bruto" / args.tarefa / args.modelo
     pasta_bruto.mkdir(parents=True, exist_ok=True)
 
-    pasta_final = RAIZ / args.respostas_base / f"{args.lotes}_batches" / tarefa["categoria"]
+    pasta_final = RAIZ / respostas_base / f"{args.lotes}_batches" / tarefa["categoria"]
     pasta_final.mkdir(parents=True, exist_ok=True)
     caminho_final = pasta_final / f"{args.modelo}.jsonl"
 

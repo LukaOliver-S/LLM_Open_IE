@@ -1,0 +1,17 @@
+modelo,campo,precisao,recall,f1,vp,fp,fn
+Claude_Sonnet5,arg1,0.3468,0.7447,0.4732,318,599,109
+Claude_Sonnet5,rel,0.2704,0.5808,0.369,248,669,179
+Claude_Sonnet5,arg2,0.2465,0.5293,0.3363,226,691,201
+Claude_Sonnet5,tripla_completa,0.1941,0.4169,0.2649,178,739,249
+respostaGrok4.0Fast,arg1,0.7297,0.5691,0.6395,243,90,184
+respostaGrok4.0Fast,rel,0.6036,0.4707,0.5289,201,132,226
+respostaGrok4.0Fast,arg2,0.5616,0.4379,0.4921,187,146,240
+respostaGrok4.0Fast,tripla_completa,0.4835,0.377,0.4237,161,172,266
+respostas_gpt5.5_mini,arg1,0.4093,0.7447,0.5282,318,459,109
+respostas_gpt5.5_mini,rel,0.3166,0.5761,0.4086,246,531,181
+respostas_gpt5.5_mini,arg2,0.2934,0.534,0.3787,228,549,199
+respostas_gpt5.5_mini,tripla_completa,0.2355,0.4286,0.304,183,594,244
+respostasGemini3.1Pro,arg1,0.3687,0.7728,0.4992,330,565,97
+respostasGemini3.1Pro,rel,0.3028,0.6347,0.41,271,624,156
+respostasGemini3.1Pro,arg2,0.2838,0.5948,0.3843,254,641,173
+respostasGemini3.1Pro,tripla_completa,0.2223,0.466,0.3011,199,696,228

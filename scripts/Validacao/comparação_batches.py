@@ -13,6 +13,7 @@ para saber a qual lote cada frase pertence.
 
 from __future__ import annotations
 
+import argparse
 import re
 from pathlib import Path
 from typing import Dict
@@ -30,6 +31,9 @@ from resultados import (
     ExactMatcher,
     Contadores,
     _normalizar_sentenca,
+    CORPORA,
+    CORPUS_PADRAO,
+    resolver_corpus,
 )
 
 _RE_PARTE = re.compile(r"sentencas_parte_(\d+)\.jsonl$")
@@ -159,14 +163,23 @@ def plotar_f1_por_batch(df: pd.DataFrame, titulo: str, caminho_png: Path) -> Non
 
 
 def main() -> None:
-    gold = "dados/bia_gold_sentences.jsonl"
-    raiz_respostas = Path("Respostas")
-    raiz_metricas = Path("Outputs") / "metricas"
+    parser = argparse.ArgumentParser(description="Métricas OIE por lote (batch)")
+    parser.add_argument("--corpus", default=CORPUS_PADRAO, choices=list(CORPORA),
+                        help="Corpus (define gold + pastas). Default: %(default)s")
+    parser.add_argument("--lotes", type=int, default=None, help="Filtra um tamanho de lote (ex.: 10)")
+    args = parser.parse_args()
+
+    cfg = resolver_corpus(args.corpus)
+    gold = cfg["gold"]
+    raiz_respostas = Path(cfg["respostas"])
+    raiz_metricas = cfg["saida"]
 
     lotes_pastas = sorted(p for p in raiz_respostas.iterdir() if p.is_dir() and p.name.endswith("_batches"))
+    if args.lotes is not None:
+        lotes_pastas = [p for p in lotes_pastas if p.name == f"{args.lotes}_batches"]
     for lote_pasta in lotes_pastas:
         n = lote_pasta.name.split("_")[0]
-        pasta_sentencas = Path("sentencas") / f"{n}_sentencas"
+        pasta_sentencas = Path(cfg["sentencas"]) / f"{n}_sentencas"
         if not pasta_sentencas.is_dir():
             log.warning("Pasta de lotes '%s' não encontrada para '%s'; pulando.", pasta_sentencas, lote_pasta.name)
             continue
