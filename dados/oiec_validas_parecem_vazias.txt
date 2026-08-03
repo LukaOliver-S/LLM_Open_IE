@@ -1,0 +1,37 @@
+# Frases VÁLIDAS (com gold) que "parecem vazias" — provam que as features NÃO são exclusivas
+
+
+## Válidas que COMEÇAM COM CONECTIVO (5 no total)
+
+FRASE: Mas eles podem pelo menos colocar armadilhas para confundir e impedir - um conceito conhecido como "defesa ativa".
+  GOLD (tem tripla!): (um conceito ; conhecido como ; defesa ativa)
+
+FRASE: Em cada estação, um guarda de chapéu vermelho comanda a plataforma e um trabalhador anda ao longo do trem com um martelo, batendo gentilmente na parte de baixo da carruagem.
+  GOLD (tem tripla!): (um guarda de chapéu vermelho ; comanda ; a plataforma)
+
+FRASE: Entretanto, Hong Kong, parece estar se preparando para uma onda de protestos.
+  GOLD (tem tripla!): (Hong Kong ; parece estar se preparando para ; uma onda de protestos)
+
+FRASE: Mas agora tudo está fora de questão e ele parece estar à procura de respostas a toda hora.
+  GOLD (tem tripla!): (tudo ; está ; fora de questão)
+
+
+## Válidas com PERGUNTA (?) (1 no total)
+
+FRASE: De onde vem toda a sua energia? Ou essa sua voz, que pode explodir com uma força para induzir ondas de choque?
+  GOLD (tem tripla!): (sua voz ; pode explodir com ; uma força)
+
+
+## Válidas com 1a pessoa / verbo subjetivo (7 no total)
+
+FRASE: Penso que é por isso que eles se imergiram em padrões e cor.
+  GOLD (tem tripla!): (eles ; se imergiram em ; padrões e cor)
+
+FRASE: Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.
+  GOLD (tem tripla!): (Eu ; visitei ; os espetáculos universitários)
+
+FRASE: O seu representante de políticas da natureza, Jeff Knott, declarou: "Eu ficaria espantado se uma proibição ou um licenciamento fosse com base nestes fundamentos".
+  GOLD (tem tripla!): (O seu representante de políticas de a natureza ; é ; Jeff Knott)
+
+FRASE: Dia três, eu estava de volta no EMicro.
+  GOLD (tem tripla!): (eu ; estava ; de volta em o EMicro)

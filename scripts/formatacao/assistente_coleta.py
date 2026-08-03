@@ -25,6 +25,10 @@ except ImportError:
 
 RAIZ = Path(__file__).resolve().parents[2]  # LLM_Open_IE/
 
+import sys
+sys.path.insert(0, str(RAIZ / "scripts" / "Validacao"))
+from resultados import CORPORA, CORPUS_PADRAO, resolver_corpus  # registro de corpora
+
 # Registro de corpora (fonte única: resultados.py) para o atalho --corpus.
 import sys as _sys
 _sys.path.insert(0, str(RAIZ / "scripts" / "Validacao"))
