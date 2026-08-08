@@ -1,0 +1,41 @@
+57 near-misses
+
+FRASE: O enxofre é um nutriente vital para o crescimento saudável das plantas
+GOLD:   (os solos em o Reino Unido ; são ; naturalmente deficientes deste mineral)
+CLAUDE: (os solos no Reino Unido ; são naturalmente deficientes de ; este mineral)
+
+FRASE: O enxofre é um nutriente vital para o crescimento saudável das plantas
+GOLD:   (O enxofre ; é ; um nutriente vital)
+CLAUDE: (O enxofre ; é ; um nutriente vital para o crescimento saudável das plantas)
+
+FRASE: O enxofre é um nutriente vital para o crescimento saudável das plantas
+GOLD:   (os solos ; são deficientes de este mineral em ; o Reino Unido)
+CLAUDE: (os solos no Reino Unido ; são naturalmente deficientes de ; este mineral)
+
+FRASE: O enxofre é um nutriente vital para o crescimento saudável das plantas
+GOLD:   (O enxofre ; é um nutriente vital para ; o crescimento saudável de as plantas)
+CLAUDE: (O enxofre ; é ; um nutriente vital para o crescimento saudável das plantas)
+
+FRASE: O mundo pode estar enfurecido e absurdo - no entanto pelo menos alguém
+GOLD:   (alguém ; tem ; dignidade)
+CLAUDE: (alguém ; tem ; dignidade para continuar a protestar contra esse fato)
+
+FRASE: O mundo pode estar enfurecido e absurdo - no entanto pelo menos alguém
+GOLD:   (alguém ; tem ; dignidade por o menos)
+CLAUDE: (alguém ; tem ; dignidade para continuar a protestar contra esse fato)
+
+FRASE: Penso que é por isso que eles se imergiram em padrões e cor.
+GOLD:   (eles ; se imergiram em ; padrões e cor)
+CLAUDE: (eles ; se imergiram em ; padrões)
+
+FRASE: Catalano voltou para a área depois de viver em Londres e em Glasgow, o
+GOLD:   (Catalano ; voltou para ; a área depois de viver em Londres)
+CLAUDE: (Catalano ; voltou para ; a área)
+
+FRASE: Catalano voltou para a área depois de viver em Londres e em Glasgow, o
+GOLD:   (Catalano ; voltou depois de ; viver em Londres)
+CLAUDE: (Catalano ; voltou para ; a área)
+
+FRASE: Eu visitei os espetáculos universitários na Universidade de Northampto
+GOLD:   (Eu ; visitei ; os espetáculos universitários em a Universidade de Northampton)
+CLAUDE: (Eu ; visitei ; os espetáculos universitários)

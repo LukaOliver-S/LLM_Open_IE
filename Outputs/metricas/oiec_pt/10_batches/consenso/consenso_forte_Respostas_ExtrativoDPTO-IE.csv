@@ -3,18 +3,20 @@ sentence,modelo_exemplo,arg1,rel,arg2,n_modelos_concordando
 "Teoricamente, um casal poderia abrir quatro contas Tesco e ganhar 3% em £12,000 – £360.",Gemini3.1Pro,um casal,poderia ganhar,"3% em £12,000 – £360",4
 "Teoricamente, um casal poderia abrir quatro contas Tesco e ganhar 3% em £12,000 – £360.",Grok4.0Fast,um casal,poderia ganhar,"3% em £12,000 – £360",4
 "Teoricamente, um casal poderia abrir quatro contas Tesco e ganhar 3% em £12,000 – £360.",respostas_gpt5.5_mini,um casal,poderia ganhar,"3% em £12,000 – £360",4
-"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Claude_Sonnet5,os clientes do Banco da Escócia,ganham,"3% em balanços de £3,000-£5,000",3
+"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Claude_Sonnet5,os clientes do Banco da Escócia,ganham,"3% em balanços de £3,000-£5,000",4
 "Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Claude_Sonnet5,os clientes do Banco da Escócia,ganham,"3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas",3
-"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Gemini3.1Pro,os clientes do Banco da Escócia,ganham,"3% em balanços de £3,000-£5,000",3
+"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Gemini3.1Pro,os clientes do Banco da Escócia,ganham,"3% em balanços de £3,000-£5,000",4
 "Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Gemini3.1Pro,os clientes do Banco da Escócia,ganham,"3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas",3
 "Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Grok4.0Fast,os clientes do Banco da Escócia,ganham,"3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas",3
-"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",respostas_gpt5.5_mini,os clientes do Banco da Escócia,ganham,"3% em balanços de £3,000-£5,000",3
+"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",PTOIE-Flair,os clientes de o Banco de a Escócia,ganham,"3% em balanços de £3,000-£5,000",4
+"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",respostas_gpt5.5_mini,os clientes do Banco da Escócia,ganham,"3% em balanços de £3,000-£5,000",4
 "Com isto, em teoria, você é capaz de acessar seu dinheiro sempre que quiser.",Claude_Sonnet5,você,é capaz de acessar,seu dinheiro sempre que quiser,4
 "Com isto, em teoria, você é capaz de acessar seu dinheiro sempre que quiser.",DPTOIE-PY,você,é,"Com isto , em teoria , capaz acessar seu dinheiro sempre que quiser",3
-"Com isto, em teoria, você é capaz de acessar seu dinheiro sempre que quiser.",Gemini3.1Pro,você,é,capaz de acessar seu dinheiro sempre que quiser,3
+"Com isto, em teoria, você é capaz de acessar seu dinheiro sempre que quiser.",Gemini3.1Pro,você,é,capaz de acessar seu dinheiro sempre que quiser,4
 "Com isto, em teoria, você é capaz de acessar seu dinheiro sempre que quiser.",Gemini3.1Pro,você,é capaz de acessar,seu dinheiro sempre que quiser,4
-"Com isto, em teoria, você é capaz de acessar seu dinheiro sempre que quiser.",Grok4.0Fast,você,é,capaz de acessar seu dinheiro sempre que quiser,3
+"Com isto, em teoria, você é capaz de acessar seu dinheiro sempre que quiser.",Grok4.0Fast,você,é,capaz de acessar seu dinheiro sempre que quiser,4
 "Com isto, em teoria, você é capaz de acessar seu dinheiro sempre que quiser.",Grok4.0Fast,você,é capaz de acessar,seu dinheiro sempre que quiser,4
+"Com isto, em teoria, você é capaz de acessar seu dinheiro sempre que quiser.",PTOIE-Flair,você,é,capaz de acessar seu dinheiro,3
 "Com isto, em teoria, você é capaz de acessar seu dinheiro sempre que quiser.",respostas_gpt5.5_mini,você,é capaz de acessar,seu dinheiro sempre que quiser,4
 "Esta taxa de 3% também se aplica a titulares de cartão Nectar que pensam em pedir emprestado £15,001-£19,999, durante um período de dois a três anos.",Claude_Sonnet5,titulares de cartão Nectar,pensam em pedir emprestado,"£15,001-£19,999, durante um período de dois a três anos",4
 "Esta taxa de 3% também se aplica a titulares de cartão Nectar que pensam em pedir emprestado £15,001-£19,999, durante um período de dois a três anos.",Gemini3.1Pro,Esta taxa de 3%,também se aplica a,"titulares de cartão Nectar que pensam em pedir emprestado £15,001-£19,999, durante um período de dois a três anos.",3
@@ -47,41 +49,45 @@ Penso que é por isso que eles se imergiram em padrões e cor.,respostas_gpt5.5_
 "Catalano voltou para a área depois de viver em Londres e em Glasgow, onde estudou design de jóias na Glasgow School of Art.",Grok4.0Fast,Catalano,estudou,design de jóias na Glasgow School of Art,4
 "Catalano voltou para a área depois de viver em Londres e em Glasgow, onde estudou design de jóias na Glasgow School of Art.",respostas_gpt5.5_mini,Catalano,voltou,para a área depois de viver em Londres e em Glasgow,3
 "Catalano voltou para a área depois de viver em Londres e em Glasgow, onde estudou design de jóias na Glasgow School of Art.",respostas_gpt5.5_mini,Catalano,estudou,design de jóias na Glasgow School of Art,4
-"Eu adorei as cores tropicais, diz ele.",Claude_Sonnet5,Eu,adorei,as cores tropicais,5
+"Eu adorei as cores tropicais, diz ele.",Claude_Sonnet5,Eu,adorei,as cores tropicais,6
 "Eu adorei as cores tropicais, diz ele.",Claude_Sonnet5,ele,diz,Eu adorei as cores tropicais,4
-"Eu adorei as cores tropicais, diz ele.",DPTOIE-PY,Eu,adorei,as cores tropicais,5
+"Eu adorei as cores tropicais, diz ele.",DPTOIE-PY,Eu,adorei,as cores tropicais,6
 "Eu adorei as cores tropicais, diz ele.",Gemini3.1Pro,ele,diz,Eu adorei as cores tropicais,4
-"Eu adorei as cores tropicais, diz ele.",Gemini3.1Pro,Eu,adorei,as cores tropicais,5
-"Eu adorei as cores tropicais, diz ele.",Grok4.0Fast,Eu,adorei,as cores tropicais,5
+"Eu adorei as cores tropicais, diz ele.",Gemini3.1Pro,Eu,adorei,as cores tropicais,6
+"Eu adorei as cores tropicais, diz ele.",Grok4.0Fast,Eu,adorei,as cores tropicais,6
 "Eu adorei as cores tropicais, diz ele.",Grok4.0Fast,ele,diz,Eu adorei as cores tropicais,4
-"Eu adorei as cores tropicais, diz ele.",respostas_gpt5.5_mini,Eu,adorei,as cores tropicais,5
+"Eu adorei as cores tropicais, diz ele.",PTOIE-Flair,Eu,adorei,as cores tropicais,6
+"Eu adorei as cores tropicais, diz ele.",respostas_gpt5.5_mini,Eu,adorei,as cores tropicais,6
 "Eu adorei as cores tropicais, diz ele.",respostas_gpt5.5_mini,ele,diz,Eu adorei as cores tropicais,4
 "Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",Claude_Sonnet5,ele,diz,Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos,4
 "Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",Gemini3.1Pro,ele,diz,Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos,4
 "Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",Grok4.0Fast,ele,diz,Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos,4
 "Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",respostas_gpt5.5_mini,ele,diz,Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos,4
 "Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",Claude_Sonnet5,eu,sugiro,que ela use a Frank como sua modelo,4
-"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",Claude_Sonnet5,ela,use,a Frank como sua modelo,5
-"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",DPTOIE-PY,ela,use,a Frank como sua modelo,5
+"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",Claude_Sonnet5,ela,use,a Frank como sua modelo,6
+"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",DPTOIE-PY,ela,use,a Frank como sua modelo,6
 "Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",Gemini3.1Pro,eu,sugiro,que ela use a Frank como sua modelo,4
-"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",Gemini3.1Pro,ela,use,a Frank como sua modelo,5
+"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",Gemini3.1Pro,ela,use,a Frank como sua modelo,6
 "Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",Grok4.0Fast,eu,sugiro,que ela use a Frank como sua modelo,4
-"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",Grok4.0Fast,ela,use,a Frank como sua modelo,5
+"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",Grok4.0Fast,ela,use,a Frank como sua modelo,6
+"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",PTOIE-Flair,ela,use,a Frank como sua modelo,6
 "Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",respostas_gpt5.5_mini,eu,sugiro,que ela use a Frank como sua modelo,4
-"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",respostas_gpt5.5_mini,ela,use,a Frank como sua modelo,5
+"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",respostas_gpt5.5_mini,ela,use,a Frank como sua modelo,6
 "Naturalmente, a paisagem do escritório apresenta muitas roupas e, no sentido de comida, pouco.",Claude_Sonnet5,a paisagem do escritório,apresenta,pouco no sentido de comida,4
 "Naturalmente, a paisagem do escritório apresenta muitas roupas e, no sentido de comida, pouco.",Gemini3.1Pro,a paisagem do escritório,apresenta,pouco no sentido de comida,4
 "Naturalmente, a paisagem do escritório apresenta muitas roupas e, no sentido de comida, pouco.",Grok4.0Fast,a paisagem do escritório,apresenta,pouco no sentido de comida,4
 "Naturalmente, a paisagem do escritório apresenta muitas roupas e, no sentido de comida, pouco.",respostas_gpt5.5_mini,a paisagem do escritório,apresenta,pouco no sentido de comida,4
-"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Claude_Sonnet5,A própria Wintour,aparece,rapidamente,5
-"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Claude_Sonnet5,A própria Wintour,é filmada,colocando seus óculos de sol,4
-"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",DPTOIE-PY,A própria Wintour,aparece,rapidamente,5
-"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Gemini3.1Pro,A própria Wintour,aparece,rapidamente,5
-"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Gemini3.1Pro,A própria Wintour,é filmada,colocando seus óculos de sol antes de ser entrevistada,4
-"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Grok4.0Fast,A própria Wintour,aparece,rapidamente,5
-"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Grok4.0Fast,A própria Wintour,é filmada,colocando seus óculos de sol antes de ser entrevistada,4
-"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",respostas_gpt5.5_mini,A própria Wintour,aparece,rapidamente,5
-"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",respostas_gpt5.5_mini,A própria Wintour,é filmada,colocando seus óculos de sol antes de ser entrevistada,4
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Claude_Sonnet5,A própria Wintour,aparece,rapidamente,6
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Claude_Sonnet5,A própria Wintour,é filmada,colocando seus óculos de sol,5
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",DPTOIE-PY,A própria Wintour,aparece,rapidamente,6
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Gemini3.1Pro,A própria Wintour,aparece,rapidamente,6
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Gemini3.1Pro,A própria Wintour,é filmada,colocando seus óculos de sol antes de ser entrevistada,5
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Grok4.0Fast,A própria Wintour,aparece,rapidamente,6
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Grok4.0Fast,A própria Wintour,é filmada,colocando seus óculos de sol antes de ser entrevistada,5
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",PTOIE-Flair,A própria Wintour,aparece,rapidamente,6
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",PTOIE-Flair,A própria Wintour,é filmada,colocando seus óculos de sol,5
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",respostas_gpt5.5_mini,A própria Wintour,aparece,rapidamente,6
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",respostas_gpt5.5_mini,A própria Wintour,é filmada,colocando seus óculos de sol antes de ser entrevistada,5
 "Olhei para o motocross e quanto mais olhava, continuava a surgir a cara desta mulher, em fotografias que pareciam ser dos anos 70.",Claude_Sonnet5,a cara desta mulher,continuava a surgir,em fotografias que pareciam ser dos anos 70,3
 "Olhei para o motocross e quanto mais olhava, continuava a surgir a cara desta mulher, em fotografias que pareciam ser dos anos 70.",Claude_Sonnet5,fotografias,pareciam ser,dos anos 70,4
 "Olhei para o motocross e quanto mais olhava, continuava a surgir a cara desta mulher, em fotografias que pareciam ser dos anos 70.",Gemini3.1Pro,a cara desta mulher,continuava a surgir,em fotografias que pareciam ser dos anos 70,3
@@ -103,11 +109,12 @@ Penso que é por isso que eles se imergiram em padrões e cor.,respostas_gpt5.5_
 "A postura do RSPB também o colocou em conflito com muitos líderes conservadores, desde o autor da petição, Mark Avery, ao apresentador de TV Chris Packham.",Grok4.0Fast,Chris Packham,é,o apresentador de TV,3
 "A postura do RSPB também o colocou em conflito com muitos líderes conservadores, desde o autor da petição, Mark Avery, ao apresentador de TV Chris Packham.",respostas_gpt5.5_mini,o autor da petição,é,Mark Avery,4
 "A postura do RSPB também o colocou em conflito com muitos líderes conservadores, desde o autor da petição, Mark Avery, ao apresentador de TV Chris Packham.",respostas_gpt5.5_mini,Mark Avery,é,o autor da petição,4
-Vamos simplesmente dizer que ele está errado.,Claude_Sonnet5,ele,está,errado,5
-Vamos simplesmente dizer que ele está errado.,DPTOIE-PY,ele,está,errado,5
-Vamos simplesmente dizer que ele está errado.,Gemini3.1Pro,ele,está,errado,5
-Vamos simplesmente dizer que ele está errado.,Grok4.0Fast,ele,está,errado,5
-Vamos simplesmente dizer que ele está errado.,respostas_gpt5.5_mini,ele,está,errado,5
+Vamos simplesmente dizer que ele está errado.,Claude_Sonnet5,ele,está,errado,6
+Vamos simplesmente dizer que ele está errado.,DPTOIE-PY,ele,está,errado,6
+Vamos simplesmente dizer que ele está errado.,Gemini3.1Pro,ele,está,errado,6
+Vamos simplesmente dizer que ele está errado.,Grok4.0Fast,ele,está,errado,6
+Vamos simplesmente dizer que ele está errado.,PTOIE-Flair,ele,está,errado,6
+Vamos simplesmente dizer que ele está errado.,respostas_gpt5.5_mini,ele,está,errado,6
 "Nisto, um ponto diário em Marrocos será em pleno sábado, quando países desenvolvidos se questionam publicamente sobre seus planos e ambições.",Claude_Sonnet5,um ponto diário em Marrocos,será,em pleno sábado,4
 "Nisto, um ponto diário em Marrocos será em pleno sábado, quando países desenvolvidos se questionam publicamente sobre seus planos e ambições.",Claude_Sonnet5,um ponto diário em Marrocos,será,"em pleno sábado, quando países desenvolvidos se questionam publicamente sobre seus planos e ambições",3
 "Nisto, um ponto diário em Marrocos será em pleno sábado, quando países desenvolvidos se questionam publicamente sobre seus planos e ambições.",DPTOIE-PY,um ponto diário em Marrocos,será,em pleno sábado,4
@@ -156,16 +163,18 @@ Vamos simplesmente dizer que ele está errado.,respostas_gpt5.5_mini,ele,está,e
 "O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",Grok4.0Fast,o Reino Unido,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,4
 "O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",respostas_gpt5.5_mini,O mundo,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,4
 "O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",respostas_gpt5.5_mini,o Reino Unido,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,4
-"As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.",Claude_Sonnet5,As empresas,podem tentar criar,um firewall entre sistemas sensíveis e potências estrangeiras,5
-"As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.",DPTOIE-PY,As empresas,podem tentar criar,um firewall entre sistemas sensíveis e potências estrangeiras,5
-"As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.",Gemini3.1Pro,As empresas,podem tentar criar,um firewall entre sistemas sensíveis e potências estrangeiras,5
-"As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.",Grok4.0Fast,As empresas,podem tentar criar,um firewall entre sistemas sensíveis e potências estrangeiras,5
-"As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.",respostas_gpt5.5_mini,As empresas,podem tentar criar,um firewall entre sistemas sensíveis e potências estrangeiras,5
-"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",Claude_Sonnet5,a minha lista,cresceu,muito,5
-"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",DPTOIE-PY,a minha lista,cresceu,muito,5
-"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",Gemini3.1Pro,a minha lista,cresceu,muito,5
-"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",Grok4.0Fast,a minha lista,cresceu,muito,5
-"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",respostas_gpt5.5_mini,a minha lista,cresceu,muito,5
+"As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.",Claude_Sonnet5,As empresas,podem tentar criar,um firewall entre sistemas sensíveis e potências estrangeiras,6
+"As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.",DPTOIE-PY,As empresas,podem tentar criar,um firewall entre sistemas sensíveis e potências estrangeiras,6
+"As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.",Gemini3.1Pro,As empresas,podem tentar criar,um firewall entre sistemas sensíveis e potências estrangeiras,6
+"As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.",Grok4.0Fast,As empresas,podem tentar criar,um firewall entre sistemas sensíveis e potências estrangeiras,6
+"As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.",PTOIE-Flair,As empresas,podem tentar,criar um firewall entre sistemas sensíveis e potências estrangeiras,6
+"As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.",respostas_gpt5.5_mini,As empresas,podem tentar criar,um firewall entre sistemas sensíveis e potências estrangeiras,6
+"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",Claude_Sonnet5,a minha lista,cresceu,muito,6
+"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",DPTOIE-PY,a minha lista,cresceu,muito,6
+"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",Gemini3.1Pro,a minha lista,cresceu,muito,6
+"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",Grok4.0Fast,a minha lista,cresceu,muito,6
+"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",PTOIE-Flair,a minha lista,cresceu,muito,6
+"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",respostas_gpt5.5_mini,a minha lista,cresceu,muito,6
 "De volta ao trem, nós continuamos em direção ao o sul.",Gemini3.1Pro,nós,continuamos,em direção ao o sul De volta ao trem,3
 "De volta ao trem, nós continuamos em direção ao o sul.",Grok4.0Fast,nós,continuamos,em direção ao o sul,3
 "Em cada estação, um guarda de chapéu vermelho comanda a plataforma e um trabalhador anda ao longo do trem com um martelo, batendo gentilmente na parte de baixo da carruagem.",Claude_Sonnet5,um trabalhador,anda,ao longo do trem com um martelo,4
@@ -219,14 +228,15 @@ Vamos simplesmente dizer que ele está errado.,respostas_gpt5.5_mini,ele,está,e
 "Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",Grok4.0Fast,Esse,foi,"sem dúvida o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril",3
 "Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",respostas_gpt5.5_mini,Esse,foi,"sem dúvida o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril",3
 Eu também penso se a Taça Davis desempenhou algum papel.,Claude_Sonnet5,Eu,também penso,se a Taça Davis desempenhou algum papel,4
-Eu também penso se a Taça Davis desempenhou algum papel.,Claude_Sonnet5,a Taça Davis,desempenhou,algum papel,5
-Eu também penso se a Taça Davis desempenhou algum papel.,DPTOIE-PY,a Taça Davis,desempenhou,algum papel,5
+Eu também penso se a Taça Davis desempenhou algum papel.,Claude_Sonnet5,a Taça Davis,desempenhou,algum papel,6
+Eu também penso se a Taça Davis desempenhou algum papel.,DPTOIE-PY,a Taça Davis,desempenhou,algum papel,6
 Eu também penso se a Taça Davis desempenhou algum papel.,Gemini3.1Pro,Eu,também penso,se a Taça Davis desempenhou algum papel,4
-Eu também penso se a Taça Davis desempenhou algum papel.,Gemini3.1Pro,a Taça Davis,desempenhou,algum papel,5
+Eu também penso se a Taça Davis desempenhou algum papel.,Gemini3.1Pro,a Taça Davis,desempenhou,algum papel,6
 Eu também penso se a Taça Davis desempenhou algum papel.,Grok4.0Fast,Eu,também penso,se a Taça Davis desempenhou algum papel,4
-Eu também penso se a Taça Davis desempenhou algum papel.,Grok4.0Fast,a Taça Davis,desempenhou,algum papel,5
+Eu também penso se a Taça Davis desempenhou algum papel.,Grok4.0Fast,a Taça Davis,desempenhou,algum papel,6
+Eu também penso se a Taça Davis desempenhou algum papel.,PTOIE-Flair,a Taça Davis,desempenhou,algum papel,6
 Eu também penso se a Taça Davis desempenhou algum papel.,respostas_gpt5.5_mini,Eu,também penso,se a Taça Davis desempenhou algum papel,4
-Eu também penso se a Taça Davis desempenhou algum papel.,respostas_gpt5.5_mini,a Taça Davis,desempenhou,algum papel,5
+Eu também penso se a Taça Davis desempenhou algum papel.,respostas_gpt5.5_mini,a Taça Davis,desempenhou,algum papel,6
 A pesquisa anual também revelou que as preocupações sobre assumir novos encargos financeiros têm disparado.,Claude_Sonnet5,A pesquisa anual,também revelou,que as preocupações sobre assumir novos encargos financeiros têm disparado,4
 A pesquisa anual também revelou que as preocupações sobre assumir novos encargos financeiros têm disparado.,Gemini3.1Pro,A pesquisa anual,também revelou,que as preocupações sobre assumir novos encargos financeiros têm disparado,4
 A pesquisa anual também revelou que as preocupações sobre assumir novos encargos financeiros têm disparado.,Grok4.0Fast,A pesquisa anual,também revelou,que as preocupações sobre assumir novos encargos financeiros têm disparado,4
@@ -273,13 +283,14 @@ A pesquisa anual também revelou que as preocupações sobre assumir novos encar
 "As empresas esperavam começar a decrescer em julho, imediatamente após o voto do Brexit, mas em vez disso têm conseguido manter o crescimento constante.",Gemini3.1Pro,As empresas,têm conseguido manter,o crescimento constante,4
 "As empresas esperavam começar a decrescer em julho, imediatamente após o voto do Brexit, mas em vez disso têm conseguido manter o crescimento constante.",Grok4.0Fast,As empresas,têm conseguido manter,o crescimento constante,4
 "As empresas esperavam começar a decrescer em julho, imediatamente após o voto do Brexit, mas em vez disso têm conseguido manter o crescimento constante.",respostas_gpt5.5_mini,As empresas,têm conseguido manter,o crescimento constante,4
-"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",Claude_Sonnet5,O custo,vai mudar,mensalmente,5
-"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",DPTOIE-PY,O custo,vai mudar,mensalmente,5
-"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",Gemini3.1Pro,O custo,vai mudar,mensalmente,5
+"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",Claude_Sonnet5,O custo,vai mudar,mensalmente,6
+"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",DPTOIE-PY,O custo,vai mudar,mensalmente,6
+"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",Gemini3.1Pro,O custo,vai mudar,mensalmente,6
 "O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",Gemini3.1Pro,o preço,aumente,no inverno,3
-"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",Grok4.0Fast,O custo,vai mudar,mensalmente,5
+"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",Grok4.0Fast,O custo,vai mudar,mensalmente,6
 "O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",Grok4.0Fast,o preço,aumente,no inverno,3
-"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",respostas_gpt5.5_mini,O custo,vai mudar,mensalmente,5
+"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",PTOIE-Flair,O custo,vai mudar,mensalmente,6
+"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",respostas_gpt5.5_mini,O custo,vai mudar,mensalmente,6
 "O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",respostas_gpt5.5_mini,o preço,aumente,no inverno,3
 A taxa fixa da Eon custa £760 e os clientes da Avro Energy pagariam cerca de £760 pela sua tarifa Simple and Select.,DPTOIE-PY,os clientes de a Avro Energy,pagariam,cerca de £760 por a sua tarifa Simple and Select,4
 A taxa fixa da Eon custa £760 e os clientes da Avro Energy pagariam cerca de £760 pela sua tarifa Simple and Select.,Gemini3.1Pro,os clientes da Avro Energy,pagariam,cerca de £760 pela sua tarifa Simple and Select,4
@@ -304,9 +315,10 @@ Isso não impediu os investidores de se reunirem para colocar o seu dinheiro nos
 Isso não impediu os investidores de se reunirem para colocar o seu dinheiro nos fundos.,Gemini3.1Pro,Isso,não impediu,os investidores de se reunirem para colocar o seu dinheiro nos fundos,5
 Isso não impediu os investidores de se reunirem para colocar o seu dinheiro nos fundos.,Grok4.0Fast,Isso,não impediu,os investidores de se reunirem para colocar o seu dinheiro nos fundos,5
 Isso não impediu os investidores de se reunirem para colocar o seu dinheiro nos fundos.,respostas_gpt5.5_mini,Isso,não impediu,os investidores de se reunirem para colocar o seu dinheiro nos fundos,5
-"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",Claude_Sonnet5,Ele,foi seguido por,os fundos Aviva Investors Multi Strategy Target Return and Income,3
-"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",Gemini3.1Pro,Ele,foi seguido,pelos fundos Aviva Investors Multi Strategy Target Return and Income,3
-"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",respostas_gpt5.5_mini,Ele,foi seguido pelos,fundos Aviva Investors Multi Strategy Target Return and Income,3
+"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",Claude_Sonnet5,Ele,foi seguido por,os fundos Aviva Investors Multi Strategy Target Return and Income,4
+"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",Gemini3.1Pro,Ele,foi seguido,pelos fundos Aviva Investors Multi Strategy Target Return and Income,4
+"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",PTOIE-Flair,Ele,foi seguido pelos,fundos Aviva Investors Multi Strategy Target Return and Income,4
+"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",respostas_gpt5.5_mini,Ele,foi seguido pelos,fundos Aviva Investors Multi Strategy Target Return and Income,4
 Isto significa que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores.,Claude_Sonnet5,Isto,significa,que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores,4
 Isto significa que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores.,DPTOIE-PY,eles,não beneficiaram,de a elevação que deu a os ativos financeiros exteriores,4
 Isto significa que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores.,Gemini3.1Pro,Isto,significa,que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores,4
@@ -369,31 +381,37 @@ O ano passado foi um ano incrível e estou pronto para que possamos voltar ainda
 "O seu pescoço avança em confronto com veias acentuadas, as suas mãos tremem.",Gemini3.1Pro,O seu pescoço,avança,em confronto com veias acentuadas,4
 "O seu pescoço avança em confronto com veias acentuadas, as suas mãos tremem.",Grok4.0Fast,O seu pescoço,avança,em confronto com veias acentuadas,4
 "O seu pescoço avança em confronto com veias acentuadas, as suas mãos tremem.",respostas_gpt5.5_mini,O seu pescoço,avança,em confronto com veias acentuadas,4
-"Mas tendo permitido que Glenda mandasse tão bem, quem poderia culpá-lo?",Claude_Sonnet5,Glenda,mandasse,tão bem,5
-"Mas tendo permitido que Glenda mandasse tão bem, quem poderia culpá-lo?",DPTOIE-PY,Glenda,mandasse,tão bem,5
-"Mas tendo permitido que Glenda mandasse tão bem, quem poderia culpá-lo?",Gemini3.1Pro,Glenda,mandasse,tão bem,5
-"Mas tendo permitido que Glenda mandasse tão bem, quem poderia culpá-lo?",Grok4.0Fast,Glenda,mandasse,tão bem,5
-"Mas tendo permitido que Glenda mandasse tão bem, quem poderia culpá-lo?",respostas_gpt5.5_mini,Glenda,mandasse,tão bem,5
+"Mas tendo permitido que Glenda mandasse tão bem, quem poderia culpá-lo?",Claude_Sonnet5,Glenda,mandasse,tão bem,6
+"Mas tendo permitido que Glenda mandasse tão bem, quem poderia culpá-lo?",DPTOIE-PY,Glenda,mandasse,tão bem,6
+"Mas tendo permitido que Glenda mandasse tão bem, quem poderia culpá-lo?",Gemini3.1Pro,Glenda,mandasse,tão bem,6
+"Mas tendo permitido que Glenda mandasse tão bem, quem poderia culpá-lo?",Grok4.0Fast,Glenda,mandasse,tão bem,6
+"Mas tendo permitido que Glenda mandasse tão bem, quem poderia culpá-lo?",PTOIE-Flair,Glenda,mandasse,tão bem,6
+"Mas tendo permitido que Glenda mandasse tão bem, quem poderia culpá-lo?",respostas_gpt5.5_mini,Glenda,mandasse,tão bem,6
 "Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Claude_Sonnet5,Ele,trabalhou,durante décadas,3
 "Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Gemini3.1Pro,Ele,trabalhou,durante décadas,3
 "Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Grok4.0Fast,Ele,trabalhou,durante décadas,3
 O cinema tinha mudado tão drasticamente que Hollywood tinha alienado o público familiar.,Gemini3.1Pro,O cinema,tinha mudado,tão drasticamente que Hollywood tinha alienado o público familiar,3
 O cinema tinha mudado tão drasticamente que Hollywood tinha alienado o público familiar.,Grok4.0Fast,O cinema,tinha mudado,tão drasticamente que Hollywood tinha alienado o público familiar,3
 O cinema tinha mudado tão drasticamente que Hollywood tinha alienado o público familiar.,respostas_gpt5.5_mini,O cinema,tinha mudado,tão drasticamente que Hollywood tinha alienado o público familiar,3
-"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",Claude_Sonnet5,o filme,é,um ato precário,4
-"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",Gemini3.1Pro,o filme,é,um ato precário,4
-"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",Grok4.0Fast,o filme,é,um ato precário,4
-"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",respostas_gpt5.5_mini,o filme,é,um ato precário,4
+"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",Claude_Sonnet5,o filme,é,um ato precário,5
+"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",Gemini3.1Pro,o filme,é,um ato precário,5
+"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",Grok4.0Fast,o filme,é,um ato precário,5
+"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",PTOIE-Flair,o filme,é,um ato precário,5
+"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",respostas_gpt5.5_mini,o filme,é,um ato precário,5
 "E, claro, tem o Bob, uma constante fonte de entretenimento.",Claude_Sonnet5,o Bob,é,uma constante fonte de entretenimento,3
 "E, claro, tem o Bob, uma constante fonte de entretenimento.",Gemini3.1Pro,o Bob,é,uma constante fonte de entretenimento,3
 "E, claro, tem o Bob, uma constante fonte de entretenimento.",Grok4.0Fast,o Bob,é,uma constante fonte de entretenimento,3
+"O resultado, então, dificilmente é o pijama do gato.",Gemini3.1Pro,O resultado,é,o pijama do gato,3
+"O resultado, então, dificilmente é o pijama do gato.",Grok4.0Fast,O resultado,é,o pijama do gato,3
+"O resultado, então, dificilmente é o pijama do gato.",PTOIE-Flair,O resultado,é,o pijama de o gato,4
 "Para as audiências modernas, maioria das quais com pouca experiência em conflitos de primeira linha, os feitos de Doss pertencem à esfera do inimaginável.",Gemini3.1Pro,os feitos de Doss,pertencem,à esfera do inimaginável,3
 "Para as audiências modernas, maioria das quais com pouca experiência em conflitos de primeira linha, os feitos de Doss pertencem à esfera do inimaginável.",Grok4.0Fast,os feitos de Doss,pertencem,à esfera do inimaginável,3
 "Para as audiências modernas, maioria das quais com pouca experiência em conflitos de primeira linha, os feitos de Doss pertencem à esfera do inimaginável.",respostas_gpt5.5_mini,os feitos de Doss,pertencem,à esfera do inimaginável,3
 A história do Doss também tem uma qualidade improvável que torna tudo ainda mais atraente.,DPTOIE-PY,A história de o Doss,também tem,uma qualidade improvável torna tudo ainda mais atraente,3
 A história do Doss também tem uma qualidade improvável que torna tudo ainda mais atraente.,Gemini3.1Pro,A história do Doss,também tem,uma qualidade improvável que torna tudo ainda mais atraente,3
 A história do Doss também tem uma qualidade improvável que torna tudo ainda mais atraente.,respostas_gpt5.5_mini,A história do Doss,também tem,uma qualidade improvável que torna tudo ainda mais atraente,3
-"Todos os médicos estavam armados, exceto eu.",Claude_Sonnet5,Todos os médicos,estavam,armados,4
-"Todos os médicos estavam armados, exceto eu.",Gemini3.1Pro,Todos os médicos,estavam,armados,4
-"Todos os médicos estavam armados, exceto eu.",Grok4.0Fast,Todos os médicos,estavam,armados,4
-"Todos os médicos estavam armados, exceto eu.",respostas_gpt5.5_mini,Todos os médicos,estavam,armados,4
+"Todos os médicos estavam armados, exceto eu.",Claude_Sonnet5,Todos os médicos,estavam,armados,5
+"Todos os médicos estavam armados, exceto eu.",Gemini3.1Pro,Todos os médicos,estavam,armados,5
+"Todos os médicos estavam armados, exceto eu.",Grok4.0Fast,Todos os médicos,estavam,armados,5
+"Todos os médicos estavam armados, exceto eu.",PTOIE-Flair,Todos os médicos,estavam,armados,5
+"Todos os médicos estavam armados, exceto eu.",respostas_gpt5.5_mini,Todos os médicos,estavam,armados,5
