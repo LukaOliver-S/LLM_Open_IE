@@ -55,6 +55,13 @@ from openpyxl.utils import get_column_letter
 # 1. LEITURA ROBUSTA DE JSON "SUJO" (mesma técnica usada nos outros scripts)
 # --------------------------------------------------------------------------- #
 
+sys.path.insert(0, str(Path(__file__).resolve().parent / "scripts" / "Validacao"))
+
+from resultados import CORPORA, resolver_corpus
+
+
+
+
 _RE_MARKDOWN_FENCE = re.compile(r"^```[a-zA-Z]*\s*|\s*```$", re.MULTILINE)
 _RE_ESPACOS = re.compile(r"\s+")
 
@@ -439,9 +446,22 @@ def main():
                          help="Caminho do .xlsx de saída. Se omitido, salva em "
                               "Outputs/metricas/N_batches/comparativo_extracoes.xlsx")
     parser.add_argument("--limiar", type=float, default=0.5, help="Limiar de overlap lexical (default: 0.5)")
+    parser.add_argument("--corpus", default=None, choices=list(CORPORA),
+                         help="Atalho: define gold + pasta de respostas + saida pelo registro.")
+    
     args = parser.parse_args()
 
     raiz = Path.cwd()
+
+
+    if args.corpus:
+        cfg = resolver_corpus(args.corpus)
+        raiz_respostas = raiz / cfg['respostas']
+        pasta_batch = raiz_respostas / f"{args.batch or '10'}_batches"
+        args.gold = args.gold or cfg['gold']
+        args.pastas = args.pastas or [str(p) for p in descobrir_pastas_de_tarefa(pasta_batch)]
+        if args.saida is None:
+             args.saida = str(cfg["saida"]/pasta_batch.name/ "comparativo_extracoes.xlsx")
 
     if args.gold:
         caminho_gold = Path(args.gold)

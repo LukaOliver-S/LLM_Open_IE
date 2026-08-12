@@ -1,4 +1,6 @@
 modelo,total_falsos_positivos,com_consenso_de_outro_modelo,pct_com_consenso
-Claude_Sonnet5,163,82,50.306748466257666
-PTOIE-Flair,43,16,37.2093023255814
-respostas_gpt5.5_mini,156,88,56.41025641025641
+Claude_Sonnet5,163,134,82.20858895705521
+Gemini3.1Pro,129,107,82.94573643410853
+Grok4.0Fast,128,113,88.28125
+PTOIE-Flair,43,17,39.53488372093023
+respostas_gpt5.5_mini,156,102,65.38461538461539
