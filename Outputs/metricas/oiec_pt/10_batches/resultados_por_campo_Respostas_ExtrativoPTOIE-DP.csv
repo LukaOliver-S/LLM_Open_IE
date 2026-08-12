@@ -1,0 +1,13 @@
+modelo,campo,precisao,recall,f1,vp,fp,fn
+Claude_Sonnet5,arg1,0.4171,0.6471,0.5072,88,123,48
+Claude_Sonnet5,rel,0.2749,0.4265,0.3343,58,153,78
+Claude_Sonnet5,arg2,0.2464,0.3824,0.2997,52,159,84
+Claude_Sonnet5,tripla_completa,0.1943,0.3015,0.2363,41,170,95
+PTOIE-Flair,arg1,0.6897,0.4412,0.5381,60,27,76
+PTOIE-Flair,rel,0.6092,0.3897,0.4753,53,34,83
+PTOIE-Flair,arg2,0.5402,0.3456,0.4215,47,40,89
+PTOIE-Flair,tripla_completa,0.5057,0.3235,0.3946,44,43,92
+respostas_gpt5.5_mini,arg1,0.4213,0.6103,0.4985,83,114,53
+respostas_gpt5.5_mini,rel,0.2792,0.4044,0.3303,55,142,81
+respostas_gpt5.5_mini,arg2,0.269,0.3897,0.3183,53,144,83
+respostas_gpt5.5_mini,tripla_completa,0.1929,0.2794,0.2282,38,159,98

@@ -1,0 +1,4 @@
+modelo,n_frases_gold_total,n_frases_pred,n_frases_pareadas,n_triplas_gold_total,n_triplas_gold_pareadas,n_triplas_pred,media_triplas_gold_por_frase,media_triplas_pred_por_frase,razao_pred_gold
+respostas_gpt5.5_mini,100,166,95,136,125,197,1.3157894736842106,2.0736842105263156,1.576
+Claude_Sonnet5,100,100,100,136,136,211,1.36,2.11,1.5514705882352942
+PTOIE-Flair,100,100,100,136,136,87,1.36,0.87,0.6397058823529411

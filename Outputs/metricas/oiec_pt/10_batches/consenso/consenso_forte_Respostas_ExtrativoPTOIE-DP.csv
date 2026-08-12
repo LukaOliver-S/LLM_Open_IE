@@ -1,0 +1,31 @@
+sentence,modelo_exemplo,arg1,rel,arg2,n_modelos_concordando
+"Eu adorei as cores tropicais, diz ele.",Claude_Sonnet5,Eu,adorei,as cores tropicais,3
+"Eu adorei as cores tropicais, diz ele.",PTOIE-Flair,Eu,adorei,as cores tropicais,3
+"Eu adorei as cores tropicais, diz ele.",respostas_gpt5.5_mini,Eu,adorei,as cores tropicais,3
+"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",Claude_Sonnet5,ela,use,a Frank como sua modelo,3
+"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",PTOIE-Flair,ela,use,a Frank como sua modelo,3
+"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",respostas_gpt5.5_mini,ela,use,a Frank como sua modelo,3
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Claude_Sonnet5,A própria Wintour,é filmada,colocando seus óculos de sol antes de ser entrevistada,3
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",PTOIE-Flair,A própria Wintour,é filmada,colocando seus óculos de sol,3
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",respostas_gpt5.5_mini,A própria Wintour,é filmada,colocando seus óculos de sol antes de ser entrevistada,3
+Vamos simplesmente dizer que ele está errado.,Claude_Sonnet5,ele,está,errado,3
+Vamos simplesmente dizer que ele está errado.,PTOIE-Flair,ele,está,errado,3
+Vamos simplesmente dizer que ele está errado.,respostas_gpt5.5_mini,ele,está,errado,3
+"As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.",Claude_Sonnet5,As empresas,podem tentar criar,um firewall entre sistemas sensíveis e potências estrangeiras,3
+"As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.",PTOIE-Flair,As empresas,podem tentar,criar um firewall entre sistemas sensíveis e potências estrangeiras,3
+"As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.",respostas_gpt5.5_mini,As empresas,podem tentar criar,um firewall entre sistemas sensíveis e potências estrangeiras,3
+"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",Claude_Sonnet5,a minha lista,cresceu,muito,3
+"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",PTOIE-Flair,a minha lista,cresceu,muito,3
+"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",respostas_gpt5.5_mini,a minha lista,cresceu,muito,3
+Eu também penso se a Taça Davis desempenhou algum papel.,Claude_Sonnet5,a Taça Davis,desempenhou,algum papel,3
+Eu também penso se a Taça Davis desempenhou algum papel.,PTOIE-Flair,a Taça Davis,desempenhou,algum papel,3
+Eu também penso se a Taça Davis desempenhou algum papel.,respostas_gpt5.5_mini,a Taça Davis,desempenhou,algum papel,3
+"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",Claude_Sonnet5,O custo,vai mudar,mensalmente,3
+"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",PTOIE-Flair,O custo,vai mudar,mensalmente,3
+"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",respostas_gpt5.5_mini,O custo,vai mudar,mensalmente,3
+"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",Claude_Sonnet5,Ele,foi seguido,pelos fundos Aviva Investors Multi Strategy Target Return and Income,3
+"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",PTOIE-Flair,Ele,foi seguido pelos,fundos Aviva Investors Multi Strategy Target Return and Income,3
+"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",respostas_gpt5.5_mini,Ele,foi seguido,pelos fundos Aviva Investors Multi Strategy Target Return and Income,3
+"Mas tendo permitido que Glenda mandasse tão bem, quem poderia culpá-lo?",Claude_Sonnet5,Glenda,mandasse,tão bem,3
+"Mas tendo permitido que Glenda mandasse tão bem, quem poderia culpá-lo?",PTOIE-Flair,Glenda,mandasse,tão bem,3
+"Mas tendo permitido que Glenda mandasse tão bem, quem poderia culpá-lo?",respostas_gpt5.5_mini,Glenda,mandasse,tão bem,3
