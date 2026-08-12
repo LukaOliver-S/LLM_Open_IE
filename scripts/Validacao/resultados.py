@@ -525,6 +525,12 @@ CORPORA = {
         saida=Path("Outputs") / "metricas" / "oiec_pt",
         sentencas="sentencas_oiecpt",
     ),
+    "unified": dict(
+        gold="dados/unified_gold_sentences.jsonl",
+        respostas="Respostas/unified",
+        saida=Path("Outputs") / "metricas" / "unified",
+        sentencas="sentencas_unified",
+    ),
 }
 CORPUS_PADRAO = "bia"
 PREFIXO_PASTAS_PADRAO = "Respostas"   # prefixo das pastas de tarefa dentro de cada "N_batches"
