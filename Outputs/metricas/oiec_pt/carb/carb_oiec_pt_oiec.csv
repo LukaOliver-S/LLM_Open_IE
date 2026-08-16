@@ -1,0 +1,5 @@
+modelo,tipo,precision,recall,f1,ic_lo,ic_hi
+Gemini3.1Pro,LLM,0.4393,0.6716,0.5312,0.4578,0.5951
+Claude_Sonnet5,LLM,0.3745,0.7259,0.4941,0.4227,0.5595
+Grok4.0Fast,LLM,0.4133,0.6010,0.4898,0.4173,0.5596
+respostas_gpt5.5_mini,LLM,0.3162,0.6831,0.4323,0.3677,0.4942

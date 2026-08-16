@@ -1,0 +1,6 @@
+modelo,tipo,precision,recall,f1,ic_lo,ic_hi
+DPTOIE-PY,Especializado,0.3724,0.7267,0.4925,0.4198,0.5643
+Grok4.0Fast,LLM,0.3246,0.8154,0.4644,0.3995,0.5276
+Claude_Sonnet5,LLM,0.3024,0.8154,0.4412,0.3823,0.4988
+Gemini3.1Pro,LLM,0.2938,0.8216,0.4328,0.3735,0.4920
+respostas_gpt5.5_mini,LLM,0.2872,0.7288,0.4120,0.3508,0.4773
