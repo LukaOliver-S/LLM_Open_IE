@@ -1,6 +1,6 @@
 modelo,tipo,precision,recall,f1,ic_lo,ic_hi
-PTOIE-Flair,Especializado,0.6092,0.5798,0.5941,0.5182,0.6664
+PTOIE-Flair,Especializado,0.6092,0.5791,0.5937,0.5179,0.6659
 Grok4.0Fast,LLM,0.3679,0.8012,0.5043,0.4384,0.5685
-Gemini3.1Pro,LLM,0.3445,0.8015,0.4819,0.4205,0.5448
-respostas_gpt5.5_mini,LLM,0.3180,0.7178,0.4408,0.3771,0.5084
+Gemini3.1Pro,LLM,0.3440,0.8015,0.4814,0.4199,0.5448
 Claude_Sonnet5,LLM,0.3026,0.8028,0.4395,0.3779,0.5037
+respostas_gpt5.5_mini,LLM,0.3138,0.7178,0.4367,0.3732,0.5057

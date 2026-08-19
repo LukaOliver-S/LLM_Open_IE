@@ -1,5 +1,5 @@
 modelo,n_frases_gold_total,n_frases_pred,n_frases_pareadas,n_triplas_gold_total,n_triplas_gold_pareadas,n_triplas_pred,media_triplas_gold_por_frase,media_triplas_pred_por_frase,razao_pred_gold
-respostas_gpt5.5_mini,100,166,95,136,125,197,1.3157894736842106,2.0736842105263156,1.576
+respostas_gpt5.5_mini,100,95,95,136,125,197,1.3157894736842106,2.0736842105263156,1.576
 Claude_Sonnet5,100,100,100,136,136,211,1.36,2.11,1.5514705882352942
 Grok4.0Fast,100,100,100,136,136,178,1.36,1.78,1.3088235294117647
 Gemini3.1Pro,100,114,99,136,135,172,1.3636363636363635,1.7373737373737375,1.2740740740740741

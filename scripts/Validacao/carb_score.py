@@ -7,20 +7,37 @@ Fidelidade ao original:
   - precisão: matching guloso 1-para-1 maximizando precisão (igual carb.py)
   - recall:   cada gold casa com seu MELHOR pred (muitos-para-1) (igual carb.py)
   - match token-level via linient_tuple_match / binary_linient_tuple_match
-Adaptações (aprovar):
-  - be-forms EN -> formas de ser/estar PT (FORMAS_SER)
-  - said-verbs EN -> verbos de dizer PT (VERBOS_DIZER)
-  - SEM remoção de stopwords (o CaRB usava lista inglesa)
+Adaptações:
+  - SEM remoção de stopwords (o CaRB usava lista inglesa, imprópria p/ PT)
+  - casos especiais EN (cópula 'be' / verbos 'said') DESLIGADOS por padrão
+    (USAR_CASOS_ESPECIAIS=False) -> match de token puro, transparente.
+    Ablation BIA/dpto: ligar muda F1 em <0.007 e não altera ranking.
 """
 from __future__ import annotations
 from copy import copy
 import re
 
-# ---- listas localizadas (APROVAR/AJUSTAR) ----
-FORMAS_SER = {"ser","é","e","era","eram","foi","foram","sendo","sido","são","sao",
-              "seja","sejam","for","fosse","estar","está","esta","estava","estão","estao"}
-VERBOS_DIZER = {"disse","dizer","diz","afirmou","afirma","declarou","declara",
-                "acrescentou","acrescenta","contou","conta","informou","informa"}
+# ---- casos especiais (herdados do CaRB inglês), DESLIGADOS por padrão ----
+# Ablation (BIA/dpto): ligar muda F1 em <0.007 e não altera ranking. Mantemos
+# desligado por transparência (match de token puro); ligue p/ fidelidade total.
+USAR_CASOS_ESPECIAIS = False
+
+# formas de ser/estar (cópula): tratadas como intercambiáveis quando ligado.
+# (sem "e"=conjunção e sem duplicatas de-acentuadas — tokens() preserva acento)
+FORMAS_SER = {
+    # ser
+    "ser", "é", "era", "eram", "foi", "foram", "sendo", "sido", "são",
+    "seja", "sejam", "for", "fosse", "fossem", "sou", "somos", "será", "serão",
+    "estar", "estou", "está", "estamos", "estão",
+    "estava", "estavam", "estávamos",
+    "estive", "esteve", "estivemos", "estiveram",
+    "estará", "estarão", "estaria", "estariam",
+    "esteja", "estejam", "estivesse", "estivessem", "estiver", "estiverem",
+    "estando", "estado",
+}
+# verbos de dizer (discurso reportado): tenta ordem de args invertida quando ligado.
+VERBOS_DIZER = {"disse", "dizer", "diz", "afirmou", "afirma", "declarou", "declara",
+                "acrescentou", "acrescenta", "contou", "conta", "informou", "informa"}
 
 def tokens(texto: str) -> list[str]:
     """lower + split; tira pontuação nas bordas de cada token. (ignoreCase do CaRB)"""
@@ -39,36 +56,44 @@ class Tripla:
 
 # ---------- match token-level (port fiel de linient_tuple_match) ----------
 def linient_tuple_match(ref: Tripla, ex: Tripla):
-    precision = [0, 0]; recall = [0, 0]
+    precision = [0, 0]
+    recall = [0, 0]
     predicted_words = tokens(ex.pred)
     gold_words = tokens(ref.pred)
-    precision[1] += len(predicted_words); recall[1] += len(gold_words)
+    precision[1] += len(predicted_words)
+    recall[1] += len(gold_words)
 
     matching = 0
     for w in gold_words:
         if w in predicted_words:
-            matching += 1; predicted_words.remove(w)
-    # equivalente ao 'be' do CaRB: formas de ser/estar contam como match
-    if (set(predicted_words) & FORMAS_SER) and (set(gold_words) & FORMAS_SER):
+            matching += 1
+            predicted_words.remove(w)
+    # equivalente ao 'be' do CaRB: formas de ser/estar contam como match (opcional)
+    if USAR_CASOS_ESPECIAIS and (set(predicted_words) & FORMAS_SER) and (set(gold_words) & FORMAS_SER):
         for w in list(predicted_words):
             if w in FORMAS_SER:
-                matching += 1; predicted_words.remove(w); break
+                matching += 1
+                predicted_words.remove(w); break
 
     if matching == 0:
         return [0.0, 0.0]
-    precision[0] += matching; recall[0] += matching
+    precision[0] += matching
+    recall[0] += matching
 
     for i in range(len(ref.args)):
         gold_words = tokens(ref.args[i]); recall[1] += len(gold_words)
         if len(ex.args) <= i:
             if i < 2: return [0.0, 0.0]      # precisa dos 2 primeiros args
             else: continue
-        predicted_words = tokens(ex.args[i]); precision[1] += len(predicted_words)
+        predicted_words = tokens(ex.args[i])
+        precision[1] += len(predicted_words)
         matching = 0
         for w in gold_words:
             if w in predicted_words:
-                matching += 1; predicted_words.remove(w)
-        precision[0] += matching; recall[0] += matching
+                matching += 1
+                predicted_words.remove(w)
+        precision[0] += matching
+        recall[0] += matching
 
     prec = precision[0] / precision[1] if precision[1] else 0.0
     rec  = recall[0] / recall[1] if recall[1] else 0.0
@@ -82,9 +107,10 @@ def binary_linient_tuple_match(ref: Tripla, ex: Tripla):
     if len(ex.args) >= 2:
         e = copy(ex); e.args = [ex.args[0], " ".join(ex.args[1:])]
     direto = linient_tuple_match(r, e)
-    # relações de dizer: CaRB tenta a ordem invertida dos args e pega o melhor
-    if set(tokens(ref.pred)) & VERBOS_DIZER and len(ex.args) >= 2:
-        e2 = copy(ex); e2.args = [" ".join(ex.args[1:]), ex.args[0]]
+    # relações de dizer: CaRB tenta a ordem invertida dos args e pega o melhor (opcional)
+    if USAR_CASOS_ESPECIAIS and set(tokens(ref.pred)) & VERBOS_DIZER and len(ex.args) >= 2:
+        e2 = copy(ex)
+        e2.args = [" ".join(ex.args[1:]), ex.args[0]]
         return max(direto, linient_tuple_match(r, e2))
     return direto
 
@@ -108,7 +134,8 @@ def score_sentenca(gold_trs, pred_trs):
                 if scores[i][j][0] > melhor:
                     melhor, br, bc = scores[i][j][0], i, j
         if br < 0: break
-        sel_r.add(br); sel_c.add(bc); prec_num += scores[br][bc][0]
+        sel_r.add(br); sel_c.add(bc)
+        prec_num += scores[br][bc][0]
     return prec_num, npr, rec_num, ng
 
 def agregar(acumuladores):
