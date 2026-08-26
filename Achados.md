@@ -1,0 +1,184 @@
+# Achados — OpenIE em Português (LLMs vs. Extratores Especializados)
+
+> Síntese **qualitativa** de tudo que descobrimos. Sem números aqui — só os
+> achados, as explicações e o que cada um significa. As métricas estão nos
+> CSVs/gráficos em `Outputs/metricas/` e nos slides.
+
+---
+
+## 1. Achado central: o especializado vence — mas **por precisão**
+
+O extrator especializado **neural** (PTOIE-Flair) supera as LLMs na tarefa de
+extração — mas **não por recuperar mais fatos**, e sim por ser **preciso**.
+
+- **PTOIE-Flair = cirúrgico:** extrai **poucas** triplas, mas quase todas certas.
+  Precisão altíssima, recall menor.
+- **LLMs = exaustivas:** recuperam **muitos** fatos (recall alto), mas
+  **super-geram** — despejam triplas demais, longas e imprecisas → precisão baixa.
+
+Essa oposição **precisão vs. recall** é a história mais forte do trabalho, e
+aparece de forma consistente em todos os modelos e corpora.
+
+## 2. Especializado de **regras** ≠ especializado **neural**
+
+A hipótese "especializado > LLM" **só se confirma para o modelo neural**:
+
+- O **PTOIE-Flair (neural)** ganha das LLMs onde atua.
+- O **DptOIE (baseado em regras)** **NÃO** ganha — a melhor LLM (Grok) empata ou
+  supera ele.
+- Conclusão: não é "especializado" que vence, é **especializado neural bem
+  finalizado**. Regras não bastam.
+
+## 3. A vantagem do especializado **cresce na dificuldade**
+
+Quando as frases ficam difíceis (lotes mais complexos), as **LLMs colapsam**
+(super-geram lixo e a precisão despenca), mas o **PTOIE-Flair segura** — a
+precisão o mantém à tona. Ou seja: quanto mais difícil a frase, **maior** a
+vantagem do especializado. Nos casos fáceis, os dois se aproximam.
+
+## 4. Grok é a LLM mais forte
+
+Entre as LLMs, o **Grok** se destaca — lidera a maioria das tarefas e é a única
+que chega a bater o especializado de regras. Tem a **melhor precisão** entre as
+LLMs mantendo recall alto. As outras (Claude, Gemini, GPT) se separam pouco entre
+si (e frequentemente de forma **não-significativa**).
+
+## 5. **A métrica muda a força da conclusão**
+
+- O **CaRB** dá **crédito parcial** (palavra a palavra) e tem uma agregação que
+  é **generosa com as LLMs verbosas**.
+- O **matcher lexical por campo** (mais rígido) **favorece mais o especializado**.
+- Ou seja: **quanto mais rígida a métrica, mais o especializado ganha.** Vale
+  reportar as duas — a conclusão depende de como se mede.
+
+## 6. Variabilidade e significância — o ponto que exige cuidado
+
+- **A dificuldade varia MUITO entre lotes** (algumas dezenas de frases), e
+  **todos os modelos sobem e descem juntos** → a dificuldade é **intrínseca às
+  frases**, não do modelo. Qual frase caiu no corpus importa mais do que qual
+  modelo você usou.
+- Como o corpus é pequeno e heterogêneo, um **número único é frágil**. Por isso
+  usamos **bootstrap** (intervalos de confiança).
+- **No BIA** a vantagem do especializado é **robusta** (ICs separados).
+  **No OIEC-PT ela NÃO é estatisticamente significativa** (ICs se sobrepõem) —
+  corpus pequeno demais. **Não superdimensionar.**
+- ⚠️ O bootstrap mede a incerteza de **quais frases** caíram (amostragem), **não**
+  a incerteza de **re-perguntar à LLM** (geração). São duas coisas diferentes.
+
+---
+
+## 7. OIEC-PT em detalhe
+
+- **O OIEC-PT é mais difícil que o BIA** em quase tudo. Motivos prováveis: as
+  regras de **factualidade (S1)** deixam muitas frases com **gold vazio**, o
+  corpus tem **contrações** (convenção diferente do BIA, que é descontraído), e as
+  frases tendem a ser mais complexas.
+- **É pequeno e heterogêneo** → intervalos largos, resultados **não-significativos**.
+  É o principal motivo pra a hipótese não fechar com força ali.
+- **Há um lote patológico** onde **nenhum modelo** acerta uma única tripla exata —
+  frases muito difíceis (provavelmente gold vazio / muito complexas). Todos
+  afundam juntos.
+- Padrão de tarefa no OIEC: o especializado de regras leva a melhor na tarefa
+  "DptOIE" por muito pouco; uma LLM lidera a tarefa "OIEC"; o PTOIE-Flair lidera a
+  tarefa "PTOIE" (mas sem significância).
+
+---
+
+## 8. Reprodutibilidade e o setup (LLMs via chat)
+
+- **As interfaces de chat não expõem `temperature` nem `seed`** — nem nos planos
+  gratuitos **nem nos pagos** (Plus/Pro). Esses controles só existem na **API**.
+- Como o estudo usa **as interfaces (não a API)**, a **estocasticidade das LLMs é
+  incontrolável** — a resposta pode mudar a cada rodada e não há como fixar.
+- Mesmo se fôssemos pra API, **reprodutibilidade exata não é garantida**: o Claude
+  não tem `seed`, o Gemini é não-determinístico mesmo com `seed`, e todos só
+  prometem *quase*-determinismo com `temperature=0`.
+- Isso vira uma **decisão metodológica declarada**: em vez de fixar a variância,
+  a gente **mede** (bootstrap; e, idealmente, k rodadas).
+
+### Guardrails que levantamos (catálogo)
+- **Prompt:** sensibilidade a formatação/ordem; few-shot reduz a variação.
+- **Geração:** k rodadas (medir a variância) + consenso (reduzi-la).
+- **Formato:** validar o JSON de saída, checar *grounding*.
+- **Estatística:** bootstrap (já feito) + teste pareado.
+- **Validade:** ⚠️ **contaminação de dados** — o BIA é de Wikipédia, então as LLMs
+  podem ter visto o corpus no treino (F1 inflado). No mínimo, **declarar**.
+
+---
+
+## 9. dptoie-neural (FORMAS) — por que **não deu** para incluir
+
+- É um OIE **neural** legítimo da FORMAS, seria um segundo baseline neural.
+- **Impossível de rodar hoje:** o modelo pré-treinado depende de **embeddings
+  Flair-"diários"** hospedados num servidor que agora dá **403** (sumiu). A
+  alternativa (re-treinar com BERTimbau) esbarra na **stack de 2022**: o
+  `allennlp 2.7` exige uma versão antiga do `torch` que **não tem mais instalação**
+  em Python/plataforma atual. É **irreproduzível**.
+- Além disso, o próprio repo indica que o modelo é **imaturo** (a avaliação
+  interna dele é quase-zero e "suporte a BERT" era um item **a fazer**).
+- **Encerrado.** Única rota real: **pedir à FORMAS** que rodem no ambiente
+  original e enviem as extrações. O **PTOIE-Flair** já cobre o slot
+  "especializado-neural".
+
+---
+
+## 10. Qualidade dos dados — problemas encontrados (e o que fizemos)
+
+- **Gemini (e em parte o GPT) salvam a saída como vários *arrays* JSON
+  concatenados**, não como JSONL. Um leitor linha-a-linha recupera **zero** e
+  falha silenciosamente. (Sintoma no CaRB: precisão 1.0 e recall 0.) → leitor
+  precisa varrer com `raw_decode`.
+- **O GPT tem aspas não-escapadas** em frases com discurso citado
+  (`declarou: "..."`), que quebram o JSON. Recuperamos a maioria; **uma pequena
+  fração é irrecuperável** por regex (aspas de fala seguidas de vírgula/ponto do
+  texto). Impacto pequeno, não muda ranking.
+- **DptOIE re-tokeniza e descontrai as frases** (expande contrações, mexe em
+  espaços/pontuação). Sem **alinhar ao gold** primeiro, o pareamento por frase
+  falha e o modelo pontua **zero** injustamente.
+
+---
+
+## 11. Validação: DptOIE-Java **é igual** ao port DptOIE-PY?
+
+**Não são iguais** — mas a diferença **não é do algoritmo**, e sim de
+**configuração**:
+
+- O **DptOIE-Java** roda em modo que **super-gera** (várias variantes de arg2 por
+  relação) → a precisão colapsa e ele pontua bem abaixo do port.
+- O jar ainda tem um **defeito de descontração** (escreve "en o" em vez de
+  "em o"/"no"), o que atrapalha o casamento de tokens.
+- Filtrando por **coerência/minimalidade** (colunas que o DptOIE fornece), o gap
+  provavelmente encolhe — é o teste que fecha a validação.
+- Conclusão pro artigo: *"o port Python e o jar Java divergem principalmente por
+  super-geração/configuração, não pelo método."*
+
+---
+
+## 12. Bugs de pipeline encontrados e corrigidos
+
+- **Scorer CaRB:** havia uma troca de variável (`prec_num`↔`rec_num`) que zerava a
+  precisão e, com isso, o **F1 de TODOS os modelos no OIEC**. Corrigido — os
+  números passaram a fazer sentido.
+- **Matcher por campo** pareia por **frase exata** (por isso o DptOIE-Java dava
+  zero antes do alinhamento); o **CaRB** pareia por **similaridade (fuzzy)**, mais
+  tolerante. Bom saber ao comparar as duas tabelas.
+
+---
+
+## 13. Pendências de maior retorno
+
+1. **k rodadas + consenso** — o guardrail que ataca de fato a estocasticidade das
+   LLMs (o bootstrap não cobre isso).
+2. **Teste de contaminação** — barato e blinda contra "o modelo já viu o corpus?".
+3. **Filtrar DptOIE-Java por coerência** — fecha a validação Java vs. PY.
+4. (Opcional) **Unified** — coletar as LLMs no corpus unificado (362 frases) para
+   testar generalização com mais dados.
+
+---
+
+## Resumo em uma frase
+
+**O especializado neural vence as LLMs por ser preciso enquanto elas super-geram; a
+vantagem é clara no BIA e nas métricas rígidas, mas o OIEC-PT é pequeno e
+heterogêneo demais para cravar significância — o que reforça a necessidade dos
+guardrails (mais dados, k rodadas, controle de contaminação).**
