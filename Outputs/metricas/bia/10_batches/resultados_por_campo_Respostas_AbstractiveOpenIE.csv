@@ -3,6 +3,10 @@ Claude_Sonnet5,arg1,0.3468,0.7447,0.4732,318,599,109
 Claude_Sonnet5,rel,0.2704,0.5808,0.369,248,669,179
 Claude_Sonnet5,arg2,0.2465,0.5293,0.3363,226,691,201
 Claude_Sonnet5,tripla_completa,0.1941,0.4169,0.2649,178,739,249
+PortugueseT5OIE_Abstractive,arg1,0.3442,0.7635,0.4745,326,621,101
+PortugueseT5OIE_Abstractive,rel,0.2661,0.5902,0.3668,252,695,175
+PortugueseT5OIE_Abstractive,arg2,0.2492,0.5527,0.3435,236,711,191
+PortugueseT5OIE_Abstractive,tripla_completa,0.1901,0.4215,0.262,180,767,247
 respostaGrok4.0Fast,arg1,0.7297,0.5691,0.6395,243,90,184
 respostaGrok4.0Fast,rel,0.6036,0.4707,0.5289,201,132,226
 respostaGrok4.0Fast,arg2,0.5616,0.4379,0.4921,187,146,240

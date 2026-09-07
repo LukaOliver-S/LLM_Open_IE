@@ -1,286 +1,511 @@
 sentence,modelo_exemplo,arg1,rel,arg2,n_modelos_concordando
-"Teoricamente, um casal poderia abrir quatro contas Tesco e ganhar 3% em £12,000 – £360.",Claude_Sonnet5,um casal,poderia ganhar,"3% em £12,000 – £360",3
-"Teoricamente, um casal poderia abrir quatro contas Tesco e ganhar 3% em £12,000 – £360.",Gemini3.1Pro,um casal,poderia ganhar,"3% em £12,000 – £360",3
-"Teoricamente, um casal poderia abrir quatro contas Tesco e ganhar 3% em £12,000 – £360.",respostas_gpt5.5_mini,um casal,poderia ganhar,"3% em £12,000",3
-"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Claude_Sonnet5,os clientes do Banco da Escócia,adicionam,a opção gratuita Vantage,4
+"Teoricamente, um casal poderia abrir quatro contas Tesco e ganhar 3% em £12,000 – £360.",Claude_Sonnet5,um casal,poderia ganhar,"3% em £12,000 – £360",6
+"Teoricamente, um casal poderia abrir quatro contas Tesco e ganhar 3% em £12,000 – £360.",Gemini3.1Pro,um casal,poderia ganhar,"3% em £12,000 – £360",6
+"Teoricamente, um casal poderia abrir quatro contas Tesco e ganhar 3% em £12,000 – £360.",LlamaPortOIE3,um casal,poderia ganhar,"3% em £12,000",6
+"Teoricamente, um casal poderia abrir quatro contas Tesco e ganhar 3% em £12,000 – £360.",Qwen3OIE_0_6B,um casal,poderia ganhar,"3% em £12,000",6
+"Teoricamente, um casal poderia abrir quatro contas Tesco e ganhar 3% em £12,000 – £360.",Qwen3OIE_4B,um casal,poderia ganhar,"3% em £12,000 – £360",6
+"Teoricamente, um casal poderia abrir quatro contas Tesco e ganhar 3% em £12,000 – £360.",respostas_gpt5.5_mini,um casal,poderia ganhar,"3% em £12,000",6
+"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Claude_Sonnet5,os clientes do Banco da Escócia,ganham,3%,3
+"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Claude_Sonnet5,os clientes do Banco da Escócia,ganham em,"balanços de £3,000-£5,000",3
+"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Claude_Sonnet5,os clientes do Banco da Escócia,adicionam,a opção gratuita Vantage,6
 "Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Claude_Sonnet5,os clientes do Banco da Escócia,adicionam a,suas contas,3
-"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Gemini3.1Pro,os clientes do Banco da Escócia,adicionam,a opção gratuita Vantage,4
+"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Gemini3.1Pro,os clientes do Banco da Escócia,ganham,3%,3
+"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Gemini3.1Pro,os clientes do Banco da Escócia,ganham em,"balanços de £3,000-£5,000",3
+"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Gemini3.1Pro,os clientes do Banco da Escócia,adicionam,a opção gratuita Vantage,6
 "Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Gemini3.1Pro,os clientes do Banco da Escócia,adicionam a,as suas contas,3
-"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Grok4.0Fast,os clientes do Banco da Escócia,adicionam,a opção gratuita Vantage às suas contas,4
-"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",respostas_gpt5.5_mini,os clientes do Banco da Escócia,adicionam,a opção gratuita Vantage às suas contas,4
+"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Grok4.0Fast,os clientes do Banco da Escócia,ganham,"3% em balanços de £3,000-£5,000",3
+"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Grok4.0Fast,os clientes do Banco da Escócia,adicionam,a opção gratuita Vantage às suas contas,6
+"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Qwen3OIE_0_6B,os clientes do Banco da Escócia,ganham,"3% em balanços de £3,000-£5,000",3
+"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Qwen3OIE_0_6B,os clientes do Banco da Escócia,adicionam,a opção gratuita Vantage às suas contas,6
+"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Qwen3OIE_4B,os clientes do Banco da Escócia,ganham,3%,3
+"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Qwen3OIE_4B,os clientes do Banco da Escócia,ganham em,"balanços de £3,000-£5,000",3
+"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",Qwen3OIE_4B,os clientes do Banco da Escócia,adicionam,a opção gratuita Vantage,6
+"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",respostas_gpt5.5_mini,os clientes do Banco da Escócia,ganham,"3% em balanços de £3,000-£5,000",3
+"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",respostas_gpt5.5_mini,os clientes do Banco da Escócia,adicionam,a opção gratuita Vantage às suas contas,6
 "Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.",respostas_gpt5.5_mini,os clientes do Banco da Escócia,adicionam a,as suas contas,3
+"Com isto, em teoria, você é capaz de acessar seu dinheiro sempre que quiser.",Gemini3.1Pro,você,é capaz de acessar,seu dinheiro,3
+"Com isto, em teoria, você é capaz de acessar seu dinheiro sempre que quiser.",Qwen3OIE_4B,você,é capaz de acessar,seu dinheiro,3
+"Com isto, em teoria, você é capaz de acessar seu dinheiro sempre que quiser.",respostas_gpt5.5_mini,você,é capaz de,acessar seu dinheiro,3
 "Esta taxa de 3% também se aplica a titulares de cartão Nectar que pensam em pedir emprestado £15,001-£19,999, durante um período de dois a três anos.",Claude_Sonnet5,Esta taxa de 3%,também se aplica a,titulares de cartão Nectar,4
 "Esta taxa de 3% também se aplica a titulares de cartão Nectar que pensam em pedir emprestado £15,001-£19,999, durante um período de dois a três anos.",Claude_Sonnet5,titulares de cartão Nectar,pensam em pedir emprestado,"£15,001-£19,999, durante um período de dois a três anos",3
 "Esta taxa de 3% também se aplica a titulares de cartão Nectar que pensam em pedir emprestado £15,001-£19,999, durante um período de dois a três anos.",Gemini3.1Pro,Esta taxa de 3%,se aplica a,titulares de cartão Nectar,4
-"Esta taxa de 3% também se aplica a titulares de cartão Nectar que pensam em pedir emprestado £15,001-£19,999, durante um período de dois a três anos.",Gemini3.1Pro,titulares de cartão Nectar,pensam em pedir emprestado durante,um período de dois a três anos,3
+"Esta taxa de 3% também se aplica a titulares de cartão Nectar que pensam em pedir emprestado £15,001-£19,999, durante um período de dois a três anos.",Gemini3.1Pro,titulares de cartão Nectar,pensam em pedir emprestado durante,um período de dois a três anos,4
 "Esta taxa de 3% também se aplica a titulares de cartão Nectar que pensam em pedir emprestado £15,001-£19,999, durante um período de dois a três anos.",Grok4.0Fast,Esta taxa de 3%,se aplica a,titulares de cartão Nectar,4
+"Esta taxa de 3% também se aplica a titulares de cartão Nectar que pensam em pedir emprestado £15,001-£19,999, durante um período de dois a três anos.",Qwen3OIE_0_6B,titulares de cartão Nectar,pensam em pedir emprestado durante,dois a três anos,3
 "Esta taxa de 3% também se aplica a titulares de cartão Nectar que pensam em pedir emprestado £15,001-£19,999, durante um período de dois a três anos.",respostas_gpt5.5_mini,Esta taxa de 3%,se aplica a,titulares de cartão Nectar,4
-"Esta taxa de 3% também se aplica a titulares de cartão Nectar que pensam em pedir emprestado £15,001-£19,999, durante um período de dois a três anos.",respostas_gpt5.5_mini,titulares de cartão Nectar,pensam em pedir emprestado durante,um período de dois a três anos,3
-"O enxofre é um nutriente vital para o crescimento saudável das plantas, mas os solos no Reino Unido são naturalmente deficientes deste mineral.",Claude_Sonnet5,O enxofre,é,um nutriente vital para o crescimento saudável das plantas,4
-"O enxofre é um nutriente vital para o crescimento saudável das plantas, mas os solos no Reino Unido são naturalmente deficientes deste mineral.",Gemini3.1Pro,O enxofre,é,um nutriente vital para o crescimento saudável das plantas,4
-"O enxofre é um nutriente vital para o crescimento saudável das plantas, mas os solos no Reino Unido são naturalmente deficientes deste mineral.",Grok4.0Fast,O enxofre,é,um nutriente vital para o crescimento saudável das plantas,4
-"O enxofre é um nutriente vital para o crescimento saudável das plantas, mas os solos no Reino Unido são naturalmente deficientes deste mineral.",respostas_gpt5.5_mini,O enxofre,é,um nutriente vital para o crescimento saudável das plantas,4
-"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",Claude_Sonnet5,Rocco Catalano,trabalha,retro,4
-"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",Claude_Sonnet5,Rocco Catalano,vive,retro,4
-"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",Gemini3.1Pro,Rocco Catalano,trabalha,retro,4
-"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",Gemini3.1Pro,Rocco Catalano,vive,retro,4
-"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",Grok4.0Fast,Rocco Catalano,trabalha,retro,4
-"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",Grok4.0Fast,Rocco Catalano,vive,retro,4
-"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",respostas_gpt5.5_mini,Rocco Catalano,trabalha,retro,4
-"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",respostas_gpt5.5_mini,Rocco Catalano,vive,retro,4
+"Esta taxa de 3% também se aplica a titulares de cartão Nectar que pensam em pedir emprestado £15,001-£19,999, durante um período de dois a três anos.",respostas_gpt5.5_mini,titulares de cartão Nectar,pensam em pedir emprestado durante,um período de dois a três anos,4
+"O enxofre é um nutriente vital para o crescimento saudável das plantas, mas os solos no Reino Unido são naturalmente deficientes deste mineral.",Claude_Sonnet5,O enxofre,é,um nutriente vital para o crescimento saudável das plantas,7
+"O enxofre é um nutriente vital para o crescimento saudável das plantas, mas os solos no Reino Unido são naturalmente deficientes deste mineral.",Gemini3.1Pro,O enxofre,é,um nutriente vital para o crescimento saudável das plantas,7
+"O enxofre é um nutriente vital para o crescimento saudável das plantas, mas os solos no Reino Unido são naturalmente deficientes deste mineral.",Grok4.0Fast,O enxofre,é,um nutriente vital para o crescimento saudável das plantas,7
+"O enxofre é um nutriente vital para o crescimento saudável das plantas, mas os solos no Reino Unido são naturalmente deficientes deste mineral.",LlamaPortOIE3,O enxofre,é,um nutriente vital para o crescimento saudável das plantas,7
+"O enxofre é um nutriente vital para o crescimento saudável das plantas, mas os solos no Reino Unido são naturalmente deficientes deste mineral.",Qwen3OIE_0_6B,O enxofre,é,um nutriente vital para o crescimento saudável das plantas,7
+"O enxofre é um nutriente vital para o crescimento saudável das plantas, mas os solos no Reino Unido são naturalmente deficientes deste mineral.",Qwen3OIE_4B,O enxofre,é,um nutriente vital para o crescimento saudável das plantas,7
+"O enxofre é um nutriente vital para o crescimento saudável das plantas, mas os solos no Reino Unido são naturalmente deficientes deste mineral.",respostas_gpt5.5_mini,O enxofre,é,um nutriente vital para o crescimento saudável das plantas,7
+"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",Claude_Sonnet5,Rocco Catalano,trabalha,retro,6
+"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",Claude_Sonnet5,Rocco Catalano,vive,retro,6
+"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",Gemini3.1Pro,Rocco Catalano,trabalha,retro,6
+"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",Gemini3.1Pro,Rocco Catalano,vive,retro,6
+"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",Grok4.0Fast,Rocco Catalano,trabalha,retro,6
+"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",Grok4.0Fast,Rocco Catalano,vive,retro,6
+"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",Qwen3OIE_0_6B,Rocco Catalano,trabalha,retro,6
+"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",Qwen3OIE_0_6B,Rocco Catalano,vive,retro,6
+"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",Qwen3OIE_4B,Rocco Catalano,trabalha,retro,6
+"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",Qwen3OIE_4B,Rocco Catalano,vive,retro,6
+"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",respostas_gpt5.5_mini,Rocco Catalano,trabalha,retro,6
+"É justo dizer que Rocco Catalano trabalha, vive e respira retro.",respostas_gpt5.5_mini,Rocco Catalano,vive,retro,6
 Penso que é por isso que eles se imergiram em padrões e cor.,Claude_Sonnet5,eles,se imergiram em,padrões,3
 Penso que é por isso que eles se imergiram em padrões e cor.,Claude_Sonnet5,eles,se imergiram em,cor,3
 Penso que é por isso que eles se imergiram em padrões e cor.,Gemini3.1Pro,eles,se imergiram em,padrões,3
 Penso que é por isso que eles se imergiram em padrões e cor.,Gemini3.1Pro,eles,se imergiram em,cor,3
 Penso que é por isso que eles se imergiram em padrões e cor.,respostas_gpt5.5_mini,eles,se imergiram em,padrões,3
 Penso que é por isso que eles se imergiram em padrões e cor.,respostas_gpt5.5_mini,eles,se imergiram em,cor,3
-"Catalano voltou para a área depois de viver em Londres e em Glasgow, onde estudou design de jóias na Glasgow School of Art.",Claude_Sonnet5,Catalano,estudou,design de jóias,3
-"Catalano voltou para a área depois de viver em Londres e em Glasgow, onde estudou design de jóias na Glasgow School of Art.",Gemini3.1Pro,Catalano,estudou,design de jóias,3
-"Catalano voltou para a área depois de viver em Londres e em Glasgow, onde estudou design de jóias na Glasgow School of Art.",respostas_gpt5.5_mini,Catalano,estudou,design de jóias,3
-"Eu adorei as cores tropicais, diz ele.",Claude_Sonnet5,Eu,adorei,as cores tropicais,4
+"Catalano voltou para a área depois de viver em Londres e em Glasgow, onde estudou design de jóias na Glasgow School of Art.",Claude_Sonnet5,Catalano,viver em,Londres,3
+"Catalano voltou para a área depois de viver em Londres e em Glasgow, onde estudou design de jóias na Glasgow School of Art.",Claude_Sonnet5,Catalano,viver em,Glasgow,3
+"Catalano voltou para a área depois de viver em Londres e em Glasgow, onde estudou design de jóias na Glasgow School of Art.",Claude_Sonnet5,Catalano,estudou,design de jóias,4
+"Catalano voltou para a área depois de viver em Londres e em Glasgow, onde estudou design de jóias na Glasgow School of Art.",Gemini3.1Pro,Catalano,estudou,design de jóias,4
+"Catalano voltou para a área depois de viver em Londres e em Glasgow, onde estudou design de jóias na Glasgow School of Art.",Grok4.0Fast,Catalano,viver em,Londres,3
+"Catalano voltou para a área depois de viver em Londres e em Glasgow, onde estudou design de jóias na Glasgow School of Art.",Grok4.0Fast,Catalano,viver em,Glasgow,3
+"Catalano voltou para a área depois de viver em Londres e em Glasgow, onde estudou design de jóias na Glasgow School of Art.",Qwen3OIE_0_6B,Catalano,viver em,Londres,3
+"Catalano voltou para a área depois de viver em Londres e em Glasgow, onde estudou design de jóias na Glasgow School of Art.",Qwen3OIE_0_6B,Catalano,viver em,Glasgow,3
+"Catalano voltou para a área depois de viver em Londres e em Glasgow, onde estudou design de jóias na Glasgow School of Art.",Qwen3OIE_4B,Catalano,estudou,design de jóias,4
+"Catalano voltou para a área depois de viver em Londres e em Glasgow, onde estudou design de jóias na Glasgow School of Art.",respostas_gpt5.5_mini,Catalano,estudou,design de jóias,4
+"Eu adorei as cores tropicais, diz ele.",Claude_Sonnet5,Eu,adorei,as cores tropicais,8
 "Eu adorei as cores tropicais, diz ele.",Claude_Sonnet5,ele,diz,Eu adorei as cores tropicais,4
-"Eu adorei as cores tropicais, diz ele.",Gemini3.1Pro,Eu,adorei,as cores tropicais,4
+"Eu adorei as cores tropicais, diz ele.",Gemini3.1Pro,Eu,adorei,as cores tropicais,8
 "Eu adorei as cores tropicais, diz ele.",Gemini3.1Pro,ele,diz,Eu adorei as cores tropicais,4
-"Eu adorei as cores tropicais, diz ele.",Grok4.0Fast,Eu,adorei,as cores tropicais,4
+"Eu adorei as cores tropicais, diz ele.",Grok4.0Fast,Eu,adorei,as cores tropicais,8
 "Eu adorei as cores tropicais, diz ele.",Grok4.0Fast,ele,diz,Eu adorei as cores tropicais,4
-"Eu adorei as cores tropicais, diz ele.",respostas_gpt5.5_mini,Eu,adorei,as cores tropicais,4
+"Eu adorei as cores tropicais, diz ele.",LlamaPortOIE3,Eu,adorei,as cores tropicais,8
+"Eu adorei as cores tropicais, diz ele.",PortNOIE,Eu,adorei,as cores tropicais,8
+"Eu adorei as cores tropicais, diz ele.",Qwen3OIE_0_6B,Eu,adorei,as cores tropicais,8
+"Eu adorei as cores tropicais, diz ele.",Qwen3OIE_4B,Eu,adorei,as cores tropicais,8
+"Eu adorei as cores tropicais, diz ele.",respostas_gpt5.5_mini,Eu,adorei,as cores tropicais,8
 "Eu adorei as cores tropicais, diz ele.",respostas_gpt5.5_mini,ele,diz,que eu adorei as cores tropicais,4
-"Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",Claude_Sonnet5,Eu,visitei em,a Universidade de Northampton,3
-"Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",Claude_Sonnet5,Eu,visitei para,encontrar novos talentos,3
+"Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",Claude_Sonnet5,Eu,visitei em,a Universidade de Northampton,4
+"Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",Claude_Sonnet5,Eu,visitei para,encontrar novos talentos,4
 "Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",Claude_Sonnet5,ele,diz,Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos,4
-"Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",Gemini3.1Pro,Eu,visitei em,a Universidade de Northampton,3
-"Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",Gemini3.1Pro,Eu,visitei para encontrar,novos talentos,3
+"Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",Gemini3.1Pro,Eu,visitei em,a Universidade de Northampton,4
+"Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",Gemini3.1Pro,Eu,visitei para encontrar,novos talentos,4
 "Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",Gemini3.1Pro,ele,diz,Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos,4
 "Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",Grok4.0Fast,ele,diz,Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos,4
-"Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",respostas_gpt5.5_mini,Eu,visitei em,a Universidade de Northampton,3
-"Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",respostas_gpt5.5_mini,Eu,visitei para,encontrar novos talentos,3
+"Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",Qwen3OIE_4B,Eu,visitei em,a Universidade de Northampton,4
+"Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",Qwen3OIE_4B,Eu,visitei para,encontrar novos talentos,4
+"Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",respostas_gpt5.5_mini,Eu,visitei em,a Universidade de Northampton,4
+"Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",respostas_gpt5.5_mini,Eu,visitei para,encontrar novos talentos,4
 "Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.",respostas_gpt5.5_mini,ele,diz,que eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos,4
-"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",Claude_Sonnet5,eu,sugiro,que ela use a Frank como sua modelo,4
-"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",Gemini3.1Pro,eu,sugiro,que ela use a Frank como sua modelo,4
-"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",Grok4.0Fast,eu,sugiro,que ela use a Frank como sua modelo,4
-"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",respostas_gpt5.5_mini,eu,sugiro,que ela use a Frank como sua modelo,4
-"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Claude_Sonnet5,A própria Wintour,aparece,rapidamente,4
-"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Claude_Sonnet5,A própria Wintour,é filmada,colocando seus óculos de sol antes de ser entrevistada,3
-"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Gemini3.1Pro,A própria Wintour,aparece,rapidamente,4
-"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Gemini3.1Pro,A própria Wintour,é filmada colocando,seus óculos de sol,3
-"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Grok4.0Fast,A própria Wintour,aparece,rapidamente,4
-"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Grok4.0Fast,A própria Wintour,é filmada,colocando seus óculos de sol,4
-"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",respostas_gpt5.5_mini,A própria Wintour,aparece,rapidamente,4
-"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",respostas_gpt5.5_mini,A própria Wintour,é filmada,colocando seus óculos de sol,4
+"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",Claude_Sonnet5,eu,sugiro,que ela use a Frank como sua modelo,5
+"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",Gemini3.1Pro,eu,sugiro,que ela use a Frank como sua modelo,5
+"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",Grok4.0Fast,eu,sugiro,que ela use a Frank como sua modelo,5
+"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",Qwen3OIE_0_6B,Eu,sugiro,que ela use a Frank como sua modelo,5
+"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.",respostas_gpt5.5_mini,eu,sugiro,que ela use a Frank como sua modelo,5
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Claude_Sonnet5,A própria Wintour,aparece,rapidamente,7
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Claude_Sonnet5,A própria Wintour,é filmada,colocando seus óculos de sol antes de ser entrevistada,4
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Gemini3.1Pro,A própria Wintour,aparece,rapidamente,7
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Gemini3.1Pro,A própria Wintour,é filmada colocando,seus óculos de sol,4
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Grok4.0Fast,A própria Wintour,aparece,rapidamente,7
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Grok4.0Fast,A própria Wintour,é filmada,colocando seus óculos de sol,6
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",LlamaPortOIE3,A própria Wintour,aparece,rapidamente,7
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",LlamaPortOIE3,A própria Wintour,é filmada,colocando seus óculos de sol antes de ser entrevistada,4
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",PortNOIE,A própria Wintour,aparece,rapidamente,7
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Qwen3OIE_4B,A própria Wintour,aparece,rapidamente,7
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",Qwen3OIE_4B,A própria Wintour,é filmada colocando,seus óculos de sol,4
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",respostas_gpt5.5_mini,A própria Wintour,aparece,rapidamente,7
+"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.",respostas_gpt5.5_mini,A própria Wintour,é filmada,colocando seus óculos de sol,6
+"Olhei para o motocross e quanto mais olhava, continuava a surgir a cara desta mulher, em fotografias que pareciam ser dos anos 70.",Gemini3.1Pro,fotografias,pareciam ser de,os anos 70,3
+"Olhei para o motocross e quanto mais olhava, continuava a surgir a cara desta mulher, em fotografias que pareciam ser dos anos 70.",Qwen3OIE_4B,fotografias,pareciam ser de,os anos 70,3
+"Olhei para o motocross e quanto mais olhava, continuava a surgir a cara desta mulher, em fotografias que pareciam ser dos anos 70.",respostas_gpt5.5_mini,fotografias,pareciam ser de,os anos 70,3
+"Amo jogar com isso e estou sempre à procura de musas que se encaixem, porque é tão interessante fazer uma coleção quando encontro uma.",Claude_Sonnet5,Eu,Amo,jogar com isso,3
+"Amo jogar com isso e estou sempre à procura de musas que se encaixem, porque é tão interessante fazer uma coleção quando encontro uma.",Claude_Sonnet5,Eu,estou sempre à procura de,musas que se encaixem,3
+"Amo jogar com isso e estou sempre à procura de musas que se encaixem, porque é tão interessante fazer uma coleção quando encontro uma.",Gemini3.1Pro,fazer uma coleção,é,tão interessante,3
+"Amo jogar com isso e estou sempre à procura de musas que se encaixem, porque é tão interessante fazer uma coleção quando encontro uma.",Grok4.0Fast,Eu,Amo,jogar com isso,3
+"Amo jogar com isso e estou sempre à procura de musas que se encaixem, porque é tão interessante fazer uma coleção quando encontro uma.",Grok4.0Fast,Eu,estou sempre à procura de,musas que se encaixem,3
+"Amo jogar com isso e estou sempre à procura de musas que se encaixem, porque é tão interessante fazer uma coleção quando encontro uma.",Qwen3OIE_4B,Eu,amo,jogar com isso,3
+"Amo jogar com isso e estou sempre à procura de musas que se encaixem, porque é tão interessante fazer uma coleção quando encontro uma.",Qwen3OIE_4B,Eu,estou à procura de,musas que se encaixem,3
+"Amo jogar com isso e estou sempre à procura de musas que se encaixem, porque é tão interessante fazer uma coleção quando encontro uma.",Qwen3OIE_4B,Fazer uma coleção,é,tão interessante,3
+"Amo jogar com isso e estou sempre à procura de musas que se encaixem, porque é tão interessante fazer uma coleção quando encontro uma.",respostas_gpt5.5_mini,fazer uma coleção,é,tão interessante,3
 "O seu representante de políticas da natureza, Jeff Knott, declarou: ""Eu ficaria espantado se uma proibição ou um licenciamento fosse com base nestes fundamentos"".",Claude_Sonnet5,"O seu representante de políticas da natureza, Jeff Knott",declarou,Eu ficaria espantado se uma proibição ou um licenciamento fosse com base nestes fundamentos,3
 "O seu representante de políticas da natureza, Jeff Knott, declarou: ""Eu ficaria espantado se uma proibição ou um licenciamento fosse com base nestes fundamentos"".",Gemini3.1Pro,"O seu representante de políticas da natureza, Jeff Knott",declarou,"""Eu ficaria espantado se uma proibição ou um licenciamento fosse com base nestes fundamentos""",3
 "O seu representante de políticas da natureza, Jeff Knott, declarou: ""Eu ficaria espantado se uma proibição ou um licenciamento fosse com base nestes fundamentos"".",Grok4.0Fast,"O seu representante de políticas da natureza, Jeff Knott",declarou,Eu ficaria espantado se uma proibição ou um licenciamento fosse com base nestes fundamentos,3
-"A postura do RSPB também o colocou em conflito com muitos líderes conservadores, desde o autor da petição, Mark Avery, ao apresentador de TV Chris Packham.",Claude_Sonnet5,A postura do RSPB,colocou em conflito com,muitos líderes conservadores,3
-"A postura do RSPB também o colocou em conflito com muitos líderes conservadores, desde o autor da petição, Mark Avery, ao apresentador de TV Chris Packham.",Gemini3.1Pro,A postura do RSPB,colocou em conflito com,muitos líderes conservadores,3
-"A postura do RSPB também o colocou em conflito com muitos líderes conservadores, desde o autor da petição, Mark Avery, ao apresentador de TV Chris Packham.",Grok4.0Fast,A postura do RSPB,colocou em conflito com,muitos líderes conservadores,3
-"Nisto, um ponto diário em Marrocos será em pleno sábado, quando países desenvolvidos se questionam publicamente sobre seus planos e ambições.",Claude_Sonnet5,um ponto diário em Marrocos,será,em pleno sábado,3
-"Nisto, um ponto diário em Marrocos será em pleno sábado, quando países desenvolvidos se questionam publicamente sobre seus planos e ambições.",Grok4.0Fast,um ponto diário em Marrocos,será,em pleno sábado,3
-"Nisto, um ponto diário em Marrocos será em pleno sábado, quando países desenvolvidos se questionam publicamente sobre seus planos e ambições.",respostas_gpt5.5_mini,um ponto diário,será,em pleno sábado,3
-"O bacalhau do mar Céltico pode colapsar, sem os limites propostos, disse um oficial da UE.",Claude_Sonnet5,um oficial da UE,disse,"O bacalhau do mar Céltico pode colapsar, sem os limites propostos",4
-"O bacalhau do mar Céltico pode colapsar, sem os limites propostos, disse um oficial da UE.",Gemini3.1Pro,um oficial da UE,disse,"O bacalhau do mar Céltico pode colapsar, sem os limites propostos",4
-"O bacalhau do mar Céltico pode colapsar, sem os limites propostos, disse um oficial da UE.",Grok4.0Fast,um oficial da UE,disse,"O bacalhau do mar Céltico pode colapsar, sem os limites propostos",4
-"O bacalhau do mar Céltico pode colapsar, sem os limites propostos, disse um oficial da UE.",respostas_gpt5.5_mini,um oficial da UE,disse,que o bacalhau do mar Céltico pode colapsar,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Claude_Sonnet5,grandes promoções,foram previstas para,o bacalhau,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Claude_Sonnet5,grandes promoções,foram previstas para,a solha,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Claude_Sonnet5,grandes promoções,foram previstas para,o linguado,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Claude_Sonnet5,grandes promoções,foram previstas para,o linguado-areeiro,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Claude_Sonnet5,grandes promoções,foram previstas para,o escamudo,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Claude_Sonnet5,grandes promoções,foram previstas em,os mares Celtas e Irlandeses,3
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Gemini3.1Pro,grandes promoções,foram previstas para,o bacalhau,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Gemini3.1Pro,grandes promoções,foram previstas para,a solha,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Gemini3.1Pro,grandes promoções,foram previstas para,o linguado,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Gemini3.1Pro,grandes promoções,foram previstas para,o linguado-areeiro,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Gemini3.1Pro,grandes promoções,foram previstas para,o escamudo,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Gemini3.1Pro,grandes promoções,foram previstas em,os mares Celtas e Irlandeses,3
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Grok4.0Fast,grandes promoções,foram previstas para,o bacalhau,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Grok4.0Fast,grandes promoções,foram previstas para,a solha,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Grok4.0Fast,grandes promoções,foram previstas para,o linguado,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Grok4.0Fast,grandes promoções,foram previstas para,o linguado-areeiro,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Grok4.0Fast,grandes promoções,foram previstas para,o escamudo,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",respostas_gpt5.5_mini,grandes promoções,foram previstas para,o bacalhau,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",respostas_gpt5.5_mini,grandes promoções,foram previstas para,a solha,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",respostas_gpt5.5_mini,grandes promoções,foram previstas para,o linguado,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",respostas_gpt5.5_mini,grandes promoções,foram previstas para,o linguado-areeiro,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",respostas_gpt5.5_mini,grandes promoções,foram previstas para,o escamudo,4
-"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",respostas_gpt5.5_mini,grandes promoções,foram previstas em,os mares Celtas e Irlandeses,3
+"O seu representante de políticas da natureza, Jeff Knott, declarou: ""Eu ficaria espantado se uma proibição ou um licenciamento fosse com base nestes fundamentos"".",LlamaPortOIE3,Jeff Knott,declarou,Eu ficaria espantado se uma proibição ou um licenciamento fosse com base nestes fundamentos,3
+"O seu representante de políticas da natureza, Jeff Knott, declarou: ""Eu ficaria espantado se uma proibição ou um licenciamento fosse com base nestes fundamentos"".",Qwen3OIE_0_6B,Jeff Knott,declarou,Eu ficaria espantado se uma proibição ou um licenciamento fosse com base nestes fundamentos,3
+"O seu representante de políticas da natureza, Jeff Knott, declarou: ""Eu ficaria espantado se uma proibição ou um licenciamento fosse com base nestes fundamentos"".",Qwen3OIE_4B,Jeff Knott,declarou,Eu ficaria espantado se uma proibição ou um licenciamento fosse com base nestes fundamentos,3
+"A postura do RSPB também o colocou em conflito com muitos líderes conservadores, desde o autor da petição, Mark Avery, ao apresentador de TV Chris Packham.",Claude_Sonnet5,A postura do RSPB,colocou em conflito com,muitos líderes conservadores,4
+"A postura do RSPB também o colocou em conflito com muitos líderes conservadores, desde o autor da petição, Mark Avery, ao apresentador de TV Chris Packham.",Gemini3.1Pro,A postura do RSPB,colocou em conflito com,muitos líderes conservadores,4
+"A postura do RSPB também o colocou em conflito com muitos líderes conservadores, desde o autor da petição, Mark Avery, ao apresentador de TV Chris Packham.",Grok4.0Fast,A postura do RSPB,colocou em conflito com,muitos líderes conservadores,4
+"A postura do RSPB também o colocou em conflito com muitos líderes conservadores, desde o autor da petição, Mark Avery, ao apresentador de TV Chris Packham.",Qwen3OIE_4B,A postura do RSPB,colocou em conflito com,muitos líderes conservadores,4
+Vamos simplesmente dizer que ele está errado.,LlamaPortOIE3,ele,está,errado,3
+Vamos simplesmente dizer que ele está errado.,PortNOIE,ele,está,errado,3
+Vamos simplesmente dizer que ele está errado.,respostas_gpt5.5_mini,ele,está,errado,3
+"Nisto, um ponto diário em Marrocos será em pleno sábado, quando países desenvolvidos se questionam publicamente sobre seus planos e ambições.",Claude_Sonnet5,um ponto diário em Marrocos,será,em pleno sábado,4
+"Nisto, um ponto diário em Marrocos será em pleno sábado, quando países desenvolvidos se questionam publicamente sobre seus planos e ambições.",Grok4.0Fast,um ponto diário em Marrocos,será,em pleno sábado,4
+"Nisto, um ponto diário em Marrocos será em pleno sábado, quando países desenvolvidos se questionam publicamente sobre seus planos e ambições.",LlamaPortOIE3,um ponto diário em Marrocos,será,em pleno sábado,4
+"Nisto, um ponto diário em Marrocos será em pleno sábado, quando países desenvolvidos se questionam publicamente sobre seus planos e ambições.",respostas_gpt5.5_mini,um ponto diário,será,em pleno sábado,4
+"Estamos ativamente à procura de formas possíveis de limitar o âmbito do litígio para apenas aqueles que tenham uma posição real no projeto, foi citado.",Claude_Sonnet5,Estamos,ativamente à procura de,formas possíveis de limitar o âmbito do litígio para apenas aqueles que tenham uma posição real no projeto,4
+"Estamos ativamente à procura de formas possíveis de limitar o âmbito do litígio para apenas aqueles que tenham uma posição real no projeto, foi citado.",LlamaPortOIE3,Estamos,à procura de,formas possíveis de limitar o âmbito do litígio para apenas aqueles que tenham uma posição real no projeto,4
+"Estamos ativamente à procura de formas possíveis de limitar o âmbito do litígio para apenas aqueles que tenham uma posição real no projeto, foi citado.",Qwen3OIE_0_6B,Estamos,Estamos ativamente à procura de,formas possíveis de limitar o âmbito do litígio para apenas aqueles que tenham uma posição real no projeto,4
+"Estamos ativamente à procura de formas possíveis de limitar o âmbito do litígio para apenas aqueles que tenham uma posição real no projeto, foi citado.",Qwen3OIE_4B,Estamos,estamos à procura de,formas possíveis de limitar o âmbito do litígio para apenas aqueles que tenham uma posição real no projeto,4
+"O bacalhau do mar Céltico pode colapsar, sem os limites propostos, disse um oficial da UE.",Claude_Sonnet5,um oficial da UE,disse,"O bacalhau do mar Céltico pode colapsar, sem os limites propostos",5
+"O bacalhau do mar Céltico pode colapsar, sem os limites propostos, disse um oficial da UE.",Gemini3.1Pro,um oficial da UE,disse,"O bacalhau do mar Céltico pode colapsar, sem os limites propostos",5
+"O bacalhau do mar Céltico pode colapsar, sem os limites propostos, disse um oficial da UE.",Grok4.0Fast,um oficial da UE,disse,"O bacalhau do mar Céltico pode colapsar, sem os limites propostos",5
+"O bacalhau do mar Céltico pode colapsar, sem os limites propostos, disse um oficial da UE.",Qwen3OIE_4B,um oficial da UE,disse,"O bacalhau do mar Céltico pode colapsar, sem os limites propostos",5
+"O bacalhau do mar Céltico pode colapsar, sem os limites propostos, disse um oficial da UE.",respostas_gpt5.5_mini,um oficial da UE,disse,que o bacalhau do mar Céltico pode colapsar,5
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Claude_Sonnet5,grandes promoções,foram previstas para,o bacalhau,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Claude_Sonnet5,grandes promoções,foram previstas para,a solha,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Claude_Sonnet5,grandes promoções,foram previstas para,o linguado,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Claude_Sonnet5,grandes promoções,foram previstas para,o linguado-areeiro,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Claude_Sonnet5,grandes promoções,foram previstas para,o escamudo,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Claude_Sonnet5,grandes promoções,foram previstas em,os mares Celtas e Irlandeses,5
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Gemini3.1Pro,grandes promoções,foram previstas para,o bacalhau,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Gemini3.1Pro,grandes promoções,foram previstas para,a solha,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Gemini3.1Pro,grandes promoções,foram previstas para,o linguado,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Gemini3.1Pro,grandes promoções,foram previstas para,o linguado-areeiro,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Gemini3.1Pro,grandes promoções,foram previstas para,o escamudo,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Gemini3.1Pro,grandes promoções,foram previstas em,os mares Celtas e Irlandeses,5
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Grok4.0Fast,grandes promoções,foram previstas para,o bacalhau,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Grok4.0Fast,grandes promoções,foram previstas para,a solha,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Grok4.0Fast,grandes promoções,foram previstas para,o linguado,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Grok4.0Fast,grandes promoções,foram previstas para,o linguado-areeiro,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Grok4.0Fast,grandes promoções,foram previstas para,o escamudo,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Qwen3OIE_0_6B,grandes promoções,foram previstas para,o bacalhau,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Qwen3OIE_0_6B,grandes promoções,foram previstas para,a solha,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Qwen3OIE_0_6B,grandes promoções,foram previstas para,o linguado,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Qwen3OIE_0_6B,grandes promoções,foram previstas para,o linguado-areeiro,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Qwen3OIE_0_6B,grandes promoções,foram previstas para,o escamudo,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Qwen3OIE_0_6B,grandes promoções,foram previstas em,os mares Celtas,5
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Qwen3OIE_4B,grandes promoções,foram previstas para,o bacalhau,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Qwen3OIE_4B,grandes promoções,foram previstas para,a solha,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Qwen3OIE_4B,grandes promoções,foram previstas para,o linguado,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Qwen3OIE_4B,grandes promoções,foram previstas para,o linguado-areeiro,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Qwen3OIE_4B,grandes promoções,foram previstas para,o escamudo,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",Qwen3OIE_4B,grandes promoções,foram previstas em,os mares Celtas,5
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",respostas_gpt5.5_mini,grandes promoções,foram previstas para,o bacalhau,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",respostas_gpt5.5_mini,grandes promoções,foram previstas para,a solha,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",respostas_gpt5.5_mini,grandes promoções,foram previstas para,o linguado,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",respostas_gpt5.5_mini,grandes promoções,foram previstas para,o linguado-areeiro,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",respostas_gpt5.5_mini,grandes promoções,foram previstas para,o escamudo,6
+"Mas foram também previstas grandes promoções para o bacalhau, a solha, o linguado, o linguado-areeiro e o escamudo, nos mares Celtas e Irlandeses.",respostas_gpt5.5_mini,grandes promoções,foram previstas em,os mares Celtas e Irlandeses,5
 "O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",Claude_Sonnet5,O Agora,foi,apenas por convite,4
-"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",Claude_Sonnet5,muitos destes mercados,estão,facilmente acessíveis,4
-"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",Claude_Sonnet5,o Dr. Lee,acrescenta,"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar",4
+"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",Claude_Sonnet5,muitos destes mercados,estão,facilmente acessíveis,5
+"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",Claude_Sonnet5,o Dr. Lee,acrescenta,"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar",5
 "O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",Gemini3.1Pro,O Agora,foi,apenas por convite,4
-"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",Gemini3.1Pro,muitos destes mercados,estão,facilmente acessíveis,4
-"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",Gemini3.1Pro,o Dr. Lee,acrescenta,"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar",4
+"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",Gemini3.1Pro,muitos destes mercados,estão,facilmente acessíveis,5
+"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",Gemini3.1Pro,o Dr. Lee,acrescenta,"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar",5
 "O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",Grok4.0Fast,O Agora,foi,apenas por convite,4
-"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",Grok4.0Fast,muitos destes mercados,estão,facilmente acessíveis,4
-"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",Grok4.0Fast,o Dr. Lee,acrescenta,"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar",4
+"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",Grok4.0Fast,muitos destes mercados,estão,facilmente acessíveis,5
+"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",Grok4.0Fast,o Dr. Lee,acrescenta,"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar",5
+"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",LlamaPortOIE3,muitos destes mercados,estão,facilmente acessíveis,5
+"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",Qwen3OIE_4B,o Dr. Lee,acrescenta,muitos destes mercados estão facilmente acessíveis se você souber como pesquisar,5
 "O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",respostas_gpt5.5_mini,O Agora,foi,apenas por convite,4
-"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",respostas_gpt5.5_mini,muitos destes mercados,estão,facilmente acessíveis,4
-"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",respostas_gpt5.5_mini,o Dr. Lee,acrescenta,"que o Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar",4
+"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",respostas_gpt5.5_mini,muitos destes mercados,estão,facilmente acessíveis,5
+"O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.",respostas_gpt5.5_mini,o Dr. Lee,acrescenta,"que o Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar",5
 "Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",Claude_Sonnet5,Eles,não tinham,os,4
 "Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",Claude_Sonnet5,pessoas sem crianças,se expressam através de,sua desaprovação,4
-"Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",Claude_Sonnet5,pessoas sem crianças,se expressam através de,seu ódio pela parentalidade moderna,3
+"Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",Claude_Sonnet5,pessoas sem crianças,se expressam através de,seu ódio pela parentalidade moderna,5
 "Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",Gemini3.1Pro,Eles,não tinham,os,4
-"Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",Gemini3.1Pro,pessoas sem crianças,se expressam através de,a sua desaprovação,4
-"Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",Gemini3.1Pro,pessoas sem crianças,se expressam através de,o seu ódio pela parentalidade moderna,3
+"Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",Gemini3.1Pro,pessoas sem crianças,se expressam através de,a sua desaprovação,5
+"Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",Gemini3.1Pro,pessoas sem crianças,se expressam através de,o seu ódio pela parentalidade moderna,5
 "Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",Grok4.0Fast,Eles,não tinham,os,4
-"Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",Grok4.0Fast,pessoas sem crianças,se expressam através de,a sua desaprovação,4
-"Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",Grok4.0Fast,pessoas sem crianças,se expressam através de,o seu ódio pela parentalidade moderna,3
+"Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",Grok4.0Fast,pessoas sem crianças,se expressam através de,a sua desaprovação,5
+"Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",Grok4.0Fast,pessoas sem crianças,se expressam através de,o seu ódio pela parentalidade moderna,5
+"Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",Qwen3OIE_0_6B,pessoas sem crianças,se expressam através de,o ódio pela parentalidade moderna,5
+"Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",Qwen3OIE_4B,pessoas sem crianças,se expressam através de,a desaprovação deles,4
+"Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",Qwen3OIE_4B,pessoas sem crianças,se expressam através de,o ódio deles pela parentalidade moderna,5
 "Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",respostas_gpt5.5_mini,Eles,não tinham,os,4
-"Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",respostas_gpt5.5_mini,pessoas sem crianças,se expressam através de,a sua desaprovação,4
-"Dia três, eu estava de volta no EMicro.",Gemini3.1Pro,eu,estava de volta em,o EMicro,3
-"Dia três, eu estava de volta no EMicro.",Grok4.0Fast,eu,estava de volta em,o EMicro,3
-"Dia três, eu estava de volta no EMicro.",respostas_gpt5.5_mini,eu,estava de volta em,o EMicro,3
-"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",Claude_Sonnet5,O mundo,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,4
-"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",Claude_Sonnet5,o Reino Unido,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,4
-"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",Gemini3.1Pro,O mundo,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,4
-"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",Gemini3.1Pro,o Reino Unido,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,4
-"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",Grok4.0Fast,O mundo,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,4
-"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",Grok4.0Fast,o Reino Unido,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,4
-"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",respostas_gpt5.5_mini,O mundo,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,4
-"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",respostas_gpt5.5_mini,o Reino Unido,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,4
-"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",Claude_Sonnet5,a minha lista,cresceu,muito,4
-"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",Gemini3.1Pro,a minha lista,cresceu,muito,4
-"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",Grok4.0Fast,a minha lista,cresceu,muito,4
-"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",respostas_gpt5.5_mini,a minha lista,cresceu,muito,4
-"De volta ao trem, nós continuamos em direção ao o sul.",Claude_Sonnet5,nós,continuamos em direção a,o sul,4
-"De volta ao trem, nós continuamos em direção ao o sul.",Gemini3.1Pro,nós,continuamos em direção a,o o sul,4
-"De volta ao trem, nós continuamos em direção ao o sul.",Grok4.0Fast,nós,continuamos em direção a,o sul,4
-"De volta ao trem, nós continuamos em direção ao o sul.",respostas_gpt5.5_mini,nós,continuamos em direção a,o sul,4
+"Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.",respostas_gpt5.5_mini,pessoas sem crianças,se expressam através de,a sua desaprovação,5
+"Dia três, eu estava de volta no EMicro.",Gemini3.1Pro,eu,estava de volta em,o EMicro,4
+"Dia três, eu estava de volta no EMicro.",Grok4.0Fast,eu,estava de volta em,o EMicro,4
+"Dia três, eu estava de volta no EMicro.",Qwen3OIE_4B,Eu,estava de volta em,o EMicro,4
+"Dia três, eu estava de volta no EMicro.",respostas_gpt5.5_mini,eu,estava de volta em,o EMicro,4
+"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",Claude_Sonnet5,O mundo,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,7
+"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",Claude_Sonnet5,o Reino Unido,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,6
+"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",Gemini3.1Pro,O mundo,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,7
+"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",Gemini3.1Pro,o Reino Unido,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,6
+"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",Grok4.0Fast,O mundo,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,7
+"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",Grok4.0Fast,o Reino Unido,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,6
+"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",LlamaPortOIE3,O mundo,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,7
+"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",Qwen3OIE_0_6B,O mundo,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,7
+"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",Qwen3OIE_0_6B,O Reino Unido,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,6
+"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",Qwen3OIE_4B,O mundo,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,7
+"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",Qwen3OIE_4B,o Reino Unido,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,6
+"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",respostas_gpt5.5_mini,O mundo,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,7
+"O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.",respostas_gpt5.5_mini,o Reino Unido,está enfrentando,uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz,6
+"As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.",Claude_Sonnet5,As empresas,podem tentar criar,um firewall entre sistemas sensíveis e potências estrangeiras,5
+"As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.",LlamaPortOIE3,As empresas,podem tentar criar,um firewall entre sistemas sensíveis e potências estrangeiras,5
+"As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.",PortNOIE,As empresas,podem tentar criar,um firewall entre sistemas sensíveis,5
+"As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.",Qwen3OIE_0_6B,As empresas,podem tentar criar,um firewall entre sistemas sensíveis e potências estrangeiras,5
+"As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.",Qwen3OIE_4B,As empresas,podem tentar criar,um firewall entre sistemas sensíveis e potências estrangeiras,5
+"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",Claude_Sonnet5,a minha lista,cresceu,muito,6
+"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",Gemini3.1Pro,a minha lista,cresceu,muito,6
+"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",Grok4.0Fast,a minha lista,cresceu,muito,6
+"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",LlamaPortOIE3,a minha lista,cresceu,muito,6
+"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",Qwen3OIE_4B,a minha lista,cresceu,muito,6
+"Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.",respostas_gpt5.5_mini,a minha lista,cresceu,muito,6
+"De volta ao trem, nós continuamos em direção ao o sul.",Claude_Sonnet5,nós,continuamos em direção a,o sul,7
+"De volta ao trem, nós continuamos em direção ao o sul.",Gemini3.1Pro,nós,continuamos em direção a,o o sul,7
+"De volta ao trem, nós continuamos em direção ao o sul.",Grok4.0Fast,nós,continuamos em direção a,o sul,7
+"De volta ao trem, nós continuamos em direção ao o sul.",PortNOIE,nós,continuamos em direção,o sul,7
+"De volta ao trem, nós continuamos em direção ao o sul.",Qwen3OIE_0_6B,nós,continuamos em direção a,o sul,7
+"De volta ao trem, nós continuamos em direção ao o sul.",Qwen3OIE_4B,nós,continuamos em direção a,o sul,7
+"De volta ao trem, nós continuamos em direção ao o sul.",respostas_gpt5.5_mini,nós,continuamos em direção a,o sul,7
 "Em cada estação, um guarda de chapéu vermelho comanda a plataforma e um trabalhador anda ao longo do trem com um martelo, batendo gentilmente na parte de baixo da carruagem.",Claude_Sonnet5,um trabalhador,batendo gentilmente em,a parte de baixo da carruagem,3
 "Em cada estação, um guarda de chapéu vermelho comanda a plataforma e um trabalhador anda ao longo do trem com um martelo, batendo gentilmente na parte de baixo da carruagem.",Gemini3.1Pro,um trabalhador,batendo gentilmente em,a parte de baixo da carruagem,3
 "Em cada estação, um guarda de chapéu vermelho comanda a plataforma e um trabalhador anda ao longo do trem com um martelo, batendo gentilmente na parte de baixo da carruagem.",respostas_gpt5.5_mini,um trabalhador,bate gentilmente em,a parte de baixo da carruagem,3
-"O juramento envolve legisladores jurando lealdade a Hong Kong, como parte da República Popular da China.",Claude_Sonnet5,legisladores,jurando lealdade a,Hong Kong,3
-"O juramento envolve legisladores jurando lealdade a Hong Kong, como parte da República Popular da China.",Gemini3.1Pro,legisladores,jurando lealdade a,Hong Kong,3
-"O juramento envolve legisladores jurando lealdade a Hong Kong, como parte da República Popular da China.",respostas_gpt5.5_mini,legisladores,jurando lealdade a,Hong Kong,3
-"O governo de Hong Kong, que é liderado por legisladores pró-Pequim, argumentou que o par não deve tomar posse.",Claude_Sonnet5,O governo de Hong Kong,argumentou,que o par não deve tomar posse,4
-"O governo de Hong Kong, que é liderado por legisladores pró-Pequim, argumentou que o par não deve tomar posse.",Gemini3.1Pro,O governo de Hong Kong,argumentou,que o par não deve tomar posse,4
-"O governo de Hong Kong, que é liderado por legisladores pró-Pequim, argumentou que o par não deve tomar posse.",Grok4.0Fast,O governo de Hong Kong,argumentou,que o par não deve tomar posse,4
-"O governo de Hong Kong, que é liderado por legisladores pró-Pequim, argumentou que o par não deve tomar posse.",respostas_gpt5.5_mini,O governo de Hong Kong,argumentou,que o par não deve tomar posse,4
-"Pequim acredita que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade, disse ele.",Claude_Sonnet5,Pequim,acredita,que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade,3
+"O juramento envolve legisladores jurando lealdade a Hong Kong, como parte da República Popular da China.",Claude_Sonnet5,legisladores,jurando lealdade a,Hong Kong,4
+"O juramento envolve legisladores jurando lealdade a Hong Kong, como parte da República Popular da China.",Gemini3.1Pro,legisladores,jurando lealdade a,Hong Kong,4
+"O juramento envolve legisladores jurando lealdade a Hong Kong, como parte da República Popular da China.",Qwen3OIE_4B,legisladores,juram lealdade a,Hong Kong,4
+"O juramento envolve legisladores jurando lealdade a Hong Kong, como parte da República Popular da China.",respostas_gpt5.5_mini,legisladores,jurando lealdade a,Hong Kong,4
+"O governo de Hong Kong, que é liderado por legisladores pró-Pequim, argumentou que o par não deve tomar posse.",Claude_Sonnet5,O governo de Hong Kong,argumentou,que o par não deve tomar posse,7
+"O governo de Hong Kong, que é liderado por legisladores pró-Pequim, argumentou que o par não deve tomar posse.",Gemini3.1Pro,O governo de Hong Kong,argumentou,que o par não deve tomar posse,7
+"O governo de Hong Kong, que é liderado por legisladores pró-Pequim, argumentou que o par não deve tomar posse.",Grok4.0Fast,O governo de Hong Kong,argumentou,que o par não deve tomar posse,7
+"O governo de Hong Kong, que é liderado por legisladores pró-Pequim, argumentou que o par não deve tomar posse.",LlamaPortOIE3,O governo de Hong Kong,argumentou,que o par não deve tomar posse,7
+"O governo de Hong Kong, que é liderado por legisladores pró-Pequim, argumentou que o par não deve tomar posse.",Qwen3OIE_0_6B,O governo de Hong Kong,argumentou,que o par não deve tomar posse,7
+"O governo de Hong Kong, que é liderado por legisladores pró-Pequim, argumentou que o par não deve tomar posse.",Qwen3OIE_4B,O governo de Hong Kong,argumentou,que o par não deve tomar posse,7
+"O governo de Hong Kong, que é liderado por legisladores pró-Pequim, argumentou que o par não deve tomar posse.",respostas_gpt5.5_mini,O governo de Hong Kong,argumentou,que o par não deve tomar posse,7
+"Pequim acredita que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade, disse ele.",Claude_Sonnet5,Pequim,acredita,que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade,5
 "Pequim acredita que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade, disse ele.",Claude_Sonnet5,ele,disse,Pequim acredita que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade,4
 "Pequim acredita que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade, disse ele.",Gemini3.1Pro,ele,disse,Pequim acredita que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade,4
-"Pequim acredita que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade, disse ele.",Gemini3.1Pro,Pequim,acredita,que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade,3
+"Pequim acredita que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade, disse ele.",Gemini3.1Pro,Pequim,acredita,que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade,5
 "Pequim acredita que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade, disse ele.",Grok4.0Fast,ele,disse,Pequim acredita que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade,4
-"Pequim acredita que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade, disse ele.",respostas_gpt5.5_mini,Pequim,acredita,que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade,3
+"Pequim acredita que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade, disse ele.",LlamaPortOIE3,Pequim,acredita,que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade,5
+"Pequim acredita que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade, disse ele.",Qwen3OIE_4B,Pequim,acredita,que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade,5
+"Pequim acredita que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade, disse ele.",respostas_gpt5.5_mini,Pequim,acredita,que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade,5
 "Pequim acredita que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade, disse ele.",respostas_gpt5.5_mini,ele,disse,que Pequim acredita que a sua intervenção é necessária para evitar a paralisia legislativa contínua na cidade,4
-"Ele disse no Andrew Marr Show da BBC: ""Uma eleição legislativa é francamente a última coisa que o Governo quer.""",Claude_Sonnet5,Ele,disse,Uma eleição legislativa é francamente a última coisa que o Governo quer,3
-"Ele disse no Andrew Marr Show da BBC: ""Uma eleição legislativa é francamente a última coisa que o Governo quer.""",Gemini3.1Pro,Ele,disse,"""Uma eleição legislativa é francamente a última coisa que o Governo quer.""",3
-"Ele disse no Andrew Marr Show da BBC: ""Uma eleição legislativa é francamente a última coisa que o Governo quer.""",Grok4.0Fast,Ele,disse,Uma eleição legislativa é francamente a última coisa que o Governo quer,3
+"Ele disse no Andrew Marr Show da BBC: ""Uma eleição legislativa é francamente a última coisa que o Governo quer.""",Claude_Sonnet5,Ele,disse,Uma eleição legislativa é francamente a última coisa que o Governo quer,6
+"Ele disse no Andrew Marr Show da BBC: ""Uma eleição legislativa é francamente a última coisa que o Governo quer.""",Gemini3.1Pro,Ele,disse,"""Uma eleição legislativa é francamente a última coisa que o Governo quer.""",6
+"Ele disse no Andrew Marr Show da BBC: ""Uma eleição legislativa é francamente a última coisa que o Governo quer.""",Grok4.0Fast,Ele,disse,Uma eleição legislativa é francamente a última coisa que o Governo quer,6
+"Ele disse no Andrew Marr Show da BBC: ""Uma eleição legislativa é francamente a última coisa que o Governo quer.""",LlamaPortOIE3,Ele,disse,Uma eleição legislativa é francamente a última coisa que o Governo quer.,6
+"Ele disse no Andrew Marr Show da BBC: ""Uma eleição legislativa é francamente a última coisa que o Governo quer.""",Qwen3OIE_0_6B,Ele,disse,Uma eleição legislativa é francamente a última coisa que o Governo quer.,6
+"Ele disse no Andrew Marr Show da BBC: ""Uma eleição legislativa é francamente a última coisa que o Governo quer.""",Qwen3OIE_4B,Ele,disse,Uma eleição legislativa é francamente a última coisa que o Governo quer.,6
 É o sonho dele terminar a sua carreira aqui.,Claude_Sonnet5,terminar a sua carreira aqui,é,o sonho dele,4
 É o sonho dele terminar a sua carreira aqui.,Gemini3.1Pro,terminar a sua carreira aqui,é,o sonho dele,4
 É o sonho dele terminar a sua carreira aqui.,Grok4.0Fast,terminar a sua carreira aqui,é,o sonho dele,4
 É o sonho dele terminar a sua carreira aqui.,respostas_gpt5.5_mini,terminar a sua carreira aqui,é,o sonho dele,4
-"Empatar um jogo que você dominou é simples de esquecer, mas fazê-lo três vezes em seguida sugere fraqueza.",Claude_Sonnet5,Empatar um jogo que você dominou,é,simples de esquecer,3
-"Empatar um jogo que você dominou é simples de esquecer, mas fazê-lo três vezes em seguida sugere fraqueza.",Claude_Sonnet5,fazê-lo três vezes em seguida,sugere,fraqueza,3
-"Empatar um jogo que você dominou é simples de esquecer, mas fazê-lo três vezes em seguida sugere fraqueza.",Gemini3.1Pro,Empatar um jogo que você dominou,é,simples de esquecer,3
-"Empatar um jogo que você dominou é simples de esquecer, mas fazê-lo três vezes em seguida sugere fraqueza.",Gemini3.1Pro,fazê-lo três vezes em seguida,sugere,fraqueza,3
-"Empatar um jogo que você dominou é simples de esquecer, mas fazê-lo três vezes em seguida sugere fraqueza.",respostas_gpt5.5_mini,Empatar um jogo que você dominou,é,simples de esquecer,3
-"Empatar um jogo que você dominou é simples de esquecer, mas fazê-lo três vezes em seguida sugere fraqueza.",respostas_gpt5.5_mini,fazê-lo três vezes em seguida,sugere,fraqueza,3
-Estávamos tão desapontados porque perdemos seis pontos jogando em casa.,Claude_Sonnet5,Nós,Estávamos,tão desapontados,3
-Estávamos tão desapontados porque perdemos seis pontos jogando em casa.,Grok4.0Fast,nós,Estávamos,tão desapontados,3
-Estávamos tão desapontados porque perdemos seis pontos jogando em casa.,respostas_gpt5.5_mini,nós,estávamos,tão desapontados,3
-"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",Claude_Sonnet5,Andy,enfrentou,Benoît Paire,3
-"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",Claude_Sonnet5,Andy,enfrentou em,Monte Carlo,3
-"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",Claude_Sonnet5,Andy,enfrentou em,abril,3
-"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",Grok4.0Fast,Andy,enfrentou,Benoît Paire,3
-"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",Grok4.0Fast,Andy,enfrentou em,Monte Carlo,3
-"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",Grok4.0Fast,Andy,enfrentou em,abril,3
-"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",respostas_gpt5.5_mini,Andy,enfrentou,Benoît Paire,3
-"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",respostas_gpt5.5_mini,Andy,enfrentou em,Monte Carlo,3
-"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",respostas_gpt5.5_mini,Andy,enfrentou em,abril,3
-Eu também penso se a Taça Davis desempenhou algum papel.,Claude_Sonnet5,Eu,penso,se a Taça Davis desempenhou algum papel,3
-Eu também penso se a Taça Davis desempenhou algum papel.,Gemini3.1Pro,Eu,penso,se a Taça Davis desempenhou algum papel,3
-Eu também penso se a Taça Davis desempenhou algum papel.,respostas_gpt5.5_mini,Eu,penso,se a Taça Davis desempenhou algum papel,3
-A pesquisa anual também revelou que as preocupações sobre assumir novos encargos financeiros têm disparado.,Gemini3.1Pro,A pesquisa anual,revelou,que as preocupações sobre assumir novos encargos financeiros têm disparado,3
-A pesquisa anual também revelou que as preocupações sobre assumir novos encargos financeiros têm disparado.,Grok4.0Fast,A pesquisa anual,revelou,que as preocupações sobre assumir novos encargos financeiros têm disparado,3
-A pesquisa anual também revelou que as preocupações sobre assumir novos encargos financeiros têm disparado.,respostas_gpt5.5_mini,A pesquisa anual,revelou,que as preocupações sobre assumir novos encargos financeiros têm disparado,3
-"O senhor Hopley acrescentou: ""O aumento do risco político não deve passar despercebido"".",Claude_Sonnet5,O senhor Hopley,acrescentou,O aumento do risco político não deve passar despercebido,3
-"O senhor Hopley acrescentou: ""O aumento do risco político não deve passar despercebido"".",Gemini3.1Pro,O senhor Hopley,acrescentou,"""O aumento do risco político não deve passar despercebido""",3
-"O senhor Hopley acrescentou: ""O aumento do risco político não deve passar despercebido"".",Grok4.0Fast,O senhor Hopley,acrescentou,O aumento do risco político não deve passar despercebido,3
-"Isso também abriu a VW para reivindicações e ações legais imensas, e viu elas levarem mais que €16 bilhões de provisões.",Gemini3.1Pro,Isso,viu,elas levarem mais que €16 bilhões de provisões,3
-"Isso também abriu a VW para reivindicações e ações legais imensas, e viu elas levarem mais que €16 bilhões de provisões.",Grok4.0Fast,Isso,viu,elas levarem mais que €16 bilhões de provisões,3
-"Isso também abriu a VW para reivindicações e ações legais imensas, e viu elas levarem mais que €16 bilhões de provisões.",respostas_gpt5.5_mini,Isso,viu,elas levarem mais que €16 bilhões de provisões,3
-"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",Claude_Sonnet5,A sondagem,com foco em,o Sr. Winterkorn,3
-"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",Claude_Sonnet5,A sondagem,com foco em,"o chefe de marca, Herbert Diess",3
-"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",Claude_Sonnet5,Herbert Diess,permanece em,a fabricante de automóveis,4
-"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",Gemini3.1Pro,Herbert Diess,permanece em,a fabricante de automóveis,4
-"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",Grok4.0Fast,Herbert Diess,permanece em,a fabricante de automóveis,4
-"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",respostas_gpt5.5_mini,Herbert Diess,permanece em,a fabricante de automóveis,4
-"Ele foi promovido a presidente em outubro de 2015, o mês seguinte ao escândalo ter sido descoberto.",Claude_Sonnet5,Ele,foi promovido a,presidente,4
-"Ele foi promovido a presidente em outubro de 2015, o mês seguinte ao escândalo ter sido descoberto.",Gemini3.1Pro,Ele,foi promovido a,presidente,4
-"Ele foi promovido a presidente em outubro de 2015, o mês seguinte ao escândalo ter sido descoberto.",Grok4.0Fast,Ele,foi promovido a,presidente,4
-"Ele foi promovido a presidente em outubro de 2015, o mês seguinte ao escândalo ter sido descoberto.",respostas_gpt5.5_mini,Ele,foi promovido a,presidente,4
-"As empresas esperavam começar a decrescer em julho, imediatamente após o voto do Brexit, mas em vez disso têm conseguido manter o crescimento constante.",Claude_Sonnet5,As empresas,têm conseguido manter,o crescimento constante,4
-"As empresas esperavam começar a decrescer em julho, imediatamente após o voto do Brexit, mas em vez disso têm conseguido manter o crescimento constante.",Gemini3.1Pro,As empresas,têm conseguido manter,o crescimento constante,4
-"As empresas esperavam começar a decrescer em julho, imediatamente após o voto do Brexit, mas em vez disso têm conseguido manter o crescimento constante.",Grok4.0Fast,As empresas,têm conseguido manter,o crescimento constante,4
-"As empresas esperavam começar a decrescer em julho, imediatamente após o voto do Brexit, mas em vez disso têm conseguido manter o crescimento constante.",respostas_gpt5.5_mini,As empresas,têm conseguido manter,o crescimento constante,4
-"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",Claude_Sonnet5,O custo,vai mudar,mensalmente,3
-"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",Gemini3.1Pro,O custo,vai mudar,mensalmente,3
-"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",respostas_gpt5.5_mini,O custo,vai mudar,mensalmente,3
+"Empatar um jogo que você dominou é simples de esquecer, mas fazê-lo três vezes em seguida sugere fraqueza.",Claude_Sonnet5,Empatar um jogo que você dominou,é,simples de esquecer,5
+"Empatar um jogo que você dominou é simples de esquecer, mas fazê-lo três vezes em seguida sugere fraqueza.",Claude_Sonnet5,fazê-lo três vezes em seguida,sugere,fraqueza,4
+"Empatar um jogo que você dominou é simples de esquecer, mas fazê-lo três vezes em seguida sugere fraqueza.",Gemini3.1Pro,Empatar um jogo que você dominou,é,simples de esquecer,5
+"Empatar um jogo que você dominou é simples de esquecer, mas fazê-lo três vezes em seguida sugere fraqueza.",Gemini3.1Pro,fazê-lo três vezes em seguida,sugere,fraqueza,4
+"Empatar um jogo que você dominou é simples de esquecer, mas fazê-lo três vezes em seguida sugere fraqueza.",LlamaPortOIE3,Empatar um jogo que você dominou,é,simples de esquecer,5
+"Empatar um jogo que você dominou é simples de esquecer, mas fazê-lo três vezes em seguida sugere fraqueza.",LlamaPortOIE3,fazê-lo três vezes em seguida,sugere,fraqueza,4
+"Empatar um jogo que você dominou é simples de esquecer, mas fazê-lo três vezes em seguida sugere fraqueza.",Qwen3OIE_4B,Empatar um jogo que você dominou,é,simples de esquecer,5
+"Empatar um jogo que você dominou é simples de esquecer, mas fazê-lo três vezes em seguida sugere fraqueza.",respostas_gpt5.5_mini,Empatar um jogo que você dominou,é,simples de esquecer,5
+"Empatar um jogo que você dominou é simples de esquecer, mas fazê-lo três vezes em seguida sugere fraqueza.",respostas_gpt5.5_mini,fazê-lo três vezes em seguida,sugere,fraqueza,4
+Estávamos tão desapontados porque perdemos seis pontos jogando em casa.,Claude_Sonnet5,Nós,Estávamos,tão desapontados,4
+Estávamos tão desapontados porque perdemos seis pontos jogando em casa.,Claude_Sonnet5,nós,perdemos,seis pontos,3
+Estávamos tão desapontados porque perdemos seis pontos jogando em casa.,Grok4.0Fast,nós,Estávamos,tão desapontados,4
+Estávamos tão desapontados porque perdemos seis pontos jogando em casa.,Qwen3OIE_4B,Nós,estávamos,tão desapontados,4
+Estávamos tão desapontados porque perdemos seis pontos jogando em casa.,Qwen3OIE_4B,Nós,perdemos,seis pontos,3
+Estávamos tão desapontados porque perdemos seis pontos jogando em casa.,respostas_gpt5.5_mini,nós,estávamos,tão desapontados,4
+Estávamos tão desapontados porque perdemos seis pontos jogando em casa.,respostas_gpt5.5_mini,nós,perdemos,seis pontos,3
+"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",Claude_Sonnet5,Andy,enfrentou,Benoît Paire,4
+"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",Claude_Sonnet5,Andy,enfrentou em,Monte Carlo,4
+"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",Claude_Sonnet5,Andy,enfrentou em,abril,4
+"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",Grok4.0Fast,Andy,enfrentou,Benoît Paire,4
+"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",Grok4.0Fast,Andy,enfrentou em,Monte Carlo,4
+"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",Grok4.0Fast,Andy,enfrentou em,abril,4
+"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",Qwen3OIE_4B,Andy,enfrentou,Benoît Paire,4
+"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",Qwen3OIE_4B,Andy,enfrentou em,Monte Carlo,4
+"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",Qwen3OIE_4B,Andy,enfrentou em,abril,4
+"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",respostas_gpt5.5_mini,Andy,enfrentou,Benoît Paire,4
+"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",respostas_gpt5.5_mini,Andy,enfrentou em,Monte Carlo,4
+"Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.",respostas_gpt5.5_mini,Andy,enfrentou em,abril,4
+Mas agora tudo está fora de questão e ele parece estar à procura de respostas a toda hora.,Gemini3.1Pro,ele,parece estar à procura de,respostas,3
+Mas agora tudo está fora de questão e ele parece estar à procura de respostas a toda hora.,Qwen3OIE_4B,Ele,parece estar à procura de,respostas,3
+Mas agora tudo está fora de questão e ele parece estar à procura de respostas a toda hora.,respostas_gpt5.5_mini,ele,parece estar à procura de,respostas,3
+Eu também penso se a Taça Davis desempenhou algum papel.,Claude_Sonnet5,Eu,penso,se a Taça Davis desempenhou algum papel,4
+Eu também penso se a Taça Davis desempenhou algum papel.,Gemini3.1Pro,Eu,penso,se a Taça Davis desempenhou algum papel,4
+Eu também penso se a Taça Davis desempenhou algum papel.,Qwen3OIE_4B,Eu,penso,se a Taça Davis desempenhou algum papel,4
+Eu também penso se a Taça Davis desempenhou algum papel.,respostas_gpt5.5_mini,Eu,penso,se a Taça Davis desempenhou algum papel,4
+A pesquisa anual também revelou que as preocupações sobre assumir novos encargos financeiros têm disparado.,Gemini3.1Pro,A pesquisa anual,revelou,que as preocupações sobre assumir novos encargos financeiros têm disparado,5
+A pesquisa anual também revelou que as preocupações sobre assumir novos encargos financeiros têm disparado.,Grok4.0Fast,A pesquisa anual,revelou,que as preocupações sobre assumir novos encargos financeiros têm disparado,5
+A pesquisa anual também revelou que as preocupações sobre assumir novos encargos financeiros têm disparado.,Qwen3OIE_0_6B,A pesquisa anual,revelou,que as preocupações sobre assumir novos encargos financeiros têm disparado,5
+A pesquisa anual também revelou que as preocupações sobre assumir novos encargos financeiros têm disparado.,Qwen3OIE_4B,A pesquisa anual,revelou,que as preocupações sobre assumir novos encargos financeiros têm disparado,5
+A pesquisa anual também revelou que as preocupações sobre assumir novos encargos financeiros têm disparado.,respostas_gpt5.5_mini,A pesquisa anual,revelou,que as preocupações sobre assumir novos encargos financeiros têm disparado,5
+"O senhor Hopley acrescentou: ""O aumento do risco político não deve passar despercebido"".",Claude_Sonnet5,O senhor Hopley,acrescentou,O aumento do risco político não deve passar despercebido,5
+"O senhor Hopley acrescentou: ""O aumento do risco político não deve passar despercebido"".",Gemini3.1Pro,O senhor Hopley,acrescentou,"""O aumento do risco político não deve passar despercebido""",5
+"O senhor Hopley acrescentou: ""O aumento do risco político não deve passar despercebido"".",Grok4.0Fast,O senhor Hopley,acrescentou,O aumento do risco político não deve passar despercebido,5
+"O senhor Hopley acrescentou: ""O aumento do risco político não deve passar despercebido"".",Qwen3OIE_0_6B,O senhor Hopley,acrescentou,O aumento do risco político não deve passar despercebido,5
+"O senhor Hopley acrescentou: ""O aumento do risco político não deve passar despercebido"".",Qwen3OIE_4B,O senhor Hopley,acrescentou,O aumento do risco político não deve passar despercebido,5
+"A notícia da fraude da companhia - que tinha funcionado durante anos - limpou dezenas de bilhões de euros do valor da VW e custou ao executivo principal, Martin Winterkorn, o seu trabalho.",Claude_Sonnet5,A notícia da fraude da companhia,custou a,"o executivo principal, Martin Winterkorn",3
+"A notícia da fraude da companhia - que tinha funcionado durante anos - limpou dezenas de bilhões de euros do valor da VW e custou ao executivo principal, Martin Winterkorn, o seu trabalho.",Gemini3.1Pro,A notícia da fraude da companhia,custou a,"o executivo principal, Martin Winterkorn",3
+"A notícia da fraude da companhia - que tinha funcionado durante anos - limpou dezenas de bilhões de euros do valor da VW e custou ao executivo principal, Martin Winterkorn, o seu trabalho.",Gemini3.1Pro,A notícia da fraude da companhia,custou,o seu trabalho,3
+"A notícia da fraude da companhia - que tinha funcionado durante anos - limpou dezenas de bilhões de euros do valor da VW e custou ao executivo principal, Martin Winterkorn, o seu trabalho.",Qwen3OIE_4B,A notícia da fraude da companhia,custou a,"o executivo principal, Martin Winterkorn",3
+"A notícia da fraude da companhia - que tinha funcionado durante anos - limpou dezenas de bilhões de euros do valor da VW e custou ao executivo principal, Martin Winterkorn, o seu trabalho.",Qwen3OIE_4B,A notícia da fraude da companhia,custou,o seu trabalho,3
+"A notícia da fraude da companhia - que tinha funcionado durante anos - limpou dezenas de bilhões de euros do valor da VW e custou ao executivo principal, Martin Winterkorn, o seu trabalho.",respostas_gpt5.5_mini,A notícia da fraude da companhia,custou,o seu trabalho,3
+"Isso também abriu a VW para reivindicações e ações legais imensas, e viu elas levarem mais que €16 bilhões de provisões.",Gemini3.1Pro,Isso,viu,elas levarem mais que €16 bilhões de provisões,4
+"Isso também abriu a VW para reivindicações e ações legais imensas, e viu elas levarem mais que €16 bilhões de provisões.",Grok4.0Fast,Isso,abriu,a VW para reivindicações e ações legais imensas,4
+"Isso também abriu a VW para reivindicações e ações legais imensas, e viu elas levarem mais que €16 bilhões de provisões.",Grok4.0Fast,Isso,viu,elas levarem mais que €16 bilhões de provisões,4
+"Isso também abriu a VW para reivindicações e ações legais imensas, e viu elas levarem mais que €16 bilhões de provisões.",LlamaPortOIE3,Isso,abriu,a VW para reivindicações e ações legais imensas,4
+"Isso também abriu a VW para reivindicações e ações legais imensas, e viu elas levarem mais que €16 bilhões de provisões.",Qwen3OIE_4B,Isso,abriu,a VW para reivindicações e ações legais imensas,4
+"Isso também abriu a VW para reivindicações e ações legais imensas, e viu elas levarem mais que €16 bilhões de provisões.",Qwen3OIE_4B,Isso,viu,que elas levarem mais que €16 bilhões de provisões,4
+"Isso também abriu a VW para reivindicações e ações legais imensas, e viu elas levarem mais que €16 bilhões de provisões.",respostas_gpt5.5_mini,Isso,abriu,a VW para reivindicações e ações legais imensas,4
+"Isso também abriu a VW para reivindicações e ações legais imensas, e viu elas levarem mais que €16 bilhões de provisões.",respostas_gpt5.5_mini,Isso,viu,elas levarem mais que €16 bilhões de provisões,4
+"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",Claude_Sonnet5,A sondagem,com foco em,o Sr. Winterkorn,5
+"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",Claude_Sonnet5,A sondagem,com foco em,"o chefe de marca, Herbert Diess",6
+"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",Claude_Sonnet5,Herbert Diess,permanece em,a fabricante de automóveis,5
+"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",Gemini3.1Pro,Herbert Diess,permanece em,a fabricante de automóveis,5
+"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",Grok4.0Fast,Herbert Diess,permanece em,a fabricante de automóveis,5
+"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",LlamaPortOIE3,A sondagem,tem foco em,"Sr. Winterkorn e no chefe de marca, Herbert Diess",5
+"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",Qwen3OIE_0_6B,A sondagem,foi foco em,o Sr. Winterkorn,4
+"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",Qwen3OIE_0_6B,A sondagem,foi foco em,"o chefe de marca, Herbert Diess",5
+"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",Qwen3OIE_4B,A sondagem,teve foco em,o Sr. Winterkorn,4
+"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",Qwen3OIE_4B,A sondagem,teve foco em,"o chefe de marca, Herbert Diess",5
+"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",Qwen3OIE_4B,Herbert Diess,permanece em,a fabricante de automóveis,5
+"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",respostas_gpt5.5_mini,A sondagem,teve foco em,o Sr. Winterkorn,4
+"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",respostas_gpt5.5_mini,A sondagem,teve foco em,"o chefe de marca, Herbert Diess",5
+"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.",respostas_gpt5.5_mini,Herbert Diess,permanece em,a fabricante de automóveis,5
+"Ele foi promovido a presidente em outubro de 2015, o mês seguinte ao escândalo ter sido descoberto.",Claude_Sonnet5,Ele,foi promovido a,presidente,6
+"Ele foi promovido a presidente em outubro de 2015, o mês seguinte ao escândalo ter sido descoberto.",Gemini3.1Pro,Ele,foi promovido a,presidente,6
+"Ele foi promovido a presidente em outubro de 2015, o mês seguinte ao escândalo ter sido descoberto.",Grok4.0Fast,Ele,foi promovido a,presidente,6
+"Ele foi promovido a presidente em outubro de 2015, o mês seguinte ao escândalo ter sido descoberto.",Qwen3OIE_0_6B,Ele,foi promovido a,presidente,6
+"Ele foi promovido a presidente em outubro de 2015, o mês seguinte ao escândalo ter sido descoberto.",Qwen3OIE_4B,Ele,foi promovido a,presidente,6
+"Ele foi promovido a presidente em outubro de 2015, o mês seguinte ao escândalo ter sido descoberto.",respostas_gpt5.5_mini,Ele,foi promovido a,presidente,6
+"As empresas esperavam começar a decrescer em julho, imediatamente após o voto do Brexit, mas em vez disso têm conseguido manter o crescimento constante.",Claude_Sonnet5,As empresas,têm conseguido manter,o crescimento constante,7
+"As empresas esperavam começar a decrescer em julho, imediatamente após o voto do Brexit, mas em vez disso têm conseguido manter o crescimento constante.",Gemini3.1Pro,As empresas,têm conseguido manter,o crescimento constante,7
+"As empresas esperavam começar a decrescer em julho, imediatamente após o voto do Brexit, mas em vez disso têm conseguido manter o crescimento constante.",Grok4.0Fast,As empresas,têm conseguido manter,o crescimento constante,7
+"As empresas esperavam começar a decrescer em julho, imediatamente após o voto do Brexit, mas em vez disso têm conseguido manter o crescimento constante.",LlamaPortOIE3,As empresas,têm conseguido manter,o crescimento constante,7
+"As empresas esperavam começar a decrescer em julho, imediatamente após o voto do Brexit, mas em vez disso têm conseguido manter o crescimento constante.",Qwen3OIE_0_6B,As empresas,têm conseguido manter,o crescimento constante,7
+"As empresas esperavam começar a decrescer em julho, imediatamente após o voto do Brexit, mas em vez disso têm conseguido manter o crescimento constante.",Qwen3OIE_4B,As empresas,têm conseguido,manter o crescimento constante,7
+"As empresas esperavam começar a decrescer em julho, imediatamente após o voto do Brexit, mas em vez disso têm conseguido manter o crescimento constante.",respostas_gpt5.5_mini,As empresas,têm conseguido manter,o crescimento constante,7
+"Os negócios de varejo e atacado se expandiram, uma vez que os lojistas continuam otimistas e as companhias de serviço ao cliente também cresceram.",LlamaPortOIE3,Os negócios de varejo e atacado,se expandiram,uma vez que os lojistas continuam otimistas e as companhias de serviço ao cliente também cresceram,3
+"Os negócios de varejo e atacado se expandiram, uma vez que os lojistas continuam otimistas e as companhias de serviço ao cliente também cresceram.",Qwen3OIE_0_6B,Os negócios de varejo e atacado,se expandiram,uma vez que os lojistas continuam otimistas e as companhias de serviço ao cliente também cresceram,3
+"Os negócios de varejo e atacado se expandiram, uma vez que os lojistas continuam otimistas e as companhias de serviço ao cliente também cresceram.",Qwen3OIE_4B,Os negócios de varejo e atacado,se expandiram,uma vez que os lojistas continuam otimistas e as companhias de serviço ao cliente também cresceram,3
+"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",Claude_Sonnet5,O custo,vai mudar,mensalmente,6
+"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",Gemini3.1Pro,O custo,vai mudar,mensalmente,6
+"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",LlamaPortOIE3,O custo,vai mudar,mensalmente,6
+"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",Qwen3OIE_0_6B,O custo,vai mudar,mensalmente,6
+"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",Qwen3OIE_4B,O custo,vai mudar,mensalmente,6
+"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.",respostas_gpt5.5_mini,O custo,vai mudar,mensalmente,6
+A taxa fixa da Eon custa £760 e os clientes da Avro Energy pagariam cerca de £760 pela sua tarifa Simple and Select.,LlamaPortOIE3,os clientes da Avro Energy,pagariam,cerca de £760 pela sua tarifa Simple and Select,3
+A taxa fixa da Eon custa £760 e os clientes da Avro Energy pagariam cerca de £760 pela sua tarifa Simple and Select.,Qwen3OIE_4B,os clientes da Avro Energy,pagariam,cerca de £760 pela sua tarifa Simple and Select,3
+A taxa fixa da Eon custa £760 e os clientes da Avro Energy pagariam cerca de £760 pela sua tarifa Simple and Select.,respostas_gpt5.5_mini,os clientes da Avro Energy,pagariam,cerca de £760 pela sua tarifa Simple and Select,3
 "Um investidor com alguma sorte e £10,000 em títulos poderia esperar receber £125 em prêmios, por ano.",Claude_Sonnet5,"Um investidor com alguma sorte e £10,000 em títulos",poderia esperar receber,£125 em prêmios,3
 "Um investidor com alguma sorte e £10,000 em títulos poderia esperar receber £125 em prêmios, por ano.",Gemini3.1Pro,"Um investidor com alguma sorte e £10,000 em títulos",poderia esperar receber,£125 em prêmios,3
+"Um investidor com alguma sorte e £10,000 em títulos poderia esperar receber £125 em prêmios, por ano.",LlamaPortOIE3,"Um investidor com alguma sorte e £10,000 em títulos",poderia esperar receber,"£125 em prêmios, por ano",3
+"Um investidor com alguma sorte e £10,000 em títulos poderia esperar receber £125 em prêmios, por ano.",Qwen3OIE_0_6B,"Um investidor com alguma sorte e £10,000 em títulos",poderia esperar receber,"£125 em prêmios, por ano",3
+"Um investidor com alguma sorte e £10,000 em títulos poderia esperar receber £125 em prêmios, por ano.",Qwen3OIE_4B,"Um investidor com alguma sorte e £10,000 em títulos",poderia esperar receber,"£125 em prêmios, por ano",3
 "Um investidor com alguma sorte e £10,000 em títulos poderia esperar receber £125 em prêmios, por ano.",respostas_gpt5.5_mini,"Um investidor com alguma sorte e £10,000 em títulos",poderia esperar receber,£125 em prêmios,3
-Isso não impediu os investidores de se reunirem para colocar o seu dinheiro nos fundos.,Claude_Sonnet5,Isso,não impediu,os investidores de se reunirem para colocar o seu dinheiro nos fundos,4
-Isso não impediu os investidores de se reunirem para colocar o seu dinheiro nos fundos.,Gemini3.1Pro,Isso,não impediu,os investidores de se reunirem para colocar o seu dinheiro nos fundos,4
-Isso não impediu os investidores de se reunirem para colocar o seu dinheiro nos fundos.,Grok4.0Fast,Isso,não impediu,os investidores de se reunirem para colocar o seu dinheiro nos fundos,4
-Isso não impediu os investidores de se reunirem para colocar o seu dinheiro nos fundos.,respostas_gpt5.5_mini,Isso,não impediu,os investidores de se reunirem para colocar o seu dinheiro nos fundos,4
-"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",Claude_Sonnet5,Ele,foi seguido por,os fundos Aviva Investors Multi Strategy Target Return and Income,4
+"O dinheiro investido no Premium Bonds, e em outras contas do National Savings & Investments, é usado para ajudar a financiar os gastos do Governo.",Gemini3.1Pro,"O dinheiro investido no Premium Bonds, e em outras contas do National Savings & Investments",é usado para ajudar a financiar,os gastos do Governo,4
+"O dinheiro investido no Premium Bonds, e em outras contas do National Savings & Investments, é usado para ajudar a financiar os gastos do Governo.",LlamaPortOIE3,"O dinheiro investido no Premium Bonds, e em outras contas do National Savings & Investments",é usado para ajudar a financiar,os gastos do Governo,4
+"O dinheiro investido no Premium Bonds, e em outras contas do National Savings & Investments, é usado para ajudar a financiar os gastos do Governo.",Qwen3OIE_0_6B,O dinheiro investido no Premium Bonds,é usado para ajudar a financiar,os gastos do Governo,3
+"O dinheiro investido no Premium Bonds, e em outras contas do National Savings & Investments, é usado para ajudar a financiar os gastos do Governo.",Qwen3OIE_4B,O dinheiro investido no Premium Bonds,é usado para ajudar a financiar,os gastos do Governo,3
+"O dinheiro investido no Premium Bonds, e em outras contas do National Savings & Investments, é usado para ajudar a financiar os gastos do Governo.",Qwen3OIE_4B,O dinheiro investido em outras contas do National Savings & Investments,é usado para ajudar a financiar,os gastos do Governo,4
+"O dinheiro investido no Premium Bonds, e em outras contas do National Savings & Investments, é usado para ajudar a financiar os gastos do Governo.",respostas_gpt5.5_mini,O dinheiro investido no Premium Bonds,é usado para ajudar a financiar,os gastos do Governo,3
+"O dinheiro investido no Premium Bonds, e em outras contas do National Savings & Investments, é usado para ajudar a financiar os gastos do Governo.",respostas_gpt5.5_mini,o dinheiro investido em outras contas do National Savings & Investments,é usado para ajudar a financiar,os gastos do Governo,4
+Isso não impediu os investidores de se reunirem para colocar o seu dinheiro nos fundos.,Claude_Sonnet5,Isso,não impediu,os investidores de se reunirem para colocar o seu dinheiro nos fundos,6
+Isso não impediu os investidores de se reunirem para colocar o seu dinheiro nos fundos.,Gemini3.1Pro,Isso,não impediu,os investidores de se reunirem para colocar o seu dinheiro nos fundos,6
+Isso não impediu os investidores de se reunirem para colocar o seu dinheiro nos fundos.,Gemini3.1Pro,os investidores,se reunirem para colocar,o seu dinheiro,4
+Isso não impediu os investidores de se reunirem para colocar o seu dinheiro nos fundos.,Grok4.0Fast,Isso,não impediu,os investidores de se reunirem para colocar o seu dinheiro nos fundos,6
+Isso não impediu os investidores de se reunirem para colocar o seu dinheiro nos fundos.,LlamaPortOIE3,os investidores,se reunirem para colocar,o seu dinheiro nos fundos,5
+Isso não impediu os investidores de se reunirem para colocar o seu dinheiro nos fundos.,Qwen3OIE_0_6B,Isso,não impediu,os investidores de se reunirem para colocar o seu dinheiro nos fundos,6
+Isso não impediu os investidores de se reunirem para colocar o seu dinheiro nos fundos.,Qwen3OIE_4B,Isso,não impediu,os investidores de se reunirem para colocar o seu dinheiro nos fundos,6
+Isso não impediu os investidores de se reunirem para colocar o seu dinheiro nos fundos.,Qwen3OIE_4B,os investidores,se reuniram para colocar,o seu dinheiro nos fundos,4
+Isso não impediu os investidores de se reunirem para colocar o seu dinheiro nos fundos.,respostas_gpt5.5_mini,Isso,não impediu,os investidores de se reunirem para colocar o seu dinheiro nos fundos,6
+Isso não impediu os investidores de se reunirem para colocar o seu dinheiro nos fundos.,respostas_gpt5.5_mini,os investidores,se reuniram para colocar,o seu dinheiro nos fundos,4
+"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",Claude_Sonnet5,Ele,foi seguido por,os fundos Aviva Investors Multi Strategy Target Return and Income,8
 "Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",Claude_Sonnet5,os investidores,colocaram,"£ 1,4bn",4
-"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",Gemini3.1Pro,Ele,foi seguido por,os fundos Aviva Investors Multi Strategy Target Return and Income,4
+"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",Gemini3.1Pro,Ele,foi seguido por,os fundos Aviva Investors Multi Strategy Target Return and Income,8
 "Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",Gemini3.1Pro,os investidores,colocaram,"£ 1,4bn",4
-"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",Grok4.0Fast,Ele,foi seguido por,os fundos Aviva Investors Multi Strategy Target Return and Income,4
+"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",Grok4.0Fast,Ele,foi seguido por,os fundos Aviva Investors Multi Strategy Target Return and Income,8
 "Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",Grok4.0Fast,os investidores,colocaram,"£ 1,4bn",4
-"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",respostas_gpt5.5_mini,Ele,foi seguido por,os fundos Aviva Investors Multi Strategy Target Return and Income,4
+"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",LlamaPortOIE3,Ele,foi seguido,pelos fundos Aviva Investors Multi Strategy Target Return and Income,8
+"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",PortNOIE,Ele,foi seguido pelos,fundos Aviva Investors Multi Strategy Target Return and,8
+"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",Qwen3OIE_0_6B,Ele,foi seguido por,os fundos Aviva Investors Multi Strategy Target Return e Income,8
+"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",Qwen3OIE_4B,Ele,foi seguido por,os fundos Aviva Investors Multi Strategy Target Return and Income,8
+"Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",respostas_gpt5.5_mini,Ele,foi seguido por,os fundos Aviva Investors Multi Strategy Target Return and Income,8
 "Ele foi seguido pelos fundos Aviva Investors Multi Strategy Target Return and Income, nos quais os investidores colocaram £ 2bn e £ 1,4bn, respectivamente.",respostas_gpt5.5_mini,os investidores,colocaram,"£ 1,4bn",4
-Isto significa que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores.,Claude_Sonnet5,Isto,significa,que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores,3
-Isto significa que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores.,Gemini3.1Pro,Isto,significa,que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores,3
-Isto significa que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores.,respostas_gpt5.5_mini,Isto,significa,que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores,3
-"A Adidas está ajudando a limpar os oceanos da Terra, usando os resíduos que flutuam pelo mundo para fazer sapatos.",Claude_Sonnet5,A Adidas,está ajudando a limpar,os oceanos da Terra,4
+Isto significa que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores.,Claude_Sonnet5,Isto,significa,que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores,4
+Isto significa que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores.,Gemini3.1Pro,Isto,significa,que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores,4
+Isto significa que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores.,Gemini3.1Pro,eles,não se beneficiaram de,a elevação que a queda da libra deu aos ativos financeiros exteriores,4
+Isto significa que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores.,Grok4.0Fast,eles,não se beneficiaram de,a elevação que a queda da libra deu aos ativos financeiros exteriores,4
+Isto significa que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores.,LlamaPortOIE3,eles,não se beneficiaram,da elevação que a queda da libra deu aos ativos financeiros exteriores,4
+Isto significa que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores.,Qwen3OIE_0_6B,eles,não se beneficiaram de,a elevação que a queda da libra deu aos ativos financeiros exteriores,4
+Isto significa que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores.,Qwen3OIE_4B,Isto,significa,que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores,4
+Isto significa que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores.,respostas_gpt5.5_mini,Isto,significa,que eles não se beneficiaram da elevação que a queda da libra deu aos ativos financeiros exteriores,4
+"A Adidas está ajudando a limpar os oceanos da Terra, usando os resíduos que flutuam pelo mundo para fazer sapatos.",Claude_Sonnet5,A Adidas,está ajudando a limpar,os oceanos da Terra,8
 "A Adidas está ajudando a limpar os oceanos da Terra, usando os resíduos que flutuam pelo mundo para fazer sapatos.",Claude_Sonnet5,A Adidas,usando,os resíduos que flutuam pelo mundo,3
-"A Adidas está ajudando a limpar os oceanos da Terra, usando os resíduos que flutuam pelo mundo para fazer sapatos.",Gemini3.1Pro,A Adidas,está ajudando a limpar,os oceanos da Terra,4
+"A Adidas está ajudando a limpar os oceanos da Terra, usando os resíduos que flutuam pelo mundo para fazer sapatos.",Gemini3.1Pro,A Adidas,está ajudando a limpar,os oceanos da Terra,8
 "A Adidas está ajudando a limpar os oceanos da Terra, usando os resíduos que flutuam pelo mundo para fazer sapatos.",Gemini3.1Pro,A Adidas,usando,os resíduos que flutuam pelo mundo,3
-"A Adidas está ajudando a limpar os oceanos da Terra, usando os resíduos que flutuam pelo mundo para fazer sapatos.",Grok4.0Fast,A Adidas,está ajudando a limpar,os oceanos da Terra,4
+"A Adidas está ajudando a limpar os oceanos da Terra, usando os resíduos que flutuam pelo mundo para fazer sapatos.",Grok4.0Fast,A Adidas,está ajudando a limpar,os oceanos da Terra,8
 "A Adidas está ajudando a limpar os oceanos da Terra, usando os resíduos que flutuam pelo mundo para fazer sapatos.",Grok4.0Fast,A Adidas,usando,os resíduos que flutuam pelo mundo para fazer sapatos,3
-"A Adidas está ajudando a limpar os oceanos da Terra, usando os resíduos que flutuam pelo mundo para fazer sapatos.",respostas_gpt5.5_mini,A Adidas,está ajudando a limpar,os oceanos da Terra,4
-"Em janeiro, um relatório importante disse que os oceanos conteriam mais plástico do que peixes até 2050, a menos que o mundo tomasse uma atitude radical para impedir que os lixos vazassem para os mares.",Claude_Sonnet5,um relatório importante,disse,"que os oceanos conteriam mais plástico do que peixes até 2050, a menos que o mundo tomasse uma atitude radical para impedir que os lixos vazassem para os mares",3
-"Em janeiro, um relatório importante disse que os oceanos conteriam mais plástico do que peixes até 2050, a menos que o mundo tomasse uma atitude radical para impedir que os lixos vazassem para os mares.",Gemini3.1Pro,um relatório importante,disse,"que os oceanos conteriam mais plástico do que peixes até 2050, a menos que o mundo tomasse uma atitude radical para impedir que os lixos vazassem para os mares",3
-"Em janeiro, um relatório importante disse que os oceanos conteriam mais plástico do que peixes até 2050, a menos que o mundo tomasse uma atitude radical para impedir que os lixos vazassem para os mares.",Grok4.0Fast,um relatório importante,disse,"que os oceanos conteriam mais plástico do que peixes até 2050, a menos que o mundo tomasse uma atitude radical para impedir que os lixos vazassem para os mares",3
-"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",Claude_Sonnet5,Quatro em cada 10 adultos,ficaram feridos devido a,o mau tempo,4
-"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",Claude_Sonnet5,nove em cada dez,subestimam,o quão fria a Grã-Bretanha pode ser no inverno,4
-"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",Gemini3.1Pro,Quatro em cada 10 adultos,ficaram feridos devido a,o mau tempo,4
-"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",Gemini3.1Pro,nove em cada dez,subestimam,o quão fria a Grã-Bretanha pode ser no inverno,4
-"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",Grok4.0Fast,Quatro em cada 10 adultos,ficaram feridos devido a,o mau tempo,4
-"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",Grok4.0Fast,nove em cada dez,subestimam,o quão fria a Grã-Bretanha pode ser no inverno,4
-"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",respostas_gpt5.5_mini,Quatro em cada 10 adultos,ficaram feridos devido a,o mau tempo,4
-"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",respostas_gpt5.5_mini,nove em cada dez,subestimam,o quão fria a Grã-Bretanha pode ser no inverno,4
-"Ela começou no RSC no meio dos anos sessenta, atuando como internada de asilo no Marat/Sade.",Claude_Sonnet5,Ela,atuando como,internada de asilo,4
-"Ela começou no RSC no meio dos anos sessenta, atuando como internada de asilo no Marat/Sade.",Gemini3.1Pro,Ela,atuando como,internada de asilo,4
-"Ela começou no RSC no meio dos anos sessenta, atuando como internada de asilo no Marat/Sade.",Grok4.0Fast,Ela,atuando como,internada de asilo no Marat/Sade,4
-"Ela começou no RSC no meio dos anos sessenta, atuando como internada de asilo no Marat/Sade.",respostas_gpt5.5_mini,Ela,atuando como,internada de asilo no Marat/Sade,4
-"O seu pescoço avança em confronto com veias acentuadas, as suas mãos tremem.",Claude_Sonnet5,O seu pescoço,avança em confronto com,veias acentuadas,4
-"O seu pescoço avança em confronto com veias acentuadas, as suas mãos tremem.",Gemini3.1Pro,O seu pescoço,avança em confronto com,veias acentuadas,4
-"O seu pescoço avança em confronto com veias acentuadas, as suas mãos tremem.",Grok4.0Fast,O seu pescoço,avança em confronto com,veias acentuadas,4
-"O seu pescoço avança em confronto com veias acentuadas, as suas mãos tremem.",respostas_gpt5.5_mini,O seu pescoço,avança em confronto com,veias acentuadas,4
-"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Claude_Sonnet5,Ele,trabalhou em,a rádio,4
-"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Claude_Sonnet5,Ele,trabalhou em,a televisão,4
-"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Gemini3.1Pro,Ele,trabalhou em,o setor dos assuntos atuais,3
-"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Gemini3.1Pro,Ele,trabalhou em,a rádio,4
-"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Gemini3.1Pro,Ele,trabalhou em,a televisão,4
-"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Grok4.0Fast,Ele,trabalhou em,o setor das notícias e dos assuntos atuais,3
-"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Grok4.0Fast,Ele,trabalhou em,a rádio,4
-"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Grok4.0Fast,Ele,trabalhou em,a televisão,4
-"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",respostas_gpt5.5_mini,Ele,trabalhou em,o setor das notícias e dos assuntos atuais,3
-"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",respostas_gpt5.5_mini,Ele,trabalhou em,a rádio,4
-"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",respostas_gpt5.5_mini,Ele,trabalhou em,a televisão,4
-"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",Claude_Sonnet5,o filme,é,um ato precário,4
-"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",Gemini3.1Pro,o filme,é,um ato precário,4
-"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",Grok4.0Fast,o filme,é,um ato precário,4
-"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",respostas_gpt5.5_mini,o filme,é,um ato precário,4
-"O resultado, então, dificilmente é o pijama do gato.",Gemini3.1Pro,O resultado,é,dificilmente o pijama do gato,3
-"O resultado, então, dificilmente é o pijama do gato.",Grok4.0Fast,O resultado,é,o pijama do gato,3
-"O resultado, então, dificilmente é o pijama do gato.",respostas_gpt5.5_mini,O resultado,é,o pijama do gato,3
-"Para as audiências modernas, maioria das quais com pouca experiência em conflitos de primeira linha, os feitos de Doss pertencem à esfera do inimaginável.",Claude_Sonnet5,os feitos de Doss,pertencem a,a esfera do inimaginável,3
-"Para as audiências modernas, maioria das quais com pouca experiência em conflitos de primeira linha, os feitos de Doss pertencem à esfera do inimaginável.",Gemini3.1Pro,os feitos de Doss,pertencem a,a esfera do inimaginável,3
-"Para as audiências modernas, maioria das quais com pouca experiência em conflitos de primeira linha, os feitos de Doss pertencem à esfera do inimaginável.",Grok4.0Fast,os feitos de Doss,pertencem a,a esfera do inimaginável,3
-"Todos os médicos estavam armados, exceto eu.",Gemini3.1Pro,Todos os médicos,estavam,armados,3
-"Todos os médicos estavam armados, exceto eu.",Grok4.0Fast,Todos os médicos,estavam,armados,3
-"Todos os médicos estavam armados, exceto eu.",respostas_gpt5.5_mini,Todos os médicos,estavam,armados,3
+"A Adidas está ajudando a limpar os oceanos da Terra, usando os resíduos que flutuam pelo mundo para fazer sapatos.",LlamaPortOIE3,A Adidas,está ajudando a limpar,os oceanos da Terra,8
+"A Adidas está ajudando a limpar os oceanos da Terra, usando os resíduos que flutuam pelo mundo para fazer sapatos.",PortNOIE,A Adidas,está ajudando a limpar,os oceanos de a Terra,8
+"A Adidas está ajudando a limpar os oceanos da Terra, usando os resíduos que flutuam pelo mundo para fazer sapatos.",Qwen3OIE_0_6B,A Adidas,está ajudando a limpar,os oceanos da Terra,8
+"A Adidas está ajudando a limpar os oceanos da Terra, usando os resíduos que flutuam pelo mundo para fazer sapatos.",Qwen3OIE_4B,A Adidas,está ajudando a limpar,os oceanos da Terra,8
+"A Adidas está ajudando a limpar os oceanos da Terra, usando os resíduos que flutuam pelo mundo para fazer sapatos.",respostas_gpt5.5_mini,A Adidas,está ajudando a limpar,os oceanos da Terra,8
+"Em janeiro, um relatório importante disse que os oceanos conteriam mais plástico do que peixes até 2050, a menos que o mundo tomasse uma atitude radical para impedir que os lixos vazassem para os mares.",Claude_Sonnet5,um relatório importante,disse,"que os oceanos conteriam mais plástico do que peixes até 2050, a menos que o mundo tomasse uma atitude radical para impedir que os lixos vazassem para os mares",5
+"Em janeiro, um relatório importante disse que os oceanos conteriam mais plástico do que peixes até 2050, a menos que o mundo tomasse uma atitude radical para impedir que os lixos vazassem para os mares.",Gemini3.1Pro,um relatório importante,disse,"que os oceanos conteriam mais plástico do que peixes até 2050, a menos que o mundo tomasse uma atitude radical para impedir que os lixos vazassem para os mares",5
+"Em janeiro, um relatório importante disse que os oceanos conteriam mais plástico do que peixes até 2050, a menos que o mundo tomasse uma atitude radical para impedir que os lixos vazassem para os mares.",Grok4.0Fast,um relatório importante,disse,"que os oceanos conteriam mais plástico do que peixes até 2050, a menos que o mundo tomasse uma atitude radical para impedir que os lixos vazassem para os mares",5
+"Em janeiro, um relatório importante disse que os oceanos conteriam mais plástico do que peixes até 2050, a menos que o mundo tomasse uma atitude radical para impedir que os lixos vazassem para os mares.",Qwen3OIE_0_6B,um relatório importante,disse,"que os oceanos conteriam mais plástico do que peixes até 2050, a menos que o mundo tomasse uma atitude radical para impedir que os lixos vazassem para os mares",5
+"Em janeiro, um relatório importante disse que os oceanos conteriam mais plástico do que peixes até 2050, a menos que o mundo tomasse uma atitude radical para impedir que os lixos vazassem para os mares.",Qwen3OIE_4B,um relatório importante,disse,"que os oceanos conteriam mais plástico do que peixes até 2050, a menos que o mundo tomasse uma atitude radical para impedir que os lixos vazassem para os mares",5
+"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",Claude_Sonnet5,Quatro em cada 10 adultos,ficaram feridos devido a,o mau tempo,7
+"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",Claude_Sonnet5,nove em cada dez,subestimam,o quão fria a Grã-Bretanha pode ser no inverno,6
+"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",Gemini3.1Pro,Quatro em cada 10 adultos,ficaram feridos devido a,o mau tempo,7
+"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",Gemini3.1Pro,nove em cada dez,subestimam,o quão fria a Grã-Bretanha pode ser no inverno,6
+"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",Grok4.0Fast,Quatro em cada 10 adultos,ficaram feridos devido a,o mau tempo,7
+"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",Grok4.0Fast,nove em cada dez,subestimam,o quão fria a Grã-Bretanha pode ser no inverno,6
+"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",LlamaPortOIE3,Quatro em cada 10 adultos,ficaram feridos devido ao,mau tempo,7
+"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",LlamaPortOIE3,nove em cada dez,subestimam,o quão fria a Grã-Bretanha pode ser no inverno,6
+"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",Qwen3OIE_0_6B,Quatro em cada 10 adultos,ficaram feridos devido a,o mau tempo,7
+"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",Qwen3OIE_4B,Quatro em cada 10 adultos,ficaram feridos devido a,o mau tempo,7
+"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",Qwen3OIE_4B,nove em cada dez adultos,subestimam,o quão fria a Grã-Bretanha pode ser no inverno,6
+"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",respostas_gpt5.5_mini,Quatro em cada 10 adultos,ficaram feridos devido a,o mau tempo,7
+"Quatro em cada 10 adultos ficaram feridos devido ao mau tempo, enquanto nove em cada dez subestimam o quão fria a Grã-Bretanha pode ser no inverno.",respostas_gpt5.5_mini,nove em cada dez,subestimam,o quão fria a Grã-Bretanha pode ser no inverno,6
+"Ela começou no RSC no meio dos anos sessenta, atuando como internada de asilo no Marat/Sade.",Claude_Sonnet5,Ela,atuando como,internada de asilo,5
+"Ela começou no RSC no meio dos anos sessenta, atuando como internada de asilo no Marat/Sade.",Gemini3.1Pro,Ela,atuando como,internada de asilo,5
+"Ela começou no RSC no meio dos anos sessenta, atuando como internada de asilo no Marat/Sade.",Grok4.0Fast,Ela,atuando como,internada de asilo no Marat/Sade,5
+"Ela começou no RSC no meio dos anos sessenta, atuando como internada de asilo no Marat/Sade.",LlamaPortOIE3,Ela,atuando como,internada de asilo no Marat/Sade,5
+"Ela começou no RSC no meio dos anos sessenta, atuando como internada de asilo no Marat/Sade.",respostas_gpt5.5_mini,Ela,atuando como,internada de asilo no Marat/Sade,5
+"O seu pescoço avança em confronto com veias acentuadas, as suas mãos tremem.",Claude_Sonnet5,O seu pescoço,avança em confronto com,veias acentuadas,6
+"O seu pescoço avança em confronto com veias acentuadas, as suas mãos tremem.",Gemini3.1Pro,O seu pescoço,avança em confronto com,veias acentuadas,6
+"O seu pescoço avança em confronto com veias acentuadas, as suas mãos tremem.",Grok4.0Fast,O seu pescoço,avança em confronto com,veias acentuadas,6
+"O seu pescoço avança em confronto com veias acentuadas, as suas mãos tremem.",LlamaPortOIE3,O seu pescoço,avança em confronto com,veias acentuadas,6
+"O seu pescoço avança em confronto com veias acentuadas, as suas mãos tremem.",Qwen3OIE_0_6B,O seu pescoço,avança em confronto com,veias acentuadas,6
+"O seu pescoço avança em confronto com veias acentuadas, as suas mãos tremem.",respostas_gpt5.5_mini,O seu pescoço,avança em confronto com,veias acentuadas,6
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Claude_Sonnet5,Ele,trabalhou em,a rádio,6
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Claude_Sonnet5,Ele,trabalhou em,a televisão,6
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Claude_Sonnet5,Ele,trabalhou durante,décadas,3
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Gemini3.1Pro,Ele,trabalhou em,o setor dos assuntos atuais,5
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Gemini3.1Pro,Ele,trabalhou em,a rádio,6
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Gemini3.1Pro,Ele,trabalhou em,a televisão,6
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Gemini3.1Pro,Ele,trabalhou durante,décadas,3
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Grok4.0Fast,Ele,trabalhou em,o setor das notícias e dos assuntos atuais,5
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Grok4.0Fast,Ele,trabalhou em,a rádio,6
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Grok4.0Fast,Ele,trabalhou em,a televisão,6
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Qwen3OIE_0_6B,Ele,trabalhou em,o setor das notícias e dos assuntos atuais,5
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Qwen3OIE_0_6B,Ele,trabalhou em,a rádio,6
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Qwen3OIE_0_6B,Ele,trabalhou em,a televisão,6
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Qwen3OIE_0_6B,Ele,trabalhou durante,décadas,3
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Qwen3OIE_4B,Ele,trabalhou em,o setor dos assuntos atuais,5
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Qwen3OIE_4B,Ele,trabalhou em,a rádio,6
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",Qwen3OIE_4B,Ele,trabalhou em,a televisão,6
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",respostas_gpt5.5_mini,Ele,trabalhou em,o setor das notícias e dos assuntos atuais,5
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",respostas_gpt5.5_mini,Ele,trabalhou em,a rádio,6
+"Ele trabalhou no setor das notícias e dos assuntos atuais, na rádio e na televisão durante décadas.",respostas_gpt5.5_mini,Ele,trabalhou em,a televisão,6
+"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",Claude_Sonnet5,o filme,é,um ato precário,7
+"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",Gemini3.1Pro,o filme,é,um ato precário,7
+"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",Gemini3.1Pro,o filme,balançando-se entre,comédias familiares e dramas sociais profundos,4
+"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",Grok4.0Fast,o filme,é,um ato precário,7
+"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",LlamaPortOIE3,o filme,é,um ato precário,7
+"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",LlamaPortOIE3,o filme,balançando-se entre,comédias familiares e dramas sociais profundos,4
+"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",Qwen3OIE_0_6B,o filme,é,um ato precário,7
+"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",Qwen3OIE_0_6B,o filme,é balançando-se entre,comédias familiares e dramas sociais profundos,4
+"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",Qwen3OIE_4B,o filme,é,um ato precário,7
+"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",respostas_gpt5.5_mini,o filme,é,um ato precário,7
+"Do ponto de vista do realizador, o filme é um ato precário, balançando-se entre comédias familiares e dramas sociais profundos.",respostas_gpt5.5_mini,o filme,balançando-se entre,comédias familiares e dramas sociais profundos,4
+"E, claro, tem o Bob, uma constante fonte de entretenimento.",Claude_Sonnet5,o Bob,é,uma constante fonte de entretenimento,3
+"E, claro, tem o Bob, uma constante fonte de entretenimento.",Qwen3OIE_0_6B,o Bob,é,uma constante fonte de entretenimento,3
+"E, claro, tem o Bob, uma constante fonte de entretenimento.",Qwen3OIE_4B,o Bob,é,uma constante fonte de entretenimento,3
+"O resultado, então, dificilmente é o pijama do gato.",Gemini3.1Pro,O resultado,é,dificilmente o pijama do gato,5
+"O resultado, então, dificilmente é o pijama do gato.",Grok4.0Fast,O resultado,é,o pijama do gato,5
+"O resultado, então, dificilmente é o pijama do gato.",Qwen3OIE_0_6B,O resultado,é,o pijama do gato,5
+"O resultado, então, dificilmente é o pijama do gato.",Qwen3OIE_4B,O resultado,é,o pijama do gato,5
+"O resultado, então, dificilmente é o pijama do gato.",respostas_gpt5.5_mini,O resultado,é,o pijama do gato,5
+"Para as audiências modernas, maioria das quais com pouca experiência em conflitos de primeira linha, os feitos de Doss pertencem à esfera do inimaginável.",Claude_Sonnet5,os feitos de Doss,pertencem a,a esfera do inimaginável,5
+"Para as audiências modernas, maioria das quais com pouca experiência em conflitos de primeira linha, os feitos de Doss pertencem à esfera do inimaginável.",Gemini3.1Pro,os feitos de Doss,pertencem a,a esfera do inimaginável,5
+"Para as audiências modernas, maioria das quais com pouca experiência em conflitos de primeira linha, os feitos de Doss pertencem à esfera do inimaginável.",Grok4.0Fast,os feitos de Doss,pertencem a,a esfera do inimaginável,5
+"Para as audiências modernas, maioria das quais com pouca experiência em conflitos de primeira linha, os feitos de Doss pertencem à esfera do inimaginável.",Qwen3OIE_0_6B,os feitos de Doss,pertencem a,a esfera do inimaginável,5
+"Para as audiências modernas, maioria das quais com pouca experiência em conflitos de primeira linha, os feitos de Doss pertencem à esfera do inimaginável.",Qwen3OIE_4B,os feitos de Doss,pertencem a,a esfera do inimaginável,5
+"Todos os médicos estavam armados, exceto eu.",Gemini3.1Pro,Todos os médicos,estavam,armados,4
+"Todos os médicos estavam armados, exceto eu.",Grok4.0Fast,Todos os médicos,estavam,armados,4
+"Todos os médicos estavam armados, exceto eu.",Qwen3OIE_4B,Todos os médicos,estavam,armados,4
+"Todos os médicos estavam armados, exceto eu.",respostas_gpt5.5_mini,Todos os médicos,estavam,armados,4

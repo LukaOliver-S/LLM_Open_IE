@@ -1,6 +1,10 @@
 modelo,tipo,precision,recall,f1,ic_lo,ic_hi
-PTOIE-Flair,Especializado,0.7555,0.5853,0.6596,0.6180,0.6991
-Claude_Sonnet5,LLM,0.4567,0.9087,0.6079,0.5815,0.6336
-respostaGrok4.0Fast,LLM,0.3581,0.9121,0.5143,0.4868,0.5414
-respostas_gpt5.5_mini,LLM,0.3297,0.9012,0.4827,0.4553,0.5093
-respostasGemini3.1Pro,LLM,0.3110,0.9104,0.4636,0.4365,0.4902
+PTOIE-Flair,Especializado,0.7555,0.5853,0.6596,,
+LlamaPortOIE3,LLM,0.4812,0.8467,0.6137,,
+Claude_Sonnet5,LLM,0.4567,0.9087,0.6079,,
+respostaGrok4.0Fast,LLM,0.3581,0.9121,0.5143,,
+PortNOIE,LLM,0.5457,0.4686,0.5042,,
+respostas_gpt5.5_mini,LLM,0.3297,0.9012,0.4827,,
+respostasGemini3.1Pro,LLM,0.3110,0.9104,0.4636,,
+Qwen3OIE_0_6B,LLM,0.3028,0.7756,0.4355,,
+Qwen3OIE_4B,LLM,0.2836,0.8185,0.4212,,

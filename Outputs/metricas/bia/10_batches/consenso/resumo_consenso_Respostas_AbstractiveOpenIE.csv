@@ -1,5 +1,6 @@
 modelo,total_falsos_positivos,com_consenso_de_outro_modelo,pct_com_consenso
-Claude_Sonnet5,714,379,53.0812324929972
-respostaGrok4.0Fast,171,97,56.72514619883041
-respostas_gpt5.5_mini,586,344,58.703071672354945
-respostasGemini3.1Pro,669,352,52.615844544095665
+Claude_Sonnet5,714,404,56.582633053221286
+PortugueseT5OIE_Abstractive,743,350,47.10632570659489
+respostaGrok4.0Fast,171,107,62.57309941520468
+respostas_gpt5.5_mini,586,372,63.48122866894198
+respostasGemini3.1Pro,669,422,63.07922272047832

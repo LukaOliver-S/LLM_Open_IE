@@ -32,7 +32,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--corpus", default="bia", choices=list(CORPORA))
     ap.add_argument("--tarefa", default="dpto", choices=list(CATEGORIA))
-    ap.add_argument("--ic", action="store_true", help="calcula IC 95% bootstrap (barras de erro)")
+    ap.add_argument("--ic", action="store_true", help="calcula IC 95%% bootstrap (barras de erro)")
     ap.add_argument("--B", type=int, default=2000)
     ap.add_argument("--seed", type=int, default=42)
     args = ap.parse_args()

@@ -1,7 +1,11 @@
 modelo,tipo,precision,recall,f1,ic_lo,ic_hi
-respostaGrok4.0Fast,LLM,0.6188,0.7704,0.6864,0.6480,0.7213
-respostaDPTOIE-PY,Especializado,0.4484,0.7776,0.5689,0.5360,0.6006
-respostas_gpt5.5_mini,LLM,0.3843,0.8914,0.5371,0.5090,0.5644
-respostasGemini3.1Pro,LLM,0.3374,0.9106,0.4924,0.4638,0.5213
-Claude_Sonnet5,LLM,0.3017,0.9190,0.4542,0.4267,0.4812
-DptOIE,Especializado,0.1815,0.7996,0.2958,0.2710,0.3209
+respostaGrok4.0Fast,LLM,0.6188,0.7704,0.6864,,
+LlamaPortOIE3,LLM,0.4812,0.8467,0.6137,,
+respostaDPTOIE-PY,Especializado,0.4484,0.7776,0.5689,,
+respostas_gpt5.5_mini,LLM,0.3843,0.8914,0.5371,,
+PortNOIE,LLM,0.5457,0.4686,0.5042,,
+respostasGemini3.1Pro,LLM,0.3374,0.9106,0.4924,,
+Claude_Sonnet5,LLM,0.3017,0.9190,0.4542,,
+Qwen3OIE_0_6B,LLM,0.3028,0.7756,0.4355,,
+Qwen3OIE_4B,LLM,0.2836,0.8185,0.4212,,
+DptOIE,Especializado,0.1815,0.7996,0.2958,,
