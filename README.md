@@ -62,9 +62,47 @@ python scripts/formatacao/assistente_coleta.py --corpus bia --tarefa oiec       
 - `--modelo`: any name (becomes the output filename, e.g. `Claude_Sonnet5`)
 - `--lotes`: batch size to use (must match an existing `<sentencas-base>/<N>_sentencas/` folder)
 - `--apenas-lotes 3,7,12`: (optional) re-collect only specific batch numbers instead of all
+- `--k`: (optional, default `1`) which repetition round this collection is. `k=1` writes
+  to the usual paths (fully backward-compatible with everything below); `k>=1` writes
+  into an isolated `k{N}/` sibling folder inside `<N>_batches/`, so repeated collections
+  of the same model/task never overwrite each other or the original run. Used to measure
+  generation variance — see `variancia_geracao.py` below.
+- `--forcar`: overwrite the final `.jsonl` even if it already exists with different content
+  (normally refused, to avoid silently clobbering a manual collection by accident).
 
 Because `--corpus` routes responses straight into `Respostas/<corpus>/`, collected files
 already land where the evaluation expects them — no manual moving needed.
+
+Shared prompt-assembly and file-layout logic (`TAREFAS`, `montar_texto`, `pasta_rodada`,
+`reconstruir_arquivo_final`, `escrever_protegido`) lives in `scripts/formatacao/_coleta_comum.py`,
+so any future collection script (manual or scripted) can reuse the exact same conventions.
+
+#### 2b. Local extraction with Portuguese-OpenIE models (Colab/Kaggle)
+
+In addition to the chat-collected commercial LLMs, the pipeline has been evaluated against
+open-weight, Portuguese-native extractors from the
+[Portuguese-OpenIE](https://github.com/FORMAS/Portuguese-OpenIE) library — `Qwen3OIE`
+(0.6B/4B/8B), `PortugueseT5OIE` (+ an abstractive variant), `LlamaPortOIE3`, and `PortNOIE`.
+Unlike the chat LLMs, these models take **no task-specific prompt** — `extract(sentence)` is
+fixed per model, and (for the transformers backend) fully **deterministic** (`do_sample=False`
+internally), so there's no generation variance to measure for them and no `--k` repetition step.
+
+This runs outside the repo, in a Colab or Kaggle notebook with GPU access (`pip install
+"portuguese-openie[all]"`), since it needs `transformers`/`torch` with CUDA rather than this
+project's own lightweight `requirements.txt`. The notebook clones this repo, runs every sentence
+in `sentencas/<N>_sentencas/` (or `sentencas_oiecpt/`) through each model, and writes output in
+the pipeline's own JSONL schema to a staging folder:
+
+```
+Respostas/<corpus>/<N>_batches/_extratores_locais/<Modelo>.jsonl
+```
+
+Because these models score against the **same single gold file per corpus** regardless of task
+(there's no prompt to vary), a single extraction run is reused across all three extractive task
+tables for direct comparison against the chat-LLM prompt variants — copy the same file into each
+categoria folder (`Respostas ExtrativoDPTO-IE`, `OIEC-PT`, `PTOIE-DP`), and the abstractive
+variant into `Respostas AbstractiveOpenIE`. This is a deliberate copy, not a re-run: the
+prediction doesn't change per task, only which gold-comparison table it shows up in.
 
 ### 3. Evaluation (`scripts/Validacao/`)
 
@@ -109,3 +147,31 @@ python scripts/Validacao/gerar_graficos.py Outputs/metricas/bia/<N>_batches/resu
 | `gerar_graficos.py` | Paper-ready charts from `resultados_*.csv` | `graficos_lexical/` |
 
 All outputs land under `Outputs/metricas/<corpus>/<N>_batches/`.
+
+#### CaRB scoring and generation-variance guardrails (`scripts/Validacao/carb_score.py` et al.)
+
+A separate, PT-adapted port of the [CaRB](https://aclanthology.org/D19-1651/) scorer (see
+`Guardrails.md` for the full methodology and rationale):
+
+```bash
+python scripts/Validacao/rodar_carb.py --corpus bia --tarefa oiec [--ic]
+```
+
+- `--tarefa`: `abstractive`, `dpto`, `oiec`, or `ptoiedp`.
+- `--ic`: bootstrap 95% confidence intervals (error bars on the plot).
+
+Scores every `*.jsonl` file found in the corresponding categoria folder and writes
+`Outputs/metricas/<corpus>/carb/carb_<corpus>_<tarefa>.csv` + a matching `.png`.
+
+**Generation variance + consensus**, for models collected across multiple `--k` rounds
+(see `assistente_coleta.py --k` above):
+
+```bash
+python scripts/Validacao/variancia_geracao.py --corpus bia --tarefa oiec --modelo <NomeDoModelo> --lotes <N> --k <K>
+```
+
+Walks `k=1..K` via the same `pasta_rodada` convention, reports each round's F1, the
+mean ± standard deviation across rounds (the actual measured generation variance, as opposed
+to citing literature figures), and a **consensus** F1 — a per-sentence majority-vote across the
+k predicted triple sets, which typically outperforms the single-round mean. Writes
+`Outputs/metricas/<corpus>/carb/variancia_<tarefa>_<modelo>.csv`.
