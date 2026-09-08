@@ -1,0 +1,454 @@
+
+# Extração de Relações Open Information Extraction (Open IE)
+
+## Objetivo
+
+
+Você receberá uma **lista de objetos JSON**, onde cada objeto contém uma sentença em português.
+
+```jsonl
+
+  {"sentence": "..."},
+  {"sentence": "..."},
+  {"sentence": "..."}
+
+```
+
+Cada objeto da lista deve ser processado de forma independente. Não deve haver mistura de informações entre sentenças diferentes.
+
+---
+
+Você receberá **sentenças em português**.
+
+Sua tarefa é extrair **todas** as relações Open Information Extraction (Open IE) presentes em cada sentença.
+
+Toda saída deve permanecer associada à **sentença original** da qual as relações foram extraídas. Todas as relações em `relations` devem corresponder exclusivamente à sentença armazenada em `sentence`.
+
+Cada relação deve ser representada por uma tripla no formato:
+
+```json
+{
+  "arg1": "...",
+  "rel": "...",
+  "arg2": "..."
+}
+```
+
+---
+
+
+Uma sentença pode conter nenhuma, uma ou várias relações. Sempre que houver múltiplas relações válidas, extraia todas elas.
+
+Siga rigorosamente as regras abaixo.
+
+---
+
+# Regras Estruturais
+
+## E1. Estrutura Fundamental da Tripla
+
+Cada tripla deve conter:
+
+* **ARG1:** entidade que exerce o papel de sujeito da relação;
+* **REL:** verbo principal ou expressão verbal que estabelece a relação;
+* **ARG2:** complemento principal da relação.
+
+A relação deve corresponder a uma estrutura sintaticamente válida presente na sentença.
+
+Deve existir uma dependência sintática clara entre ARG1, REL e ARG2.
+
+---
+
+## E2. Concordância
+
+Preserve integralmente a concordância de número, gênero e pessoa presente na sentença original.
+
+Não altere flexões verbais ou nominais durante a construção da tripla.
+
+---
+
+## E3. Construção dos Argumentos
+
+Os argumentos devem representar sintagmas nominais completos.
+
+Inclua:
+
+* núcleo nominal;
+* artigos;
+* pronomes;
+* numerais;
+* adjetivos restritivos;
+* modificadores nominais;
+* adjuntos adnominais essenciais para identificar a entidade.
+
+Não inclua elementos que não sejam essenciais para identificar o participante da relação, como orações relativas explicativas ou modificadores acessórios.
+
+**Exemplo**
+
+Sentença:
+`O novo presidente da empresa anunciou o projeto.`
+
+Saída:
+
+```json
+{
+  "arg1": "O novo presidente da empresa",
+  "rel": "anunciou",
+  "arg2": "o projeto"
+}
+```
+
+---
+
+## E4. Preposições Regidas pelo Verbo
+
+Quando o verbo exigir uma preposição para introduzir ARG2, essa preposição deve fazer parte da relação (REL).
+
+**Exemplo**
+
+Sentença:
+`João gosta de livros.`
+
+Saída:
+
+```json
+{
+  "arg1": "João",
+  "rel": "gosta de",
+  "arg2": "livros"
+}
+```
+
+---
+
+## E4.1 Contrações
+
+Quando houver contração entre preposição e artigo, separe ambos.
+
+A preposição permanece em REL.
+
+O artigo passa a fazer parte de ARG2.
+
+**Exemplo**
+
+Sentença:
+`João gosta do livro.`
+
+Saída:
+
+```json
+{
+  "arg1": "João",
+  "rel": "gosta de",
+  "arg2": "o livro"
+}
+```
+
+---
+
+## E4.2 Locuções Prepositivas
+
+Locuções prepositivas lexicalizadas não devem ser fragmentadas.
+
+Devem permanecer completas dentro da relação.
+
+Exemplos:
+
+* ao longo de
+* de acordo com
+* em frente de
+
+---
+
+## E5. Natureza dos Argumentos
+
+Pelo menos um dos argumentos deve corresponder a um sintagma nominal cujo núcleo seja um substantivo ou pronome.
+
+Os argumentos devem referir-se a entidades, objetos, pessoas, organizações, conceitos ou eventos claramente identificáveis.
+
+---
+
+## E6. Relações N-árias
+
+Quando uma relação possuir mais de dois argumentos principais, decomponha-a em múltiplas relações binárias sempre que essa decomposição preservar o significado original.
+
+Priorize relações mais atômicas.
+
+**Exemplo**
+
+Sentença:
+`Ele viajou para a Rússia no dia 19 de junho.`
+
+Saída possível:
+
+```json
+[
+  {
+    "arg1": "Ele",
+    "rel": "viajou para",
+    "arg2": "a Rússia"
+  },
+  {
+    "arg1": "Ele",
+    "rel": "viajou em",
+    "arg2": "no dia 19 de junho"
+  }
+]
+```
+
+---
+
+## E7. Coordenação
+
+Quando uma coordenação unir múltiplos participantes da mesma relação, prefira gerar uma tripla independente para cada elemento coordenado.
+
+Caso a decomposição prejudique o significado da sentença, a coordenação poderá permanecer dentro do argumento correspondente.
+
+**Exemplo**
+
+Sentença:
+`João comprou pão, leite e queijo.`
+
+Saída possível:
+
+```json
+[
+  {
+    "arg1": "João",
+    "rel": "comprou",
+    "arg2": "pão"
+  },
+  {
+    "arg1": "João",
+    "rel": "comprou",
+    "arg2": "leite"
+  },
+  {
+    "arg1": "João",
+    "rel": "comprou",
+    "arg2": "queijo"
+  }
+]
+```
+
+---
+
+## E8. Argumentos Oracionais
+
+Os argumentos podem ser constituídos por orações inteiras quando estas desempenharem função sintática de argumento da relação.
+
+A existência da oração subordinada como argumento não implica que seu conteúdo seja factual.
+
+A factualidade deve ser avaliada separadamente.
+
+**Exemplo**
+
+Sentença:
+`Maria disse que João venceu a competição.`
+
+Saída possível:
+
+```json
+[
+  {
+    "arg1": "Maria",
+    "rel": "disse",
+    "arg2": "que João venceu a competição"
+  },
+  {
+    "arg1": "João",
+    "rel": "venceu",
+    "arg2": "a competição"
+  }
+]
+```
+
+---
+
+## E9. Expressões Multipalavra
+
+Expressões multipalavra lexicalizadas devem ser tratadas como unidades.
+
+Quando fizerem parte da relação verbal, devem permanecer integralmente em REL.
+
+Quando modificarem um argumento, devem permanecer integralmente dentro do argumento correspondente.
+
+---
+
+# Regras Semânticas
+
+## S1. Factualidade
+
+Extraia apenas relações afirmadas ou diretamente implicadas pela sentença.
+
+Não considere como fatos:
+
+* possibilidades;
+* hipóteses;
+* condicionais;
+* crenças;
+* opiniões;
+* relatos;
+* conteúdo de discurso indireto;
+* fatos negados.
+
+Quando apropriado, a própria relação de crença, fala ou negação pode ser extraída.
+
+**Exemplo**
+
+Sentença:
+`João não comprou o livro.`
+
+Saída possível:
+
+```json
+{
+  "arg1": "João",
+  "rel": "não comprou",
+  "arg2": "o livro"
+}
+```
+
+---
+
+## S2. Delimitação Semântica dos Argumentos
+
+Escolha a extensão dos argumentos de acordo com a necessidade de identificar corretamente a entidade participante da relação.
+
+Evite argumentos excessivamente curtos que percam informação essencial.
+
+Evite argumentos excessivamente longos que incluam informações pertencentes a outras relações.
+
+---
+
+## S3. Evitar Relações Aninhadas
+
+Não incorpore dentro de um argumento uma segunda relação que possa ser extraída independentemente.
+
+Sempre que possível, decomponha relações complexas em múltiplas triplas mais simples.
+
+---
+
+## S4. Consistência Linguística
+
+Baseie toda extração em uma interpretação sintática e semântica consistente da sentença.
+
+Quando houver ambiguidade, selecione a interpretação mais plausível segundo o contexto linguístico da própria sentença.
+
+---
+
+## S5. Ausência de Inferência Externa
+
+Não utilize conhecimento de mundo, inferências lógicas ou informações externas ao texto.
+
+Extraia apenas relações explicitamente expressas ou diretamente implicadas pela sentença.
+
+Não derive fatos por transitividade, conhecimento enciclopédico ou deduções não presentes no texto.
+
+---
+
+# Formato da Resposta
+
+Retorne exclusivamente um objeto JSON válido.
+
+O objeto deve possuir obrigatoriamente os campos:
+
+* **sentence:** exatamente a sentença de entrada, sem qualquer modificação, correção, normalização ou reescrita.
+* **relations:** um array contendo todas as relações extraídas.
+
+As relações devem aparecer, sempre que possível, na mesma ordem em que surgem na sentença.
+
+Caso nenhuma relação válida seja encontrada, retorne `relations` como array vazio.
+
+Não inclua explicações, comentários, Markdown ou qualquer texto adicional.
+
+Formato esperado:
+
+```json
+{
+  "sentence": "A universidade é afiliada à Congregação de Santa Cruz.",
+  "relations": [
+    {
+      "arg1": "A universidade",
+      "rel": "é",
+      "arg2": "afiliada à Congregação de Santa Cruz"
+    },
+    {
+      "arg1": "A universidade",
+      "rel": "é afiliada a",
+      "arg2": "a Congregação de Santa Cruz"
+    }
+  ]
+}
+```
+
+Caso não exista nenhuma relação Open IE válida:
+
+```json
+{
+  "sentence": "A universidade é afiliada à Congregação de Santa Cruz.",
+  "relations": []
+}
+```
+
+
+
+Processe as seguintes sentenças:
+[
+  {
+    "sentence": "É justo dizer que Rocco Catalano trabalha, vive e respira retro."
+  },
+  {
+    "sentence": "Penso que é por isso que eles se imergiram em padrões e cor."
+  },
+  {
+    "sentence": "Catalano voltou para a área depois de viver em Londres e em Glasgow, onde estudou design de jóias na Glasgow School of Art."
+  },
+  {
+    "sentence": "Eu adorei as cores tropicais, diz ele."
+  },
+  {
+    "sentence": "Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele."
+  },
+  {
+    "sentence": "Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri."
+  },
+  {
+    "sentence": "Naturalmente, a paisagem do escritório apresenta muitas roupas e, no sentido de comida, pouco."
+  },
+  {
+    "sentence": "A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada."
+  },
+  {
+    "sentence": "Olhei para o motocross e quanto mais olhava, continuava a surgir a cara desta mulher, em fotografias que pareciam ser dos anos 70."
+  },
+  {
+    "sentence": "Amo jogar com isso e estou sempre à procura de musas que se encaixem, porque é tão interessante fazer uma coleção quando encontro uma."
+  }
+]
+
+IMPORTANTE -- formato de saída obrigatório: JSONL (um objeto JSON por linha, SEM colchetes
+envolvendo tudo e SEM vírgula entre os objetos). Cada linha corresponde a uma sentença, na
+mesma ordem em que foram apresentadas acima. Exemplo (frases fictícias, apenas para ilustrar o
+formato -- não fazem parte do texto a ser processado):
+
+{"sentence":"Maria Silva, nascida em 1990, trabalha como engenheira, e seu marido, Carlos Silva, que se formou em 2010, trabalha como médico.","relations":[{"arg1":"Maria Silva","rel":"nascida em","arg2":"1990"},{"arg1":"Maria Silva","rel":"trabalha como","arg2":"engenheira"},{"arg1":"Carlos Silva","rel":"se formou em","arg2":"2010"},{"arg1":"Carlos Silva","rel":"trabalha como","arg2":"médico"},{"arg1":"seu marido","rel":"é","arg2":"Carlos Silva"}]}
+{"sentence":"A empresa Alfa Tech lançou um novo produto em março de 2022.","relations":[{"arg1":"A empresa Alfa Tech","rel":"lançou","arg2":"um novo produto"},{"arg1":"A empresa Alfa Tech","rel":"lançou em","arg2":"março de 2022"}]}
+
+Não devolva as triplas soltas fora de "relations"; não repita a sentença como um item separado; se
+nenhuma relação for encontrada em uma sentença, use "relations": [].
+
+E Cada trecho do texto acima está marcado com [S1], [S2], etc. -- cada marcador indica o INÍCIO de
+uma sentença nova e independente. NUNCA funda duas sentenças de marcadores diferentes em um único
+item de saída, mesmo que pareçam continuar uma a outra. Gere exatamente um item de saída por
+marcador [Sn], com o texto daquele trecho (sem incluir "[Sn]") no campo "sentence".
+{"sentence":"É justo dizer que Rocco Catalano trabalha, vive e respira retro.","relations":[{"arg1":"Rocco Catalano","rel":"trabalha","arg2":"retro"},{"arg1":"Rocco Catalano","rel":"vive","arg2":"retro"},{"arg1":"Rocco Catalano","rel":"respira","arg2":"retro"}]}
+{"sentence":"Penso que é por isso que eles se imergiram em padrões e cor.","relations":[{"arg1":"eles","rel":"se imergiram em","arg2":"padrões"},{"arg1":"eles","rel":"se imergiram em","arg2":"cor"}]}
+{"sentence":"Catalano voltou para a área depois de viver em Londres e em Glasgow, onde estudou design de jóias na Glasgow School of Art.","relations":[{"arg1":"Catalano","rel":"voltou para","arg2":"a área"},{"arg1":"Catalano","rel":"viver em","arg2":"Londres"},{"arg1":"Catalano","rel":"viver em","arg2":"Glasgow"},{"arg1":"Catalano","rel":"estudou","arg2":"design de jóias"},{"arg1":"Catalano","rel":"estudou na","arg2":"Glasgow School of Art"}]}
+{"sentence":"Eu adorei as cores tropicais, diz ele.","relations":[{"arg1":"Eu","rel":"adorei","arg2":"as cores tropicais"},{"arg1":"ele","rel":"diz","arg2":"Eu adorei as cores tropicais"}]}
+{"sentence":"Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos, diz ele.","relations":[{"arg1":"Eu","rel":"visitei","arg2":"os espetáculos universitários"},{"arg1":"Eu","rel":"visitei na","arg2":"Universidade de Northampton"},{"arg1":"Eu","rel":"visitei para","arg2":"encontrar novos talentos"},{"arg1":"ele","rel":"diz","arg2":"Eu visitei os espetáculos universitários na Universidade de Northampton para encontrar novos talentos"}]}
+{"sentence":"Mas, quando eu sugiro que ela use a Frank como sua modelo, ela ri.","relations":[{"arg1":"eu","rel":"sugiro","arg2":"que ela use a Frank como sua modelo"},{"arg1":"ela","rel":"use","arg2":"a Frank como sua modelo"},{"arg1":"ela","rel":"ri","arg2":""}]}
+{"sentence":"Naturalmente, a paisagem do escritório apresenta muitas roupas e, no sentido de comida, pouco.","relations":[{"arg1":"a paisagem do escritório","rel":"apresenta","arg2":"muitas roupas"},{"arg1":"a paisagem do escritório","rel":"apresenta","arg2":"pouco"}]}
+{"sentence":"A própria Wintour aparece rapidamente, e é filmada colocando seus óculos de sol antes de ser entrevistada.","relations":[{"arg1":"A própria Wintour","rel":"aparece","arg2":"rapidamente"},{"arg1":"A própria Wintour","rel":"é filmada","arg2":"colocando seus óculos de sol"},{"arg1":"A própria Wintour","rel":"colocando","arg2":"seus óculos de sol"}]}
+{"sentence":"Olhei para o motocross e quanto mais olhava, continuava a surgir a cara desta mulher, em fotografias que pareciam ser dos anos 70.","relations":[{"arg1":"eu","rel":"Olhei para","arg2":"o motocross"},{"arg1":"a cara desta mulher","rel":"continuava a surgir","arg2":"em fotografias"},{"arg1":"fotografias","rel":"pareciam ser","arg2":"dos anos 70"}]}
+{"sentence":"Amo jogar com isso e estou sempre à procura de musas que se encaixem, porque é tão interessante fazer uma coleção quando encontro uma.","relations":[{"arg1":"eu","rel":"Amo","arg2":"jogar com isso"},{"arg1":"eu","rel":"estou à procura de","arg2":"musas que se encaixem"},{"arg1":"eu","rel":"encontro","arg2":"uma"}]}
