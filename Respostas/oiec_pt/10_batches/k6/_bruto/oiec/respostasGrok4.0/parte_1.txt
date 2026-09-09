@@ -1,0 +1,10 @@
+{"sentence":"Teoricamente, um casal poderia abrir quatro contas Tesco e ganhar 3% em £12,000 – £360.","relations":[]}
+{"sentence":"Entretanto, os clientes do Banco da Escócia ganham 3% em balanços de £3,000-£5,000 quando adicionam a opção gratuita Vantage às suas contas.","relations":[{"arg1":"os clientes do Banco da Escócia","rel":"ganham","arg2":"3% em balanços de £3,000-£5,000"},{"arg1":"os clientes do Banco da Escócia","rel":"adicionam","arg2":"a opção gratuita Vantage às suas contas"}]}
+{"sentence":"Com isto, em teoria, você é capaz de acessar seu dinheiro sempre que quiser.","relations":[]}
+{"sentence":"Esta taxa de 3% também se aplica a titulares de cartão Nectar que pensam em pedir emprestado £15,001-£19,999, durante um período de dois a três anos.","relations":[{"arg1":"Esta taxa de 3%","rel":"se aplica a","arg2":"titulares de cartão Nectar"}]}
+{"sentence":"O enxofre é um nutriente vital para o crescimento saudável das plantas, mas os solos no Reino Unido são naturalmente deficientes deste mineral.","relations":[{"arg1":"O enxofre","rel":"é","arg2":"um nutriente vital para o crescimento saudável das plantas"},{"arg1":"os solos no Reino Unido","rel":"são","arg2":"naturalmente deficientes deste mineral"}]}
+{"sentence":"Um avanço rápido para 2016 e isso é cada vez mais digno de atenção.","relations":[{"arg1":"isso","rel":"é","arg2":"cada vez mais digno de atenção"}]}
+{"sentence":"Surpreendentemente como pode parecer, até as nuvens de chuvas ácidas podem ter um lado positivo.","relations":[]}
+{"sentence":"O mundo pode estar enfurecido e absurdo - no entanto pelo menos alguém tem dignidade para continuar a protestar contra esse fato.","relations":[{"arg1":"alguém","rel":"tem","arg2":"dignidade para continuar a protestar contra esse fato"}]}
+{"sentence":"Acaba ouvindo mais intensamente o barulho seguinte e ficando mais irritado quando ele surge.","relations":[{"arg1":"Acaba","rel":"ouvindo mais intensamente","arg2":"o barulho seguinte"},{"arg1":"Acaba","rel":"ficando mais irritado","arg2":"quando ele surge"}]}
+{"sentence":"Isso é legitimamente horrível.","relations":[{"arg1":"Isso","rel":"é","arg2":"legitimamente horrível"}]}
