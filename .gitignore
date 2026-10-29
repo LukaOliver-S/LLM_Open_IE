@@ -7,3 +7,4 @@ __pycache__/
 *.pt
 *.log
 "@ | Set-Content -Encoding utf8 .gitignore
+./Outputs
