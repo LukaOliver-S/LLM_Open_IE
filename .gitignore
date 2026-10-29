@@ -6,5 +6,5 @@ __pycache__/
 *.pyo
 *.pt
 *.log
-"@ | Set-Content -Encoding utf8 .gitignore
 Outputs
+"@ | Set-Content -Encoding utf8 .gitignore
