@@ -12,10 +12,15 @@ visual de acerto/erro:
     ✓✓ tripla = casamento EXATO com uma tripla do gold
     ✓  tripla = casamento LEXICAL (overlap > 50%) com uma tripla do gold
     ✗  tripla = falso positivo (não bateu com nada do gold)
+    🟡 tripla = falso positivo em que TODOS os modelos da aba concordam
+    🔷 tripla = falso positivo em que só as LLMs comerciais concordam entre si
 
-No gabarito, triplas que NENHUM modelo conseguiu recuperar (nem lexical)
-ficam marcadas com ⚠ em vermelho/negrito — útil pra achar rapidamente os
-casos mais difíceis pro artigo.
+No gabarito:
+    ⚠  triplas que NENHUM modelo conseguiu recuperar (nem lexical) ficam
+       marcadas em vermelho/negrito — útil pra achar os casos mais difíceis.
+    ⭐ triplas que TODOS os modelos da aba recuperaram (cada um por conta
+       própria) ficam marcadas em roxo/negrito — fatos "fáceis"/inequívocos,
+       úteis como contraste dos casos difíceis acima.
 
 Não depende do resultados.py nem do corrigir_gemini.py: é 100% autônomo
 (faz sua própria leitura robusta de JSON e agrupamento por frase).
@@ -211,7 +216,9 @@ COR_LEXICAL = "4CAF50"   # verde
 COR_FALSO_POSITIVO = "C0392B"  # vermelho
 COR_NAO_RECUPERADO = "C0392B"  # vermelho (gold nunca extraído por ninguém)
 COR_CINZA = "888888"
-COR_CONSENSO = "B8860B"  # dourado/amarelo escuro (legível em fundo branco) - consenso fora do gold
+COR_CONSENSO = "B8860B"      # dourado/amarelo escuro - TODOS os modelos da aba concordam, fora do gold
+COR_CONSENSO_LLM = "2471A3"  # azul - só as LLMs comerciais concordam entre si, fora do gold
+COR_UNANIME = "6C3483"       # roxo - TODOS os modelos da aba recuperaram essa tripla do gold
 
 FONTE_NORMAL = InlineFont(rFont=FONTE, sz=10)
 FONTE_EXATO = InlineFont(rFont=FONTE, sz=10, b=True, color=COR_EXATO)
@@ -220,9 +227,30 @@ FONTE_FP = InlineFont(rFont=FONTE, sz=10, color=COR_FALSO_POSITIVO)
 FONTE_NAO_RECUPERADO = InlineFont(rFont=FONTE, sz=10, b=True, color=COR_NAO_RECUPERADO)
 FONTE_VAZIO = InlineFont(rFont=FONTE, sz=10, i=True, color=COR_CINZA)
 FONTE_CONSENSO = InlineFont(rFont=FONTE, sz=10, b=True, color=COR_CONSENSO)
+FONTE_CONSENSO_LLM = InlineFont(rFont=FONTE, sz=10, b=True, color=COR_CONSENSO_LLM)
+FONTE_UNANIME = InlineFont(rFont=FONTE, sz=10, b=True, color=COR_UNANIME)
+
+_PALAVRAS_LLM = ("grok", "gpt", "claude", "gemini")
 
 
-def montar_celula_gold(gold_triplas: List[dict], recuperadas: set) -> CellRichText:
+def eh_llm_comercial(nome_modelo: str) -> bool:
+    """Heurística: LLMs de chat comerciais (Grok/GPT/Claude/Gemini) vs.
+    extratores locais/especializados (LlamaPortOIE3, PortNOIE, Qwen3OIE,
+    DptOIE, PTOIE-Flair, PortugueseT5OIE, ...), pelo nome do arquivo/modelo."""
+    n = nome_modelo.lower()
+    return any(p in n for p in _PALAVRAS_LLM)
+
+
+def montar_celula_gold(gold_triplas: List[dict], recuperadas_por_modelo: Dict[int, set],
+                        total_modelos: int) -> CellRichText:
+    """`recuperadas_por_modelo[i]` = conjunto de nomes de modelo que
+    recuperaram (exato ou lexical) a i-ésima tripla do gold. Cada tripla é
+    marcada em 3 níveis:
+      ⚠  ninguém recuperou (vermelho)
+      ⭐ TODOS os modelos da aba recuperaram, cada um por conta própria
+         (roxo) — sinal de que é um fato "fácil"/inequívoco
+      (sem marca) recuperada por alguns, não por todos
+    """
     if not gold_triplas:
         return CellRichText([TextBlock(FONTE_VAZIO, "(sem triplas no gabarito)")])
     blocos = []
@@ -230,10 +258,13 @@ def montar_celula_gold(gold_triplas: List[dict], recuperadas: set) -> CellRichTe
         texto = f"{g['arg1']} → {g['rel']} → {g['arg2']}"
         if i > 0:
             blocos.append("\n")
-        if i in recuperadas:
-            blocos.append(TextBlock(FONTE_NORMAL, texto))
-        else:
+        modelos_que_recuperaram = recuperadas_por_modelo.get(i, set())
+        if not modelos_que_recuperaram:
             blocos.append(TextBlock(FONTE_NAO_RECUPERADO, f"⚠ {texto}"))
+        elif total_modelos >= 2 and len(modelos_que_recuperaram) == total_modelos:
+            blocos.append(TextBlock(FONTE_UNANIME, f"⭐ {texto}"))
+        else:
+            blocos.append(TextBlock(FONTE_NORMAL, texto))
     return CellRichText(blocos)
 
 
@@ -246,6 +277,7 @@ def montar_celula_predicao(pred_triplas: List[dict], status: List[str]) -> CellR
         "lexical": ("✓ ", FONTE_LEXICAL),
         "none": ("✗ ", FONTE_FP),
         "consenso": ("🟡 ", FONTE_CONSENSO),
+        "consenso_llm": ("🔷 ", FONTE_CONSENSO_LLM),
     }
     for i, p in enumerate(pred_triplas):
         prefixo, fonte = simbolo_fonte[status[i]]
@@ -257,16 +289,33 @@ def montar_celula_predicao(pred_triplas: List[dict], status: List[str]) -> CellR
 
 
 def marcar_consenso_fora_do_gold(status_por_modelo: Dict[str, Tuple[List[dict], List[str]]]) -> None:
-    """Detecta triplas que TODOS os modelos extraíram (mesmo arg1/rel/arg2,
-    normalizados) mas que NENHUM bateu com o gold (status == "none") — ou
-    seja, todas as IAs concordam entre si só que discordam do gabarito.
-    Modifica `status_por_modelo` in-place, trocando "none" por "consenso"
-    nesses casos. Só é acionado com 2+ modelos na aba (com 1 só modelo,
-    "consenso" não tem sentido).
+    """Detecta, entre os falsos positivos (status == "none"), triplas em que
+    vários modelos concordam entre si (mesmo arg1/rel/arg2, normalizados) mas
+    que nenhum bateu com o gold. Modifica `status_por_modelo` in-place,
+    trocando "none" por um dos dois níveis de concordância:
+
+      "consenso"     — TODOS os modelos da aba (LLMs + locais/especializados)
+                       extraíram a mesma tripla. Sinal mais forte de que o
+                       gold pode ter perdido uma relação real.
+      "consenso_llm" — só as LLMs comerciais (Grok/GPT/Claude/Gemini)
+                       presentes na aba concordam entre si, mas nenhum
+                       extrator local/especializado extraiu a mesma tripla.
+                       Sinal mais fraco (pode ser um viés compartilhado só
+                       pelas LLMs de chat, não confirmado por um extrator
+                       independente).
+
+    "consenso_llm" só é calculado quando a aba tem 2+ LLMs E pelo menos 1
+    modelo local/especializado (senão a distinção entre os dois grupos não
+    faz sentido). Cada assinatura é classificada no nível mais forte que
+    atingir: "consenso" tem prioridade sobre "consenso_llm".
     """
     total_modelos = len(status_por_modelo)
     if total_modelos < 2:
         return
+
+    modelos_llm = {m for m in status_por_modelo if eh_llm_comercial(m)}
+    modelos_especializados = set(status_por_modelo) - modelos_llm
+    checar_consenso_llm = len(modelos_llm) >= 2 and len(modelos_especializados) >= 1
 
     contagem: Dict[Tuple[str, str, str], set] = {}
     for nome_modelo, (pred_triplas, status) in status_por_modelo.items():
@@ -276,8 +325,18 @@ def marcar_consenso_fora_do_gold(status_por_modelo: Dict[str, Tuple[List[dict], 
             assinatura = (normalizar_frase(p["arg1"]), normalizar_frase(p["rel"]), normalizar_frase(p["arg2"]))
             contagem.setdefault(assinatura, set()).add(nome_modelo)
 
-    assinaturas_consenso = {a for a, modelos_ in contagem.items() if len(modelos_) == total_modelos}
-    if not assinaturas_consenso:
+    assinaturas_consenso_total = {a for a, ms in contagem.items() if len(ms) == total_modelos}
+    assinaturas_consenso_llm = set()
+    if checar_consenso_llm:
+        # Igualdade exata (não subconjunto): TODAS as LLMs concordam e
+        # NENHUM modelo local/especializado propôs a mesma tripla. Um
+        # subconjunto (ex.: LLMs + Qwen3OIE) não conta como "só LLMs".
+        assinaturas_consenso_llm = {
+            a for a, ms in contagem.items()
+            if a not in assinaturas_consenso_total and ms == modelos_llm
+        }
+
+    if not assinaturas_consenso_total and not assinaturas_consenso_llm:
         return
 
     for nome_modelo, (pred_triplas, status) in status_por_modelo.items():
@@ -285,8 +344,10 @@ def marcar_consenso_fora_do_gold(status_por_modelo: Dict[str, Tuple[List[dict], 
             if status[i] != "none":
                 continue
             assinatura = (normalizar_frase(p["arg1"]), normalizar_frase(p["rel"]), normalizar_frase(p["arg2"]))
-            if assinatura in assinaturas_consenso:
+            if assinatura in assinaturas_consenso_total:
                 status[i] = "consenso"
+            elif assinatura in assinaturas_consenso_llm:
+                status[i] = "consenso_llm"
 
 
 def gerar_aba(wb: Workbook, nome_aba: str, gold_ordenado: List[dict],
@@ -314,14 +375,15 @@ def gerar_aba(wb: Workbook, nome_aba: str, gold_ordenado: List[dict],
         gold_triplas = item_gold["relations"]
         chave = normalizar_frase(frase)
 
-        recuperadas_por_qualquer_modelo: set = set()
+        recuperadas_por_modelo: Dict[int, set] = {}
         celulas_modelos: Dict[str, CellRichText] = {}
         status_por_modelo: Dict[str, Tuple[List[dict], List[str]]] = {}
 
         for nome_modelo, dados_modelo in modelos.items():
             pred_triplas = dados_modelo.get(chave, [])
             status, usados = classificar_predicoes(gold_triplas, pred_triplas, limiar)
-            recuperadas_por_qualquer_modelo |= usados
+            for i in usados:
+                recuperadas_por_modelo.setdefault(i, set()).add(nome_modelo)
             status_por_modelo[nome_modelo] = (pred_triplas, status)
 
         marcar_consenso_fora_do_gold(status_por_modelo)
@@ -330,7 +392,7 @@ def gerar_aba(wb: Workbook, nome_aba: str, gold_ordenado: List[dict],
         ws.cell(row=linha_idx, column=1).alignment = Alignment(wrap_text=True, vertical="top")
 
         c_gold = ws.cell(row=linha_idx, column=2)
-        c_gold.value = montar_celula_gold(gold_triplas, recuperadas_por_qualquer_modelo)
+        c_gold.value = montar_celula_gold(gold_triplas, recuperadas_por_modelo, len(modelos))
         c_gold.alignment = Alignment(wrap_text=True, vertical="top")
 
         for col_offset, (nome_modelo, (pred_triplas, status)) in enumerate(status_por_modelo.items()):
@@ -522,8 +584,10 @@ def main():
     wb.save(caminho_saida)
     print(f"\n✅ Planilha salva em: {caminho_saida.resolve()}")
     print("   Legenda: ✓✓ = casamento exato | ✓ = casamento lexical (>50%) | ✗ = falso positivo")
-    print("            🟡 = TODOS os modelos extraíram a mesma tripla, mas não está no gold (possível falha do gabarito)")
+    print("            🟡 = TODOS os modelos da aba (LLMs + locais/especializados) extraíram a mesma tripla, mas não está no gold")
+    print("            🔷 = só as LLMs comerciais concordam entre si nessa tripla; nenhum extrator local/especializado a extraiu")
     print("            ⚠ (no gold) = tripla do gabarito nunca recuperada por nenhum modelo")
+    print("            ⭐ (no gold) = tripla do gabarito recuperada por TODOS os modelos da aba, cada um por conta própria")
 
 
 if __name__ == "__main__":

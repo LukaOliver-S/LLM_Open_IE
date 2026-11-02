@@ -35,7 +35,7 @@ for C in "${CORPORA[@]}"; do
   "$PY" $X scripts/Validacao/gerar_graficos.py Outputs/metricas/"$C"/*/resultados_*.csv || echo "  [skip graficos $C]"
   for T in "${TAREFAS[@]}"; do
     echo "----- $C / $T -----"
-    "$PY" $X scripts/Validacao/rodar_carb.py     --corpus "$C" --tarefa "$T" --ic || echo "  [skip carb $C/$T]"
+    "$PY" $X scripts/Validacao/rodar_carb.py     --corpus "$C" --tarefa "$T"  || echo "  [skip carb $C/$T]"
     "$PY" $X scripts/Validacao/bootstrap_carb.py --corpus "$C" --tarefa "$T"       || echo "  [skip boot $C/$T]"
   done
 done

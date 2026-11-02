@@ -282,8 +282,50 @@ cada um decide emitir por relação**.
 >   Isso, multiplicado por 262 frases, é o que produz a razão 3,93×.
 >
 > Os três "leram" a frase da mesma forma (identificaram sujeito, verbo,
-> parêntese); a diferença inteira está em **quantas variantes decidir
-> emitir** — 1, 1 (bagunçada) ou 8.
+> parêntese); a diferença está em **quantas variantes decidir emitir** —
+> 1, 1 (bagunçada) ou 8. **Correção (verificado nos Colabs oficiais, ver
+> abaixo): não é a mesma extração com um filtro — são duas ferramentas e
+> dois motores linguísticos diferentes, e a diferença real é qual conjunto
+> de regras estava LIGADO em cada execução.**
+
+**⚠️ Correção desta seção:** a versão anterior deste documento descrevia o
+DptOIE-Py como "a mesma extração baseada em regras do Java, mas com um
+filtro que descarta variantes redundantes". Isso estava errado. Verificando
+os três Colabs oficiais do FORMAS (compartilhados pelo usuário) e o
+repositório do DptOIE-Py, a explicação real é outra — mais interessante e
+mais precisa:
+
+- **DptOIE (Java)** é a ferramenta original: `DptOIE.jar`, publicada em
+  Oliveira, L., Claro, D. B. e Souza, M., *"DptOIE: a Portuguese open
+  information extraction based on dependency analysis"*, Artificial
+  Intelligence Review, v. 56, p. 7015–7046, 2023. O Colab roda
+  `java -jar DptOIE.jar -sentencesIN <arquivo>` **sem nenhuma flag** — o
+  jar aplica seu conjunto de regras (R1 coordenadas, R2 subordinadas, R3
+  apositivos, R4 transitividade — ver `Strucutral_Rules.md`)
+  incondicionalmente.
+- **DptOIE-Py** é uma **reimplementação separada em Python**
+  (`FORMAS/DPToie-Python`, rodada aqui via o fork
+  `andrewalkermo/PTOIE-Dep`), usando SpaCy+Stanza em vez do parser do Java —
+  **não é o mesmo código com um filtro por cima**. O `README` desse
+  repositório documenta explicitamente: *"Extraction modules are disabled
+  by default. Enable the ones you want using the flags `-cc -sc -a -t`"* —
+  onde `-cc`/`-sc` são coordenação/subordinação (equivalentes a R1/R2),
+  `-a` é **extração de apositivos** (equivalente a R3) e `-t` é
+  **transitividade de apositivos** (equivalente a R4, só tem efeito com
+  `-a` ligado). O comando usado no Colab do projeto para gerar os dados é
+  `poetry run python3 -m src.main -i <arquivo> -it txt -o <saida> -ot csv`
+  — **sem nenhuma dessas 4 flags**. Ou seja, a coleta rodou o DptOIE-Py só
+  com a regra básica (E1: sujeito-verbo-argumento), com coordenação,
+  subordinação, apositivos e transitividade **desligados por padrão**.
+
+**A causa real da razão 3,93× (Java) vs. 0,89× (Py) não é "filtro
+melhor"** — é que o Java aplica R1–R4 sempre, e a coleta do Python nunca
+ligou os equivalentes (`-cc -sc -a -t`). São as MESMAS regras conceituais
+(coordenação, subordinação, aposto, transitividade) que produzem a cascata
+de sub-extrações no Java; no Python elas simplesmente nunca foram
+acionadas nesta coleta. Isso também explica por que o exemplo acima não
+tem variantes de aposto/transitividade no DptOIE-Py: a regra que geraria
+essas variantes (`-a -t`) estava desligada.
 
 **PTOIE-Flair (neural) — conservador e limpo.**
 Razão de triplas preditas/gold: **0,541× (BIA) / 0,640× (OIEC-PT)** — extrai
@@ -293,14 +335,21 @@ falta de confiança na detecção do verbo). Erra por **omissão**, não por
 ruído: sendo neural, aprende a produzir uma decisão holística única por
 predicado, sem decompor a frase em variações.
 
-**DptOIE-Py — no meio, porque filtra melhor.**
+**DptOIE-Py — próximo de 1×, porque rodou só com a regra básica.**
 Razão de triplas: **0,888× (BIA) / 0,949× (OIEC-PT)** — perto de 1×, nem
-super-gera nem sub-gera. É a mesma extração baseada em regras do Java, mas
-com um filtro que descarta variantes redundantes antes de emitir a saída —
-e é exatamente esse filtro que explica o F1 bem mais alto (0,569 vs. 0,296
-no BIA; 0,487 vs. 0,418 no OIEC-PT).
+super-gera nem sub-gera. Não é "o Java filtrado": é uma reimplementação
+Python (SpaCy+Stanza, `FORMAS/DPToie-Python`) rodada nesta coleta com
+coordenação/subordinação/apositivos/transitividade desligados (flags
+`-cc -sc -a -t` não usadas) — só a regra estrutural básica ficou ativa.
+Isso explica o F1 bem mais alto (0,569 vs. 0,296 no BIA; 0,487 vs. 0,418
+no OIEC-PT): menos regras ativas, menos triplas, menos ruído — mas também
+significa que essa comparação Java-vs-Python não isola "qualidade do
+motor", e sim "quantas regras estavam ligadas na coleta". Rodar o mesmo
+DptOIE-Py com `-cc -sc -a -t` provavelmente aproximaria o comportamento do
+Java (e teste isso seria um bom próximo passo, se der tempo).
 
-**DptOIE-Java (regras, sem filtro) — o pior, por super-geração severa.**
+**DptOIE-Java (regras completas, sempre ligadas) — o pior, por
+super-geração severa.**
 Razão de triplas: **3,93× no BIA** (o maior super-gerador do estudo inteiro,
 em qualquer prompt) e **2,04× no OIEC-PT**. Para uma única relação, ele emite
 a "casca" mais todas as sub-extrações aninhadas como triplas separadas — uma
@@ -318,6 +367,72 @@ para a lógica de fragmentação em cascata do que o texto do OIEC-PT.
 e o pior extrator especializado da FORMAS não é sobre entender melhor ou
 pior o português — é sobre **saber quando parar de extrair**. É a mesma
 lógica que separa especializados de LLMs no estudo inteiro.
+
+---
+
+## 16. Por que as LLMs concordam entre si e erram do mesmo jeito no OIEC-PT — um conflito de protocolo, não de qualidade
+
+Isolando os falsos positivos em que **só** as 4 LLMs comerciais concordam
+entre si (nenhum extrator local/especializado propôs a mesma tripla —
+planilha `comparativo_extracoes.xlsx`, marca 🔷), o padrão que mais se repete
+não é ruído aleatório: é a inferência de uma relação de cópula ("é") a
+partir de um **aposto**, algo que nenhum verbo da frase original expressa.
+
+> **Exemplo real 1 (BIA, tarefa DPTO-IE):** *"Mais tarde naquela manhã, o
+> marido de Solange, Clésinger, fez a máscara mortuária de Chopin..."*
+> Gold: `(o marido de Solange | fez | a máscara mortuária de Chopin)`.
+> As 4 LLMs (Claude, Grok, GPT, Gemini) extraem, além disso,
+> `(Clésinger | é | o marido de Solange)` — nenhum dos extratores locais
+> (DptOIE, LlamaPortOIE3, PortNOIE, Qwen3OIE) propõe essa tripla.
+
+> **Exemplo real 2 (BIA, tarefa DPTO-IE):** *"Peter Stuyvesant,
+> diretor-geral de a colônia de a Nova Holanda, entregou Nova Amsterdã..."*
+> Mesmo padrão: só as 4 LLMs extraem
+> `(Peter Stuyvesant | é | diretor-geral de a colônia de a Nova Holanda)`.
+
+**Isso não é coincidência — é a colisão entre dois protocolos de anotação
+publicados, com regras que se contradizem ponto a ponto:**
+
+- O **paper do OIEC-PT** (Seção 4.2) define o protocolo como um conjunto
+  explícito de 9 regras estruturais (E1–E9) + 5 semânticas (S1–S5).
+  A **E1** exige que "REL contenha o verbo principal e haja uma dependência
+  sintática clara entre o verbo e seus argumentos" — mas nas duas frases
+  acima não existe verbo "é" nenhum; o verbo principal é "fez"/"entregou". A
+  **S5 — Sem inferência externa** é ainda mais direta: *"Não validar fatos
+  que dependam de conhecimento externo ou inferência lógica não-declarada"*.
+  Tratar "X, Y" (aposto) como "X é Y" é exatamente esse tipo de inferência
+  não-declarada — o protocolo do OIEC-PT proíbe isso por construção.
+- O **DptOIE**, ao contrário, tem uma regra que faz **exatamente o oposto**
+  de propósito: a **R3 — Apositivos** diz que um "apositivo rotulado como
+  nome próprio... cria uma cláusula sintética com o verbo 'é', gerando uma
+  tripla entre o termo e o apositivo" (ver `Strucutral_Rules.md`). Ou seja,
+  DptOIE **manufatura deliberadamente** esse tipo de tripla; OIEC-PT a
+  **proíbe** deliberadamente.
+
+As LLMs, sem conhecer nenhum dos dois protocolos, se comportam por padrão
+como a regra R3 do DptOIE (extraem o máximo de informação implícita que
+conseguem) — e por isso colidem sistematicamente com o gold do OIEC-PT, que
+segue o protocolo oposto. É importante notar que **BIA não é o corpus
+"mais correto"**: ele vem do CaRB (Bhardwaj et al., 2019, crowdsourced,
+tradução do inglês), que nunca formalizou um protocolo E1–E9/S1–S5 —
+provavelmente por isso ele tolera implicitamente esse tipo de inferência
+que o OIEC-PT rejeita explicitamente. O OIEC-PT não é "mais difícil" à toa:
+é o único dos dois corpora com um protocolo de anotação formal, público e
+teoricamente fundamentado — e isso muda o que conta como acerto.
+
+**Como isso se conecta ao §14:** a regra **S1** (mesmo trecho do protocolo)
+já explicava por que 33/100 sentenças do OIEC-PT têm gold vazio (frases sem
+fato assertável). A regra **E3** ("adjuntos não-essenciais devem ser
+evitados") reforça por que modelos que super-geram com orações relativas
+penduradas no arg2 perdem mais precisão no OIEC-PT do que no BIA. Os três
+achados — gold vazio (S1), aposto-como-cópula (E1+S5) e adjuntos
+não-essenciais (E3) — não são causas isoladas: são a mesma fonte (um
+protocolo de anotação mais rígido e explícito) aparecendo em três lugares
+diferentes da métrica.
+
+*Fonte: paper OIEC-PT (EMNLP 2026, anônimo), Seção 4.2 "Annotation
+Guidelines" — regras E1–E9 e S1–S5 citadas com numeração e exemplos do
+próprio artigo.*
 
 ---
 

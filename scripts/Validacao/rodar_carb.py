@@ -22,7 +22,7 @@ from carb_score import agregar
 from bootstrap_carb import acumuladores_modelo, CATEGORIA   # reusa loading/pairing
 
 # modelos especializados (verde); resto = LLM (azul). ajuste se preciso.
-ESPEC = {"ptoie-flair", "dptoie-py", "dptoie", "respostadptoie-py"}
+ESPEC = {"ptoie-flair", "dptoie-py", "dptoie", "respostadptoie-py",'portnoie','llamaportoie3','qwen3oie_0_6b','qwen3oie_4b'}
 COR_ESPEC, COR_LLM = "#009E73", "#0072B2"    # Okabe-Ito (consistente c/ os outros gráficos)
 
 def eh_espec(nome: str) -> bool:
@@ -59,7 +59,8 @@ def main():
         if amostras is not None:
             boot = np.array([agregar([acc[i] for i in idx])["f1"] for idx in amostras])
             lo, hi = np.percentile(boot, [2.5, 97.5])
-        linhas.append((mp.stem, "Especializado" if eh_espec(mp.stem) else "LLM",
+   
+        linhas.append((mp.stem, "Modelos FORMAS" if eh_espec(mp.stem) else "LLM",
                        m["precision"], m["recall"], m["f1"], lo, hi))
 
     linhas.sort(key=lambda x: x[4], reverse=True)   # por F1
@@ -78,7 +79,7 @@ def main():
     # ---- gráfico: F1 por modelo (barh), especializados destacados ----
     nomes = [r[0] for r in linhas]
     f1s   = [r[4] for r in linhas]
-    cores = [COR_ESPEC if r[1] == "Especializado" else COR_LLM for r in linhas]
+    cores = [COR_ESPEC if r[1] == "Modelos FORMAS" else COR_LLM for r in linhas]
     y = np.arange(len(nomes))[::-1]     # maior no topo
 
     fig, ax = plt.subplots(figsize=(8, 0.55 * len(nomes) + 1.5))
@@ -97,7 +98,7 @@ def main():
     ax.set_title(f"CaRB — {args.corpus} / {args.tarefa}"
                  + ("  (IC 95% bootstrap)" if amostras is not None else ""))
     from matplotlib.patches import Patch
-    ax.legend(handles=[Patch(color=COR_ESPEC, label="Especializado"),
+    ax.legend(handles=[Patch(color=COR_ESPEC, label="Modelos FORMAS"),
                        Patch(color=COR_LLM, label="LLM")], loc="lower right")
     ax.grid(axis="x", linestyle=":", alpha=0.5)
     fig.tight_layout()
