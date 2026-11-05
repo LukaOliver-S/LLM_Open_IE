@@ -175,3 +175,83 @@ mean ± standard deviation across rounds (the actual measured generation varianc
 to citing literature figures), and a **consensus** F1 — a per-sentence majority-vote across the
 k predicted triple sets, which typically outperforms the single-round mean. Writes
 `Outputs/metricas/<corpus>/carb/variancia_<tarefa>_<modelo>.csv`.
+
+
+## Métricas de grafos das triplas
+
+O script `scripts/graphs/metrics_graph.py` transforma as triplas (arg1, rel, arg2) em grafos e calcula as métricas de teoria dos grafos vistas na aula. Cada tripla vira uma aresta entre arg1 e arg2. Nas métricas a direção é ignorada, e laços e triplas incompletas são descartados. Os vértices são o texto do argumento em minúsculas, com espaços normalizados.
+
+### Requisitos
+
+```bash
+pip install networkx
+```
+
+(inclua `networkx` no `requirements.txt` se ainda não estiver lá)
+
+### Configuração
+
+No topo do script, em `CONFIGURAÇÃO`:
+
+| Variável | O que é |
+|---|---|
+| `DADOS` | pasta que contém `dados/` (gold) e `Respostas/` (extrações). Os dados são lidos daqui |
+| `SAIDA_PADRAO` | pasta onde os resultados são gravados. Padrão: `Outputs/graphs/metrics` |
+| `CORPORA` | corpora conhecidos: `oiec_pt`, `bia`, `unified` |
+
+As pastas de saída são criadas automaticamente se não existirem.
+
+### Como rodar
+
+Abra o terminal na pasta `scripts/graphs` e use:
+
+```bash
+python metrics_graph.py                 # gold e todas as extrações, de todos os corpora
+python metrics_graph.py gold            # só os corpora gold
+python metrics_graph.py extracoes       # só as extrações
+python metrics_graph.py comparar        # compara cada extrator com o gold, só nas sentenças em comum
+python metrics_graph.py comparar oiec_pt
+python metrics_graph.py bia gold        # filtros por corpus podem ser combinados com gold, extracoes e comparar
+```
+
+Também aceita um caminho de arquivo `.jsonl` ou de pasta, e `--saida` para mudar a pasta de resultados:
+
+```bash
+python metrics_graph.py "caminho/para/pasta_ou_arquivo" --saida "outra/pasta"
+```
+
+Pastas de extrações que começam com `_` (por exemplo `_bruto`) são ignoradas.
+
+### Formatos de entrada aceitos
+
+- Extrações: `{"sentence": "...", "relations": [{"arg1": ..., "rel": ..., "arg2": ...}]}`
+- Gold: `{"sentence": "...", "gold": [{"arg1": ..., "rel": ..., "arg2": ..., "valid": true}]}`. Triplas com `valid: false` são ignoradas
+- Um objeto por linha (JSONL) ou arrays JSON indentados, um depois do outro (alguns arquivos de resposta vêm assim). Trechos inválidos são pulados, com um aviso por arquivo
+
+### Saída
+
+```
+Outputs/graphs/metrics/
+└── <corpus>/                          oiec_pt, bia ou unified
+    ├── gold/
+    │   ├── metricas_corpus.csv
+    │   └── metricas_sentencas.csv
+    └── <pasta das extrações>/         por exemplo 10_batches/Respostas ExtrativoOIEC-PT
+        ├── metricas_corpus.csv
+        ├── metricas_sentencas.csv
+        └── comparacao_gold.csv        só com o comando comparar
+```
+
+`metricas_sentencas.csv` traz uma linha por sentença: `n` (vértices), `m` (arestas), `grau_max`, `componentes`, `conexo`, `formato` (estrela, arvore, com ciclo ou desconexo), `pontes`, `articulacoes`, `diametro`, `triangulos`, `nu` (emparelhamento máximo), `tau` (cobertura de vértices mínima), `alfa` (conjunto independente máximo, igual a n − τ) e `rho` (cobertura de arestas mínima, igual a n − ν).
+
+`metricas_corpus.csv` traz uma linha por arquivo, com o grafo de todas as sentenças juntas: vértices, arestas, densidade, componentes, fração do maior componente, grau médio e máximo, pontes, articulações, diâmetro do maior componente, agrupamento, transitividade, limites para τ e α, e os 5 vértices de maior grau, intermediação e proximidade.
+
+`comparacao_gold.csv` traz uma linha por extrator, usando só as sentenças que têm triplas no gold e na resposta (casadas pelo texto da sentença). Cada métrica aparece nas versões `_gold` e `_resp`: vértices, arestas e a proporção de cada formato. Há ainda `mesma_forma` (fração de sentenças em que as duas formas coincidem), `mesmo_n_vertices` e `dif_arestas_media` (resposta menos gold).
+
+### Cuidados na leitura
+
+- As métricas descrevem a forma do grafo, não se as triplas estão corretas. Para isso use as métricas de precisão e revocação em `Outputs/metricas`.
+- No grafo do corpus, vértices de sentenças diferentes com o mesmo texto são fundidos. Pronomes como "ele" e "isso" viram hubs por causa disso, e não por importância real. As métricas por sentença não têm esse efeito.
+- A cobertura de vértices mínima (τ) é NP-difícil. Por sentença é calculada exatamente, até 18 vértices. No grafo do corpus aparece só como intervalo, ν ≤ τ ≤ 2ν.
+- A intermediação do corpus é normalizada e calculada com uma amostra de até 300 vértices. O diâmetro é exato até 1500 vértices no maior componente, e acima disso é um limite inferior.
+- Nas pastas `k2` a `k6` há poucas sentenças em comum com o gold em alguns extratores, então não compare essas pastas entre si.
