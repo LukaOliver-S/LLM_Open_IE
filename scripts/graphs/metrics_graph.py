@@ -227,27 +227,78 @@ def gravar(caminho, linhas):
     print("gravado:", caminho)
 
 
+def grafos_por_sentenca(arq):
+    """{texto normalizado da sentença: grafo sem setas}, só sentenças com ao menos uma tripla"""
+    out = {}
+    for frase, rels in ler_jsonl(arq):
+        Ds = construir(rels)
+        if Ds.number_of_edges() == 0:
+            continue
+        G, k = Ds.to_undirected(), norm(frase)
+        out[k] = nx.compose(out[k], G) if k in out else G
+    return out
 
 
+def comparar_gold(corpus_nome, grupo, arquivos, saida):
+    """compara cada extrator com o gold usando só as sentenças que têm triplas nos dois"""
+    gold_f = DADOS / "dados" / f"{corpus_nome}_gold_sentences.jsonl"
+    if not gold_f.exists():
+        return
+    gold = grafos_por_sentenca(gold_f)
+    print(f"\n== comparação com o gold: {corpus_nome} / {grupo}  (gold com triplas: {len(gold)})")
+    linhas = []
+    for arq in arquivos:
+        resp = grafos_por_sentenca(arq)
+        comuns = sorted(set(gold) & set(resp))
+        if not comuns:
+            continue
+        mg = [por_sentenca(gold[k]) for k in comuns]
+        mr = [por_sentenca(resp[k]) for k in comuns]
+        media = lambda ms, c: round(st.mean(x[c] for x in ms), 3)
+        pct = lambda ms, f: round(sum(1 for x in ms if x["formato"] == f) / len(ms), 3)
+        linha = {"arquivo": arq.stem, "sentencas_gold": len(gold), "sentencas_resposta": len(resp), "sentencas_comuns": len(comuns),
+                 "vertices_gold": media(mg, "n"), "vertices_resp": media(mr, "n"),
+                 "arestas_gold": media(mg, "m"), "arestas_resp": media(mr, "m")}
+        for f in ("estrela", "arvore", "com ciclo", "desconexo"):
+            linha[f"{f}_gold"], linha[f"{f}_resp"] = pct(mg, f), pct(mr, f)
+        linha["mesma_forma"] = round(sum(1 for a, b in zip(mg, mr) if a["formato"] == b["formato"]) / len(comuns), 3)
+        linha["mesmo_n_vertices"] = round(sum(1 for a, b in zip(mg, mr) if a["n"] == b["n"]) / len(comuns), 3)
+        linha["dif_arestas_media"] = round(st.mean(b["m"] - a["m"] for a, b in zip(mg, mr)), 3)
+        linhas.append(linha)
+        print(f"{arq.stem[:28]:28} comuns {len(comuns):3} | vértices gold {linha['vertices_gold']:.2f} resp {linha['vertices_resp']:.2f} | "
+              f"arestas gold {linha['arestas_gold']:.2f} resp {linha['arestas_resp']:.2f} | mesma forma {linha['mesma_forma']:.0%} | "
+              f"estrela {linha['estrela_gold']:.0%}/{linha['estrela_resp']:.0%} desconexo {linha['desconexo_gold']:.0%}/{linha['desconexo_resp']:.0%}")
+    destino = saida / corpus_nome / grupo
+    destino.mkdir(parents=True, exist_ok=True)
+    gravar(destino / "comparacao_gold.csv", linhas)
 def main():
     ap = argparse.ArgumentParser(description="Métricas de grafos dos corpora (gold) e das extrações.")
-    ap.add_argument("alvos", nargs="*", help="gold, extracoes, bia, oiec_pt, unified (combináveis). Sem nada = tudo. "
-                    "Também aceita caminhos de .jsonl ou de pastas")
+    ap.add_argument("alvos", nargs="*", help="gold, extracoes, comparar, bia, oiec_pt, unified (combináveis). Sem nada = gold e extracoes. "
+                    "'comparar' compara cada extrator com o gold só nas sentenças em comum. Também aceita caminhos de .jsonl ou de pastas")
     ap.add_argument("--saida", type=Path, default=SAIDA_PADRAO, help=f"padrão: {SAIDA_PADRAO}")
     a = ap.parse_args()
 
     caminhos = [Path(x) for x in a.alvos if Path(x).exists()]
     palavras = {x.lower() for x in a.alvos if not Path(x).exists()}
-    desconhecidas = palavras - set(CORPORA) - {"gold", "extracoes"}
+    desconhecidas = palavras - set(CORPORA) - {"gold", "extracoes", "comparar"}
     if desconhecidas:
-        raise SystemExit(f"não entendi: {sorted(desconhecidas)}. Use gold, extracoes, bia, oiec_pt, unified ou um caminho")
+        raise SystemExit(f"não entendi: {sorted(desconhecidas)}. Use gold, extracoes, comparar, bia, oiec_pt, unified ou um caminho")
+
+    corpora = [c for c in CORPORA if c in palavras] or list(CORPORA)
+    if "comparar" in palavras:
+        trabalhos = tarefas(corpora, ["extracoes"])
+        if not trabalhos:
+            raise SystemExit(f"nada encontrado em {DADOS}")
+        for c, g, arqs in trabalhos:
+            comparar_gold(c, g, arqs, a.saida)
+        print(f"\nfeito. Resultados em {a.saida}")
+        return
 
     if caminhos:
         arquivos = [f for p in caminhos for f in (sorted(p.glob("*.jsonl")) if p.is_dir() else [p])]
         c = inferir_corpus(caminhos[0])
         trabalhos = [(c, inferir_grupo(caminhos[0], c), arquivos)]
     else:
-        corpora = [c for c in CORPORA if c in palavras] or list(CORPORA)
         tipos = [t for t in ("gold", "extracoes") if t in palavras] or ["gold", "extracoes"]
         trabalhos = tarefas(corpora, tipos)
     if not trabalhos:
@@ -255,5 +306,3 @@ def main():
     for c, g, arqs in trabalhos:
         processar(arqs, c, g, a.saida)
     print(f"\nfeito. Resultados em {a.saida}")
-if __name__ == "__main__":
-    main()
