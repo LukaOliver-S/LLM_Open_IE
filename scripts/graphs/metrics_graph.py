@@ -306,3 +306,6 @@ def main():
     for c, g, arqs in trabalhos:
         processar(arqs, c, g, a.saida)
     print(f"\nfeito. Resultados em {a.saida}")
+    
+if __name__ == "__main__":
+    main()
