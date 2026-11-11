@@ -15,6 +15,8 @@ import statistics as st
 from itertools import combinations
 from pathlib import Path
 
+
+import re
 import networkx as nx
 # ============================== CONFIGURAÇÃO ==============================
 DADOS = Path(r"C:\Users\User\Documents\IC_FORMAS\raw\TASKS\TASK-1\Codes\LLM_Open_IE")   # pasta com dados/, Respostas/ e Outputs/
@@ -64,10 +66,19 @@ def tarefas(corpora, tipos):
                 out.append((c, "/".join(partes) or "geral", sorted(pasta.glob("*.jsonl"))))
     return out
 
+def identificar(corpus_nome, grupo):
+    """colunas de identificação a partir do grupo (a pasta): gold, ou lote/[k]/prompt"""
+    if grupo == "gold":
+        return {"corpus": corpus_nome, "lote": "gold", "k": "", "prompt": "gold"}
+    partes = grupo.split("/")
+    k = partes[1] if len(partes) > 2 and re.fullmatch(r"k\d+", partes[1], re.IGNORECASE) else ""
+    return {"corpus": corpus_nome, "lote": partes[0], "k": k, "prompt": partes[-1]}
+
 
 def processar(arquivos, corpus_nome, grupo, saida):
     destino = saida / corpus_nome / grupo
     destino.mkdir(parents=True, exist_ok=True)
+    ident = identificar(corpus_nome, grupo)
     print(f"\n== {corpus_nome} / {grupo}")
     linhas_corpus, linhas_sent = [], []
     for arq in arquivos:
@@ -79,11 +90,14 @@ def processar(arquivos, corpus_nome, grupo, saida):
                 sem_triplas += 1
                 continue
             D = nx.compose(D, Ds)
-            linhas_sent.append({"arquivo": arq.stem, "sentenca": idx, "triplas": len(rels), **por_sentenca(Ds.to_undirected())})
+            relacoes_json = json.dumps([{"arg1": r["arg1"], "rel": r.get("rel", ""), "arg2": r["arg2"]}
+                                        for r in rels if isinstance(r, dict) and r.get("arg1") and r.get("arg2")], ensure_ascii=False)
+            linhas_sent.append({**ident, "arquivo": arq.stem, "sentenca": idx, "frase": frase, "triplas": len(rels),
+                                **por_sentenca(Ds), "relacoes_json": relacoes_json})
         if D.number_of_edges() == 0:
             print("sem triplas em", arq.name)
             continue
-        linhas_corpus.append({"arquivo": arq.stem, "sentencas": total, "sentencas_sem_triplas": sem_triplas, **corpus(D)})
+        linhas_corpus.append({**ident, "arquivo": arq.stem, "sentencas": total, "sentencas_sem_triplas": sem_triplas, **corpus(D)})
     gravar(destino / "metricas_corpus.csv", linhas_corpus)
     gravar(destino / "metricas_sentencas.csv", linhas_sent)
     for arq in dict.fromkeys(l["arquivo"] for l in linhas_sent):
@@ -91,9 +105,8 @@ def processar(arquivos, corpus_nome, grupo, saida):
         formatos = {f: sum(1 for l in ls if l["formato"] == f) / len(ls) for f in ("estrela", "arvore", "com ciclo", "desconexo")}
         print(f"{arq}: {len(ls)} sentenças | n médio {st.mean(l['n'] for l in ls):.2f} | m médio {st.mean(l['m'] for l in ls):.2f} | "
               + " | ".join(f"{k} {v:.1%}" for k, v in formatos.items()))
-
-
-
+        
+        
 def norm(t):
     """minúsculas e espaços normalizados, para 'O enxofre' e 'o enxofre' virarem o mesmo vértice"""
     return " ".join(str(t).lower().split()) if t is not None else ""
@@ -161,16 +174,21 @@ def formato(G):
         return "arvore"
     return "com ciclo"
 
-
-def por_sentenca(G):
+def por_sentenca(D):
+    """D é o grafo dirigido da sentença. Estrutura (conexão, forma) no grafo sem setas. Ciclos são dirigidos"""
+    G = D.to_undirected()
     n, m = G.number_of_nodes(), G.number_of_edges()
     graus = [d for _, d in G.degree()]
     nu = len(nx.max_weight_matching(G, maxcardinality=True))      # emparelhamento máximo
     tau = cobertura_minima(G)                                     # cobertura de vértices mínima
     conexo = nx.is_connected(G)
+    ciclos = list(nx.simple_cycles(D))                            # ciclos dirigidos
     return {
         "n": n, "m": m, "grau_max": max(graus), "componentes": nx.number_connected_components(G),
         "conexo": conexo, "formato": formato(G),
+        "reciprocas": sum(1 for c in ciclos if len(c) == 2),      # pares A⇄B, por exemplo o aposto
+        "ciclos_dirigidos": sum(1 for c in ciclos if len(c) >= 3),
+        "tem_ciclo_dirigido": bool(ciclos),
         "pontes": sum(1 for _ in nx.bridges(G)), "articulacoes": sum(1 for _ in nx.articulation_points(G)),
         "diametro": nx.diameter(G) if conexo else "",
         "triangulos": sum(nx.triangles(G).values()) // 3,
@@ -234,7 +252,7 @@ def grafos_por_sentenca(arq):
         Ds = construir(rels)
         if Ds.number_of_edges() == 0:
             continue
-        G, k = Ds.to_undirected(), norm(frase)
+        G, k = Ds, norm(frase)
         out[k] = nx.compose(out[k], G) if k in out else G
     return out
 
