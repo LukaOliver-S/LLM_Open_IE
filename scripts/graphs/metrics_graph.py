@@ -17,9 +17,10 @@ from pathlib import Path
 
 import networkx as nx
 # ============================== CONFIGURAÇÃO ==============================
-DADOS = Path(r"C:\Users\User\Documents\IC_FORMAS\raw\TASKS\TASK-1\Codes\LLM_Open_IE")   # pasta com dados/, Respostas/ e Outputs/
-SAIDA_PADRAO = Path(r"C:\Users\User\Documents\IC_FORMAS\raw\TASKS\TASK-1\LLM_Open_IE\Outputs") / "graphs" / "metrics"
-CORPORA = ("oiec_pt", "bia", "unified")
+RAIZ_REPOSITORIO = Path(__file__).resolve().parents[2]
+DADOS = RAIZ_REPOSITORIO   # pasta com dados/, Respostas/ e Outputs/
+SAIDA_PADRAO = RAIZ_REPOSITORIO / "Outputs" / "graphs" / "metrics"
+CORPORA = ("oiec_pt", "bia")
 # ==========================================================================
 
 
@@ -306,3 +307,7 @@ def main():
     for c, g, arqs in trabalhos:
         processar(arqs, c, g, a.saida)
     print(f"\nfeito. Resultados em {a.saida}")
+
+
+if __name__ == "__main__":
+    main()
