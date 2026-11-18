@@ -11,8 +11,9 @@ COMO USAR
  1. Notebook novo. Accelerator: GPU T4 x2 (o 8B não cabe em uma T4 só). Internet: On.
  2. Suba como dataset o arquivo de sentenças do corpus: dados/<corpus>_gold_sentences.jsonl
     (oiec_pt_abs_gold_sentences.jsonl, oiec_pt_gold_sentences.jsonl ou bia_gold_sentences.jsonl).
- 3. Célula 1:  !pip install -q "portuguese-openie[transformers]"
- 4. Célula 2:  cole este arquivo inteiro e rode.
+ 3. (Sem célula de pip: o script instala portuguese-openie e fixa o transformers sozinho.)
+ 4. Única célula:  cole este arquivo inteiro e rode. (O script troca sozinho o transformers 5.x pelo 4.57.1,
+    necessário para o T5. Não importe transformers/torch em nenhuma célula antes desta.)
     Para outro corpus ou outros modelos, troque a última linha do arquivo por, por exemplo:
         main("oiec_pt_abs", ["PortugueseT5OIE"])
         main("bia", ["PortugueseT5OIE", "Qwen3OIE_0_6B"])
@@ -45,6 +46,7 @@ MODELOS = {
 }
 N_ESPERADO = {"oiec_pt_abs": 100, "oiec_pt": 100, "bia": 262}
 LOTE = 10
+ALVO_TRANSFORMERS = "4.57.1"   # o tokenizer do T5 não funciona no transformers 5.x
 SAIDA = Path("/kaggle/working") if Path("/kaggle/working").exists() else Path(".")
 
 
@@ -161,7 +163,55 @@ def info_ambiente() -> dict:
     return info
 
 
+def garantir_transformers() -> None:
+    """O tokenizer do T5 quebra no transformers 5.x ('dict' object is not an instance of 'Sequence').
+    Instala o 4.57.1 (e as dependências compatíveis) ANTES de qualquer import. Se o transformers já
+    foi importado nesta sessão com versão 5, não dá para trocar sem reiniciar o kernel: avisa e para."""
+    import importlib
+    import subprocess
+    import sys
+    from importlib import metadata
+
+    try:
+        metadata.version("portuguese-openie")
+    except metadata.PackageNotFoundError:                 # instala a biblioteca ANTES de fixar o transformers
+        print("instalando portuguese-openie ...")
+        subprocess.run([sys.executable, "-m", "pip", "install", "-q", "portuguese-openie[transformers]"],
+                       check=True)
+        importlib.invalidate_caches()
+    prefixo = ALVO_TRANSFORMERS.split(".")[0] + "."
+    if "transformers" in sys.modules:               # o que vale é a versão CARREGADA, não a do disco
+        carregada = getattr(sys.modules["transformers"], "__version__", "?")
+        if carregada.startswith(prefixo):
+            print("transformers", carregada, "ok")
+            return
+        raise SystemExit(
+            f"Este kernel já carregou o transformers {carregada}, que quebra o T5 (o disco pode estar em "
+            "outra versão, mas a memória manda). Reinicie o KERNEL/sessão e rode as duas células do zero: "
+            "pip install do portuguese-openie, depois o script, sem importar mais nada antes."
+        )
+    try:
+        versao = metadata.version("transformers")
+    except metadata.PackageNotFoundError:
+        versao = ""
+    if versao.startswith(prefixo):                                         # já é 4.x no disco
+        print("transformers", versao, "ok")
+        return
+    print(f"transformers {versao or 'ausente'} -> instalando {ALVO_TRANSFORMERS} ...")
+    subprocess.run(
+        [sys.executable, "-m", "pip", "install", "-q", f"transformers=={ALVO_TRANSFORMERS}",
+         "tokenizers==0.22.1", "huggingface-hub<1.0", "sentencepiece"],
+        check=True,
+    )
+    importlib.invalidate_caches()
+    versao = metadata.version("transformers")
+    if not versao.startswith("4."):
+        raise SystemExit(f"a instalação não trocou o transformers (está em {versao}).")
+    print("transformers", versao, "instalado")
+
+
 def main(corpus: str = "oiec_pt_abs", selecionados: list[str] | None = None) -> None:
+    garantir_transformers()
     if corpus not in N_ESPERADO:
         raise SystemExit(f"corpus desconhecido: {corpus}. Opções: {', '.join(N_ESPERADO)}")
     desconhecidos = set(selecionados or []) - set(MODELOS)
