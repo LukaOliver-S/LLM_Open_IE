@@ -97,12 +97,32 @@ the pipeline's own JSONL schema to a staging folder:
 Respostas/<corpus>/<N>_batches/_extratores_locais/<Modelo>.jsonl
 ```
 
-Because these models score against the **same single gold file per corpus** regardless of task
-(there's no prompt to vary), a single extraction run is reused across all three extractive task
-tables for direct comparison against the chat-LLM prompt variants — copy the same file into each
-categoria folder (`Respostas ExtrativoDPTO-IE`, `OIEC-PT`, `PTOIE-DP`), and the abstractive
-variant into `Respostas AbstractiveOpenIE`. This is a deliberate copy, not a re-run: the
-prediction doesn't change per task, only which gold-comparison table it shows up in.
+After the run, **move** each file (do not copy it into the prompt folders) to the folder that
+matches the system type. Local-model outputs are stored **once per corpus and batch size**:
+
+```
+Respostas/<corpus>/<N>_batches/Respostas SistemasExtrativos/<Modelo>.jsonl
+Respostas/<corpus>/<N>_batches/Respostas SistemasAbstrativos/<Modelo>.jsonl
+```
+
+- `Respostas SistemasExtrativos`: PortNOIE, LlamaPortOIE3, PortugueseT5OIE, DptOIE,
+  DPTOIE-PY, PTOIE-Flair.
+- `Respostas SistemasAbstrativos`: Qwen3OIE (0.6B/4B/8B) and `PortugueseT5OIE_Abstractive`.
+
+The prompt folders (`Respostas ExtrativoDPTO-IE`, `Respostas ExtrativoOIEC-PT`,
+`Respostas ExtrativoPTOIE-DP`, `Respostas AbstractiveOpenIE`) hold **chat-LLM outputs only**.
+Local models have no prompt to vary, so a single run per corpus is scored against the same
+single gold file as the LLMs. Because both folder names start with `Respostas`, every script in
+`scripts/Validacao/` discovers them automatically and produces a table of their own (for
+example `resultados_Respostas_SistemasExtrativos.csv`); compare it with the LLM tables side by
+side. Earlier versions of this repo copied each local-model file into every prompt folder; that
+duplicated the same prediction in several tables and was removed.
+
+**Caution on the abstractive systems.** `Qwen3OIE` and `PortugueseT5OIE_Abstractive` were
+fine-tuned on WikiPUD-Portuguese-Abstractive (Cabral, 2025; synthetic silver corpus generated
+with Gemini 2.5 Flash, per the author), so they must **not** be evaluated on WikiPUD samples.
+On `bia` and `oiec_pt`, whose gold is extractive, their scores compare annotation conventions
+rather than task quality.
 
 ### 3. Evaluation (`scripts/Validacao/`)
 

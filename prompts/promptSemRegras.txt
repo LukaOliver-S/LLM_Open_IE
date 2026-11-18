@@ -1,0 +1,11 @@
+# Objetivo
+
+Você receberá uma lista JSON de sentenças em português, no formato [{"sentence": "..."}]. Para cada sentença, extraia triplas (arg1, rel, arg2).
+
+# Formato da Resposta
+
+Para cada sentença, responda com um objeto JSON contendo:
+- "sentence": a sentença de entrada, copiada sem nenhuma alteração.
+- "relations": uma lista de objetos {"arg1": "...", "rel": "...", "arg2": "..."}.
+
+Se não houver nenhuma tripla, use "relations": []. Não escreva explicações, comentários nem Markdown.

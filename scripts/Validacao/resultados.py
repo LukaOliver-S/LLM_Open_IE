@@ -525,6 +525,15 @@ CORPORA = {
         saida=Path("Outputs") / "metricas" / "oiec_pt",
         sentencas="sentencas_oiecpt",
     ),
+    # Mesmas 100 sentenças do oiec_pt (reaproveita os lotes de sentencas_oiecpt), mas com a referência
+    # SILVER abstrativa da tese de Cabral (2025), gerada pelo Gemini 2.5 Pro. Para os extratores
+    # abstrativos. Gerado por scripts/formatacao/converter_abstractive_silver.py.
+    "oiec_pt_abs": dict(
+        gold="dados/oiec_pt_abs_gold_sentences.jsonl",
+        respostas="Respostas/oiec_pt_abs",
+        saida=Path("Outputs") / "metricas" / "oiec_pt_abs",
+        sentencas="sentencas_oiecpt",
+    ),
     "unified": dict(
         gold="dados/unified_gold_sentences.jsonl",
         respostas="Respostas/unified",

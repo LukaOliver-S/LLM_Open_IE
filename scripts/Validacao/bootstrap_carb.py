@@ -19,7 +19,7 @@ from resultados import CORPORA
 from carb_score import Tripla, score_sentenca, agregar, tokens
 
 CATEGORIA = {"abstractive": "Respostas AbstractiveOpenIE", "dpto": "Respostas ExtrativoDPTO-IE",
-             "oiec": "Respostas ExtrativoOIEC-PT", "ptoiedp": "Respostas ExtrativoPTOIE-DP"}
+             "oiec": "Respostas ExtrativoOIEC-PT", "ptoiedp": "Respostas ExtrativoPTOIE-DP","semregras":"Respostas SemRegras"}
 
 
 def carregar_jsonl(p: Path):

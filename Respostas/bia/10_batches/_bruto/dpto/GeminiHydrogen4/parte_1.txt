@@ -1,0 +1,982 @@
+
+
+# Extração de Relações Open Information Extraction (Open IE)
+
+
+
+## Objetivo
+
+
+
+Você receberá uma **lista de objetos JSON**, onde cada objeto contém uma sentença em português.
+
+
+
+```jsonl
+
+
+
+  {"sentence": "..."},
+
+  {"sentence": "..."},
+
+  {"sentence": "..."}
+
+
+
+```
+
+
+
+Cada objeto da lista deve ser processado de forma independente. Não deve haver mistura de informações entre sentenças diferentes e todas as sentenças devem ser analisadas. 
+
+
+
+---
+
+
+
+Você receberá **sentenças em português**.
+
+
+
+Sua tarefa é extrair **todas** as relações Open Information Extraction (Open IE) presentes em cada sentença.
+
+
+
+Toda saída deve permanecer associada à **sentença original** da qual as relações foram extraídas. Todas as relações em `relations` devem corresponder exclusivamente à sentença armazenada em `sentence`.
+
+
+
+Cada relação deve ser representada por uma tripla no formato:
+
+
+
+```json
+
+{
+
+  "arg1": "...",
+
+  "rel": "...",
+
+  "arg2": "..."
+
+}
+
+```
+
+
+
+---
+
+
+
+
+
+Uma sentença pode conter nenhuma, uma ou várias relações. Sempre que houver múltiplas relações válidas, extraia todas elas.
+
+
+
+Siga rigorosamente as regras abaixo.
+
+
+
+---
+
+
+
+# Regras Estruturais
+
+
+
+## E1. Estrutura Fundamental da Tripla
+
+
+
+Cada tripla deve conter:
+
+
+
+* **ARG1:** sujeito ou entidade principal da relação;
+
+* **REL:** relação verbal que conecta os argumentos;
+
+* **ARG2:** complemento principal da relação.
+
+
+
+Toda tripla deve representar uma relação sintaticamente válida presente na sentença.
+
+
+
+---
+
+
+
+## E2. Construção de ARG1
+
+
+
+ARG1 deve corresponder ao sujeito da oração, tanto em construções na voz ativa quanto na voz passiva.
+
+
+
+Além do núcleo do sujeito, inclua todos os elementos pertencentes ao sintagma nominal que sejam relevantes para identificá-lo, tais como:
+
+
+
+* modificadores numéricos;
+
+* modificadores adverbiais;
+
+* modificadores nominais;
+
+* modificadores adjetivais;
+
+* dependentes sintáticos;
+
+* objetos associados;
+
+* elementos coordenados;
+
+* apostos, apenas quando representarem expressões numéricas identificadas pelo analisador morfossintático.
+
+
+
+O objetivo é representar o sujeito da forma mais completa possível.
+
+
+
+---
+
+
+
+## E3. Construção da Relação (REL)
+
+
+
+REL deve ser construída a partir do verbo principal da oração.
+
+
+
+Quando houver uma construção participial, ela também poderá constituir a relação principal.
+
+
+
+Inclua na relação:
+
+
+
+### Antes do verbo principal
+
+
+
+* verbos auxiliares;
+
+* verbos auxiliares da voz passiva;
+
+* verbos copulativos;
+
+* objetos diretos e indiretos, quando fizerem parte da construção verbal;
+
+* modificadores adverbiais;
+
+* pronomes expletivos;
+
+* marcadores subordinativos.
+
+
+
+### Depois do verbo principal
+
+
+
+* pronomes expletivos;
+
+* construções participiais.
+
+
+
+---
+
+
+
+## E4. Construção de ARG2
+
+
+
+ARG2 deve corresponder ao complemento principal da relação.
+
+
+
+Devem ser incorporados:
+
+
+
+### Objetos
+
+
+
+* objetos diretos;
+
+* objetos indiretos.
+
+
+
+### Modificadores
+
+
+
+* modificadores nominais;
+
+* modificadores numéricos;
+
+* modificadores adverbiais;
+
+* modificadores adjetivais.
+
+
+
+### Complementos
+
+
+
+* complementos verbais abertos, isto é, complementos que não possuem sujeito próprio.
+
+
+
+### Orações
+
+
+
+* orações subordinadas completivas;
+
+* orações subordinadas adverbiais, desde que não possuam sujeito próprio explícito.
+
+
+
+### Outros elementos
+
+
+
+* orações relativas;
+
+* elementos coordenados;
+
+* apostos;
+
+* construções participiais;
+
+* outros dependentes sintáticos.
+
+
+
+O objetivo é representar o complemento da relação da forma mais completa possível.
+
+
+
+---
+
+
+
+## E5. Tratamento das Preposições
+
+
+
+As preposições regidas pelo verbo devem permanecer incorporadas ao ARG2.
+
+
+
+Elas não devem ser deslocadas para REL.
+
+
+
+As locuções prepositivas lexicalizadas devem permanecer intactas, sem fragmentação.
+
+
+
+---
+
+
+
+## E6. Extração por Busca em Profundidade (DFS)
+
+
+
+Considere a construção da tripla seguindo a lógica de uma busca em profundidade:
+
+
+
+1. identificar ARG1;
+
+2. identificar REL;
+
+3. identificar todos os argumentos dependentes da relação (ARG2).
+
+
+
+A extração deve continuar até atingir os elementos folha relevantes da estrutura.
+
+
+
+Quando dois ARG2 distintos puderem ser combinados para produzir um complemento mais informativo sem alterar o significado da relação, ambos poderão compor o mesmo ARG2.
+
+
+
+---
+
+
+
+## E7. Não Duplicação
+
+
+
+Não produza triplas idênticas.
+
+
+
+Caso diferentes regras resultem exatamente na mesma tripla `(ARG1, REL, ARG2)`, mantenha apenas uma ocorrência.
+
+
+
+---
+
+
+
+# Regras Semânticas
+
+
+
+## S1. Coordenação
+
+
+
+Coordenações introduzidas pelas conjunções **"e"** ou **"ou"** devem gerar novas relações independentes.
+
+
+
+### Coordenação verbal
+
+
+
+Quando houver verbos coordenados, gere uma nova tripla para cada verbo coordenado.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`Eu compro e vendo banana, maçã e pera.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "Eu compro e vendo banana, maçã e pera.",
+
+  "relations": [
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "compro",
+
+      "arg2": "banana"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "compro",
+
+      "arg2": "maçã"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "compro",
+
+      "arg2": "pera"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "vendo",
+
+      "arg2": "banana"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "vendo",
+
+      "arg2": "maçã"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "vendo",
+
+      "arg2": "pera"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+### Coordenação de argumentos
+
+
+
+Quando ARG1 ou ARG2 contiver elementos coordenados, gere uma tripla independente para cada elemento coordenado, sempre que isso preservar o sentido.
+
+
+
+---
+
+
+
+## S2. Orações Subordinadas
+
+
+
+### S2.1 Orações Relativas
+
+
+
+Quando um pronome relativo exercer a função de sujeito da oração relativa, substitua-o pelo seu antecedente explícito.
+
+
+
+Utilize o antecedente como ARG1.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`A espada, que estava em casa, foi levada ontem.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "A espada, que estava em casa, foi levada ontem.",
+
+  "relations": [
+
+    {
+
+      "arg1": "A espada",
+
+      "rel": "estava",
+
+      "arg2": "em casa"
+
+    },
+
+    {
+
+      "arg1": "A espada",
+
+      "rel": "foi levada",
+
+      "arg2": "ontem"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+---
+
+
+
+### S2.2 Orações Subordinadas Completivas
+
+
+
+Quando uma oração subordinada completar semanticamente outra oração, gere uma tripla para a oração principal e outra para a oração subordinada.
+
+
+
+A conjunção **"que"**, quando presente, deve permanecer como parte de ARG2 da oração principal.
+
+
+
+Aplique esta regra apenas quando ambas as orações possuírem sujeito explícito.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`Ele afirmou que o cidadão se comportou bem.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "Ele afirmou que o cidadão se comportou bem.",
+
+  "relations": [
+
+    {
+
+      "arg1": "Ele",
+
+      "rel": "afirmou",
+
+      "arg2": "que o cidadão se comportou bem"
+
+    },
+
+    {
+
+      "arg1": "o cidadão",
+
+      "rel": "se comportou",
+
+      "arg2": "bem"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+Se a oração subordinada não possuir sujeito explícito, não gere o encadeamento entre a oração principal e a subordinada; nesse caso, mantenha a subordinada em ARG2 da oração principal.
+
+
+
+---
+
+
+
+### S2.3 Orações Subordinadas Adverbiais
+
+
+
+Orações subordinadas adverbiais devem receber o mesmo tratamento das orações subordinadas completivas, preservando a relação entre as duas orações.
+
+
+
+---
+
+
+
+## S3. Relações de Aposto
+
+
+
+Quando um aposto corresponder a um nome próprio, gere uma nova tripla sintética utilizando o verbo **"é"** como REL.
+
+
+
+O termo principal constitui ARG1.
+
+
+
+O aposto constitui ARG2.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`O diretor do hospital, Júlio, vendeu sua fazenda.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "O diretor do hospital, Júlio, vendeu sua fazenda.",
+
+  "relations": [
+
+    {
+
+      "arg1": "O diretor do hospital",
+
+      "rel": "vendeu",
+
+      "arg2": "sua fazenda"
+
+    },
+
+    {
+
+      "arg1": "O diretor do hospital",
+
+      "rel": "é",
+
+      "arg2": "Júlio"
+
+    },
+
+    {
+
+      "arg1": "Júlio",
+
+      "rel": "é",
+
+      "arg2": "O diretor do hospital"
+
+    },
+
+    {
+
+      "arg1": "Júlio",
+
+      "rel": "vendeu",
+
+      "arg2": "sua fazenda"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+---
+
+
+
+## S4. Transitividade de Apostos
+
+
+
+Considere o termo principal e seu aposto como semanticamente equivalentes.
+
+
+
+Após extrair as triplas principais, gere novas triplas substituindo o termo principal pelo aposto, ou o aposto pelo termo principal, sempre que essa substituição preservar o significado da relação.
+
+
+
+---
+
+
+
+## S5. Coerência e Minimalidade
+
+
+
+Extraia apenas relações que possuam interpretação semântica completa e coerente.
+
+
+
+Priorize fatos minimais que não embutam, sem necessidade, outra relação separável dentro de ARG1 ou ARG2.
+
+
+
+Quando uma relação mais completa puder ser decomposta em fatos menores sem perda relevante de significado, gere também as versões mais atômicas.
+
+
+
+---
+
+
+
+## S6. Ausência de Inferência Externa
+
+
+
+Não utilize conhecimento de mundo, inferência lógica externa ou informação não expressa na sentença.
+
+
+
+Extraia apenas relações explicitamente presentes ou diretamente implicadas pelo texto.
+
+
+
+---
+
+
+
+# Formato da Resposta
+
+
+
+Retorne **exclusivamente um objeto JSON válido**.
+
+
+
+O objeto deve possuir obrigatoriamente os seguintes campos:
+
+
+
+* **sentence:** deve conter exatamente a sentença de entrada, sem qualquer modificação, correção, normalização ou reescrita.
+
+* **relations:** um array contendo todas as triplas Open IE extraídas da sentença.
+
+
+
+As relações devem ser retornadas, sempre que possível, na mesma ordem em que aparecem na sentença.
+
+
+
+Caso nenhuma relação válida seja encontrada, retorne `relations` como array vazio.
+
+
+
+Não inclua explicações, comentários, Markdown ou qualquer texto adicional.
+
+
+
+Formato esperado:
+
+
+
+```json
+
+{
+
+  "sentence": "A universidade é afiliada à Congregação de Santa Cruz.",
+
+  "relations": [
+
+    {
+
+      "arg1": "A universidade",
+
+      "rel": "é",
+
+      "arg2": "afiliada à Congregação de Santa Cruz"
+
+    },
+
+    {
+
+      "arg1": "A universidade",
+
+      "rel": "é afiliada a",
+
+      "arg2": "a Congregação de Santa Cruz"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+Caso não exista nenhuma relação Open IE válida:
+
+
+
+```json
+
+{
+
+  "sentence": "A universidade é afiliada à Congregação de Santa Cruz.",
+
+  "relations": []
+
+}
+
+```
+
+
+
+Processe as seguintes sentenças:
+[
+  {
+    "sentence": "A universidade é afiliada a a Congregação de a Santa Cruz (em latim Congregatio a Sancta Cruce, pós-nominais abreviados"
+  },
+  {
+    "sentence": "Michael J. Shea, formado em 1904, escreveu a música, e seu irmão, John F. Shea, que se formou em 1906 e 1908, escreveu a letra original."
+  },
+  {
+    "sentence": "A Universidade de Notre Dame du Lac (ou simplesmente Notre Dame / ˌnoʊtərˈdeɪm / NOH-tər-DAYM) é uma Universidade Católica de Pesquisa localizada a o lado de South Bend, Indiana, em os Estados Unidos."
+  },
+  {
+    "sentence": "Em fevereiro de 2013, Beyoncé disse que Madonna a inspirou a assumir o controle de sua própria carreira."
+  },
+  {
+    "sentence": "Em 2013, Beyoncé fez a Lista Time 100, Baz Luhrmann escrevendo ninguém tem essa voz, ninguém se move de o jeito que ela se move, ninguém pode manter uma audiência de o jeito que ela faz... Quando Beyoncé faz um álbum, quando Beyoncé canta uma música, quando Beyoncé faz qualquer coisa, é um evento e é amplamente influente."
+  },
+  {
+    "sentence": "Em 2013, foi anunciado que Beyoncé trabalharia com Salma Hayek e Frida Giannini em uma campanha de a Gucci Chime for Change, que visa espalhar o empoderamento feminino."
+  },
+  {
+    "sentence": "O Bureau de o Censo de os Estados Unidos estima que a população de Montana era 1.032.949 em 1º de julho de 2015, um aumento de 4,40 % desde o Censo de os Estados Unidos de 2010."
+  },
+  {
+    "sentence": "O Aeroporto Internacional de Bozeman Yellowstone é o aeroporto mais movimentado de o estado de Montana, superando o Aeroporto Internacional Billings Logan em a primavera de 2013"
+  },
+  {
+    "sentence": "Na primavera de 1834, Chopin participou de o Festival de Música de o Baixo Reno em Aix-la-Chapelle com Hiller, e foi lá que Chopin conheceu Felix Mendelssohn."
+  },
+  {
+    "sentence": "Mais tarde naquela manhã, o marido de Solange, Clésinger, fez a máscara mortuária de Chopin e um giro de a mão esquerda."
+  },
+  {
+    "sentence": "Em 1841, Léon Escudier escreveu sobre um recital de Chopin naquele ano Pode-se dizer que Chopin é o criador de uma escola de piano e escola de composição."
+  },
+  {
+    "sentence": "Em setembro de 1828, Chopin, ainda estudante, visitou Berlim com um amigo de a família, o zoólogo Feliks Jarocki, desfrutando de óperas dirigidas por Gaspare Spontini e assistindo a concertos de Carl Friedrich Zelter, Felix Mendelssohn e outras celebridades."
+  },
+  {
+    "sentence": "A partir de 1236, o príncipe mongol Kublai, que mais tarde governou como Khagan de 1260 a 1294, recebeu um grande appanage em o norte de a China por seu superior, Ögedei Khan."
+  },
+  {
+    "sentence": "Dreyfus escreve que depois que o Phagmodrupa perdeu seu poder centralizador sobre o Tibete em 1434, várias tentativas de outras famílias para estabelecer hegemonias falharam em os próximos dois séculos até 1642 com a efetiva hegemonia de o 5º Dalai Lama sobre o Tibete."
+  },
+  {
+    "sentence": "Quando o imperador Ming Yongle convidou Je Tsongkhapa (1357-1419), fundador de a escola Gelug, para ir a a corte Ming e prestar homenagem, este último recusou."
+  },
+  {
+    "sentence": "Chen Qingying afirma que Tsongkhapa escreveu uma carta para recusar o convite de o Imperador e, nesta resposta, Tsongkhapa escreveu"
+  },
+  {
+    "sentence": "No entanto, depois que Altan Khan (1507-1582) - líder de os mongóis Tümed que derrubou a hegemonia de a confederação Oirat Mongol sobre as estepes - fez as pazes com a dinastia Ming em 1571, ele persuadiu os Ming a reabrir seus mercados de fronteira em 1573."
+  },
+  {
+    "sentence": "Klieger escreve que a presença de Altan Khan em o oeste reduziu efetivamente a influência de os Ming e o contato com o Tibete."
+  },
+  {
+    "sentence": "Depois que Altan Khan fez as pazes com a dinastia Ming em 1571, ele convidou o terceiro hierarca de a Gelug - Sönam Gyatso (1543-1588) - para encontrá-lo em Amdo (Qinghai moderno) em 1578, onde acidentalmente concedeu a ele e seus dois antecessores com o título de Dalai Lama - Professor de o Oceano."
+  },
+  {
+    "sentence": "Embora não tenha sido registrada em nenhum registro oficial chinês, a biografia de Sonam Gyatso afirma que Wanli novamente conferiu títulos a Sonam Gyatso em 1588 e o convidou para Pequim por a segunda vez, mas Sonam Gyatso não pôde visitar a China, pois morreu em o mesmo ano em a Mongólia."
+  },
+  {
+    "sentence": "Sem mencionar o papel de os mongóis, o China Daily afirma que foi a sucessiva dinastia Qing que estabeleceu o título de Dalai Lama e seu poder em o Tibete Em 1653, o imperador Qing concedeu um título honorífico a o quinto Dalai Lama e depois o fez."
+  },
+  {
+    "sentence": "O imperador Wanli convidou Yonten Gyatso para Pequim em 1616, mas, assim como seu antecessor, ele morreu antes de poder fazer a jornada."
+  },
+  {
+    "sentence": "O quarto Dalai Lama se recusou a dar uma audiência a o rei Ü-Tsang, que provocou um conflito quando este começou a atacar mosteiros Gelug."
+  },
+  {
+    "sentence": "Quando um aliado de o governante Ü-Tsang ameaçou novamente a destruição de os Gelugpas, o quinto Dalai Lama Lozang Gyatso pediu ajuda a o príncipe mongol Güshi Khan (1582-1655), líder de a tribo Khoshut (Qoshot) de os mongóis Oirat, que estava então em peregrinação a Lhasa."
+  },
+  {
+    "sentence": "Güshi Khan aceitou seu papel de protetor e, de 1637 a 1640, ele não apenas derrotou os inimigos de os Gelugpas em as regiões Amdo e Kham, mas também reassentou toda a sua tribo em Amdo."
+  },
+  {
+    "sentence": "Shih-Shan Henry Tsai escreve que o imperador Yongle enviou seu eunuco Yang Sanbao a o Tibete em 1413 para obter uma lealdade de vários príncipes tibetanos, enquanto o imperador Yongle pagou uma pequena fortuna em troca de presentes em troca de tributos, a fim de manter a lealdade de o vassalo vizinho."
+  },
+  {
+    "sentence": "A Apple lançou um novo conector dock de 8 pinos, chamado Relâmpago, em 12 de setembro de 2012, com o anúncio de o iPhone 5, de o iPod Touch de quinta geração e de o iPod Nano de a sétima geração, todos com esse recurso."
+  }
+]
+
+IMPORTANTE -- formato de saída obrigatório: JSONL (um objeto JSON por linha, SEM colchetes
+envolvendo tudo e SEM vírgula entre os objetos). Cada linha corresponde a uma sentença, na
+mesma ordem em que foram apresentadas acima. Exemplo (frases fictícias, apenas para ilustrar o
+formato -- não fazem parte do texto a ser processado):
+
+{"sentence":"Maria Silva, nascida em 1990, trabalha como engenheira, e seu marido, Carlos Silva, que se formou em 2010, trabalha como médico.","relations":[{"arg1":"Maria Silva","rel":"nascida em","arg2":"1990"},{"arg1":"Maria Silva","rel":"trabalha como","arg2":"engenheira"},{"arg1":"Carlos Silva","rel":"se formou em","arg2":"2010"},{"arg1":"Carlos Silva","rel":"trabalha como","arg2":"médico"},{"arg1":"seu marido","rel":"é","arg2":"Carlos Silva"}]}
+{"sentence":"A empresa Alfa Tech lançou um novo produto em março de 2022.","relations":[{"arg1":"A empresa Alfa Tech","rel":"lançou","arg2":"um novo produto"},{"arg1":"A empresa Alfa Tech","rel":"lançou em","arg2":"março de 2022"}]}
+
+Não devolva as triplas soltas fora de "relations"; não repita a sentença como um item separado; se
+nenhuma relação for encontrada em uma sentença, use "relations": [].
+
+E Cada trecho do texto acima está marcado com [S1], [S2], etc. -- cada marcador indica o INÍCIO de
+uma sentença nova e independente. NUNCA funda duas sentenças de marcadores diferentes em um único
+item de saída, mesmo que pareçam continuar uma a outra. Gere exatamente um item de saída por
+marcador [Sn], com o texto daquele trecho (sem incluir "[Sn]") no campo "sentence".
+
+{"sentence": "A universidade é afiliada a a Congregação de a Santa Cruz (em latim Congregatio a Sancta Cruce, pós-nominais abreviados", "relations": [{"arg1": "A universidade", "rel": "é", "arg2": "afiliada a a Congregação de a Santa Cruz"}, {"arg1": "A universidade", "rel": "é afiliada", "arg2": "a a Congregação de a Santa Cruz"}]}
+{"sentence": "Michael J. Shea, formado em 1904, escreveu a música, e seu irmão, John F. Shea, que se formou em 1906 e 1908, escreveu a letra original.", "relations": [{"arg1": "Michael J. Shea", "rel": "formado", "arg2": "em 1904"}, {"arg1": "Michael J. Shea", "rel": "escreveu", "arg2": "a música"}, {"arg1": "seu irmão", "rel": "é", "arg2": "John F. Shea"}, {"arg1": "John F. Shea", "rel": "é", "arg2": "seu irmão"}, {"arg1": "John F. Shea", "rel": "se formou", "arg2": "em 1906"}, {"arg1": "John F. Shea", "rel": "se formou", "arg2": "em 1908"}, {"arg1": "seu irmão", "rel": "se formou", "arg2": "em 1906"}, {"arg1": "seu irmão", "rel": "se formou", "arg2": "em 1908"}, {"arg1": "John F. Shea", "rel": "escreveu", "arg2": "a letra original"}, {"arg1": "seu irmão", "rel": "escreveu", "arg2": "a letra original"}]}
+{"sentence": "A Universidade de Notre Dame du Lac (ou simplesmente Notre Dame / ˌnoʊtərˈdeɪm / NOH-tər-DAYM) é uma Universidade Católica de Pesquisa localizada a o lado de South Bend, Indiana, em os Estados Unidos.", "relations": [{"arg1": "A Universidade de Notre Dame du Lac", "rel": "é", "arg2": "uma Universidade Católica de Pesquisa localizada a o lado de South Bend, Indiana, em os Estados Unidos"}, {"arg1": "A Universidade de Notre Dame du Lac", "rel": "é", "arg2": "uma Universidade Católica de Pesquisa"}, {"arg1": "uma Universidade Católica de Pesquisa", "rel": "localizada", "arg2": "a o lado de South Bend, Indiana, em os Estados Unidos"}]}
+{"sentence": "Em fevereiro de 2013, Beyoncé disse que Madonna a inspirou a assumir o controle de sua própria carreira.", "relations": [{"arg1": "Beyoncé", "rel": "disse", "arg2": "que Madonna a inspirou a assumir o controle de sua própria carreira em fevereiro de 2013"}, {"arg1": "Beyoncé", "rel": "disse", "arg2": "que Madonna a inspirou a assumir o controle de sua própria carreira"}, {"arg1": "Madonna", "rel": "inspirou", "arg2": "Beyoncé a assumir o controle de sua própria carreira"}, {"arg1": "Madonna", "rel": "inspirou", "arg2": "a assumir o controle de sua própria carreira"}]}
+{"sentence": "Em 2013, Beyoncé fez a Lista Time 100, Baz Luhrmann escrevendo ninguém tem essa voz, ninguém se move de o jeito que ela se move, ninguém pode manter uma audiência de o jeito que ela faz... Quando Beyoncé faz um álbum, quando Beyoncé canta uma música, quando Beyoncé faz qualquer coisa, é um evento e é amplamente influente.", "relations": [{"arg1": "Beyoncé", "rel": "fez", "arg2": "a Lista Time 100 em 2013"}, {"arg1": "Beyoncé", "rel": "fez", "arg2": "a Lista Time 100"}, {"arg1": "Baz Luhrmann", "rel": "escrevendo", "arg2": "ninguém tem essa voz"}, {"arg1": "ninguém", "rel": "tem", "arg2": "essa voz"}, {"arg1": "ninguém", "rel": "se move", "arg2": "de o jeito que ela se move"}, {"arg1": "ela", "rel": "se move", "arg2": "de o jeito"}, {"arg1": "ninguém", "rel": "pode manter", "arg2": "uma audiência de o jeito que ela faz"}, {"arg1": "ninguém", "rel": "pode manter", "arg2": "uma audiência"}, {"arg1": "Beyoncé", "rel": "faz", "arg2": "um álbum"}, {"arg1": "Beyoncé", "rel": "canta", "arg2": "uma música"}, {"arg1": "Beyoncé", "rel": "faz", "arg2": "qualquer coisa"}]}
+{"sentence": "Em 2013, foi anunciado que Beyoncé trabalharia com Salma Hayek e Frida Giannini em uma campanha de a Gucci Chime for Change, que visa espalhar o empoderamento feminino.", "relations": [{"arg1": "Beyoncé", "rel": "trabalharia", "arg2": "com Salma Hayek em uma campanha de a Gucci Chime for Change"}, {"arg1": "Beyoncé", "rel": "trabalharia", "arg2": "com Frida Giannini em uma campanha de a Gucci Chime for Change"}, {"arg1": "Beyoncé", "rel": "trabalharia", "arg2": "com Salma Hayek"}, {"arg1": "Beyoncé", "rel": "trabalharia", "arg2": "com Frida Giannini"}, {"arg1": "uma campanha de a Gucci Chime for Change", "rel": "visa espalhar", "arg2": "o empoderamento feminino"}]}
+{"sentence": "O Bureau de o Censo de os Estados Unidos estima que a população de Montana era 1.032.949 em 1º de julho de 2015, um aumento de 4,40 % desde o Censo de os Estados Unidos de 2010.", "relations": [{"arg1": "O Bureau de o Censo de os Estados Unidos", "rel": "estima", "arg2": "que a população de Montana era 1.032.949 em 1º de julho de 2015, um aumento de 4,40 % desde o Censo de os Estados Unidos de 2010"}, {"arg1": "O Bureau de o Censo de os Estados Unidos", "rel": "estima", "arg2": "que a população de Montana era 1.032.949 em 1º de julho de 2015"}, {"arg1": "a população de Montana", "rel": "era", "arg2": "1.032.949 em 1º de julho de 2015"}, {"arg1": "a população de Montana", "rel": "era", "arg2": "1.032.949"}]}
+{"sentence": "O Aeroporto Internacional de Bozeman Yellowstone é o aeroporto mais movimentado de o estado de Montana, superando o Aeroporto Internacional Billings Logan em a primavera de 2013", "relations": [{"arg1": "O Aeroporto Internacional de Bozeman Yellowstone", "rel": "é", "arg2": "o aeroporto mais movimentado de o estado de Montana"}, {"arg1": "O Aeroporto Internacional de Bozeman Yellowstone", "rel": "superando", "arg2": "o Aeroporto Internacional Billings Logan em a primavera de 2013"}, {"arg1": "O Aeroporto Internacional de Bozeman Yellowstone", "rel": "superando", "arg2": "o Aeroporto Internacional Billings Logan"}]}
+{"sentence": "Na primavera de 1834, Chopin participou de o Festival de Música de o Baixo Reno em Aix-la-Chapelle com Hiller, e foi lá que Chopin conheceu Felix Mendelssohn.", "relations": [{"arg1": "Chopin", "rel": "participou", "arg2": "de o Festival de Música de o Baixo Reno em Aix-la-Chapelle com Hiller na primavera de 1834"}, {"arg1": "Chopin", "rel": "participou", "arg2": "de o Festival de Música de o Baixo Reno em Aix-la-Chapelle"}, {"arg1": "Chopin", "rel": "participou", "arg2": "de o Festival de Música de o Baixo Reno com Hiller"}, {"arg1": "Chopin", "rel": "participou", "arg2": "de o Festival de Música de o Baixo Reno"}, {"arg1": "Chopin", "rel": "conheceu", "arg2": "Felix Mendelssohn lá"}, {"arg1": "Chopin", "rel": "conheceu", "arg2": "Felix Mendelssohn"}]}
+{"sentence": "Mais tarde naquela manhã, o marido de Solange, Clésinger, fez a máscara mortuária de Chopin e um giro de a mão esquerda.", "relations": [{"arg1": "o marido de Solange", "rel": "é", "arg2": "Clésinger"}, {"arg1": "Clésinger", "rel": "é", "arg2": "o marido de Solange"}, {"arg1": "o marido de Solange", "rel": "fez", "arg2": "a máscara mortuária de Chopin mais tarde naquela manhã"}, {"arg1": "o marido de Solange", "rel": "fez", "arg2": "um giro de a mão esquerda mais tarde naquela manhã"}, {"arg1": "o marido de Solange", "rel": "fez", "arg2": "a máscara mortuária de Chopin"}, {"arg1": "o marido de Solange", "rel": "fez", "arg2": "um giro de a mão esquerda"}, {"arg1": "Clésinger", "rel": "fez", "arg2": "a máscara mortuária de Chopin mais tarde naquela manhã"}, {"arg1": "Clésinger", "rel": "fez", "arg2": "um giro de a mão esquerda mais tarde naquela manhã"}, {"arg1": "Clésinger", "rel": "fez", "arg2": "a máscara mortuária de Chopin"}, {"arg1": "Clésinger", "rel": "fez", "arg2": "um giro de a mão esquerda"}]}
+{"sentence": "Em 1841, Léon Escudier escreveu sobre um recital de Chopin naquele ano Pode-se dizer que Chopin é o criador de uma escola de piano e escola de composição.", "relations": [{"arg1": "Léon Escudier", "rel": "escreveu", "arg2": "sobre um recital de Chopin naquele ano em 1841"}, {"arg1": "Léon Escudier", "rel": "escreveu", "arg2": "sobre um recital de Chopin"}, {"arg1": "Chopin", "rel": "é", "arg2": "o criador de uma escola de piano"}, {"arg1": "Chopin", "rel": "é", "arg2": "o criador de uma escola de composição"}]}
+{"sentence": "Em setembro de 1828, Chopin, ainda estudante, visitou Berlim com um amigo de a família, o zoólogo Feliks Jarocki, desfrutando de óperas dirigidas por Gaspare Spontini e assistindo a concertos de Carl Friedrich Zelter, Felix Mendelssohn e outras celebridades.", "relations": [{"arg1": "um amigo de a família", "rel": "é", "arg2": "o zoólogo Feliks Jarocki"}, {"arg1": "o zoólogo Feliks Jarocki", "rel": "é", "arg2": "um amigo de a família"}, {"arg1": "Chopin", "rel": "visitou", "arg2": "Berlim com um amigo de a família em setembro de 1828"}, {"arg1": "Chopin", "rel": "visitou", "arg2": "Berlim com o zoólogo Feliks Jarocki em setembro de 1828"}, {"arg1": "Chopin", "rel": "visitou", "arg2": "Berlim"}, {"arg1": "Chopin", "rel": "desfrutando", "arg2": "de óperas dirigidas por Gaspare Spontini"}, {"arg1": "óperas", "rel": "dirigidas", "arg2": "por Gaspare Spontini"}, {"arg1": "Chopin", "rel": "assistindo", "arg2": "a concertos de Carl Friedrich Zelter"}, {"arg1": "Chopin", "rel": "assistindo", "arg2": "a concertos de Felix Mendelssohn"}, {"arg1": "Chopin", "rel": "assistindo", "arg2": "a concertos de outras celebridades"}]}
+{"sentence": "A partir de 1236, o príncipe mongol Kublai, que mais tarde governou como Khagan de 1260 a 1294, recebeu um grande appanage em o norte de a China por seu superior, Ögedei Khan.", "relations": [{"arg1": "o príncipe mongol Kublai", "rel": "governou", "arg2": "como Khagan de 1260 a 1294"}, {"arg1": "o príncipe mongol Kublai", "rel": "governou", "arg2": "como Khagan"}, {"arg1": "seu superior", "rel": "é", "arg2": "Ögedei Khan"}, {"arg1": "Ögedei Khan", "rel": "é", "arg2": "seu superior"}, {"arg1": "o príncipe mongol Kublai", "rel": "recebeu", "arg2": "um grande appanage em o norte de a China por seu superior a partir de 1236"}, {"arg1": "o príncipe mongol Kublai", "rel": "recebeu", "arg2": "um grande appanage em o norte de a China por Ögedei Khan a partir de 1236"}, {"arg1": "o príncipe mongol Kublai", "rel": "recebeu", "arg2": "um grande appanage em o norte de a China"}]}
+{"sentence": "Dreyfus escreve que depois que o Phagmodrupa perdeu seu poder centralizador sobre o Tibete em 1434, várias tentativas de outras famílias para estabelecer hegemonias falharam em os próximos dois séculos até 1642 com a efetiva hegemonia de o 5º Dalai Lama sobre o Tibete.", "relations": [{"arg1": "Dreyfus", "rel": "escreve", "arg2": "que depois que o Phagmodrupa perdeu seu poder centralizador sobre o Tibete em 1434, várias tentativas de outras famílias para estabelecer hegemonias falharam em os próximos dois séculos até 1642 com a efetiva hegemonia de o 5º Dalai Lama sobre o Tibete"}, {"arg1": "o Phagmodrupa", "rel": "perdeu", "arg2": "seu poder centralizador sobre o Tibete em 1434"}, {"arg1": "o Phagmodrupa", "rel": "perdeu", "arg2": "seu poder centralizador sobre o Tibete"}, {"arg1": "várias tentativas de outras famílias para estabelecer hegemonias", "rel": "falharam", "arg2": "em os próximos dois séculos até 1642 com a efetiva hegemonia de o 5º Dalai Lama sobre o Tibete"}, {"arg1": "várias tentativas de outras famílias para estabelecer hegemonias", "rel": "falharam", "arg2": "em os próximos dois séculos"}]}
+{"sentence": "Quando o imperador Ming Yongle convidou Je Tsongkhapa (1357-1419), fundador de a escola Gelug, para ir a a corte Ming e prestar homenagem, este último recusou.", "relations": [{"arg1": "o imperador Ming Yongle", "rel": "convidou", "arg2": "Je Tsongkhapa para ir a a corte Ming"}, {"arg1": "o imperador Ming Yongle", "rel": "convidou", "arg2": "Je Tsongkhapa para prestar homenagem"}, {"arg1": "o imperador Ming Yongle", "rel": "convidou", "arg2": "Je Tsongkhapa"}, {"arg1": "este último", "rel": "recusou", "arg2": "quando o imperador Ming Yongle convidou Je Tsongkhapa para ir a a corte Ming e prestar homenagem"}]}
+{"sentence": "Chen Qingying afirma que Tsongkhapa escreveu uma carta para recusar o convite de o Imperador e, nesta resposta, Tsongkhapa escreveu", "relations": [{"arg1": "Chen Qingying", "rel": "afirma", "arg2": "que Tsongkhapa escreveu uma carta para recusar o convite de o Imperador"}, {"arg1": "Tsongkhapa", "rel": "escreveu", "arg2": "uma carta para recusar o convite de o Imperador"}, {"arg1": "Tsongkhapa", "rel": "escreveu", "arg2": "uma carta"}]}
+{"sentence": "No entanto, depois que Altan Khan (1507-1582) - líder de os mongóis Tümed que derrubou a hegemonia de a confederação Oirat Mongol sobre as estepes - fez as pazes com a dinastia Ming em 1571, ele persuadiu os Ming a reabrir seus mercados de fronteira em 1573.", "relations": [{"arg1": "líder de os mongóis Tümed", "rel": "derrubou", "arg2": "a hegemonia de a confederação Oirat Mongol sobre as estepes"}, {"arg1": "Altan Khan", "rel": "fez", "arg2": "as pazes com a dinastia Ming em 1571"}, {"arg1": "Altan Khan", "rel": "fez", "arg2": "as pazes com a dinastia Ming"}, {"arg1": "ele", "rel": "persuadiu", "arg2": "os Ming a reabrir seus mercados de fronteira em 1573"}, {"arg1": "ele", "rel": "persuadiu", "arg2": "os Ming a reabrir seus mercados de fronteira"}]}
+{"sentence": "Klieger escreve que a presença de Altan Khan em o oeste reduziu efetivamente a influência de os Ming e o contato com o Tibete.", "relations": [{"arg1": "Klieger", "rel": "escreve", "arg2": "que a presença de Altan Khan em o oeste reduziu efetivamente a influência de os Ming e o contato com o Tibete"}, {"arg1": "a presença de Altan Khan em o oeste", "rel": "reduziu efetivamente", "arg2": "a influência de os Ming"}, {"arg1": "a presença de Altan Khan em o oeste", "rel": "reduziu efetivamente", "arg2": "o contato com o Tibete"}, {"arg1": "a presença de Altan Khan em o oeste", "rel": "reduziu", "arg2": "a influência de os Ming"}, {"arg1": "a presença de Altan Khan em o oeste", "rel": "reduziu", "arg2": "o contato com o Tibete"}]}
+{"sentence": "Depois que Altan Khan fez as pazes com a dinastia Ming em 1571, ele convidou o terceiro hierarca de a Gelug - Sönam Gyatso (1543-1588) - para encontrá-lo em Amdo (Qinghai moderno) em 1578, onde acidentalmente concedeu a ele e seus dois antecessores com o título de Dalai Lama - Professor de o Oceano.", "relations": [{"arg1": "Altan Khan", "rel": "fez", "arg2": "as pazes com a dinastia Ming em 1571"}, {"arg1": "Altan Khan", "rel": "fez", "arg2": "as pazes com a dinastia Ming"}, {"arg1": "ele", "rel": "convidou", "arg2": "o terceiro hierarca de a Gelug para encontrá-lo em Amdo em 1578"}, {"arg1": "ele", "rel": "convidou", "arg2": "o terceiro hierarca de a Gelug"}, {"arg1": "ele", "rel": "acidentalmente concedeu", "arg2": "a ele com o título de Dalai Lama"}, {"arg1": "ele", "rel": "acidentalmente concedeu", "arg2": "a seus dois antecessores com o título de Dalai Lama"}]}
+{"sentence": "Embora não tenha sido registrada em nenhum registro oficial chinês, a biografia de Sonam Gyatso afirma que Wanli novamente conferiu títulos a Sonam Gyatso em 1588 e o convidou para Pequim por a segunda vez, mas Sonam Gyatso não pôde visitar a China, pois morreu em o mesmo ano em a Mongólia.", "relations": [{"arg1": "a biografia de Sonam Gyatso", "rel": "afirma", "arg2": "que Wanli novamente conferiu títulos a Sonam Gyatso em 1588"}, {"arg1": "a biografia de Sonam Gyatso", "rel": "afirma", "arg2": "que Wanli o convidou para Pequim por a segunda vez"}, {"arg1": "Wanli", "rel": "novamente conferiu", "arg2": "títulos a Sonam Gyatso em 1588"}, {"arg1": "Wanli", "rel": "conferiu", "arg2": "títulos a Sonam Gyatso"}, {"arg1": "Wanli", "rel": "convidou", "arg2": "Sonam Gyatso para Pequim por a segunda vez"}, {"arg1": "Wanli", "rel": "convidou", "arg2": "Sonam Gyatso para Pequim"}, {"arg1": "Sonam Gyatso", "rel": "não pôde visitar", "arg2": "a China"}, {"arg1": "Sonam Gyatso", "rel": "morreu", "arg2": "em o mesmo ano em a Mongólia"}, {"arg1": "Sonam Gyatso", "rel": "morreu", "arg2": "em a Mongólia"}]}
+{"sentence": "Sem mencionar o papel de os mongóis, o China Daily afirma que foi a sucessiva dinastia Qing que estabeleceu o título de Dalai Lama e seu poder em o Tibete Em 1653, o imperador Qing concedeu um título honorífico a o quinto Dalai Lama e depois o fez.", "relations": [{"arg1": "o China Daily", "rel": "afirma", "arg2": "que foi a sucessiva dinastia Qing que estabeleceu o título de Dalai Lama e seu poder em o Tibete"}, {"arg1": "a sucessiva dinastia Qing", "rel": "estabeleceu", "arg2": "o título de Dalai Lama em o Tibete"}, {"arg1": "a sucessiva dinastia Qing", "rel": "estabeleceu", "arg2": "seu poder em o Tibete"}, {"arg1": "o imperador Qing", "rel": "concedeu", "arg2": "um título honorífico a o quinto Dalai Lama em 1653"}, {"arg1": "o imperador Qing", "rel": "concedeu", "arg2": "um título honorífico a o quinto Dalai Lama"}]}
+{"sentence": "O imperador Wanli convidou Yonten Gyatso para Pequim em 1616, mas, assim como seu antecessor, ele morreu antes de poder fazer a jornada.", "relations": [{"arg1": "O imperador Wanli", "rel": "convidou", "arg2": "Yonten Gyatso para Pequim em 1616"}, {"arg1": "O imperador Wanli", "rel": "convidou", "arg2": "Yonten Gyatso para Pequim"}, {"arg1": "ele", "rel": "morreu", "arg2": "antes de poder fazer a jornada"}]}
+{"sentence": "O quarto Dalai Lama se recusou a dar uma audiência a o rei Ü-Tsang, que provocou um conflito quando este começou a atacar mosteiros Gelug.", "relations": [{"arg1": "O quarto Dalai Lama", "rel": "se recusou", "arg2": "a dar uma audiência a o rei Ü-Tsang"}, {"arg1": "o rei Ü-Tsang", "rel": "provocou", "arg2": "um conflito quando este começou a atacar mosteiros Gelug"}, {"arg1": "o rei Ü-Tsang", "rel": "provocou", "arg2": "um conflito"}, {"arg1": "este", "rel": "começou a atacar", "arg2": "mosteiros Gelug"}]}
+{"sentence": "Quando um aliado de o governante Ü-Tsang ameaçou novamente a destruição de os Gelugpas, o quinto Dalai Lama Lozang Gyatso pediu ajuda a o príncipe mongol Güshi Khan (1582-1655), líder de a tribo Khoshut (Qoshot) de os mongóis Oirat, que estava então em peregrinação a Lhasa.", "relations": [{"arg1": "um aliado de o governante Ü-Tsang", "rel": "ameaçou novamente", "arg2": "a destruição de os Gelugpas"}, {"arg1": "um aliado de o governante Ü-Tsang", "rel": "ameaçou", "arg2": "a destruição de os Gelugpas"}, {"arg1": "o quinto Dalai Lama Lozang Gyatso", "rel": "pediu", "arg2": "ajuda a o príncipe mongol Güshi Khan"}, {"arg1": "o príncipe mongol Güshi Khan", "rel": "estava", "arg2": "então em peregrinação a Lhasa"}, {"arg1": "o príncipe mongol Güshi Khan", "rel": "estava", "arg2": "em peregrinação a Lhasa"}]}
+{"sentence": "Güshi Khan aceitou seu papel de protetor e, de 1637 a 1640, ele não apenas derrotou os inimigos de os Gelugpas em as regiões Amdo e Kham, mas também reassentou toda a sua tribo em Amdo.", "relations": [{"arg1": "Güshi Khan", "rel": "aceitou", "arg2": "seu papel de protetor"}, {"arg1": "ele", "rel": "não apenas derrotou", "arg2": "os inimigos de os Gelugpas em as regiões Amdo e Kham de 1637 a 1640"}, {"arg1": "ele", "rel": "derrotou", "arg2": "os inimigos de os Gelugpas em Amdo"}, {"arg1": "ele", "rel": "derrotou", "arg2": "os inimigos de os Gelugpas em Kham"}, {"arg1": "ele", "rel": "também reassentou", "arg2": "toda a sua tribo em Amdo de 1637 a 1640"}, {"arg1": "ele", "rel": "reassentou", "arg2": "toda a sua tribo em Amdo"}]}
+{"sentence": "Shih-Shan Henry Tsai escreve que o imperador Yongle enviou seu eunuco Yang Sanbao a o Tibete em 1413 para obter uma lealdade de vários príncipes tibetanos, enquanto o imperador Yongle pagou uma pequena fortuna em troca de presentes em troca de tributos, a fim de manter a lealdade de o vassalo vizinho.", "relations": [{"arg1": "Shih-Shan Henry Tsai", "rel": "escreve", "arg2": "que o imperador Yongle enviou seu eunuco Yang Sanbao a o Tibete em 1413 para obter uma lealdade de vários príncipes tibetanos"}, {"arg1": "o imperador Yongle", "rel": "enviou", "arg2": "seu eunuco Yang Sanbao a o Tibete em 1413 para obter uma lealdade de vários príncipes tibetanos"}, {"arg1": "o imperador Yongle", "rel": "enviou", "arg2": "seu eunuco Yang Sanbao a o Tibete em 1413"}, {"arg1": "o imperador Yongle", "rel": "enviou", "arg2": "seu eunuco Yang Sanbao a o Tibete"}, {"arg1": "o imperador Yongle", "rel": "pagou", "arg2": "uma pequena fortuna em troca de presentes em troca de tributos, a fim de manter a lealdade de o vassalo vizinho"}, {"arg1": "o imperador Yongle", "rel": "pagou", "arg2": "uma pequena fortuna em troca de presentes"}]}
+{"sentence": "A Apple lançou um novo conector dock de 8 pinos, chamado Relâmpago, em 12 de setembro de 2012, com o anúncio de o iPhone 5, de o iPod Touch de quinta geração e de o iPod Nano de a sétima geração, todos com esse recurso.", "relations": [{"arg1": "A Apple", "rel": "lançou", "arg2": "um novo conector dock de 8 pinos em 12 de setembro de 2012 com o anúncio de o iPhone 5, de o iPod Touch de quinta geração e de o iPod Nano de a sétima geração"}, {"arg1": "A Apple", "rel": "lançou", "arg2": "um novo conector dock de 8 pinos em 12 de setembro de 2012"}, {"arg1": "A Apple", "rel": "lançou", "arg2": "um novo conector dock de 8 pinos"}, {"arg1": "um novo conector dock de 8 pinos", "rel": "chamado", "arg2": "Relâmpago"}]}

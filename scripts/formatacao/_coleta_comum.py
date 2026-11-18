@@ -6,6 +6,12 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[2]
 
+
+FORMATO_MINIMO = """
+
+Formato de saída: JSONL, isto é, um objeto JSON por linha, sem colchetes envolvendo tudo e sem vírgula entre os objetos. Gere um objeto por sentença, na mesma ordem em que foram apresentadas. Cada objeto tem o campo "sentence", com a sentença de entrada copiada sem nenhuma alteração, e o campo "relations", uma lista de objetos com os campos "arg1", "rel" e "arg2". Se não houver nenhuma tripla, use "relations": []. Não escreva nenhum outro texto.
+"""
+
 TAREFAS = {
     "abstractive": {
         "prompt": RAIZ / "prompts" / "promptAbstractiveOpenIE.txt",
@@ -26,6 +32,12 @@ TAREFAS = {
         "prompt": RAIZ / "prompts" / "promptPTOIE-dp_extrativo.txt",
         "categoria": "Respostas ExtrativoPTOIE-DP",
         "placeholder": None,
+    },
+        "semregras": {
+        "prompt": RAIZ / "prompts" / "promptSemRegras.txt",
+        "categoria": "Respostas SemRegras",
+        "placeholder": None,
+        "reforco": FORMATO_MINIMO,
     },
 }
 
@@ -65,7 +77,7 @@ def montar_texto(tarefa: dict, sentencas: list[dict]) -> str:
     else:
         bloco = json.dumps(sentencas, ensure_ascii=False, indent=2)
         texto = f"{prompt}\n\nProcesse as seguintes sentenças:\n{bloco}"
-    return texto + FORMATO_REFORCO
+    return texto + tarefa.get("reforco", FORMATO_REFORCO)
 
 def pasta_rodada(respostas_base:Path, lotes: int, k:int) -> Path:
     base = respostas_base / f"{lotes}_batches"

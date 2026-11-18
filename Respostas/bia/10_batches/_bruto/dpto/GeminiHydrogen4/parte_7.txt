@@ -1,0 +1,981 @@
+
+
+# Extração de Relações Open Information Extraction (Open IE)
+
+
+
+## Objetivo
+
+
+
+Você receberá uma **lista de objetos JSON**, onde cada objeto contém uma sentença em português.
+
+
+
+```jsonl
+
+
+
+  {"sentence": "..."},
+
+  {"sentence": "..."},
+
+  {"sentence": "..."}
+
+
+
+```
+
+
+
+Cada objeto da lista deve ser processado de forma independente. Não deve haver mistura de informações entre sentenças diferentes e todas as sentenças devem ser analisadas. 
+
+
+
+---
+
+
+
+Você receberá **sentenças em português**.
+
+
+
+Sua tarefa é extrair **todas** as relações Open Information Extraction (Open IE) presentes em cada sentença.
+
+
+
+Toda saída deve permanecer associada à **sentença original** da qual as relações foram extraídas. Todas as relações em `relations` devem corresponder exclusivamente à sentença armazenada em `sentence`.
+
+
+
+Cada relação deve ser representada por uma tripla no formato:
+
+
+
+```json
+
+{
+
+  "arg1": "...",
+
+  "rel": "...",
+
+  "arg2": "..."
+
+}
+
+```
+
+
+
+---
+
+
+
+
+
+Uma sentença pode conter nenhuma, uma ou várias relações. Sempre que houver múltiplas relações válidas, extraia todas elas.
+
+
+
+Siga rigorosamente as regras abaixo.
+
+
+
+---
+
+
+
+# Regras Estruturais
+
+
+
+## E1. Estrutura Fundamental da Tripla
+
+
+
+Cada tripla deve conter:
+
+
+
+* **ARG1:** sujeito ou entidade principal da relação;
+
+* **REL:** relação verbal que conecta os argumentos;
+
+* **ARG2:** complemento principal da relação.
+
+
+
+Toda tripla deve representar uma relação sintaticamente válida presente na sentença.
+
+
+
+---
+
+
+
+## E2. Construção de ARG1
+
+
+
+ARG1 deve corresponder ao sujeito da oração, tanto em construções na voz ativa quanto na voz passiva.
+
+
+
+Além do núcleo do sujeito, inclua todos os elementos pertencentes ao sintagma nominal que sejam relevantes para identificá-lo, tais como:
+
+
+
+* modificadores numéricos;
+
+* modificadores adverbiais;
+
+* modificadores nominais;
+
+* modificadores adjetivais;
+
+* dependentes sintáticos;
+
+* objetos associados;
+
+* elementos coordenados;
+
+* apostos, apenas quando representarem expressões numéricas identificadas pelo analisador morfossintático.
+
+
+
+O objetivo é representar o sujeito da forma mais completa possível.
+
+
+
+---
+
+
+
+## E3. Construção da Relação (REL)
+
+
+
+REL deve ser construída a partir do verbo principal da oração.
+
+
+
+Quando houver uma construção participial, ela também poderá constituir a relação principal.
+
+
+
+Inclua na relação:
+
+
+
+### Antes do verbo principal
+
+
+
+* verbos auxiliares;
+
+* verbos auxiliares da voz passiva;
+
+* verbos copulativos;
+
+* objetos diretos e indiretos, quando fizerem parte da construção verbal;
+
+* modificadores adverbiais;
+
+* pronomes expletivos;
+
+* marcadores subordinativos.
+
+
+
+### Depois do verbo principal
+
+
+
+* pronomes expletivos;
+
+* construções participiais.
+
+
+
+---
+
+
+
+## E4. Construção de ARG2
+
+
+
+ARG2 deve corresponder ao complemento principal da relação.
+
+
+
+Devem ser incorporados:
+
+
+
+### Objetos
+
+
+
+* objetos diretos;
+
+* objetos indiretos.
+
+
+
+### Modificadores
+
+
+
+* modificadores nominais;
+
+* modificadores numéricos;
+
+* modificadores adverbiais;
+
+* modificadores adjetivais.
+
+
+
+### Complementos
+
+
+
+* complementos verbais abertos, isto é, complementos que não possuem sujeito próprio.
+
+
+
+### Orações
+
+
+
+* orações subordinadas completivas;
+
+* orações subordinadas adverbiais, desde que não possuam sujeito próprio explícito.
+
+
+
+### Outros elementos
+
+
+
+* orações relativas;
+
+* elementos coordenados;
+
+* apostos;
+
+* construções participiais;
+
+* outros dependentes sintáticos.
+
+
+
+O objetivo é representar o complemento da relação da forma mais completa possível.
+
+
+
+---
+
+
+
+## E5. Tratamento das Preposições
+
+
+
+As preposições regidas pelo verbo devem permanecer incorporadas ao ARG2.
+
+
+
+Elas não devem ser deslocadas para REL.
+
+
+
+As locuções prepositivas lexicalizadas devem permanecer intactas, sem fragmentação.
+
+
+
+---
+
+
+
+## E6. Extração por Busca em Profundidade (DFS)
+
+
+
+Considere a construção da tripla seguindo a lógica de uma busca em profundidade:
+
+
+
+1. identificar ARG1;
+
+2. identificar REL;
+
+3. identificar todos os argumentos dependentes da relação (ARG2).
+
+
+
+A extração deve continuar até atingir os elementos folha relevantes da estrutura.
+
+
+
+Quando dois ARG2 distintos puderem ser combinados para produzir um complemento mais informativo sem alterar o significado da relação, ambos poderão compor o mesmo ARG2.
+
+
+
+---
+
+
+
+## E7. Não Duplicação
+
+
+
+Não produza triplas idênticas.
+
+
+
+Caso diferentes regras resultem exatamente na mesma tripla `(ARG1, REL, ARG2)`, mantenha apenas uma ocorrência.
+
+
+
+---
+
+
+
+# Regras Semânticas
+
+
+
+## S1. Coordenação
+
+
+
+Coordenações introduzidas pelas conjunções **"e"** ou **"ou"** devem gerar novas relações independentes.
+
+
+
+### Coordenação verbal
+
+
+
+Quando houver verbos coordenados, gere uma nova tripla para cada verbo coordenado.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`Eu compro e vendo banana, maçã e pera.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "Eu compro e vendo banana, maçã e pera.",
+
+  "relations": [
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "compro",
+
+      "arg2": "banana"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "compro",
+
+      "arg2": "maçã"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "compro",
+
+      "arg2": "pera"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "vendo",
+
+      "arg2": "banana"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "vendo",
+
+      "arg2": "maçã"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "vendo",
+
+      "arg2": "pera"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+### Coordenação de argumentos
+
+
+
+Quando ARG1 ou ARG2 contiver elementos coordenados, gere uma tripla independente para cada elemento coordenado, sempre que isso preservar o sentido.
+
+
+
+---
+
+
+
+## S2. Orações Subordinadas
+
+
+
+### S2.1 Orações Relativas
+
+
+
+Quando um pronome relativo exercer a função de sujeito da oração relativa, substitua-o pelo seu antecedente explícito.
+
+
+
+Utilize o antecedente como ARG1.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`A espada, que estava em casa, foi levada ontem.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "A espada, que estava em casa, foi levada ontem.",
+
+  "relations": [
+
+    {
+
+      "arg1": "A espada",
+
+      "rel": "estava",
+
+      "arg2": "em casa"
+
+    },
+
+    {
+
+      "arg1": "A espada",
+
+      "rel": "foi levada",
+
+      "arg2": "ontem"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+---
+
+
+
+### S2.2 Orações Subordinadas Completivas
+
+
+
+Quando uma oração subordinada completar semanticamente outra oração, gere uma tripla para a oração principal e outra para a oração subordinada.
+
+
+
+A conjunção **"que"**, quando presente, deve permanecer como parte de ARG2 da oração principal.
+
+
+
+Aplique esta regra apenas quando ambas as orações possuírem sujeito explícito.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`Ele afirmou que o cidadão se comportou bem.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "Ele afirmou que o cidadão se comportou bem.",
+
+  "relations": [
+
+    {
+
+      "arg1": "Ele",
+
+      "rel": "afirmou",
+
+      "arg2": "que o cidadão se comportou bem"
+
+    },
+
+    {
+
+      "arg1": "o cidadão",
+
+      "rel": "se comportou",
+
+      "arg2": "bem"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+Se a oração subordinada não possuir sujeito explícito, não gere o encadeamento entre a oração principal e a subordinada; nesse caso, mantenha a subordinada em ARG2 da oração principal.
+
+
+
+---
+
+
+
+### S2.3 Orações Subordinadas Adverbiais
+
+
+
+Orações subordinadas adverbiais devem receber o mesmo tratamento das orações subordinadas completivas, preservando a relação entre as duas orações.
+
+
+
+---
+
+
+
+## S3. Relações de Aposto
+
+
+
+Quando um aposto corresponder a um nome próprio, gere uma nova tripla sintética utilizando o verbo **"é"** como REL.
+
+
+
+O termo principal constitui ARG1.
+
+
+
+O aposto constitui ARG2.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`O diretor do hospital, Júlio, vendeu sua fazenda.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "O diretor do hospital, Júlio, vendeu sua fazenda.",
+
+  "relations": [
+
+    {
+
+      "arg1": "O diretor do hospital",
+
+      "rel": "vendeu",
+
+      "arg2": "sua fazenda"
+
+    },
+
+    {
+
+      "arg1": "O diretor do hospital",
+
+      "rel": "é",
+
+      "arg2": "Júlio"
+
+    },
+
+    {
+
+      "arg1": "Júlio",
+
+      "rel": "é",
+
+      "arg2": "O diretor do hospital"
+
+    },
+
+    {
+
+      "arg1": "Júlio",
+
+      "rel": "vendeu",
+
+      "arg2": "sua fazenda"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+---
+
+
+
+## S4. Transitividade de Apostos
+
+
+
+Considere o termo principal e seu aposto como semanticamente equivalentes.
+
+
+
+Após extrair as triplas principais, gere novas triplas substituindo o termo principal pelo aposto, ou o aposto pelo termo principal, sempre que essa substituição preservar o significado da relação.
+
+
+
+---
+
+
+
+## S5. Coerência e Minimalidade
+
+
+
+Extraia apenas relações que possuam interpretação semântica completa e coerente.
+
+
+
+Priorize fatos minimais que não embutam, sem necessidade, outra relação separável dentro de ARG1 ou ARG2.
+
+
+
+Quando uma relação mais completa puder ser decomposta em fatos menores sem perda relevante de significado, gere também as versões mais atômicas.
+
+
+
+---
+
+
+
+## S6. Ausência de Inferência Externa
+
+
+
+Não utilize conhecimento de mundo, inferência lógica externa ou informação não expressa na sentença.
+
+
+
+Extraia apenas relações explicitamente presentes ou diretamente implicadas pelo texto.
+
+
+
+---
+
+
+
+# Formato da Resposta
+
+
+
+Retorne **exclusivamente um objeto JSON válido**.
+
+
+
+O objeto deve possuir obrigatoriamente os seguintes campos:
+
+
+
+* **sentence:** deve conter exatamente a sentença de entrada, sem qualquer modificação, correção, normalização ou reescrita.
+
+* **relations:** um array contendo todas as triplas Open IE extraídas da sentença.
+
+
+
+As relações devem ser retornadas, sempre que possível, na mesma ordem em que aparecem na sentença.
+
+
+
+Caso nenhuma relação válida seja encontrada, retorne `relations` como array vazio.
+
+
+
+Não inclua explicações, comentários, Markdown ou qualquer texto adicional.
+
+
+
+Formato esperado:
+
+
+
+```json
+
+{
+
+  "sentence": "A universidade é afiliada à Congregação de Santa Cruz.",
+
+  "relations": [
+
+    {
+
+      "arg1": "A universidade",
+
+      "rel": "é",
+
+      "arg2": "afiliada à Congregação de Santa Cruz"
+
+    },
+
+    {
+
+      "arg1": "A universidade",
+
+      "rel": "é afiliada a",
+
+      "arg2": "a Congregação de Santa Cruz"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+Caso não exista nenhuma relação Open IE válida:
+
+
+
+```json
+
+{
+
+  "sentence": "A universidade é afiliada à Congregação de Santa Cruz.",
+
+  "relations": []
+
+}
+
+```
+
+
+
+Processe as seguintes sentenças:
+[
+  {
+    "sentence": "O termo aspiração às vezes se refere a a mudança sonora de a desescalização, em a qual uma consoante é lenitizada (enfraquecida) para se tornar uma parada glótica ou fricativa [ ʔ h ɦ ]."
+  },
+  {
+    "sentence": "O Punjabi perdeu os consoantes de voz ofegante, o que resultou em um sistema de tons e, portanto, faz uma distinção entre sem voz, aspirado e sonoro / p pʰ b /."
+  },
+  {
+    "sentence": "O estudo de suas propriedades é conhecido como química orgânica e seu estudo em o contexto de organismos vivos é conhecido como bioquímica."
+  },
+  {
+    "sentence": "Na química inorgânica, os hidretos também podem servir como ligantes de ponte que ligam dois centros metálicos em um complexo de coordenação."
+  },
+  {
+    "sentence": "Maxwell observou que a capacidade térmica específica de o H2 se afasta inexplicavelmente de a de um gás diatômico abaixo de a temperatura ambiente e começa a se assemelhar cada vez mais a a de um gás monatômico a temperaturas criogênicas."
+  },
+  {
+    "sentence": "O hidrogênio, como H atômico, é o elemento químico mais abundante em o universo, constituindo 75 % de a matéria normal em massa e mais de 90 % em número de átomos (a maior parte de a massa de o universo, porém, não está em a forma de matéria de o tipo elemento químico, mas postula-se que ocorra como formas de massa ainda não detectadas, como matéria escura e energia escura)."
+  },
+  {
+    "sentence": "Uma corrente de baixa tensão é percorrida por a água e o oxigênio gasoso se forma em o ânodo, enquanto o hidrogênio gasoso se forma em o cátodo."
+  },
+  {
+    "sentence": "A divisão de a água, em a qual a água é decomposta em seus componentes prótons, elétrons e oxigênio, ocorre em as reações de luz em todos os organismos fotossintéticos."
+  },
+  {
+    "sentence": "Andreessen, líder de a equipe Mosaic em o Centro Nacional de Aplicações de Supercomputação (NCSA), logo fundou sua própria empresa, chamada Netscape, e lançou o Netscape Navigator, influenciado por o Mosaic, em 1994, que rapidamente se tornou o navegador mais popular de o mundo, respondendo por 90 % de todo o uso de a Web em o auge (consulte a participação de navegadores em a Web)."
+  },
+  {
+    "sentence": "Navegadores de a web modernos oferecem suporte a uma combinação de HTML e XHTML baseados em padrões e de fato, que devem ser renderizados de a mesma maneira por todos os navegadores."
+  },
+  {
+    "sentence": "O principal objetivo de um navegador de a web é trazer recursos de informação para o usuário (recuperação ou busca), permitindo que eles visualizem as informações (exibição, renderização) e acessem outras informações (navegação, seguindo links)."
+  },
+  {
+    "sentence": "Boston (pronuncia-se i / ˈbɒstən /) é a capital e maior cidade de a Commonwealth of Massachusetts em os Estados Unidos."
+  },
+  {
+    "sentence": "Sua rica história atrai muitos turistas, com o Faneuil Hall atraindo mais de 20 milhões de visitantes por ano."
+  },
+  {
+    "sentence": "Na época em que Boston foi declarada como cidade, a população era de 46.226 habitantes, enquanto a área de a cidade era de apenas 12 km2."
+  },
+  {
+    "sentence": "O rio Charles separa Boston de Watertown e a maioria de Cambridge, e a massa de Boston de seu próprio bairro de Charlestown."
+  },
+  {
+    "sentence": "O mês mais frio é janeiro, com uma média de 29,0 ° F (-1,7 ° C)."
+  },
+  {
+    "sentence": "O Boston Red Sox, membro fundador de a Liga Americana de Major League Baseball em 1901, joga seus jogos em casa em o Fenway Park, perto de Kenmore Square, em a seção Fenway de a cidade."
+  },
+  {
+    "sentence": "A cidade é servida por estações que representam todas as principais redes americanas, incluindo a WBZ-TV e sua estação irmã WSBK-TV (a antiga CBS O&O, a segunda afiliada de a MyNetwork TV), a WCVB-TV (ABC), a WHDH (NBC), WFXT (Fox) e WLVI (The CW)."
+  },
+  {
+    "sentence": "O Aeroporto Logan, localizado em East Boston e operado por a Massachusetts Port Authority (Massport), é o principal aeroporto de Boston."
+  },
+  {
+    "sentence": "O mês mais quente é Julho, com temperatura média de 73,4 ° F (23,0 ° C)."
+  },
+  {
+    "sentence": "O Ateneu de Boston (uma de as bibliotecas independentes mais antigas de os Estados Unidos), o Museu Infantil de Boston, o Bull & Finch Pub (cujo prédio é conhecido por o programa de televisão Cheers), o Museum of Science e o New England Aquarium estão dentro de a cidade."
+  },
+  {
+    "sentence": "Um de os eventos esportivos mais conhecidos de a cidade é uma maratona de Boston, a corrida de 42,2 km que é a maratona anual mais antiga de o mundo, realizada em o dia de os patriotas em abril."
+  },
+  {
+    "sentence": "A órbita de o Compass-M1 é quase circular, tem uma altitude de 21.150 km e uma inclinação de 55,5 graus."
+  },
+  {
+    "sentence": "O Compass-M1 transmite em 3 bandas E2, E5B e E6."
+  },
+  {
+    "sentence": "O Serviço Postal de a Somália (Correio de a Somália) é o serviço postal nacional de o Governo Federal de a Somália."
+  },
+  {
+    "sentence": "É a única e nacional língua oficial de Andorra e co-oficial de as comunidades autônomas espanholas de a Catalunha, Ilhas Baleares e Valência (onde a língua é conhecida como valenciana e existem padrões regionais)."
+  },
+  {
+    "sentence": "Logo após a Revolução Francesa (1789), a Primeira República Francesa proibiu o uso oficial e adotou políticas discriminatórias contra as línguas não padronizadas de a França (patois), como catalão, alsaciano, bretão, occitânico, flamengo e basco."
+  }
+]
+
+IMPORTANTE -- formato de saída obrigatório: JSONL (um objeto JSON por linha, SEM colchetes
+envolvendo tudo e SEM vírgula entre os objetos). Cada linha corresponde a uma sentença, na
+mesma ordem em que foram apresentadas acima. Exemplo (frases fictícias, apenas para ilustrar o
+formato -- não fazem parte do texto a ser processado):
+
+{"sentence":"Maria Silva, nascida em 1990, trabalha como engenheira, e seu marido, Carlos Silva, que se formou em 2010, trabalha como médico.","relations":[{"arg1":"Maria Silva","rel":"nascida em","arg2":"1990"},{"arg1":"Maria Silva","rel":"trabalha como","arg2":"engenheira"},{"arg1":"Carlos Silva","rel":"se formou em","arg2":"2010"},{"arg1":"Carlos Silva","rel":"trabalha como","arg2":"médico"},{"arg1":"seu marido","rel":"é","arg2":"Carlos Silva"}]}
+{"sentence":"A empresa Alfa Tech lançou um novo produto em março de 2022.","relations":[{"arg1":"A empresa Alfa Tech","rel":"lançou","arg2":"um novo produto"},{"arg1":"A empresa Alfa Tech","rel":"lançou em","arg2":"março de 2022"}]}
+
+Não devolva as triplas soltas fora de "relations"; não repita a sentença como um item separado; se
+nenhuma relação for encontrada em uma sentença, use "relations": [].
+
+E Cada trecho do texto acima está marcado com [S1], [S2], etc. -- cada marcador indica o INÍCIO de
+uma sentença nova e independente. NUNCA funda duas sentenças de marcadores diferentes em um único
+item de saída, mesmo que pareçam continuar uma a outra. Gere exatamente um item de saída por
+marcador [Sn], com o texto daquele trecho (sem incluir "[Sn]") no campo "sentence".
+{"sentence": "O termo aspiração às vezes se refere a a mudança sonora de a desescalização, em a qual uma consoante é lenitizada (enfraquecida) para se tornar uma parada glótica ou fricativa [ ʔ h ɦ ].", "relations": [{"arg1": "O termo aspiração", "rel": "às vezes se refere", "arg2": "a a mudança sonora de a desescalização"}, {"arg1": "O termo aspiração", "rel": "se refere", "arg2": "a a mudança sonora de a desescalização"}, {"arg1": "uma consoante", "rel": "é lenitizada", "arg2": "para se tornar uma parada glótica em a mudança sonora de a desescalização"}, {"arg1": "uma consoante", "rel": "é lenitizada", "arg2": "para se tornar fricativa em a mudança sonora de a desescalização"}]}
+{"sentence": "O Punjabi perdeu os consoantes de voz ofegante, o que resultou em um sistema de tons e, portanto, faz uma distinção entre sem voz, aspirado e sonoro / p pʰ b /.", "relations": [{"arg1": "O Punjabi", "rel": "perdeu", "arg2": "os consoantes de voz ofegante"}, {"arg1": "O Punjabi", "rel": "faz", "arg2": "uma distinção entre sem voz, aspirado e sonoro"}]}
+{"sentence": "O estudo de suas propriedades é conhecido como química orgânica e seu estudo em o contexto de organismos vivos é conhecido como bioquímica.", "relations": [{"arg1": "O estudo de suas propriedades", "rel": "é conhecido", "arg2": "como química orgânica"}, {"arg1": "seu estudo em o contexto de organismos vivos", "rel": "é conhecido", "arg2": "como bioquímica"}]}
+{"sentence": "Na química inorgânica, os hidretos também podem servir como ligantes de ponte que ligam dois centros metálicos em um complexo de coordenação.", "relations": [{"arg1": "os hidretos", "rel": "também podem servir", "arg2": "como ligantes de ponte na química inorgânica"}, {"arg1": "os hidretos", "rel": "podem servir", "arg2": "como ligantes de ponte"}, {"arg1": "ligantes de ponte", "rel": "ligam", "arg2": "dois centros metálicos em um complexo de coordenação"}, {"arg1": "ligantes de ponte", "rel": "ligam", "arg2": "dois centros metálicos"}]}
+{"sentence": "Maxwell observou que a capacidade térmica específica de o H2 se afasta inexplicavelmente de a de um gás diatômico abaixo de a temperatura ambiente e começa a se assemelhar cada vez mais a a de um gás monatômico a temperaturas criogênicas.", "relations": [{"arg1": "Maxwell", "rel": "observou", "arg2": "que a capacidade térmica específica de o H2 se afasta inexplicavelmente de a de um gás diatômico abaixo de a temperatura ambiente"}, {"arg1": "a capacidade térmica específica de o H2", "rel": "se afasta inexplicavelmente", "arg2": "de a de um gás diatômico abaixo de a temperatura ambiente"}, {"arg1": "a capacidade térmica específica de o H2", "rel": "se afasta", "arg2": "de a de um gás diatômico"}, {"arg1": "a capacidade térmica específica de o H2", "rel": "começa a se assemelhar cada vez mais", "arg2": "a a de um gás monatômico a temperaturas criogênicas"}, {"arg1": "a capacidade térmica específica de o H2", "rel": "começa a se assemelhar", "arg2": "a a de um gás monatômico"}]}
+{"sentence": "O hidrogênio, como H atômico, é o elemento químico mais abundante em o universo, constituindo 75 % de a matéria normal em massa e mais de 90 % em número de átomos (a maior parte de a massa de o universo, porém, não está em a forma de matéria de o tipo elemento químico, mas postula-se que ocorra como formas de massa ainda não detectadas, como matéria escura e energia escura).", "relations": [{"arg1": "O hidrogênio", "rel": "é", "arg2": "o elemento químico mais abundante em o universo"}, {"arg1": "O hidrogênio", "rel": "constituindo", "arg2": "75 % de a matéria normal em massa"}, {"arg1": "O hidrogênio", "rel": "constituindo", "arg2": "mais de 90 % em número de átomos"}, {"arg1": "a maior parte de a massa de o universo", "rel": "não está", "arg2": "em a forma de matéria de o tipo elemento químico"}]}
+{"sentence": "Uma corrente de baixa tensão é percorrida por a água e o oxigênio gasoso se forma em o ânodo, enquanto o hidrogênio gasoso se forma em o cátodo.", "relations": [{"arg1": "Uma corrente de baixa tensão", "rel": "é percorrida", "arg2": "por a água"}, {"arg1": "o oxigênio gasoso", "rel": "se forma", "arg2": "em o ânodo"}, {"arg1": "o hidrogênio gasoso", "rel": "se forma", "arg2": "em o cátodo"}]}
+{"sentence": "A divisão de a água, em a qual a água é decomposta em seus componentes prótons, elétrons e oxigênio, ocorre em as reações de luz em todos os organismos fotossintéticos.", "relations": [{"arg1": "a água", "rel": "é decomposta", "arg2": "em seus componentes prótons em a divisão de a água"}, {"arg1": "a água", "rel": "é decomposta", "arg2": "em seus componentes elétrons em a divisão de a água"}, {"arg1": "a água", "rel": "é decomposta", "arg2": "em seus componentes oxigênio em a divisão de a água"}, {"arg1": "A divisão de a água", "rel": "ocorre", "arg2": "em as reações de luz em todos os organismos fotossintéticos"}, {"arg1": "A divisão de a água", "rel": "ocorre", "arg2": "em as reações de luz"}]}
+{"sentence": "Andreessen, líder de a equipe Mosaic em o Centro Nacional de Aplicações de Supercomputação (NCSA), logo fundou sua própria empresa, chamada Netscape, e lançou o Netscape Navigator, influenciado por o Mosaic, em 1994, que rapidamente se tornou o navegador mais popular de o mundo, respondendo por 90 % de todo o uso de a Web em o auge (consulte a participação de navegadores em a Web).", "relations": [{"arg1": "Andreessen", "rel": "logo fundou", "arg2": "sua própria empresa, chamada Netscape"}, {"arg1": "Andreessen", "rel": "fundou", "arg2": "sua própria empresa"}, {"arg1": "sua própria empresa", "rel": "chamada", "arg2": "Netscape"}, {"arg1": "Andreessen", "rel": "lançou", "arg2": "o Netscape Navigator em 1994"}, {"arg1": "Andreessen", "rel": "lançou", "arg2": "o Netscape Navigator"}, {"arg1": "o Netscape Navigator", "rel": "influenciado", "arg2": "por o Mosaic"}, {"arg1": "o Netscape Navigator", "rel": "rapidamente se tornou", "arg2": "o navegador mais popular de o mundo"}, {"arg1": "o Netscape Navigator", "rel": "se tornou", "arg2": "o navegador mais popular de o mundo"}, {"arg1": "o Netscape Navigator", "rel": "respondendo", "arg2": "por 90 % de todo o uso de a Web em o auge"}]}
+{"sentence": "Navegadores de a web modernos oferecem suporte a uma combinação de HTML e XHTML baseados em padrões e de fato, que devem ser renderizados de a mesma maneira por todos os navegadores.", "relations": [{"arg1": "Navegadores de a web modernos", "rel": "oferecem", "arg2": "suporte a uma combinação de HTML baseados em padrões"}, {"arg1": "Navegadores de a web modernos", "rel": "oferecem", "arg2": "suporte a uma combinação de XHTML baseados em padrões"}, {"arg1": "uma combinação de HTML e XHTML", "rel": "devem ser renderizados", "arg2": "de a mesma maneira por todos os navegadores"}]}
+{"sentence": "O principal objetivo de um navegador de a web é trazer recursos de informação para o usuário (recuperação ou busca), permitindo que eles visualizem as informações (exibição, renderização) e acessem outras informações (navegação, seguindo links).", "relations": [{"arg1": "O principal objetivo de um navegador de a web", "rel": "é", "arg2": "trazer recursos de informação para o usuário"}, {"arg1": "eles", "rel": "visualizem", "arg2": "as informações"}, {"arg1": "eles", "rel": "acessem", "arg2": "outras informações"}]}
+{"sentence": "Boston (pronuncia-se i / ˈbɒstən /) é a capital e maior cidade de a Commonwealth of Massachusetts em os Estados Unidos.", "relations": [{"arg1": "Boston", "rel": "é", "arg2": "a capital de a Commonwealth of Massachusetts em os Estados Unidos"}, {"arg1": "Boston", "rel": "é", "arg2": "a maior cidade de a Commonwealth of Massachusetts em os Estados Unidos"}, {"arg1": "Boston", "rel": "é", "arg2": "a capital"}, {"arg1": "Boston", "rel": "é", "arg2": "maior cidade"}]}
+{"sentence": "Sua rica história atrai muitos turistas, com o Faneuil Hall atraindo mais de 20 milhões de visitantes por ano.", "relations": [{"arg1": "Sua rica história", "rel": "atrai", "arg2": "muitos turistas"}, {"arg1": "o Faneuil Hall", "rel": "atraindo", "arg2": "mais de 20 milhões de visitantes por ano"}, {"arg1": "o Faneuil Hall", "rel": "atraindo", "arg2": "mais de 20 milhões de visitantes"}]}
+{"sentence": "Na época em que Boston foi declarada como cidade, a população era de 46.226 habitantes, enquanto a área de a cidade era de apenas 12 km2.", "relations": [{"arg1": "Boston", "rel": "foi declarada", "arg2": "como cidade"}, {"arg1": "a população", "rel": "era", "arg2": "de 46.226 habitantes na época"}, {"arg1": "a população", "rel": "era", "arg2": "de 46.226 habitantes"}, {"arg1": "a área de a cidade", "rel": "era", "arg2": "de apenas 12 km2"}]}
+{"sentence": "O rio Charles separa Boston de Watertown e a maioria de Cambridge, e a massa de Boston de seu próprio bairro de Charlestown.", "relations": [{"arg1": "O rio Charles", "rel": "separa", "arg2": "Boston de Watertown"}, {"arg1": "O rio Charles", "rel": "separa", "arg2": "Boston de a maioria de Cambridge"}, {"arg1": "O rio Charles", "rel": "separa", "arg2": "a massa de Boston de seu próprio bairro de Charlestown"}]}
+{"sentence": "O mês mais frio é janeiro, com uma média de 29,0 ° F (-1,7 ° C).", "relations": [{"arg1": "O mês mais frio", "rel": "é", "arg2": "janeiro, com uma média de 29,0 ° F (-1,7 ° C)"}, {"arg1": "O mês mais frio", "rel": "é", "arg2": "janeiro"}]}
+{"sentence": "O Boston Red Sox, membro fundador de a Liga Americana de Major League Baseball em 1901, joga seus jogos em casa em o Fenway Park, perto de Kenmore Square, em a seção Fenway de a cidade.", "relations": [{"arg1": "O Boston Red Sox", "rel": "joga", "arg2": "seus jogos em casa em o Fenway Park, perto de Kenmore Square, em a seção Fenway de a cidade"}, {"arg1": "O Boston Red Sox", "rel": "joga", "arg2": "seus jogos em casa em o Fenway Park"}, {"arg1": "O Boston Red Sox", "rel": "joga", "arg2": "seus jogos em casa"}]}
+{"sentence": "A cidade é servida por estações que representam todas as principais redes americanas, incluindo a WBZ-TV e sua estação irmã WSBK-TV (a antiga CBS O&O, a segunda afiliada de a MyNetwork TV), a WCVB-TV (ABC), a WHDH (NBC), WFXT (Fox) e WLVI (The CW).", "relations": [{"arg1": "A cidade", "rel": "é servida", "arg2": "por estações que representam todas as principais redes americanas"}, {"arg1": "A cidade", "rel": "é servida", "arg2": "por estações"}, {"arg1": "estações", "rel": "representam", "arg2": "todas as principais redes americanas"}]}
+{"sentence": "O Aeroporto Logan, localizado em East Boston e operado por a Massachusetts Port Authority (Massport), é o principal aeroporto de Boston.", "relations": [{"arg1": "O Aeroporto Logan", "rel": "localizado", "arg2": "em East Boston"}, {"arg1": "O Aeroporto Logan", "rel": "operado", "arg2": "por a Massachusetts Port Authority"}, {"arg1": "O Aeroporto Logan", "rel": "é", "arg2": "o principal aeroporto de Boston"}]}
+{"sentence": "O mês mais quente é Julho, com temperatura média de 73,4 ° F (23,0 ° C).", "relations": [{"arg1": "O mês mais quente", "rel": "é", "arg2": "Julho, com temperatura média de 73,4 ° F (23,0 ° C)"}, {"arg1": "O mês mais quente", "rel": "é", "arg2": "Julho"}]}
+{"sentence": "O Ateneu de Boston (uma de as bibliotecas independentes mais antigas de os Estados Unidos), o Museu Infantil de Boston, o Bull & Finch Pub (cujo prédio é conhecido por o programa de televisão Cheers), o Museum of Science e o New England Aquarium estão dentro de a cidade.", "relations": [{"arg1": "O Ateneu de Boston", "rel": "estão", "arg2": "dentro de a cidade"}, {"arg1": "o Museu Infantil de Boston", "rel": "estão", "arg2": "dentro de a cidade"}, {"arg1": "o Bull & Finch Pub", "rel": "estão", "arg2": "dentro de a cidade"}, {"arg1": "o Museum of Science", "rel": "estão", "arg2": "dentro de a cidade"}, {"arg1": "o New England Aquarium", "rel": "estão", "arg2": "dentro de a cidade"}]}
+{"sentence": "Um de os eventos esportivos mais conhecidos de a cidade é uma maratona de Boston, a corrida de 42,2 km que é a maratona anual mais antiga de o mundo, realizada em o dia de os patriotas em abril.", "relations": [{"arg1": "Um de os eventos esportivos mais conhecidos de a cidade", "rel": "é", "arg2": "uma maratona de Boston"}, {"arg1": "a corrida de 42,2 km", "rel": "é", "arg2": "a maratona anual mais antiga de o mundo"}, {"arg1": "a corrida de 42,2 km", "rel": "realizada", "arg2": "em o dia de os patriotas em abril"}]}
+{"sentence": "A órbita de o Compass-M1 é quase circular, tem uma altitude de 21.150 km e uma inclinação de 55,5 graus.", "relations": [{"arg1": "A órbita de o Compass-M1", "rel": "é", "arg2": "quase circular"}, {"arg1": "A órbita de o Compass-M1", "rel": "tem", "arg2": "uma altitude de 21.150 km"}, {"arg1": "A órbita de o Compass-M1", "rel": "tem", "arg2": "uma inclinação de 55,5 graus"}]}
+{"sentence": "O Compass-M1 transmite em 3 bandas E2, E5B e E6.", "relations": [{"arg1": "O Compass-M1", "rel": "transmite", "arg2": "em 3 bandas E2, E5B e E6"}, {"arg1": "O Compass-M1", "rel": "transmite", "arg2": "em 3 bandas"}]}
+{"sentence": "O Serviço Postal de a Somália (Correio de a Somália) é o serviço postal nacional de o Governo Federal de a Somália.", "relations": [{"arg1": "O Serviço Postal de a Somália", "rel": "é", "arg2": "o serviço postal nacional de o Governo Federal de a Somália"}]}
+{"sentence": "É a única e nacional língua oficial de Andorra e co-oficial de as comunidades autônomas espanholas de a Catalunha, Ilhas Baleares e Valência (onde a língua é conhecida como valenciana e existem padrões regionais).", "relations": [{"arg1": "a língua", "rel": "é conhecida", "arg2": "como valenciana em Valência"}, {"arg1": "a língua", "rel": "é conhecida", "arg2": "como valenciana"}]}
+{"sentence": "Logo após a Revolução Francesa (1789), a Primeira República Francesa proibiu o uso oficial e adotou políticas discriminatórias contra as línguas não padronizadas de a França (patois), como catalão, alsaciano, bretão, occitânico, flamengo e basco.", "relations": [{"arg1": "a Primeira República Francesa", "rel": "proibiu", "arg2": "o uso oficial logo após a Revolução Francesa"}, {"arg1": "a Primeira República Francesa", "rel": "proibiu", "arg2": "o uso oficial"}, {"arg1": "a Primeira República Francesa", "rel": "adotou", "arg2": "políticas discriminatórias contra as línguas não padronizadas de a França logo após a Revolução Francesa"}, {"arg1": "a Primeira República Francesa", "rel": "adotou", "arg2": "políticas discriminatórias contra as línguas não padronizadas de a França"}]}

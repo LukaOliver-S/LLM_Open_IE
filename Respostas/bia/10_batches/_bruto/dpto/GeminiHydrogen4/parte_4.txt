@@ -1,0 +1,981 @@
+
+
+# Extração de Relações Open Information Extraction (Open IE)
+
+
+
+## Objetivo
+
+
+
+Você receberá uma **lista de objetos JSON**, onde cada objeto contém uma sentença em português.
+
+
+
+```jsonl
+
+
+
+  {"sentence": "..."},
+
+  {"sentence": "..."},
+
+  {"sentence": "..."}
+
+
+
+```
+
+
+
+Cada objeto da lista deve ser processado de forma independente. Não deve haver mistura de informações entre sentenças diferentes e todas as sentenças devem ser analisadas. 
+
+
+
+---
+
+
+
+Você receberá **sentenças em português**.
+
+
+
+Sua tarefa é extrair **todas** as relações Open Information Extraction (Open IE) presentes em cada sentença.
+
+
+
+Toda saída deve permanecer associada à **sentença original** da qual as relações foram extraídas. Todas as relações em `relations` devem corresponder exclusivamente à sentença armazenada em `sentence`.
+
+
+
+Cada relação deve ser representada por uma tripla no formato:
+
+
+
+```json
+
+{
+
+  "arg1": "...",
+
+  "rel": "...",
+
+  "arg2": "..."
+
+}
+
+```
+
+
+
+---
+
+
+
+
+
+Uma sentença pode conter nenhuma, uma ou várias relações. Sempre que houver múltiplas relações válidas, extraia todas elas.
+
+
+
+Siga rigorosamente as regras abaixo.
+
+
+
+---
+
+
+
+# Regras Estruturais
+
+
+
+## E1. Estrutura Fundamental da Tripla
+
+
+
+Cada tripla deve conter:
+
+
+
+* **ARG1:** sujeito ou entidade principal da relação;
+
+* **REL:** relação verbal que conecta os argumentos;
+
+* **ARG2:** complemento principal da relação.
+
+
+
+Toda tripla deve representar uma relação sintaticamente válida presente na sentença.
+
+
+
+---
+
+
+
+## E2. Construção de ARG1
+
+
+
+ARG1 deve corresponder ao sujeito da oração, tanto em construções na voz ativa quanto na voz passiva.
+
+
+
+Além do núcleo do sujeito, inclua todos os elementos pertencentes ao sintagma nominal que sejam relevantes para identificá-lo, tais como:
+
+
+
+* modificadores numéricos;
+
+* modificadores adverbiais;
+
+* modificadores nominais;
+
+* modificadores adjetivais;
+
+* dependentes sintáticos;
+
+* objetos associados;
+
+* elementos coordenados;
+
+* apostos, apenas quando representarem expressões numéricas identificadas pelo analisador morfossintático.
+
+
+
+O objetivo é representar o sujeito da forma mais completa possível.
+
+
+
+---
+
+
+
+## E3. Construção da Relação (REL)
+
+
+
+REL deve ser construída a partir do verbo principal da oração.
+
+
+
+Quando houver uma construção participial, ela também poderá constituir a relação principal.
+
+
+
+Inclua na relação:
+
+
+
+### Antes do verbo principal
+
+
+
+* verbos auxiliares;
+
+* verbos auxiliares da voz passiva;
+
+* verbos copulativos;
+
+* objetos diretos e indiretos, quando fizerem parte da construção verbal;
+
+* modificadores adverbiais;
+
+* pronomes expletivos;
+
+* marcadores subordinativos.
+
+
+
+### Depois do verbo principal
+
+
+
+* pronomes expletivos;
+
+* construções participiais.
+
+
+
+---
+
+
+
+## E4. Construção de ARG2
+
+
+
+ARG2 deve corresponder ao complemento principal da relação.
+
+
+
+Devem ser incorporados:
+
+
+
+### Objetos
+
+
+
+* objetos diretos;
+
+* objetos indiretos.
+
+
+
+### Modificadores
+
+
+
+* modificadores nominais;
+
+* modificadores numéricos;
+
+* modificadores adverbiais;
+
+* modificadores adjetivais.
+
+
+
+### Complementos
+
+
+
+* complementos verbais abertos, isto é, complementos que não possuem sujeito próprio.
+
+
+
+### Orações
+
+
+
+* orações subordinadas completivas;
+
+* orações subordinadas adverbiais, desde que não possuam sujeito próprio explícito.
+
+
+
+### Outros elementos
+
+
+
+* orações relativas;
+
+* elementos coordenados;
+
+* apostos;
+
+* construções participiais;
+
+* outros dependentes sintáticos.
+
+
+
+O objetivo é representar o complemento da relação da forma mais completa possível.
+
+
+
+---
+
+
+
+## E5. Tratamento das Preposições
+
+
+
+As preposições regidas pelo verbo devem permanecer incorporadas ao ARG2.
+
+
+
+Elas não devem ser deslocadas para REL.
+
+
+
+As locuções prepositivas lexicalizadas devem permanecer intactas, sem fragmentação.
+
+
+
+---
+
+
+
+## E6. Extração por Busca em Profundidade (DFS)
+
+
+
+Considere a construção da tripla seguindo a lógica de uma busca em profundidade:
+
+
+
+1. identificar ARG1;
+
+2. identificar REL;
+
+3. identificar todos os argumentos dependentes da relação (ARG2).
+
+
+
+A extração deve continuar até atingir os elementos folha relevantes da estrutura.
+
+
+
+Quando dois ARG2 distintos puderem ser combinados para produzir um complemento mais informativo sem alterar o significado da relação, ambos poderão compor o mesmo ARG2.
+
+
+
+---
+
+
+
+## E7. Não Duplicação
+
+
+
+Não produza triplas idênticas.
+
+
+
+Caso diferentes regras resultem exatamente na mesma tripla `(ARG1, REL, ARG2)`, mantenha apenas uma ocorrência.
+
+
+
+---
+
+
+
+# Regras Semânticas
+
+
+
+## S1. Coordenação
+
+
+
+Coordenações introduzidas pelas conjunções **"e"** ou **"ou"** devem gerar novas relações independentes.
+
+
+
+### Coordenação verbal
+
+
+
+Quando houver verbos coordenados, gere uma nova tripla para cada verbo coordenado.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`Eu compro e vendo banana, maçã e pera.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "Eu compro e vendo banana, maçã e pera.",
+
+  "relations": [
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "compro",
+
+      "arg2": "banana"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "compro",
+
+      "arg2": "maçã"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "compro",
+
+      "arg2": "pera"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "vendo",
+
+      "arg2": "banana"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "vendo",
+
+      "arg2": "maçã"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "vendo",
+
+      "arg2": "pera"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+### Coordenação de argumentos
+
+
+
+Quando ARG1 ou ARG2 contiver elementos coordenados, gere uma tripla independente para cada elemento coordenado, sempre que isso preservar o sentido.
+
+
+
+---
+
+
+
+## S2. Orações Subordinadas
+
+
+
+### S2.1 Orações Relativas
+
+
+
+Quando um pronome relativo exercer a função de sujeito da oração relativa, substitua-o pelo seu antecedente explícito.
+
+
+
+Utilize o antecedente como ARG1.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`A espada, que estava em casa, foi levada ontem.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "A espada, que estava em casa, foi levada ontem.",
+
+  "relations": [
+
+    {
+
+      "arg1": "A espada",
+
+      "rel": "estava",
+
+      "arg2": "em casa"
+
+    },
+
+    {
+
+      "arg1": "A espada",
+
+      "rel": "foi levada",
+
+      "arg2": "ontem"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+---
+
+
+
+### S2.2 Orações Subordinadas Completivas
+
+
+
+Quando uma oração subordinada completar semanticamente outra oração, gere uma tripla para a oração principal e outra para a oração subordinada.
+
+
+
+A conjunção **"que"**, quando presente, deve permanecer como parte de ARG2 da oração principal.
+
+
+
+Aplique esta regra apenas quando ambas as orações possuírem sujeito explícito.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`Ele afirmou que o cidadão se comportou bem.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "Ele afirmou que o cidadão se comportou bem.",
+
+  "relations": [
+
+    {
+
+      "arg1": "Ele",
+
+      "rel": "afirmou",
+
+      "arg2": "que o cidadão se comportou bem"
+
+    },
+
+    {
+
+      "arg1": "o cidadão",
+
+      "rel": "se comportou",
+
+      "arg2": "bem"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+Se a oração subordinada não possuir sujeito explícito, não gere o encadeamento entre a oração principal e a subordinada; nesse caso, mantenha a subordinada em ARG2 da oração principal.
+
+
+
+---
+
+
+
+### S2.3 Orações Subordinadas Adverbiais
+
+
+
+Orações subordinadas adverbiais devem receber o mesmo tratamento das orações subordinadas completivas, preservando a relação entre as duas orações.
+
+
+
+---
+
+
+
+## S3. Relações de Aposto
+
+
+
+Quando um aposto corresponder a um nome próprio, gere uma nova tripla sintética utilizando o verbo **"é"** como REL.
+
+
+
+O termo principal constitui ARG1.
+
+
+
+O aposto constitui ARG2.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`O diretor do hospital, Júlio, vendeu sua fazenda.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "O diretor do hospital, Júlio, vendeu sua fazenda.",
+
+  "relations": [
+
+    {
+
+      "arg1": "O diretor do hospital",
+
+      "rel": "vendeu",
+
+      "arg2": "sua fazenda"
+
+    },
+
+    {
+
+      "arg1": "O diretor do hospital",
+
+      "rel": "é",
+
+      "arg2": "Júlio"
+
+    },
+
+    {
+
+      "arg1": "Júlio",
+
+      "rel": "é",
+
+      "arg2": "O diretor do hospital"
+
+    },
+
+    {
+
+      "arg1": "Júlio",
+
+      "rel": "vendeu",
+
+      "arg2": "sua fazenda"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+---
+
+
+
+## S4. Transitividade de Apostos
+
+
+
+Considere o termo principal e seu aposto como semanticamente equivalentes.
+
+
+
+Após extrair as triplas principais, gere novas triplas substituindo o termo principal pelo aposto, ou o aposto pelo termo principal, sempre que essa substituição preservar o significado da relação.
+
+
+
+---
+
+
+
+## S5. Coerência e Minimalidade
+
+
+
+Extraia apenas relações que possuam interpretação semântica completa e coerente.
+
+
+
+Priorize fatos minimais que não embutam, sem necessidade, outra relação separável dentro de ARG1 ou ARG2.
+
+
+
+Quando uma relação mais completa puder ser decomposta em fatos menores sem perda relevante de significado, gere também as versões mais atômicas.
+
+
+
+---
+
+
+
+## S6. Ausência de Inferência Externa
+
+
+
+Não utilize conhecimento de mundo, inferência lógica externa ou informação não expressa na sentença.
+
+
+
+Extraia apenas relações explicitamente presentes ou diretamente implicadas pelo texto.
+
+
+
+---
+
+
+
+# Formato da Resposta
+
+
+
+Retorne **exclusivamente um objeto JSON válido**.
+
+
+
+O objeto deve possuir obrigatoriamente os seguintes campos:
+
+
+
+* **sentence:** deve conter exatamente a sentença de entrada, sem qualquer modificação, correção, normalização ou reescrita.
+
+* **relations:** um array contendo todas as triplas Open IE extraídas da sentença.
+
+
+
+As relações devem ser retornadas, sempre que possível, na mesma ordem em que aparecem na sentença.
+
+
+
+Caso nenhuma relação válida seja encontrada, retorne `relations` como array vazio.
+
+
+
+Não inclua explicações, comentários, Markdown ou qualquer texto adicional.
+
+
+
+Formato esperado:
+
+
+
+```json
+
+{
+
+  "sentence": "A universidade é afiliada à Congregação de Santa Cruz.",
+
+  "relations": [
+
+    {
+
+      "arg1": "A universidade",
+
+      "rel": "é",
+
+      "arg2": "afiliada à Congregação de Santa Cruz"
+
+    },
+
+    {
+
+      "arg1": "A universidade",
+
+      "rel": "é afiliada a",
+
+      "arg2": "a Congregação de Santa Cruz"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+Caso não exista nenhuma relação Open IE válida:
+
+
+
+```json
+
+{
+
+  "sentence": "A universidade é afiliada à Congregação de Santa Cruz.",
+
+  "relations": []
+
+}
+
+```
+
+
+
+Processe as seguintes sentenças:
+[
+  {
+    "sentence": "A segunda verdade é que a origem de dukkha pode ser conhecida."
+  },
+  {
+    "sentence": "O ensinamento zen-budista geralmente é cheio de paradoxos, a fim de afrouxar o domínio de o ego e facilitar a penetração em o reino de o Eu Verdadeiro ou Eu Sem Forma, que é equiparado a o próprio Buda."
+  },
+  {
+    "sentence": "Além disso, o Budismo de o Leste Asiático reconhece alguns sutras considerados pelos estudiosos de origem chinesa e não indiana."
+  },
+  {
+    "sentence": "O programa foi renomeado como American Idol The Search for a Superstar e estreou em o verão de 2002."
+  },
+  {
+    "sentence": "No entanto, em a sexta temporada, durante o primeiro episódio de a série Idol Gives Back, nenhum participante foi eliminado, mas em a semana seguinte, dois foram enviados para casa."
+  },
+  {
+    "sentence": "Após o sucesso de a primeira temporada, a segunda temporada foi a o ar em janeiro de 2003."
+  },
+  {
+    "sentence": "Desde então, Underwood vendeu 65 milhões de discos em todo o mundo e se tornou o concorrente de maior sucesso em os EUA, vendendo mais de 14 milhões de cópias de álbuns em os EUA e mais Underwood ganhou sete prêmios Grammy, o maior número de Grammys de um ex-aluno de o American Idol."
+  },
+  {
+    "sentence": "No final de a temporada de 23 de maio, Jordin Sparks foi declarado vencedor, sendo o segundo colocado Blake Lewis."
+  },
+  {
+    "sentence": "De acordo com o vencedor de a quinta temporada, Taylor Hicks, que é de o estado de o Alabama, as pessoas de o sul têm muito orgulho... Então, elas são inflexíveis em apoiar os competidores que se saem bem de seu estado ou região."
+  },
+  {
+    "sentence": "A sexta temporada foi a primeira temporada em que os resultados médios mostram uma classificação mais alta de o que as etapas de a competição (diferente de as temporadas anteriores) e se tornou a segunda melhor classificação de a série após a temporada anterior."
+  },
+  {
+    "sentence": "O American Idol foi indicado a o Programa de Competição de Realidade Excepcional de o Emmy por nove anos, mas nunca venceu."
+  },
+  {
+    "sentence": "Na turnê de a 12ª temporada, um semi-finalista que venceu uma cantada também foi adicionado a a turnê."
+  },
+  {
+    "sentence": "A apresentadora de talk show ganhadora de o Emmy, Ellen Degeneres substituiu Paula Abdul nessa temporada, mas saiu depois de apenas uma temporada."
+  },
+  {
+    "sentence": "Em 1758, o taxonomista Linnaeus publicou em o Systema Naturae uma categorização de espécies que incluía as espécies de Canis."
+  },
+  {
+    "sentence": "Nos países asiáticos, como China, Coréia e Japão, os cães são vistos como protetores gentis."
+  },
+  {
+    "sentence": "O pai de uma ninhada é chamado de dam, e a mãe é chamada de sire.: {"
+  },
+  {
+    "sentence": "Cazaquistão: O primeiro portador de tocha em Almaty, onde a tocha olímpica chegou por a primeira vez em 2 de abril, foi o presidente de o Nursultan Nazarbaev de o Cazaquistão."
+  },
+  {
+    "sentence": "Rússia Em 5 de abril, a tocha olímpica chegou a São Petersburgo, em a Rússia."
+  },
+  {
+    "sentence": "Em meio a a pressão de ambas as direções, o primeiro-ministro Gordon Brown recebeu a tocha de o lado de fora de a 10 Downing Street sem segurá-la ou tocá-la."
+  },
+  {
+    "sentence": "Em 1º de abril de 2008, o Conselho de Supervisores de São Francisco aprovou uma resolução que tratava de as questões de direitos humanos quando a tocha olímpica de Pequim chegasse a São Francisco em 9 de abril."
+  },
+  {
+    "sentence": "A mídia indiana informou que o ministro de o Comércio de a Índia, Kamal Nath, cancelou uma viagem oficial a Pequim em protesto, apesar de fontes de a Nath e de a China terem negado.:"
+  },
+  {
+    "sentence": "A Organização de as Nações Unidas e sua agência infantil UNICEF retiraram sua equipe, dizendo que não tinha certeza de que o evento ajudaria sua missão de aumentar a conscientização sobre as condições de as crianças e em meio a preocupações de que o revezamento fosse usado como um golpe de propaganda."
+  },
+  {
+    "sentence": "Em vez de ensinar pequenas partes de um grande número de assuntos, Whitehead advogou o ensino de relativamente poucos conceitos importantes que o aluno poderia vincular organicamente a muitas áreas diferentes de o conhecimento, descobrindo sua aplicação em a vida real."
+  },
+  {
+    "sentence": "Whitehead argumentou que a realidade consiste em processos e não em objetos materiais, e que os processos são melhor definidos por suas relações com outros processos, rejeitando assim a teoria de que a realidade é fundamentalmente construída por pedaços de matéria que existem independentemente um de o outro."
+  },
+  {
+    "sentence": "Alfred North Whitehead nasceu em Ramsgate, Kent, Inglaterra, em 1861."
+  },
+  {
+    "sentence": "Em 1918, as responsabilidades acadêmicas de Whitehead começaram a se expandir seriamente, quando ele aceitou uma série de altos cargos administrativos dentro de o sistema de a Universidade de Londres, de os quais o Imperial College London era membro em a época."
+  },
+  {
+    "sentence": "A biografia de dois volumes de Whitehead de Victor Lowe é a apresentação mais definitiva de a vida de Whitehead."
+  }
+]
+
+IMPORTANTE -- formato de saída obrigatório: JSONL (um objeto JSON por linha, SEM colchetes
+envolvendo tudo e SEM vírgula entre os objetos). Cada linha corresponde a uma sentença, na
+mesma ordem em que foram apresentadas acima. Exemplo (frases fictícias, apenas para ilustrar o
+formato -- não fazem parte do texto a ser processado):
+
+{"sentence":"Maria Silva, nascida em 1990, trabalha como engenheira, e seu marido, Carlos Silva, que se formou em 2010, trabalha como médico.","relations":[{"arg1":"Maria Silva","rel":"nascida em","arg2":"1990"},{"arg1":"Maria Silva","rel":"trabalha como","arg2":"engenheira"},{"arg1":"Carlos Silva","rel":"se formou em","arg2":"2010"},{"arg1":"Carlos Silva","rel":"trabalha como","arg2":"médico"},{"arg1":"seu marido","rel":"é","arg2":"Carlos Silva"}]}
+{"sentence":"A empresa Alfa Tech lançou um novo produto em março de 2022.","relations":[{"arg1":"A empresa Alfa Tech","rel":"lançou","arg2":"um novo produto"},{"arg1":"A empresa Alfa Tech","rel":"lançou em","arg2":"março de 2022"}]}
+
+Não devolva as triplas soltas fora de "relations"; não repita a sentença como um item separado; se
+nenhuma relação for encontrada em uma sentença, use "relations": [].
+
+E Cada trecho do texto acima está marcado com [S1], [S2], etc. -- cada marcador indica o INÍCIO de
+uma sentença nova e independente. NUNCA funda duas sentenças de marcadores diferentes em um único
+item de saída, mesmo que pareçam continuar uma a outra. Gere exatamente um item de saída por
+marcador [Sn], com o texto daquele trecho (sem incluir "[Sn]") no campo "sentence".
+{"sentence": "A segunda verdade é que a origem de dukkha pode ser conhecida.", "relations": [{"arg1": "A segunda verdade", "rel": "é", "arg2": "que a origem de dukkha pode ser conhecida"}, {"arg1": "a origem de dukkha", "rel": "pode ser conhecida", "arg2": ""}]}
+{"sentence": "O ensinamento zen-budista geralmente é cheio de paradoxos, a fim de afrouxar o domínio de o ego e facilitar a penetração em o reino de o Eu Verdadeiro ou Eu Sem Forma, que é equiparado a o próprio Buda.", "relations": [{"arg1": "O ensinamento zen-budista", "rel": "geralmente é", "arg2": "cheio de paradoxos"}, {"arg1": "O ensinamento zen-budista", "rel": "é", "arg2": "cheio de paradoxos"}, {"arg1": "o reino de o Eu Verdadeiro", "rel": "é equiparado", "arg2": "a o próprio Buda"}, {"arg1": "Eu Sem Forma", "rel": "é equiparado", "arg2": "a o próprio Buda"}]}
+{"sentence": "Além disso, o Budismo de o Leste Asiático reconhece alguns sutras considerados pelos estudiosos de origem chinesa e não indiana.", "relations": [{"arg1": "o Budismo de o Leste Asiático", "rel": "reconhece", "arg2": "alguns sutras"}, {"arg1": "alguns sutras", "rel": "considerados", "arg2": "pelos estudiosos de origem chinesa"}, {"arg1": "alguns sutras", "rel": "considerados", "arg2": "pelos estudiosos de origem não indiana"}]}
+{"sentence": "O programa foi renomeado como American Idol The Search for a Superstar e estreou em o verão de 2002.", "relations": [{"arg1": "O programa", "rel": "foi renomeado", "arg2": "como American Idol The Search for a Superstar"}, {"arg1": "O programa", "rel": "estreou", "arg2": "em o verão de 2002"}]}
+{"sentence": "No entanto, em a sexta temporada, durante o primeiro episódio de a série Idol Gives Back, nenhum participante foi eliminado, mas em a semana seguinte, dois foram enviados para casa.", "relations": [{"arg1": "nenhum participante", "rel": "foi eliminado", "arg2": "em a sexta temporada durante o primeiro episódio de a série Idol Gives Back"}, {"arg1": "nenhum participante", "rel": "foi eliminado", "arg2": ""}, {"arg1": "dois", "rel": "foram enviados", "arg2": "para casa em a semana seguinte"}, {"arg1": "dois", "rel": "foram enviados", "arg2": "para casa"}]}
+{"sentence": "Após o sucesso de a primeira temporada, a segunda temporada foi a o ar em janeiro de 2003.", "relations": [{"arg1": "a segunda temporada", "rel": "foi", "arg2": "a o ar em janeiro de 2003 após o sucesso de a primeira temporada"}, {"arg1": "a segunda temporada", "rel": "foi", "arg2": "a o ar em janeiro de 2003"}, {"arg1": "a segunda temporada", "rel": "foi", "arg2": "a o ar"}]}
+{"sentence": "Desde então, Underwood vendeu 65 milhões de discos em todo o mundo e se tornou o concorrente de maior sucesso em os EUA, vendendo mais de 14 milhões de cópias de álbuns em os EUA e mais Underwood ganhou sete prêmios Grammy, o maior número de Grammys de um ex-aluno de o American Idol.", "relations": [{"arg1": "Underwood", "rel": "vendeu", "arg2": "65 milhões de discos em todo o mundo desde então"}, {"arg1": "Underwood", "rel": "vendeu", "arg2": "65 milhões de discos em todo o mundo"}, {"arg1": "Underwood", "rel": "vendeu", "arg2": "65 milhões de discos"}, {"arg1": "Underwood", "rel": "se tornou", "arg2": "o concorrente de maior sucesso em os EUA"}, {"arg1": "Underwood", "rel": "vendendo", "arg2": "mais de 14 milhões de cópias de álbuns em os EUA"}, {"arg1": "Underwood", "rel": "ganhou", "arg2": "sete prêmios Grammy, o maior número de Grammys de um ex-aluno de o American Idol"}, {"arg1": "Underwood", "rel": "ganhou", "arg2": "sete prêmios Grammy"}]}
+{"sentence": "No final de a temporada de 23 de maio, Jordin Sparks foi declarado vencedor, sendo o segundo colocado Blake Lewis.", "relations": [{"arg1": "Jordin Sparks", "rel": "foi declarado", "arg2": "vencedor no final de a temporada de 23 de maio"}, {"arg1": "Jordin Sparks", "rel": "foi declarado", "arg2": "vencedor"}, {"arg1": "o segundo colocado", "rel": "sendo", "arg2": "Blake Lewis"}]}
+{"sentence": "De acordo com o vencedor de a quinta temporada, Taylor Hicks, que é de o estado de o Alabama, as pessoas de o sul têm muito orgulho... Então, elas são inflexíveis em apoiar os competidores que se saem bem de seu estado ou região.", "relations": [{"arg1": "o vencedor de a quinta temporada", "rel": "é", "arg2": "Taylor Hicks"}, {"arg1": "Taylor Hicks", "rel": "é", "arg2": "o vencedor de a quinta temporada"}, {"arg1": "Taylor Hicks", "rel": "é", "arg2": "de o estado de o Alabama"}, {"arg1": "o vencedor de a quinta temporada", "rel": "é", "arg2": "de o estado de o Alabama"}, {"arg1": "as pessoas de o sul", "rel": "têm", "arg2": "muito orgulho"}, {"arg1": "elas", "rel": "são", "arg2": "inflexíveis em apoiar os competidores"}, {"arg1": "os competidores", "rel": "se saem", "arg2": "bem de seu estado"}, {"arg1": "os competidores", "rel": "se saem", "arg2": "bem de sua região"}]}
+{"sentence": "A sexta temporada foi a primeira temporada em que os resultados médios mostram uma classificação mais alta de o que as etapas de a competição (diferente de as temporadas anteriores) e se tornou a segunda melhor classificação de a série após a temporada anterior.", "relations": [{"arg1": "A sexta temporada", "rel": "foi", "arg2": "a primeira temporada"}, {"arg1": "os resultados médios", "rel": "mostram", "arg2": "uma classificação mais alta de o que as etapas de a competição"}, {"arg1": "A sexta temporada", "rel": "se tornou", "arg2": "a segunda melhor classificação de a série após a temporada anterior"}, {"arg1": "A sexta temporada", "rel": "se tornou", "arg2": "a segunda melhor classificação de a série"}]}
+{"sentence": "O American Idol foi indicado a o Programa de Competição de Realidade Excepcional de o Emmy por nove anos, mas nunca venceu.", "relations": [{"arg1": "O American Idol", "rel": "foi indicado", "arg2": "a o Programa de Competição de Realidade Excepcional de o Emmy por nove anos"}, {"arg1": "O American Idol", "rel": "foi indicado", "arg2": "a o Programa de Competição de Realidade Excepcional de o Emmy"}, {"arg1": "O American Idol", "rel": "nunca venceu", "arg2": ""}]}
+{"sentence": "Na turnê de a 12ª temporada, um semi-finalista que venceu uma cantada também foi adicionado a a turnê.", "relations": [{"arg1": "um semi-finalista", "rel": "venceu", "arg2": "uma cantada"}, {"arg1": "um semi-finalista", "rel": "também foi adicionado", "arg2": "a a turnê na turnê de a 12ª temporada"}, {"arg1": "um semi-finalista", "rel": "foi adicionado", "arg2": "a a turnê"}]}
+{"sentence": "A apresentadora de talk show ganhadora de o Emmy, Ellen Degeneres substituiu Paula Abdul nessa temporada, mas saiu depois de apenas uma temporada.", "relations": [{"arg1": "A apresentadora de talk show ganhadora de o Emmy", "rel": "é", "arg2": "Ellen Degeneres"}, {"arg1": "Ellen Degeneres", "rel": "é", "arg2": "A apresentadora de talk show ganhadora de o Emmy"}, {"arg1": "Ellen Degeneres", "rel": "substituiu", "arg2": "Paula Abdul nessa temporada"}, {"arg1": "Ellen Degeneres", "rel": "substituiu", "arg2": "Paula Abdul"}, {"arg1": "A apresentadora de talk show ganhadora de o Emmy", "rel": "substituiu", "arg2": "Paula Abdul nessa temporada"}, {"arg1": "Ellen Degeneres", "rel": "saiu", "arg2": "depois de apenas uma temporada"}, {"arg1": "A apresentadora de talk show ganhadora de o Emmy", "rel": "saiu", "arg2": "depois de apenas uma temporada"}]}
+{"sentence": "Em 1758, o taxonomista Linnaeus publicou em o Systema Naturae uma categorização de espécies que incluía as espécies de Canis.", "relations": [{"arg1": "o taxonomista", "rel": "é", "arg2": "Linnaeus"}, {"arg1": "Linnaeus", "rel": "é", "arg2": "o taxonomista"}, {"arg1": "Linnaeus", "rel": "publicou", "arg2": "em o Systema Naturae uma categorização de espécies em 1758"}, {"arg1": "Linnaeus", "rel": "publicou", "arg2": "uma categorização de espécies"}, {"arg1": "o taxonomista", "rel": "publicou", "arg2": "uma categorização de espécies"}, {"arg1": "uma categorização de espécies", "rel": "incluía", "arg2": "as espécies de Canis"}]}
+{"sentence": "Nos países asiáticos, como China, Coréia e Japão, os cães são vistos como protetores gentis.", "relations": [{"arg1": "os cães", "rel": "são vistos", "arg2": "como protetores gentis nos países asiáticos"}, {"arg1": "os cães", "rel": "são vistos", "arg2": "como protetores gentis"}]}
+{"sentence": "O pai de uma ninhada é chamado de dam, e a mãe é chamada de sire.: {", "relations": [{"arg1": "O pai de uma ninhada", "rel": "é chamado", "arg2": "de dam"}, {"arg1": "a mãe", "rel": "é chamada", "arg2": "de sire"}]}
+{"sentence": "Cazaquistão: O primeiro portador de tocha em Almaty, onde a tocha olímpica chegou por a primeira vez em 2 de abril, foi o presidente de o Nursultan Nazarbaev de o Cazaquistão.", "relations": [{"arg1": "a tocha olímpica", "rel": "chegou", "arg2": "por a primeira vez em 2 de abril em Almaty"}, {"arg1": "a tocha olímpica", "rel": "chegou", "arg2": "em 2 de abril em Almaty"}, {"arg1": "O primeiro portador de tocha em Almaty", "rel": "foi", "arg2": "o presidente de o Nursultan Nazarbaev de o Cazaquistão"}]}
+{"sentence": "Rússia Em 5 de abril, a tocha olímpica chegou a São Petersburgo, em a Rússia.", "relations": [{"arg1": "a tocha olímpica", "rel": "chegou", "arg2": "a São Petersburgo, em a Rússia em 5 de abril"}, {"arg1": "a tocha olímpica", "rel": "chegou", "arg2": "a São Petersburgo, em a Rússia"}]}
+{"sentence": "Em meio a a pressão de ambas as direções, o primeiro-ministro Gordon Brown recebeu a tocha de o lado de fora de a 10 Downing Street sem segurá-la ou tocá-la.", "relations": [{"arg1": "o primeiro-ministro", "rel": "é", "arg2": "Gordon Brown"}, {"arg1": "Gordon Brown", "rel": "é", "arg2": "o primeiro-ministro"}, {"arg1": "Gordon Brown", "rel": "recebeu", "arg2": "a tocha de o lado de fora de a 10 Downing Street"}, {"arg1": "Gordon Brown", "rel": "recebeu", "arg2": "a tocha"}, {"arg1": "o primeiro-ministro", "rel": "recebeu", "arg2": "a tocha de o lado de fora de a 10 Downing Street"}, {"arg1": "o primeiro-ministro", "rel": "recebeu", "arg2": "a tocha"}]}
+{"sentence": "Em 1º de abril de 2008, o Conselho de Supervisores de São Francisco aprovou uma resolução que tratava de as questões de direitos humanos quando a tocha olímpica de Pequim chegasse a São Francisco em 9 de abril.", "relations": [{"arg1": "o Conselho de Supervisores de São Francisco", "rel": "aprovou", "arg2": "uma resolução em 1º de abril de 2008"}, {"arg1": "o Conselho de Supervisores de São Francisco", "rel": "aprovou", "arg2": "uma resolução"}, {"arg1": "uma resolução", "rel": "tratava", "arg2": "de as questões de direitos humanos"}, {"arg1": "a tocha olímpica de Pequim", "rel": "chegasse", "arg2": "a São Francisco em 9 de abril"}, {"arg1": "a tocha olímpica de Pequim", "rel": "chegasse", "arg2": "a São Francisco"}]}
+{"sentence": "A mídia indiana informou que o ministro de o Comércio de a Índia, Kamal Nath, cancelou uma viagem oficial a Pequim em protesto, apesar de fontes de a Nath e de a China terem negado.:", "relations": [{"arg1": "A mídia indiana", "rel": "informou", "arg2": "que o ministro de o Comércio de a Índia, Kamal Nath, cancelou uma viagem oficial a Pequim em protesto"}, {"arg1": "o ministro de o Comércio de a Índia", "rel": "é", "arg2": "Kamal Nath"}, {"arg1": "Kamal Nath", "rel": "é", "arg2": "o ministro de o Comércio de a Índia"}, {"arg1": "Kamal Nath", "rel": "cancelou", "arg2": "uma viagem oficial a Pequim em protesto"}, {"arg1": "Kamal Nath", "rel": "cancelou", "arg2": "uma viagem oficial a Pequim"}, {"arg1": "o ministro de o Comércio de a Índia", "rel": "cancelou", "arg2": "uma viagem oficial a Pequim em protesto"}, {"arg1": "o ministro de o Comércio de a Índia", "rel": "cancelou", "arg2": "uma viagem oficial a Pequim"}]}
+{"sentence": "A Organização de as Nações Unidas e sua agência infantil UNICEF retiraram sua equipe, dizendo que não tinha certeza de que o evento ajudaria sua missão de aumentar a conscientização sobre as condições de as crianças e em meio a preocupações de que o revezamento fosse usado como um golpe de propaganda.", "relations": [{"arg1": "A Organização de as Nações Unidas", "rel": "retiraram", "arg2": "sua equipe"}, {"arg1": "sua agência infantil", "rel": "é", "arg2": "UNICEF"}, {"arg1": "UNICEF", "rel": "é", "arg2": "sua agência infantil"}, {"arg1": "UNICEF", "rel": "retiraram", "arg2": "sua equipe"}, {"arg1": "sua agência infantil", "rel": "retiraram", "arg2": "sua equipe"}, {"arg1": "o evento", "rel": "ajudaria", "arg2": "sua missão de aumentar a conscientização sobre as condições de as crianças"}, {"arg1": "o revezamento", "rel": "fosse usado", "arg2": "como um golpe de propaganda"}]}
+{"sentence": "Em vez de ensinar pequenas partes de um grande número de assuntos, Whitehead advogou o ensino de relativamente poucos conceitos importantes que o aluno poderia vincular organicamente a muitas áreas diferentes de o conhecimento, descobrindo sua aplicação em a vida real.", "relations": [{"arg1": "Whitehead", "rel": "advogou", "arg2": "o ensino de relativamente poucos conceitos importantes"}, {"arg1": "o aluno", "rel": "poderia vincular organicamente", "arg2": "relativamente poucos conceitos importantes a muitas áreas diferentes de o conhecimento"}, {"arg1": "o aluno", "rel": "poderia vincular", "arg2": "relativamente poucos conceitos importantes a muitas áreas diferentes de o conhecimento"}]}
+{"sentence": "Whitehead argumentou que a realidade consiste em processos e não em objetos materiais, e que os processos são melhor definidos por suas relações com outros processos, rejeitando assim a teoria de que a realidade é fundamentalmente construída por pedaços de matéria que existem independentemente um de o outro.", "relations": [{"arg1": "Whitehead", "rel": "argumentou", "arg2": "que a realidade consiste em processos e não em objetos materiais"}, {"arg1": "Whitehead", "rel": "argumentou", "arg2": "que os processos são melhor definidos por suas relações com outros processos"}, {"arg1": "a realidade", "rel": "consiste", "arg2": "em processos"}, {"arg1": "os processos", "rel": "são melhor definidos", "arg2": "por suas relações com outros processos"}, {"arg1": "os processos", "rel": "são definidos", "arg2": "por suas relações com outros processos"}, {"arg1": "Whitehead", "rel": "rejeitando assim", "arg2": "a teoria de que a realidade é fundamentalmente construída por pedaços de matéria que existem independentemente um de o outro"}, {"arg1": "a realidade", "rel": "é fundamentalmente construída", "arg2": "por pedaços de matéria"}, {"arg1": "pedaços de matéria", "rel": "existem", "arg2": "independentemente um de o outro"}]}
+{"sentence": "Alfred North Whitehead nasceu em Ramsgate, Kent, Inglaterra, em 1861.", "relations": [{"arg1": "Alfred North Whitehead", "rel": "nasceu", "arg2": "em Ramsgate, Kent, Inglaterra, em 1861"}, {"arg1": "Alfred North Whitehead", "rel": "nasceu", "arg2": "em Ramsgate, Kent, Inglaterra"}, {"arg1": "Alfred North Whitehead", "rel": "nasceu", "arg2": "em 1861"}]}
+{"sentence": "Em 1918, as responsabilidades acadêmicas de Whitehead começaram a se expandir seriamente, quando ele aceitou uma série de altos cargos administrativos dentro de o sistema de a Universidade de Londres, de os quais o Imperial College London era membro em a época.", "relations": [{"arg1": "as responsabilidades acadêmicas de Whitehead", "rel": "começaram a se expandir seriamente", "arg2": "em 1918"}, {"arg1": "as responsabilidades acadêmicas de Whitehead", "rel": "começaram a se expandir", "arg2": "em 1918"}, {"arg1": "ele", "rel": "aceitou", "arg2": "uma série de altos cargos administrativos dentro de o sistema de a Universidade de Londres"}, {"arg1": "o Imperial College London", "rel": "era", "arg2": "membro de o sistema de a Universidade de Londres em a época"}, {"arg1": "o Imperial College London", "rel": "era", "arg2": "membro"}]}
+{"sentence": "A biografia de dois volumes de Whitehead de Victor Lowe é a apresentação mais definitiva de a vida de Whitehead.", "relations": [{"arg1": "A biografia de dois volumes de Whitehead de Victor Lowe", "rel": "é", "arg2": "a apresentação mais definitiva de a vida de Whitehead"}]}

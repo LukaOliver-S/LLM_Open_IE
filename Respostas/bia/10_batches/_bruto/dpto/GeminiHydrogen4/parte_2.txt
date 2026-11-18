@@ -1,0 +1,1935 @@
+
+
+# Extração de Relações Open Information Extraction (Open IE)
+
+
+
+## Objetivo
+
+
+
+Você receberá uma **lista de objetos JSON**, onde cada objeto contém uma sentença em português.
+
+
+
+```jsonl
+
+
+
+  {"sentence": "..."},
+
+  {"sentence": "..."},
+
+  {"sentence": "..."}
+
+
+
+```
+
+
+
+Cada objeto da lista deve ser processado de forma independente. Não deve haver mistura de informações entre sentenças diferentes e todas as sentenças devem ser analisadas. 
+
+
+
+---
+
+
+
+Você receberá **sentenças em português**.
+
+
+
+Sua tarefa é extrair **todas** as relações Open Information Extraction (Open IE) presentes em cada sentença.
+
+
+
+Toda saída deve permanecer associada à **sentença original** da qual as relações foram extraídas. Todas as relações em `relations` devem corresponder exclusivamente à sentença armazenada em `sentence`.
+
+
+
+Cada relação deve ser representada por uma tripla no formato:
+
+
+
+```json
+
+{
+
+  "arg1": "...",
+
+  "rel": "...",
+
+  "arg2": "..."
+
+}
+
+```
+
+
+
+---
+
+
+
+
+
+Uma sentença pode conter nenhuma, uma ou várias relações. Sempre que houver múltiplas relações válidas, extraia todas elas.
+
+
+
+Siga rigorosamente as regras abaixo.
+
+
+
+---
+
+
+
+# Regras Estruturais
+
+
+
+## E1. Estrutura Fundamental da Tripla
+
+
+
+Cada tripla deve conter:
+
+
+
+* **ARG1:** sujeito ou entidade principal da relação;
+
+* **REL:** relação verbal que conecta os argumentos;
+
+* **ARG2:** complemento principal da relação.
+
+
+
+Toda tripla deve representar uma relação sintaticamente válida presente na sentença.
+
+
+
+---
+
+
+
+## E2. Construção de ARG1
+
+
+
+ARG1 deve corresponder ao sujeito da oração, tanto em construções na voz ativa quanto na voz passiva.
+
+
+
+Além do núcleo do sujeito, inclua todos os elementos pertencentes ao sintagma nominal que sejam relevantes para identificá-lo, tais como:
+
+
+
+* modificadores numéricos;
+
+* modificadores adverbiais;
+
+* modificadores nominais;
+
+* modificadores adjetivais;
+
+* dependentes sintáticos;
+
+* objetos associados;
+
+* elementos coordenados;
+
+* apostos, apenas quando representarem expressões numéricas identificadas pelo analisador morfossintático.
+
+
+
+O objetivo é representar o sujeito da forma mais completa possível.
+
+
+
+---
+
+
+
+## E3. Construção da Relação (REL)
+
+
+
+REL deve ser construída a partir do verbo principal da oração.
+
+
+
+Quando houver uma construção participial, ela também poderá constituir a relação principal.
+
+
+
+Inclua na relação:
+
+
+
+### Antes do verbo principal
+
+
+
+* verbos auxiliares;
+
+* verbos auxiliares da voz passiva;
+
+* verbos copulativos;
+
+* objetos diretos e indiretos, quando fizerem parte da construção verbal;
+
+* modificadores adverbiais;
+
+* pronomes expletivos;
+
+* marcadores subordinativos.
+
+
+
+### Depois do verbo principal
+
+
+
+* pronomes expletivos;
+
+* construções participiais.
+
+
+
+---
+
+
+
+## E4. Construção de ARG2
+
+
+
+ARG2 deve corresponder ao complemento principal da relação.
+
+
+
+Devem ser incorporados:
+
+
+
+### Objetos
+
+
+
+* objetos diretos;
+
+* objetos indiretos.
+
+
+
+### Modificadores
+
+
+
+* modificadores nominais;
+
+* modificadores numéricos;
+
+* modificadores adverbiais;
+
+* modificadores adjetivais.
+
+
+
+### Complementos
+
+
+
+* complementos verbais abertos, isto é, complementos que não possuem sujeito próprio.
+
+
+
+### Orações
+
+
+
+* orações subordinadas completivas;
+
+* orações subordinadas adverbiais, desde que não possuam sujeito próprio explícito.
+
+
+
+### Outros elementos
+
+
+
+* orações relativas;
+
+* elementos coordenados;
+
+* apostos;
+
+* construções participiais;
+
+* outros dependentes sintáticos.
+
+
+
+O objetivo é representar o complemento da relação da forma mais completa possível.
+
+
+
+---
+
+
+
+## E5. Tratamento das Preposições
+
+
+
+As preposições regidas pelo verbo devem permanecer incorporadas ao ARG2.
+
+
+
+Elas não devem ser deslocadas para REL.
+
+
+
+As locuções prepositivas lexicalizadas devem permanecer intactas, sem fragmentação.
+
+
+
+---
+
+
+
+## E6. Extração por Busca em Profundidade (DFS)
+
+
+
+Considere a construção da tripla seguindo a lógica de uma busca em profundidade:
+
+
+
+1. identificar ARG1;
+
+2. identificar REL;
+
+3. identificar todos os argumentos dependentes da relação (ARG2).
+
+
+
+A extração deve continuar até atingir os elementos folha relevantes da estrutura.
+
+
+
+Quando dois ARG2 distintos puderem ser combinados para produzir um complemento mais informativo sem alterar o significado da relação, ambos poderão compor o mesmo ARG2.
+
+
+
+---
+
+
+
+## E7. Não Duplicação
+
+
+
+Não produza triplas idênticas.
+
+
+
+Caso diferentes regras resultem exatamente na mesma tripla `(ARG1, REL, ARG2)`, mantenha apenas uma ocorrência.
+
+
+
+---
+
+
+
+# Regras Semânticas
+
+
+
+## S1. Coordenação
+
+
+
+Coordenações introduzidas pelas conjunções **"e"** ou **"ou"** devem gerar novas relações independentes.
+
+
+
+### Coordenação verbal
+
+
+
+Quando houver verbos coordenados, gere uma nova tripla para cada verbo coordenado.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`Eu compro e vendo banana, maçã e pera.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "Eu compro e vendo banana, maçã e pera.",
+
+  "relations": [
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "compro",
+
+      "arg2": "banana"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "compro",
+
+      "arg2": "maçã"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "compro",
+
+      "arg2": "pera"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "vendo",
+
+      "arg2": "banana"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "vendo",
+
+      "arg2": "maçã"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "vendo",
+
+      "arg2": "pera"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+### Coordenação de argumentos
+
+
+
+Quando ARG1 ou ARG2 contiver elementos coordenados, gere uma tripla independente para cada elemento coordenado, sempre que isso preservar o sentido.
+
+
+
+---
+
+
+
+## S2. Orações Subordinadas
+
+
+
+### S2.1 Orações Relativas
+
+
+
+Quando um pronome relativo exercer a função de sujeito da oração relativa, substitua-o pelo seu antecedente explícito.
+
+
+
+Utilize o antecedente como ARG1.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`A espada, que estava em casa, foi levada ontem.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "A espada, que estava em casa, foi levada ontem.",
+
+  "relations": [
+
+    {
+
+      "arg1": "A espada",
+
+      "rel": "estava",
+
+      "arg2": "em casa"
+
+    },
+
+    {
+
+      "arg1": "A espada",
+
+      "rel": "foi levada",
+
+      "arg2": "ontem"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+---
+
+
+
+### S2.2 Orações Subordinadas Completivas
+
+
+
+Quando uma oração subordinada completar semanticamente outra oração, gere uma tripla para a oração principal e outra para a oração subordinada.
+
+
+
+A conjunção **"que"**, quando presente, deve permanecer como parte de ARG2 da oração principal.
+
+
+
+Aplique esta regra apenas quando ambas as orações possuírem sujeito explícito.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`Ele afirmou que o cidadão se comportou bem.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "Ele afirmou que o cidadão se comportou bem.",
+
+  "relations": [
+
+    {
+
+      "arg1": "Ele",
+
+      "rel": "afirmou",
+
+      "arg2": "que o cidadão se comportou bem"
+
+    },
+
+    {
+
+      "arg1": "o cidadão",
+
+      "rel": "se comportou",
+
+      "arg2": "bem"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+Se a oração subordinada não possuir sujeito explícito, não gere o encadeamento entre a oração principal e a subordinada; nesse caso, mantenha a subordinada em ARG2 da oração principal.
+
+
+
+---
+
+
+
+### S2.3 Orações Subordinadas Adverbiais
+
+
+
+Orações subordinadas adverbiais devem receber o mesmo tratamento das orações subordinadas completivas, preservando a relação entre as duas orações.
+
+
+
+---
+
+
+
+## S3. Relações de Aposto
+
+
+
+Quando um aposto corresponder a um nome próprio, gere uma nova tripla sintética utilizando o verbo **"é"** como REL.
+
+
+
+O termo principal constitui ARG1.
+
+
+
+O aposto constitui ARG2.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`O diretor do hospital, Júlio, vendeu sua fazenda.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "O diretor do hospital, Júlio, vendeu sua fazenda.",
+
+  "relations": [
+
+    {
+
+      "arg1": "O diretor do hospital",
+
+      "rel": "vendeu",
+
+      "arg2": "sua fazenda"
+
+    },
+
+    {
+
+      "arg1": "O diretor do hospital",
+
+      "rel": "é",
+
+      "arg2": "Júlio"
+
+    },
+
+    {
+
+      "arg1": "Júlio",
+
+      "rel": "é",
+
+      "arg2": "O diretor do hospital"
+
+    },
+
+    {
+
+      "arg1": "Júlio",
+
+      "rel": "vendeu",
+
+      "arg2": "sua fazenda"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+---
+
+
+
+## S4. Transitividade de Apostos
+
+
+
+Considere o termo principal e seu aposto como semanticamente equivalentes.
+
+
+
+Após extrair as triplas principais, gere novas triplas substituindo o termo principal pelo aposto, ou o aposto pelo termo principal, sempre que essa substituição preservar o significado da relação.
+
+
+
+---
+
+
+
+## S5. Coerência e Minimalidade
+
+
+
+Extraia apenas relações que possuam interpretação semântica completa e coerente.
+
+
+
+Priorize fatos minimais que não embutam, sem necessidade, outra relação separável dentro de ARG1 ou ARG2.
+
+
+
+Quando uma relação mais completa puder ser decomposta em fatos menores sem perda relevante de significado, gere também as versões mais atômicas.
+
+
+
+---
+
+
+
+## S6. Ausência de Inferência Externa
+
+
+
+Não utilize conhecimento de mundo, inferência lógica externa ou informação não expressa na sentença.
+
+
+
+Extraia apenas relações explicitamente presentes ou diretamente implicadas pelo texto.
+
+
+
+---
+
+
+
+# Formato da Resposta
+
+
+
+Retorne **exclusivamente um objeto JSON válido**.
+
+
+
+O objeto deve possuir obrigatoriamente os seguintes campos:
+
+
+
+* **sentence:** deve conter exatamente a sentença de entrada, sem qualquer modificação, correção, normalização ou reescrita.
+
+* **relations:** um array contendo todas as triplas Open IE extraídas da sentença.
+
+
+
+As relações devem ser retornadas, sempre que possível, na mesma ordem em que aparecem na sentença.
+
+
+
+Caso nenhuma relação válida seja encontrada, retorne `relations` como array vazio.
+
+
+
+Não inclua explicações, comentários, Markdown ou qualquer texto adicional.
+
+
+
+Formato esperado:
+
+
+
+```json
+
+{
+
+  "sentence": "A universidade é afiliada à Congregação de Santa Cruz.",
+
+  "relations": [
+
+    {
+
+      "arg1": "A universidade",
+
+      "rel": "é",
+
+      "arg2": "afiliada à Congregação de Santa Cruz"
+
+    },
+
+    {
+
+      "arg1": "A universidade",
+
+      "rel": "é afiliada a",
+
+      "arg2": "a Congregação de Santa Cruz"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+Caso não exista nenhuma relação Open IE válida:
+
+
+
+```json
+
+{
+
+  "sentence": "A universidade é afiliada à Congregação de Santa Cruz.",
+
+  "relations": []
+
+}
+
+```
+
+
+
+Processe as seguintes sentenças:
+[
+  {
+    "sentence": "As versões de seis e sete faixas de a trilha sonora de o jogo foram lançadas em 19 de novembro de 2006, como parte de uma promoção de o Nintendo Power e acompanhadas de réplicas de a Master Sword e de o Hylian Shield."
+  },
+  {
+    "sentence": "As versões 3.3 e 3.4 de o Wii Menu impediram a cópia de arquivos salvos explorados em o console até que os métodos de evasão fossem descobertos, e a versão 4.0 de o Wii Menu corrigiu a vulnerabilidade."
+  },
+  {
+    "sentence": "Todas as rodovias em Wenchuan, e outras em toda a província, foram danificadas, resultando em atraso em a chegada de as tropas de resgate."
+  },
+  {
+    "sentence": "O serviço de a China Unicom em Wenchuan e quatro municípios vizinhos foi interrompido, com mais de 700 torres suspensas."
+  },
+  {
+    "sentence": "Em 2002, o geólogo chinês Chen Xuezhong publicou um estudo de Análise de Risco Sísmico, em o qual concluiu que, a partir de 2003"
+  },
+  {
+    "sentence": "O governo central estima que mais de 7.000 salas de aula com engenharia inadequada desabaram em o terremoto."
+  },
+  {
+    "sentence": "A rota de a tocha por o país foi reduzida e houve um minuto de silêncio quando a próxima etapa começou em a cidade de Ruijin, Jiangxi, em a quarta-feira após o terremoto."
+  },
+  {
+    "sentence": "Enquanto isso, um trem de carga que transportava 13 tanques de gasolina descarrilou em Condado de Hui, Gansu, e pegou fogo depois que o trilho foi distorcido."
+  },
+  {
+    "sentence": "Os Estados Unidos compartilharam algumas de suas imagens de satélite de as áreas atingidas por o terremoto com as Autoridades chinesas."
+  },
+  {
+    "sentence": "Nova York - freqüentemente chamada Cidade de Nova York ou Cidade de Nova York para distingui-la de o Estado de Nova York, de o qual faz parte - é a cidade mais populosa de os Estados Unidos e o centro de a área metropolitana de Nova York, o principal portal de imigração legal para os Estados Unidos e uma de as aglomerações urbanas mais populosas de o mundo."
+  },
+  {
+    "sentence": "Em 1664, Peter Stuyvesant, diretor-geral de a colônia de a Nova Holanda, entregou Nova Amsterdã a os ingleses sem derramamento de sangue."
+  },
+  {
+    "sentence": "A Batalha de Long Island, a maior batalha de a Guerra Revolucionária Americana, foi travada em agosto de 1776, inteiramente em o bairro moderno de o Brooklyn."
+  },
+  {
+    "sentence": "Quando um candidato presidencial republicano às eleições de 2016 ridicularizou o liberalismo de os valores de Nova York em janeiro de 2016, Donald Trump, líder em as pesquisas, defendeu vigorosamente sua cidade."
+  },
+  {
+    "sentence": "O ponto mais alto de a cidade é Todt Hill, em Staten Island, que, a 124,9 m acima de o nível de o mar, é o ponto mais alto de a costa leste de o sul de o Maine."
+  },
+  {
+    "sentence": "O maior parque municipal de a cidade é o Pelham Bay Park, com 2.700 acres (1.093 ha)."
+  },
+  {
+    "sentence": "A cidade de Nova York possui um alto grau de disparidade de renda, conforme indicado por o seu coeficiente de Gini de 0,5 para a cidade em geral e 0,6 para Manhattan."
+  },
+  {
+    "sentence": "A frota de ônibus públicos de a cidade de Nova York é a maior de a América de o Norte, e o Port Authority Bus Terminal, o principal terminal de ônibus interurbano de a cidade, atende 7.000 ônibus e 200.000 passageiros diariamente, tornando-se a estação de ônibus mais movimentada de o mundo."
+  },
+  {
+    "sentence": "Eu amo Nova Iorque (estilizado I ❤ NY) é um logotipo e uma música que são a base de uma campanha publicitária e são usados desde 1977 para promover o turismo em a cidade de Nova York e, posteriormente, também para promover o Estado de Nova York."
+  },
+  {
+    "sentence": "A cidade de Nova York está localizada em um de os maiores portos naturais de o mundo, e os bairros de Manhattan e Staten Island são (principalmente) coterminosos com ilhas com os mesmos nomes, enquanto Queens e Brooklyn estão localizadas em a extremidade oeste de a maior Ilha Longa, e O Bronx está localizado em a ponta sul de o continente de o estado de Nova York."
+  },
+  {
+    "sentence": "Desde 1990, uma peça baseada em o romance é realizada anualmente em a cidade natal de Harper Lee, em Monroeville, Alabama.:"
+  },
+  {
+    "sentence": "Em 1960, Capote e Lee viajaram juntos para o Kansas para investigar os vários assassinatos que foram a base de o romance de ficção não-ficção de Capote In Cold Blood."
+  },
+  {
+    "sentence": "O alabamiano nativo Allen Barra criticou Lee e o romance em o The Wall Street Journal, chamando o Atticus de repositório de epigramas de barril de cracker e o romance representa um mito coberto de açúcar de a história de o Alabama."
+  },
+  {
+    "sentence": "O pai de Lee morreu antes de o lançamento de o filme, e Lee ficou tão impressionado com a performance de Peck que ela lhe deu um relógio de bolso de o pai, que ele tinha com ele em a noite em que recebeu o Oscar de melhor ator."
+  },
+  {
+    "sentence": "Como resultado de o colapso de a União Soviética, o Tajiquistão se tornou uma nação independente em 1991."
+  },
+  {
+    "sentence": "Em 2010, houve preocupações entre as autoridades tadjiques de que o militarismo islâmico em o leste de o país estava em ascensão após a fuga de 25 militantes de uma prisão tadjique em agosto, uma emboscada que matou 28 soldados tadjiques em o vale de Rasht em setembro, e outra emboscada em o vale em outubro que matou 30 soldados, seguida de combates fora de Gharm que deixaram 3 militantes mortos."
+  },
+  {
+    "sentence": "O Império Samanida, 819 a 999, restaurou o controle persa de a região e ampliou as cidades de Samarcanda e Bukhara (hoje as duas cidades fazem parte de o Uzbequistão), que se tornaram os centros culturais de o Irã e a região era conhecida como Khorasan."
+  },
+  {
+    "sentence": "Durante o final de o século XIX, os jadidistas se estabeleceram como um movimento social islâmico em toda a região."
+  }
+]
+
+IMPORTANTE -- formato de saída obrigatório: JSONL (um objeto JSON por linha, SEM colchetes
+envolvendo tudo e SEM vírgula entre os objetos). Cada linha corresponde a uma sentença, na
+mesma ordem em que foram apresentadas acima. Exemplo (frases fictícias, apenas para ilustrar o
+formato -- não fazem parte do texto a ser processado):
+
+{"sentence":"Maria Silva, nascida em 1990, trabalha como engenheira, e seu marido, Carlos Silva, que se formou em 2010, trabalha como médico.","relations":[{"arg1":"Maria Silva","rel":"nascida em","arg2":"1990"},{"arg1":"Maria Silva","rel":"trabalha como","arg2":"engenheira"},{"arg1":"Carlos Silva","rel":"se formou em","arg2":"2010"},{"arg1":"Carlos Silva","rel":"trabalha como","arg2":"médico"},{"arg1":"seu marido","rel":"é","arg2":"Carlos Silva"}]}
+{"sentence":"A empresa Alfa Tech lançou um novo produto em março de 2022.","relations":[{"arg1":"A empresa Alfa Tech","rel":"lançou","arg2":"um novo produto"},{"arg1":"A empresa Alfa Tech","rel":"lançou em","arg2":"março de 2022"}]}
+
+Não devolva as triplas soltas fora de "relations"; não repita a sentença como um item separado; se
+nenhuma relação for encontrada em uma sentença, use "relations": [].
+
+E Cada trecho do texto acima está marcado com [S1], [S2], etc. -- cada marcador indica o INÍCIO de
+uma sentença nova e independente. NUNCA funda duas sentenças de marcadores diferentes em um único
+item de saída, mesmo que pareçam continuar uma a outra. Gere exatamente um item de saída por
+marcador [Sn], com o texto daquele trecho (sem incluir "[Sn]") no campo "sentence".
+
+
+# Extração de Relações Open Information Extraction (Open IE)
+
+
+
+## Objetivo
+
+
+
+Você receberá uma **lista de objetos JSON**, onde cada objeto contém uma sentença em português.
+
+
+
+```jsonl
+
+
+
+  {"sentence": "..."},
+
+  {"sentence": "..."},
+
+  {"sentence": "..."}
+
+
+
+```
+
+
+
+Cada objeto da lista deve ser processado de forma independente. Não deve haver mistura de informações entre sentenças diferentes e todas as sentenças devem ser analisadas. 
+
+
+
+---
+
+
+
+Você receberá **sentenças em português**.
+
+
+
+Sua tarefa é extrair **todas** as relações Open Information Extraction (Open IE) presentes em cada sentença.
+
+
+
+Toda saída deve permanecer associada à **sentença original** da qual as relações foram extraídas. Todas as relações em `relations` devem corresponder exclusivamente à sentença armazenada em `sentence`.
+
+
+
+Cada relação deve ser representada por uma tripla no formato:
+
+
+
+```json
+
+{
+
+  "arg1": "...",
+
+  "rel": "...",
+
+  "arg2": "..."
+
+}
+
+```
+
+
+
+---
+
+
+
+
+
+Uma sentença pode conter nenhuma, uma ou várias relações. Sempre que houver múltiplas relações válidas, extraia todas elas.
+
+
+
+Siga rigorosamente as regras abaixo.
+
+
+
+---
+
+
+
+# Regras Estruturais
+
+
+
+## E1. Estrutura Fundamental da Tripla
+
+
+
+Cada tripla deve conter:
+
+
+
+* **ARG1:** sujeito ou entidade principal da relação;
+
+* **REL:** relação verbal que conecta os argumentos;
+
+* **ARG2:** complemento principal da relação.
+
+
+
+Toda tripla deve representar uma relação sintaticamente válida presente na sentença.
+
+
+
+---
+
+
+
+## E2. Construção de ARG1
+
+
+
+ARG1 deve corresponder ao sujeito da oração, tanto em construções na voz ativa quanto na voz passiva.
+
+
+
+Além do núcleo do sujeito, inclua todos os elementos pertencentes ao sintagma nominal que sejam relevantes para identificá-lo, tais como:
+
+
+
+* modificadores numéricos;
+
+* modificadores adverbiais;
+
+* modificadores nominais;
+
+* modificadores adjetivais;
+
+* dependentes sintáticos;
+
+* objetos associados;
+
+* elementos coordenados;
+
+* apostos, apenas quando representarem expressões numéricas identificadas pelo analisador morfossintático.
+
+
+
+O objetivo é representar o sujeito da forma mais completa possível.
+
+
+
+---
+
+
+
+## E3. Construção da Relação (REL)
+
+
+
+REL deve ser construída a partir do verbo principal da oração.
+
+
+
+Quando houver uma construção participial, ela também poderá constituir a relação principal.
+
+
+
+Inclua na relação:
+
+
+
+### Antes do verbo principal
+
+
+
+* verbos auxiliares;
+
+* verbos auxiliares da voz passiva;
+
+* verbos copulativos;
+
+* objetos diretos e indiretos, quando fizerem parte da construção verbal;
+
+* modificadores adverbiais;
+
+* pronomes expletivos;
+
+* marcadores subordinativos.
+
+
+
+### Depois do verbo principal
+
+
+
+* pronomes expletivos;
+
+* construções participiais.
+
+
+
+---
+
+
+
+## E4. Construção de ARG2
+
+
+
+ARG2 deve corresponder ao complemento principal da relação.
+
+
+
+Devem ser incorporados:
+
+
+
+### Objetos
+
+
+
+* objetos diretos;
+
+* objetos indiretos.
+
+
+
+### Modificadores
+
+
+
+* modificadores nominais;
+
+* modificadores numéricos;
+
+* modificadores adverbiais;
+
+* modificadores adjetivais.
+
+
+
+### Complementos
+
+
+
+* complementos verbais abertos, isto é, complementos que não possuem sujeito próprio.
+
+
+
+### Orações
+
+
+
+* orações subordinadas completivas;
+
+* orações subordinadas adverbiais, desde que não possuam sujeito próprio explícito.
+
+
+
+### Outros elementos
+
+
+
+* orações relativas;
+
+* elementos coordenados;
+
+* apostos;
+
+* construções participiais;
+
+* outros dependentes sintáticos.
+
+
+
+O objetivo é representar o complemento da relação da forma mais completa possível.
+
+
+
+---
+
+
+
+## E5. Tratamento das Preposições
+
+
+
+As preposições regidas pelo verbo devem permanecer incorporadas ao ARG2.
+
+
+
+Elas não devem ser deslocadas para REL.
+
+
+
+As locuções prepositivas lexicalizadas devem permanecer intactas, sem fragmentação.
+
+
+
+---
+
+
+
+## E6. Extração por Busca em Profundidade (DFS)
+
+
+
+Considere a construção da tripla seguindo a lógica de uma busca em profundidade:
+
+
+
+1. identificar ARG1;
+
+2. identificar REL;
+
+3. identificar todos os argumentos dependentes da relação (ARG2).
+
+
+
+A extração deve continuar até atingir os elementos folha relevantes da estrutura.
+
+
+
+Quando dois ARG2 distintos puderem ser combinados para produzir um complemento mais informativo sem alterar o significado da relação, ambos poderão compor o mesmo ARG2.
+
+
+
+---
+
+
+
+## E7. Não Duplicação
+
+
+
+Não produza triplas idênticas.
+
+
+
+Caso diferentes regras resultem exatamente na mesma tripla `(ARG1, REL, ARG2)`, mantenha apenas uma ocorrência.
+
+
+
+---
+
+
+
+# Regras Semânticas
+
+
+
+## S1. Coordenação
+
+
+
+Coordenações introduzidas pelas conjunções **"e"** ou **"ou"** devem gerar novas relações independentes.
+
+
+
+### Coordenação verbal
+
+
+
+Quando houver verbos coordenados, gere uma nova tripla para cada verbo coordenado.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`Eu compro e vendo banana, maçã e pera.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "Eu compro e vendo banana, maçã e pera.",
+
+  "relations": [
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "compro",
+
+      "arg2": "banana"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "compro",
+
+      "arg2": "maçã"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "compro",
+
+      "arg2": "pera"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "vendo",
+
+      "arg2": "banana"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "vendo",
+
+      "arg2": "maçã"
+
+    },
+
+    {
+
+      "arg1": "Eu",
+
+      "rel": "vendo",
+
+      "arg2": "pera"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+### Coordenação de argumentos
+
+
+
+Quando ARG1 ou ARG2 contiver elementos coordenados, gere uma tripla independente para cada elemento coordenado, sempre que isso preservar o sentido.
+
+
+
+---
+
+
+
+## S2. Orações Subordinadas
+
+
+
+### S2.1 Orações Relativas
+
+
+
+Quando um pronome relativo exercer a função de sujeito da oração relativa, substitua-o pelo seu antecedente explícito.
+
+
+
+Utilize o antecedente como ARG1.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`A espada, que estava em casa, foi levada ontem.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "A espada, que estava em casa, foi levada ontem.",
+
+  "relations": [
+
+    {
+
+      "arg1": "A espada",
+
+      "rel": "estava",
+
+      "arg2": "em casa"
+
+    },
+
+    {
+
+      "arg1": "A espada",
+
+      "rel": "foi levada",
+
+      "arg2": "ontem"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+---
+
+
+
+### S2.2 Orações Subordinadas Completivas
+
+
+
+Quando uma oração subordinada completar semanticamente outra oração, gere uma tripla para a oração principal e outra para a oração subordinada.
+
+
+
+A conjunção **"que"**, quando presente, deve permanecer como parte de ARG2 da oração principal.
+
+
+
+Aplique esta regra apenas quando ambas as orações possuírem sujeito explícito.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`Ele afirmou que o cidadão se comportou bem.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "Ele afirmou que o cidadão se comportou bem.",
+
+  "relations": [
+
+    {
+
+      "arg1": "Ele",
+
+      "rel": "afirmou",
+
+      "arg2": "que o cidadão se comportou bem"
+
+    },
+
+    {
+
+      "arg1": "o cidadão",
+
+      "rel": "se comportou",
+
+      "arg2": "bem"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+Se a oração subordinada não possuir sujeito explícito, não gere o encadeamento entre a oração principal e a subordinada; nesse caso, mantenha a subordinada em ARG2 da oração principal.
+
+
+
+---
+
+
+
+### S2.3 Orações Subordinadas Adverbiais
+
+
+
+Orações subordinadas adverbiais devem receber o mesmo tratamento das orações subordinadas completivas, preservando a relação entre as duas orações.
+
+
+
+---
+
+
+
+## S3. Relações de Aposto
+
+
+
+Quando um aposto corresponder a um nome próprio, gere uma nova tripla sintética utilizando o verbo **"é"** como REL.
+
+
+
+O termo principal constitui ARG1.
+
+
+
+O aposto constitui ARG2.
+
+
+
+**Exemplo**
+
+
+
+Sentença:
+
+`O diretor do hospital, Júlio, vendeu sua fazenda.`
+
+
+
+Saída:
+
+
+
+```json
+
+{
+
+  "sentence": "O diretor do hospital, Júlio, vendeu sua fazenda.",
+
+  "relations": [
+
+    {
+
+      "arg1": "O diretor do hospital",
+
+      "rel": "vendeu",
+
+      "arg2": "sua fazenda"
+
+    },
+
+    {
+
+      "arg1": "O diretor do hospital",
+
+      "rel": "é",
+
+      "arg2": "Júlio"
+
+    },
+
+    {
+
+      "arg1": "Júlio",
+
+      "rel": "é",
+
+      "arg2": "O diretor do hospital"
+
+    },
+
+    {
+
+      "arg1": "Júlio",
+
+      "rel": "vendeu",
+
+      "arg2": "sua fazenda"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+---
+
+
+
+## S4. Transitividade de Apostos
+
+
+
+Considere o termo principal e seu aposto como semanticamente equivalentes.
+
+
+
+Após extrair as triplas principais, gere novas triplas substituindo o termo principal pelo aposto, ou o aposto pelo termo principal, sempre que essa substituição preservar o significado da relação.
+
+
+
+---
+
+
+
+## S5. Coerência e Minimalidade
+
+
+
+Extraia apenas relações que possuam interpretação semântica completa e coerente.
+
+
+
+Priorize fatos minimais que não embutam, sem necessidade, outra relação separável dentro de ARG1 ou ARG2.
+
+
+
+Quando uma relação mais completa puder ser decomposta em fatos menores sem perda relevante de significado, gere também as versões mais atômicas.
+
+
+
+---
+
+
+
+## S6. Ausência de Inferência Externa
+
+
+
+Não utilize conhecimento de mundo, inferência lógica externa ou informação não expressa na sentença.
+
+
+
+Extraia apenas relações explicitamente presentes ou diretamente implicadas pelo texto.
+
+
+
+---
+
+
+
+# Formato da Resposta
+
+
+
+Retorne **exclusivamente um objeto JSON válido**.
+
+
+
+O objeto deve possuir obrigatoriamente os seguintes campos:
+
+
+
+* **sentence:** deve conter exatamente a sentença de entrada, sem qualquer modificação, correção, normalização ou reescrita.
+
+* **relations:** um array contendo todas as triplas Open IE extraídas da sentença.
+
+
+
+As relações devem ser retornadas, sempre que possível, na mesma ordem em que aparecem na sentença.
+
+
+
+Caso nenhuma relação válida seja encontrada, retorne `relations` como array vazio.
+
+
+
+Não inclua explicações, comentários, Markdown ou qualquer texto adicional.
+
+
+
+Formato esperado:
+
+
+
+```json
+
+{
+
+  "sentence": "A universidade é afiliada à Congregação de Santa Cruz.",
+
+  "relations": [
+
+    {
+
+      "arg1": "A universidade",
+
+      "rel": "é",
+
+      "arg2": "afiliada à Congregação de Santa Cruz"
+
+    },
+
+    {
+
+      "arg1": "A universidade",
+
+      "rel": "é afiliada a",
+
+      "arg2": "a Congregação de Santa Cruz"
+
+    }
+
+  ]
+
+}
+
+```
+
+
+
+Caso não exista nenhuma relação Open IE válida:
+
+
+
+```json
+
+{
+
+  "sentence": "A universidade é afiliada à Congregação de Santa Cruz.",
+
+  "relations": []
+
+}
+
+```
+
+
+
+Processe as seguintes sentenças:
+[
+  {
+    "sentence": "As versões de seis e sete faixas de a trilha sonora de o jogo foram lançadas em 19 de novembro de 2006, como parte de uma promoção de o Nintendo Power e acompanhadas de réplicas de a Master Sword e de o Hylian Shield."
+  },
+  {
+    "sentence": "As versões 3.3 e 3.4 de o Wii Menu impediram a cópia de arquivos salvos explorados em o console até que os métodos de evasão fossem descobertos, e a versão 4.0 de o Wii Menu corrigiu a vulnerabilidade."
+  },
+  {
+    "sentence": "Todas as rodovias em Wenchuan, e outras em toda a província, foram danificadas, resultando em atraso em a chegada de as tropas de resgate."
+  },
+  {
+    "sentence": "O serviço de a China Unicom em Wenchuan e quatro municípios vizinhos foi interrompido, com mais de 700 torres suspensas."
+  },
+  {
+    "sentence": "Em 2002, o geólogo chinês Chen Xuezhong publicou um estudo de Análise de Risco Sísmico, em o qual concluiu que, a partir de 2003"
+  },
+  {
+    "sentence": "O governo central estima que mais de 7.000 salas de aula com engenharia inadequada desabaram em o terremoto."
+  },
+  {
+    "sentence": "A rota de a tocha por o país foi reduzida e houve um minuto de silêncio quando a próxima etapa começou em a cidade de Ruijin, Jiangxi, em a quarta-feira após o terremoto."
+  },
+  {
+    "sentence": "Enquanto isso, um trem de carga que transportava 13 tanques de gasolina descarrilou em Condado de Hui, Gansu, e pegou fogo depois que o trilho foi distorcido."
+  },
+  {
+    "sentence": "Os Estados Unidos compartilharam algumas de suas imagens de satélite de as áreas atingidas por o terremoto com as Autoridades chinesas."
+  },
+  {
+    "sentence": "Nova York - freqüentemente chamada Cidade de Nova York ou Cidade de Nova York para distingui-la de o Estado de Nova York, de o qual faz parte - é a cidade mais populosa de os Estados Unidos e o centro de a área metropolitana de Nova York, o principal portal de imigração legal para os Estados Unidos e uma de as aglomerações urbanas mais populosas de o mundo."
+  },
+  {
+    "sentence": "Em 1664, Peter Stuyvesant, diretor-geral de a colônia de a Nova Holanda, entregou Nova Amsterdã a os ingleses sem derramamento de sangue."
+  },
+  {
+    "sentence": "A Batalha de Long Island, a maior batalha de a Guerra Revolucionária Americana, foi travada em agosto de 1776, inteiramente em o bairro moderno de o Brooklyn."
+  },
+  {
+    "sentence": "Quando um candidato presidencial republicano às eleições de 2016 ridicularizou o liberalismo de os valores de Nova York em janeiro de 2016, Donald Trump, líder em as pesquisas, defendeu vigorosamente sua cidade."
+  },
+  {
+    "sentence": "O ponto mais alto de a cidade é Todt Hill, em Staten Island, que, a 124,9 m acima de o nível de o mar, é o ponto mais alto de a costa leste de o sul de o Maine."
+  },
+  {
+    "sentence": "O maior parque municipal de a cidade é o Pelham Bay Park, com 2.700 acres (1.093 ha)."
+  },
+  {
+    "sentence": "A cidade de Nova York possui um alto grau de disparidade de renda, conforme indicado por o seu coeficiente de Gini de 0,5 para a cidade em geral e 0,6 para Manhattan."
+  },
+  {
+    "sentence": "A frota de ônibus públicos de a cidade de Nova York é a maior de a América de o Norte, e o Port Authority Bus Terminal, o principal terminal de ônibus interurbano de a cidade, atende 7.000 ônibus e 200.000 passageiros diariamente, tornando-se a estação de ônibus mais movimentada de o mundo."
+  },
+  {
+    "sentence": "Eu amo Nova Iorque (estilizado I ❤ NY) é um logotipo e uma música que são a base de uma campanha publicitária e são usados desde 1977 para promover o turismo em a cidade de Nova York e, posteriormente, também para promover o Estado de Nova York."
+  },
+  {
+    "sentence": "A cidade de Nova York está localizada em um de os maiores portos naturais de o mundo, e os bairros de Manhattan e Staten Island são (principalmente) coterminosos com ilhas com os mesmos nomes, enquanto Queens e Brooklyn estão localizadas em a extremidade oeste de a maior Ilha Longa, e O Bronx está localizado em a ponta sul de o continente de o estado de Nova York."
+  },
+  {
+    "sentence": "Desde 1990, uma peça baseada em o romance é realizada anualmente em a cidade natal de Harper Lee, em Monroeville, Alabama.:"
+  },
+  {
+    "sentence": "Em 1960, Capote e Lee viajaram juntos para o Kansas para investigar os vários assassinatos que foram a base de o romance de ficção não-ficção de Capote In Cold Blood."
+  },
+  {
+    "sentence": "O alabamiano nativo Allen Barra criticou Lee e o romance em o The Wall Street Journal, chamando o Atticus de repositório de epigramas de barril de cracker e o romance representa um mito coberto de açúcar de a história de o Alabama."
+  },
+  {
+    "sentence": "O pai de Lee morreu antes de o lançamento de o filme, e Lee ficou tão impressionado com a performance de Peck que ela lhe deu um relógio de bolso de o pai, que ele tinha com ele em a noite em que recebeu o Oscar de melhor ator."
+  },
+  {
+    "sentence": "Como resultado de o colapso de a União Soviética, o Tajiquistão se tornou uma nação independente em 1991."
+  },
+  {
+    "sentence": "Em 2010, houve preocupações entre as autoridades tadjiques de que o militarismo islâmico em o leste de o país estava em ascensão após a fuga de 25 militantes de uma prisão tadjique em agosto, uma emboscada que matou 28 soldados tadjiques em o vale de Rasht em setembro, e outra emboscada em o vale em outubro que matou 30 soldados, seguida de combates fora de Gharm que deixaram 3 militantes mortos."
+  },
+  {
+    "sentence": "O Império Samanida, 819 a 999, restaurou o controle persa de a região e ampliou as cidades de Samarcanda e Bukhara (hoje as duas cidades fazem parte de o Uzbequistão), que se tornaram os centros culturais de o Irã e a região era conhecida como Khorasan."
+  },
+  {
+    "sentence": "Durante o final de o século XIX, os jadidistas se estabeleceram como um movimento social islâmico em toda a região."
+  }
+]
+
+IMPORTANTE -- formato de saída obrigatório: JSONL (um objeto JSON por linha, SEM colchetes
+envolvendo tudo e SEM vírgula entre os objetos). Cada linha corresponde a uma sentença, na
+mesma ordem em que foram apresentadas acima. Exemplo (frases fictícias, apenas para ilustrar o
+formato -- não fazem parte do texto a ser processado):
+
+{"sentence":"Maria Silva, nascida em 1990, trabalha como engenheira, e seu marido, Carlos Silva, que se formou em 2010, trabalha como médico.","relations":[{"arg1":"Maria Silva","rel":"nascida em","arg2":"1990"},{"arg1":"Maria Silva","rel":"trabalha como","arg2":"engenheira"},{"arg1":"Carlos Silva","rel":"se formou em","arg2":"2010"},{"arg1":"Carlos Silva","rel":"trabalha como","arg2":"médico"},{"arg1":"seu marido","rel":"é","arg2":"Carlos Silva"}]}
+{"sentence":"A empresa Alfa Tech lançou um novo produto em março de 2022.","relations":[{"arg1":"A empresa Alfa Tech","rel":"lançou","arg2":"um novo produto"},{"arg1":"A empresa Alfa Tech","rel":"lançou em","arg2":"março de 2022"}]}
+
+Não devolva as triplas soltas fora de "relations"; não repita a sentença como um item separado; se
+nenhuma relação for encontrada em uma sentença, use "relations": [].
+
+E Cada trecho do texto acima está marcado com [S1], [S2], etc. -- cada marcador indica o INÍCIO de
+uma sentença nova e independente. NUNCA funda duas sentenças de marcadores diferentes em um único
+item de saída, mesmo que pareçam continuar uma a outra. Gere exatamente um item de saída por
+marcador [Sn], com o texto daquele trecho (sem incluir "[Sn]") no campo "sentence".
+{"sentence": "As versões de seis e sete faixas de a trilha sonora de o jogo foram lançadas em 19 de novembro de 2006, como parte de uma promoção de o Nintendo Power e acompanhadas de réplicas de a Master Sword e de o Hylian Shield.", "relations": [{"arg1": "As versões de seis faixas de a trilha sonora de o jogo", "rel": "foram lançadas", "arg2": "em 19 de novembro de 2006"}, {"arg1": "As versões de sete faixas de a trilha sonora de o jogo", "rel": "foram lançadas", "arg2": "em 19 de novembro de 2006"}, {"arg1": "As versões de seis faixas de a trilha sonora de o jogo", "rel": "foram acompanhadas", "arg2": "de réplicas de a Master Sword"}, {"arg1": "As versões de seis faixas de a trilha sonora de o jogo", "rel": "foram acompanhadas", "arg2": "de réplicas de o Hylian Shield"}, {"arg1": "As versões de sete faixas de a trilha sonora de o jogo", "rel": "foram acompanhadas", "arg2": "de réplicas de a Master Sword"}, {"arg1": "As versões de sete faixas de a trilha sonora de o jogo", "rel": "foram acompanhadas", "arg2": "de réplicas de o Hylian Shield"}]}
+{"sentence": "As versões 3.3 e 3.4 de o Wii Menu impediram a cópia de arquivos salvos explorados em o console até que os métodos de evasão fossem descobertos, e a versão 4.0 de o Wii Menu corrigiu a vulnerabilidade.", "relations": [{"arg1": "As versões 3.3 de o Wii Menu", "rel": "impediram", "arg2": "a cópia de arquivos salvos explorados em o console"}, {"arg1": "As versões 3.4 de o Wii Menu", "rel": "impediram", "arg2": "a cópia de arquivos salvos explorados em o console"}, {"arg1": "os métodos de evasão", "rel": "fossem descobertos", "arg2": ""}, {"arg1": "a versão 4.0 de o Wii Menu", "rel": "corrigiu", "arg2": "a vulnerabilidade"}]}
+{"sentence": "Todas as rodovias em Wenchuan, e outras em toda a província, foram danificadas, resultando em atraso em a chegada de as tropas de resgate.", "relations": [{"arg1": "Todas as rodovias em Wenchuan", "rel": "foram danificadas", "arg2": ""}, {"arg1": "outras em toda a província", "rel": "foram danificadas", "arg2": ""}, {"arg1": "Todas as rodovias em Wenchuan", "rel": "resultando", "arg2": "em atraso em a chegada de as tropas de resgate"}, {"arg1": "outras em toda a província", "rel": "resultando", "arg2": "em atraso em a chegada de as tropas de resgate"}]}
+{"sentence": "O serviço de a China Unicom em Wenchuan e quatro municípios vizinhos foi interrompido, com mais de 700 torres suspensas.", "relations": [{"arg1": "O serviço de a China Unicom em Wenchuan", "rel": "foi interrompido", "arg2": "com mais de 700 torres suspensas"}, {"arg1": "O serviço de a China Unicom em quatro municípios vizinhos", "rel": "foi interrompido", "arg2": "com mais de 700 torres suspensas"}, {"arg1": "O serviço de a China Unicom em Wenchuan", "rel": "foi interrompido", "arg2": ""}, {"arg1": "O serviço de a China Unicom em quatro municípios vizinhos", "rel": "foi interrompido", "arg2": ""}]}
+{"sentence": "Em 2002, o geólogo chinês Chen Xuezhong publicou um estudo de Análise de Risco Sísmico, em o qual concluiu que, a partir de 2003", "relations": [{"arg1": "o geólogo chinês", "rel": "é", "arg2": "Chen Xuezhong"}, {"arg1": "Chen Xuezhong", "rel": "é", "arg2": "o geólogo chinês"}, {"arg1": "o geólogo chinês", "rel": "publicou", "arg2": "um estudo de Análise de Risco Sísmico em 2002"}, {"arg1": "Chen Xuezhong", "rel": "publicou", "arg2": "um estudo de Análise de Risco Sísmico em 2002"}, {"arg1": "o geólogo chinês", "rel": "publicou", "arg2": "um estudo de Análise de Risco Sísmico"}, {"arg1": "Chen Xuezhong", "rel": "publicou", "arg2": "um estudo de Análise de Risco Sísmico"}]}
+{"sentence": "O governo central estima que mais de 7.000 salas de aula com engenharia inadequada desabaram em o terremoto.", "relations": [{"arg1": "O governo central", "rel": "estima", "arg2": "que mais de 7.000 salas de aula com engenharia inadequada desabaram em o terremoto"}, {"arg1": "mais de 7.000 salas de aula com engenharia inadequada", "rel": "desabaram", "arg2": "em o terremoto"}]}
+{"sentence": "A rota de a tocha por o país foi reduzida e houve um minuto de silêncio quando a próxima etapa começou em a cidade de Ruijin, Jiangxi, em a quarta-feira após o terremoto.", "relations": [{"arg1": "A rota de a tocha por o país", "rel": "foi reduzida", "arg2": ""}, {"arg1": "a próxima etapa", "rel": "começou", "arg2": "em a cidade de Ruijin, Jiangxi, em a quarta-feira após o terremoto"}, {"arg1": "a próxima etapa", "rel": "começou", "arg2": "em a cidade de Ruijin, Jiangxi"}]}
+{"sentence": "Enquanto isso, um trem de carga que transportava 13 tanques de gasolina descarrilou em Condado de Hui, Gansu, e pegou fogo depois que o trilho foi distorcido.", "relations": [{"arg1": "um trem de carga", "rel": "transportava", "arg2": "13 tanques de gasolina"}, {"arg1": "um trem de carga", "rel": "descarrilou", "arg2": "em Condado de Hui, Gansu"}, {"arg1": "um trem de carga", "rel": "pegou fogo", "arg2": "depois que o trilho foi distorcido"}, {"arg1": "um trem de carga", "rel": "pegou fogo", "arg2": ""}, {"arg1": "o trilho", "rel": "foi distorcido", "arg2": ""}]}
+{"sentence": "Os Estados Unidos compartilharam algumas de suas imagens de satélite de as áreas atingidas por o terremoto com as Autoridades chinesas.", "relations": [{"arg1": "Os Estados Unidos", "rel": "compartilharam", "arg2": "algumas de suas imagens de satélite de as áreas atingidas por o terremoto com as Autoridades chinesas"}, {"arg1": "Os Estados Unidos", "rel": "compartilharam", "arg2": "algumas de suas imagens de satélite"}, {"arg1": "as áreas", "rel": "atingidas", "arg2": "por o terremoto"}]}
+{"sentence": "Nova York - freqüentemente chamada Cidade de Nova York ou Cidade de Nova York para distingui-la de o Estado de Nova York, de o qual faz parte - é a cidade mais populosa de os Estados Unidos e o centro de a área metropolitana de Nova York, o principal portal de imigração legal para os Estados Unidos e uma de as aglomerações urbanas mais populosas de o mundo.", "relations": [{"arg1": "Nova York", "rel": "é", "arg2": "a cidade mais populosa de os Estados Unidos"}, {"arg1": "Nova York", "rel": "é", "arg2": "o centro de a área metropolitana de Nova York"}, {"arg1": "Nova York", "rel": "é", "arg2": "o principal portal de imigração legal para os Estados Unidos"}, {"arg1": "Nova York", "rel": "é", "arg2": "uma de as aglomerações urbanas mais populosas de o mundo"}, {"arg1": "Nova York", "rel": "freqüentemente chamada", "arg2": "Cidade de Nova York"}]}
+{"sentence": "Em 1664, Peter Stuyvesant, diretor-geral de a colônia de a Nova Holanda, entregou Nova Amsterdã a os ingleses sem derramamento de sangue.", "relations": [{"arg1": "Peter Stuyvesant", "rel": "é", "arg2": "diretor-geral de a colônia de a Nova Holanda"}, {"arg1": "diretor-geral de a colônia de a Nova Holanda", "rel": "é", "arg2": "Peter Stuyvesant"}, {"arg1": "Peter Stuyvesant", "rel": "entregou", "arg2": "Nova Amsterdã a os ingleses sem derramamento de sangue em 1664"}, {"arg1": "Peter Stuyvesant", "rel": "entregou", "arg2": "Nova Amsterdã a os ingleses"}, {"arg1": "diretor-geral de a colônia de a Nova Holanda", "rel": "entregou", "arg2": "Nova Amsterdã a os ingleses sem derramamento de sangue em 1664"}, {"arg1": "diretor-geral de a colônia de a Nova Holanda", "rel": "entregou", "arg2": "Nova Amsterdã a os ingleses"}]}
+{"sentence": "A Batalha de Long Island, a maior batalha de a Guerra Revolucionária Americana, foi travada em agosto de 1776, inteiramente em o bairro moderno de o Brooklyn.", "relations": [{"arg1": "A Batalha de Long Island", "rel": "é", "arg2": "a maior batalha de a Guerra Revolucionária Americana"}, {"arg1": "a maior batalha de a Guerra Revolucionária Americana", "rel": "é", "arg2": "A Batalha de Long Island"}, {"arg1": "A Batalha de Long Island", "rel": "foi travada", "arg2": "em agosto de 1776, inteiramente em o bairro moderno de o Brooklyn"}, {"arg1": "A Batalha de Long Island", "rel": "foi travada", "arg2": "em agosto de 1776"}, {"arg1": "A Batalha de Long Island", "rel": "foi travada", "arg2": "em o bairro moderno de o Brooklyn"}, {"arg1": "a maior batalha de a Guerra Revolucionária Americana", "rel": "foi travada", "arg2": "em agosto de 1776"}, {"arg1": "a maior batalha de a Guerra Revolucionária Americana", "rel": "foi travada", "arg2": "em o bairro moderno de o Brooklyn"}]}
+{"sentence": "Quando um candidato presidencial republicano às eleições de 2016 ridicularizou o liberalismo de os valores de Nova York em janeiro de 2016, Donald Trump, líder em as pesquisas, defendeu vigorosamente sua cidade.", "relations": [{"arg1": "um candidato presidencial republicano às eleições de 2016", "rel": "ridicularizou", "arg2": "o liberalismo de os valores de Nova York em janeiro de 2016"}, {"arg1": "um candidato presidencial republicano às eleições de 2016", "rel": "ridicularizou", "arg2": "o liberalismo de os valores de Nova York"}, {"arg1": "Donald Trump", "rel": "é", "arg2": "líder em as pesquisas"}, {"arg1": "líder em as pesquisas", "rel": "é", "arg2": "Donald Trump"}, {"arg1": "Donald Trump", "rel": "defendeu vigorosamente", "arg2": "sua cidade"}, {"arg1": "Donald Trump", "rel": "defendeu", "arg2": "sua cidade"}, {"arg1": "líder em as pesquisas", "rel": "defendeu vigorosamente", "arg2": "sua cidade"}]}
+{"sentence": "O ponto mais alto de a cidade é Todt Hill, em Staten Island, que, a 124,9 m acima de o nível de o mar, é o ponto mais alto de a costa leste de o sul de o Maine.", "relations": [{"arg1": "O ponto mais alto de a cidade", "rel": "é", "arg2": "Todt Hill, em Staten Island"}, {"arg1": "O ponto mais alto de a cidade", "rel": "é", "arg2": "Todt Hill"}, {"arg1": "Todt Hill", "rel": "é", "arg2": "o ponto mais alto de a costa leste de o sul de o Maine"}, {"arg1": "O ponto mais alto de a cidade", "rel": "é", "arg2": "o ponto mais alto de a costa leste de o sul de o Maine"}]}
+{"sentence": "O maior parque municipal de a cidade é o Pelham Bay Park, com 2.700 acres (1.093 ha).", "relations": [{"arg1": "O maior parque municipal de a cidade", "rel": "é", "arg2": "o Pelham Bay Park, com 2.700 acres (1.093 ha)"}, {"arg1": "O maior parque municipal de a cidade", "rel": "é", "arg2": "o Pelham Bay Park"}]}
+{"sentence": "A cidade de Nova York possui um alto grau de disparidade de renda, conforme indicado por o seu coeficiente de Gini de 0,5 para a cidade em geral e 0,6 para Manhattan.", "relations": [{"arg1": "A cidade de Nova York", "rel": "possui", "arg2": "um alto grau de disparidade de renda"}]}
+{"sentence": "A frota de ônibus públicos de a cidade de Nova York é a maior de a América de o Norte, e o Port Authority Bus Terminal, o principal terminal de ônibus interurbano de a cidade, atende 7.000 ônibus e 200.000 passageiros diariamente, tornando-se a estação de ônibus mais movimentada de o mundo.", "relations": [{"arg1": "A frota de ônibus públicos de a cidade de Nova York", "rel": "é", "arg2": "a maior de a América de o Norte"}, {"arg1": "o Port Authority Bus Terminal", "rel": "é", "arg2": "o principal terminal de ônibus interurbano de a cidade"}, {"arg1": "o principal terminal de ônibus interurbano de a cidade", "rel": "é", "arg2": "o Port Authority Bus Terminal"}, {"arg1": "o Port Authority Bus Terminal", "rel": "atende", "arg2": "7.000 ônibus diariamente"}, {"arg1": "o Port Authority Bus Terminal", "rel": "atende", "arg2": "200.000 passageiros diariamente"}, {"arg1": "o Port Authority Bus Terminal", "rel": "atende", "arg2": "7.000 ônibus"}, {"arg1": "o Port Authority Bus Terminal", "rel": "atende", "arg2": "200.000 passageiros"}, {"arg1": "o principal terminal de ônibus interurbano de a cidade", "rel": "atende", "arg2": "7.000 ônibus"}, {"arg1": "o principal terminal de ônibus interurbano de a cidade", "rel": "atende", "arg2": "200.000 passageiros"}]}
+{"sentence": "Eu amo Nova Iorque (estilizado I ❤ NY) é um logotipo e uma música que são a base de uma campanha publicitária e são usados desde 1977 para promover o turismo em a cidade de Nova York e, posteriormente, também para promover o Estado de Nova York.", "relations": [{"arg1": "Eu amo Nova Iorque", "rel": "é", "arg2": "um logotipo"}, {"arg1": "Eu amo Nova Iorque", "rel": "é", "arg2": "uma música"}, {"arg1": "Eu amo Nova Iorque", "rel": "são", "arg2": "a base de uma campanha publicitária"}, {"arg1": "Eu amo Nova Iorque", "rel": "são usados", "arg2": "desde 1977 para promover o turismo em a cidade de Nova York"}, {"arg1": "Eu amo Nova Iorque", "rel": "são usados", "arg2": "para promover o Estado de Nova York"}]}
+{"sentence": "A cidade de Nova York está localizada em um de os maiores portos naturais de o mundo, e os bairros de Manhattan e Staten Island são (principalmente) coterminosos com ilhas com os mesmos nomes, enquanto Queens e Brooklyn estão localizadas em a extremidade oeste de a maior Ilha Longa, e O Bronx está localizado em a ponta sul de o continente de o estado de Nova York.", "relations": [{"arg1": "A cidade de Nova York", "rel": "está localizada", "arg2": "em um de os maiores portos naturais de o mundo"}, {"arg1": "os bairros de Manhattan", "rel": "são coterminosos", "arg2": "com ilhas com os mesmos nomes"}, {"arg1": "os bairros de Staten Island", "rel": "são coterminosos", "arg2": "com ilhas com os mesmos nomes"}, {"arg1": "Queens", "rel": "estão localizadas", "arg2": "em a extremidade oeste de a maior Ilha Longa"}, {"arg1": "Brooklyn", "rel": "estão localizadas", "arg2": "em a extremidade oeste de a maior Ilha Longa"}, {"arg1": "O Bronx", "rel": "está localizado", "arg2": "em a ponta sul de o continente de o estado de Nova York"}]}
+{"sentence": "Desde 1990, uma peça baseada em o romance é realizada anualmente em a cidade natal de Harper Lee, em Monroeville, Alabama.:", "relations": [{"arg1": "uma peça", "rel": "baseada", "arg2": "em o romance"}, {"arg1": "uma peça baseada em o romance", "rel": "é realizada", "arg2": "anualmente em a cidade natal de Harper Lee, em Monroeville, Alabama desde 1990"}, {"arg1": "uma peça baseada em o romance", "rel": "é realizada", "arg2": "em a cidade natal de Harper Lee, em Monroeville, Alabama"}]}
+{"sentence": "Em 1960, Capote e Lee viajaram juntos para o Kansas para investigar os vários assassinatos que foram a base de o romance de ficção não-ficção de Capote In Cold Blood.", "relations": [{"arg1": "Capote", "rel": "viajaram", "arg2": "juntos para o Kansas em 1960"}, {"arg1": "Lee", "rel": "viajaram", "arg2": "juntos para o Kansas em 1960"}, {"arg1": "Capote", "rel": "viajaram", "arg2": "para o Kansas"}, {"arg1": "Lee", "rel": "viajaram", "arg2": "para o Kansas"}, {"arg1": "os vários assassinatos", "rel": "foram", "arg2": "a base de o romance de ficção não-ficção de Capote In Cold Blood"}]}
+{"sentence": "O alabamiano nativo Allen Barra criticou Lee e o romance em o The Wall Street Journal, chamando o Atticus de repositório de epigramas de barril de cracker e o romance representa um mito coberto de açúcar de a história de o Alabama.", "relations": [{"arg1": "O alabamiano nativo Allen Barra", "rel": "criticou", "arg2": "Lee em o The Wall Street Journal"}, {"arg1": "O alabamiano nativo Allen Barra", "rel": "criticou", "arg2": "o romance em o The Wall Street Journal"}, {"arg1": "O alabamiano nativo Allen Barra", "rel": "criticou", "arg2": "Lee"}, {"arg1": "O alabamiano nativo Allen Barra", "rel": "criticou", "arg2": "o romance"}, {"arg1": "O alabamiano nativo Allen Barra", "rel": "chamando", "arg2": "o Atticus de repositório de epigramas de barril de cracker"}, {"arg1": "o romance", "rel": "representa", "arg2": "um mito coberto de açúcar de a história de o Alabama"}]}
+{"sentence": "O pai de Lee morreu antes de o lançamento de o filme, e Lee ficou tão impressionado com a performance de Peck que ela lhe deu um relógio de bolso de o pai, que ele tinha com ele em a noite em que recebeu o Oscar de melhor ator.", "relations": [{"arg1": "O pai de Lee", "rel": "morreu", "arg2": "antes de o lançamento de o filme"}, {"arg1": "Lee", "rel": "ficou", "arg2": "tão impressionado com a performance de Peck"}, {"arg1": "ela", "rel": "deu", "arg2": "um relógio de bolso de o pai"}, {"arg1": "ele", "rel": "tinha", "arg2": "um relógio de bolso de o pai com ele em a noite"}, {"arg1": "ele", "rel": "recebeu", "arg2": "o Oscar de melhor ator"}]}
+{"sentence": "Como resultado de o colapso de a União Soviética, o Tajiquistão se tornou uma nação independente em 1991.", "relations": [{"arg1": "o Tajiquistão", "rel": "se tornou", "arg2": "uma nação independente em 1991 como resultado de o colapso de a União Soviética"}, {"arg1": "o Tajiquistão", "rel": "se tornou", "arg2": "uma nação independente em 1991"}, {"arg1": "o Tajiquistão", "rel": "se tornou", "arg2": "uma nação independente"}]}
+{"sentence": "Em 2010, houve preocupações entre as autoridades tadjiques de que o militarismo islâmico em o leste de o país estava em ascensão após a fuga de 25 militantes de uma prisão tadjique em agosto, uma emboscada que matou 28 soldados tadjiques em o vale de Rasht em setembro, e outra emboscada em o vale em outubro que matou 30 soldados, seguida de combates fora de Gharm que deixaram 3 militantes mortos.", "relations": [{"arg1": "o militarismo islâmico em o leste de o país", "rel": "estava", "arg2": "em ascensão"}, {"arg1": "uma emboscada", "rel": "matou", "arg2": "28 soldados tadjiques em o vale de Rasht em setembro"}, {"arg1": "outra emboscada em o vale em outubro", "rel": "matou", "arg2": "30 soldados"}, {"arg1": "combates fora de Gharm", "rel": "deixaram", "arg2": "3 militantes mortos"}]}
+{"sentence": "O Império Samanida, 819 a 999, restaurou o controle persa de a região e ampliou as cidades de Samarcanda e Bukhara (hoje as duas cidades fazem parte de o Uzbequistão), que se tornaram os centros culturais de o Irã e a região era conhecida como Khorasan.", "relations": [{"arg1": "O Império Samanida, 819 a 999", "rel": "restaurou", "arg2": "o controle persa de a região"}, {"arg1": "O Império Samanida, 819 a 999", "rel": "ampliou", "arg2": "as cidades de Samarcanda"}, {"arg1": "O Império Samanida, 819 a 999", "rel": "ampliou", "arg2": "Bukhara"}, {"arg1": "as duas cidades", "rel": "fazem parte", "arg2": "de o Uzbequistão hoje"}, {"arg1": "as duas cidades", "rel": "fazem parte", "arg2": "de o Uzbequistão"}, {"arg1": "as cidades de Samarcanda", "rel": "se tornaram", "arg2": "os centros culturais de o Irã"}, {"arg1": "Bukhara", "rel": "se tornaram", "arg2": "os centros culturais de o Irã"}, {"arg1": "a região", "rel": "era conhecida", "arg2": "como Khorasan"}]}
+{"sentence": "Durante o final de o século XIX, os jadidistas se estabeleceram como um movimento social islâmico em toda a região.", "relations": [{"arg1": "os jadidistas", "rel": "se estabeleceram", "arg2": "como um movimento social islâmico em toda a região durante o final de o século XIX"}, {"arg1": "os jadidistas", "rel": "se estabeleceram", "arg2": "como um movimento social islâmico em toda a região"}, {"arg1": "os jadidistas", "rel": "se estabeleceram", "arg2": "como um movimento social islâmico"}]}
