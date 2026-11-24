@@ -23,16 +23,18 @@ import re
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[2]
-ABRE = '{"sentence":"'
+INICIO = re.compile(r'^\{\s*"sentence"\s*:\s*"')     # aceita `{"sentence":"` e `{"sentence": "`
+FRAGMENTO = re.compile(r'^\s*"?arg1"\s*:.*\}\s*\]\s*\}\s*$')   # ex.: `arg1": "TASS", "rel": ..., "arg2": ...}]}`
 
 # Marcas estruturais (aspas que fazem parte da sintaxe JSON). Todas as outras aspas são conteúdo.
+# Todas toleram espaços ao redor de `:` e `,`, pois alguns arquivos não são compactos.
 MARCAS = [
-    re.compile(r'"\}(?=,\{|\])'),          # fim de tripla: vem primeiro, pois olha o `{` seguinte, que outra marca consumiria
-    re.compile(r'\{"sentence":"'),
-    re.compile(r'","relations":\['),
-    re.compile(r'\{"arg1":"'),
-    re.compile(r'","rel":"'),
-    re.compile(r'","arg2":"'),
+    re.compile(r'"\s*\}(?=\s*,\s*\{|\s*\])'),   # fim de tripla: vem primeiro, pois olha o `{` seguinte, que outra marca consumiria
+    re.compile(r'\{\s*"sentence"\s*:\s*"'),
+    re.compile(r'"\s*,\s*"relations"\s*:\s*\['),
+    re.compile(r'\{\s*"arg1"\s*:\s*"'),
+    re.compile(r'"\s*,\s*"rel"\s*:\s*"'),
+    re.compile(r'"\s*,\s*"arg2"\s*:\s*"'),
 ]
 
 
@@ -116,17 +118,19 @@ def processar(caminho: Path, aplicar: bool) -> dict:
     texto = caminho.read_text(encoding="utf-8")
     linhas = texto.split("\n")
     candidatas = [l for l in linhas if l.strip()]
-    if not candidatas or sum(l.startswith(ABRE) for l in candidatas) < 0.9 * len(candidatas):
+    if not candidatas or sum(bool(INICIO.match(l)) for l in candidatas) < 0.9 * len(candidatas):
         return {"ignorado": True}
     novas, cont, restantes = [], {}, []
     for i, l in enumerate(linhas, 1):
-        if l.startswith(ABRE):
+        if INICIO.match(l):
             res, feitos = corrigir_linha(l)
             for d in feitos:
                 cont[d] = cont.get(d, 0) + 1
             if not feitos and not valido(l.rstrip("\r")):
                 restantes.append(i)
             novas.extend(res)
+        elif FRAGMENTO.match(l):                            # resto de objeto sem o início: descartado
+            cont["fragmento_orfao"] = cont.get("fragmento_orfao", 0) + 1
         else:
             novas.append(l)
     n_depois = sum(1 for l in novas if l.strip())

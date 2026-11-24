@@ -39,6 +39,18 @@ TAREFAS = {
         "placeholder": None,
         "reforco": FORMATO_MINIMO,
     },
+    "regrasbia": {
+        "prompt": RAIZ / "prompts" / "promptBIA_extrativo.txt",
+        "categoria": "Respostas ExtrativoBIA",
+        "placeholder": None,
+        "reforco": FORMATO_MINIMO,   # sem exemplos: o FORMATO_REFORCO traz exemplos que somariam regras às da BIA
+    },
+    "regrasbiacompleto": {
+        "prompt": RAIZ / "prompts" / "promptBIA_completo_extrativo.txt",
+        "categoria": "Respostas ExtrativoBIA-completo",
+        "placeholder": None,
+        # sem "reforco": usa o FORMATO_REFORCO padrão, igual ao dos prompts DPTO-IE, OIEC-PT e PTOIE-DP
+    },
 }
 
 FORMATO_REFORCO = """

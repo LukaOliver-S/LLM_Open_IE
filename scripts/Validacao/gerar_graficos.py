@@ -71,9 +71,7 @@ plt.rcParams.update({
     "axes.labelsize": 11,
     "axes.edgecolor": "#333333",
     "axes.linewidth": 0.8,
-    "axes.grid": True,
-    "grid.color": "#dddddd",
-    "grid.linewidth": 0.6,
+    "axes.grid": False,          # sem linhas de grade: o valor vem escrito em cada barra
     "figure.dpi": 150,
     "savefig.dpi": 300,
     "legend.frameon": False,
@@ -108,18 +106,20 @@ def salvar(fig: plt.Figure, caminho_base: Path) -> None:
     print(f"   -> {caminho_base.with_suffix('.pdf')}")
 
 
-def rotular_barras(ax, barras, formato="{:.3f}", offset=0.01, orientacao="v"):
-    """Escreve o valor no topo/ponta de cada barra.
-    orientacao='h' para ax.barh (barras horizontais), 'v' para ax.bar (verticais)."""
+def rotular_barras(ax, barras, formato="{:.1%}", offset=0.01, orientacao="v", fontsize=9, rotacao=0):
+    """Escreve o valor, em porcentagem, no topo/ponta de cada barra (a métrica é uma fração: 0.514 -> 51.4%).
+    orientacao='h' para ax.barh (barras horizontais), 'v' para ax.bar (verticais).
+    Barras sem valor (NaN, modelo ausente naquela tarefa) ficam sem rótulo."""
     for b in barras:
+        valor = b.get_width() if orientacao == "h" else b.get_height()
+        if valor != valor:          # NaN
+            continue
         if orientacao == "h":
-            largura = b.get_width()
-            ax.text(largura + offset, b.get_y() + b.get_height() / 2,
-                     formato.format(largura), va="center", fontsize=9)
+            ax.text(valor + offset, b.get_y() + b.get_height() / 2,
+                    formato.format(valor), va="center", fontsize=fontsize)
         else:
-            altura = b.get_height()
-            ax.text(b.get_x() + b.get_width() / 2, altura + offset,
-                     formato.format(altura), ha="center", fontsize=9)
+            ax.text(b.get_x() + b.get_width() / 2, valor + offset,
+                    formato.format(valor), ha="center", va="bottom", fontsize=fontsize, rotation=rotacao)
 
 # --------------------------------------------------------------------------- #
 # GRÁFICO 1: F1 lexical, barras horizontais ordenadas
@@ -152,6 +152,8 @@ def grafico_prf_agrupado(df: pd.DataFrame, caminho_base: Path, sufixo="lexical")
     b1 = ax.bar([i - largura for i in x], d[f"precisao_{sufixo}"], largura, label="Precision", color=PALETA[0])
     b2 = ax.bar(list(x), d[f"recall_{sufixo}"], largura, label="Recall", color=PALETA[1])
     b3 = ax.bar([i + largura for i in x], d[f"f1_{sufixo}"], largura, label="F1", color=PALETA[2])
+    for grupo in (b1, b2, b3):
+        rotular_barras(ax, grupo, fontsize=7, rotacao=90)       # 3 barras por modelo: rótulo na vertical
 
     tipo_match = "Lexical Match" if sufixo == "lexical" else "Exact Match"
     ax.set_xticks(list(x))
@@ -177,6 +179,8 @@ def grafico_lexical_vs_exact(df: pd.DataFrame, caminho_base: Path):
     fig, ax = plt.subplots(figsize=(max(7, 1.1 * len(modelos)), 4.5))
     b1 = ax.bar([i - largura / 2 for i in x], d["f1_lexical"], largura, label="F1 (Lexical Match > 50%)", color=PALETA[1])
     b2 = ax.bar([i + largura / 2 for i in x], d["f1_exact"], largura, label="F1 (Exact Match)", color=PALETA[4])
+    for grupo in (b1, b2):
+        rotular_barras(ax, grupo, fontsize=8)
 
     ax.set_xticks(list(x))
     ax.set_xticklabels(modelos, rotation=30, ha="right")
@@ -204,9 +208,10 @@ def grafico_comparativo_tarefas(dfs_por_tarefa: dict, metrica: str, caminho_base
     fig, ax = plt.subplots(figsize=(max(8, 1.3 * len(modelos)), 5))
     for i, tarefa in enumerate(tarefas):
         df = dfs_por_tarefa[tarefa].set_index("modelo")
-        valores = [df.loc[m, metrica] if m in df.index else 0 for m in modelos]
+        valores = [df.loc[m, metrica] if m in df.index else float("nan") for m in modelos]   # ausente: sem barra nem rótulo
         offset = (i - (n_tarefas - 1) / 2) * largura
-        ax.bar([xi + offset for xi in x], valores, largura, label=tarefa, color=PALETA[i % len(PALETA)])
+        barras = ax.bar([xi + offset for xi in x], valores, largura, label=tarefa, color=PALETA[i % len(PALETA)])
+        rotular_barras(ax, barras, fontsize=8 if n_tarefas <= 2 else 7, rotacao=0 if n_tarefas <= 2 else 90)
 
     ax.set_xticks(list(x))
     ax.set_xticklabels(modelos, rotation=30, ha="right")

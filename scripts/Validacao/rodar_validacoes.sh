@@ -20,7 +20,7 @@ echo ">> raiz: $(pwd)"
 echo ">> python: $PY"
 
 CORPORA=("bia" "oiec_pt")                  # inclua "unified" quando coletar
-TAREFAS=("abstractive" "dpto" "oiec" "ptoiedp","semregras")
+TAREFAS=("abstractive" "dpto" "oiec" "ptoiedp" "semregras" "regrasbia" "regrasbiacompleto")
 
 for C in "${CORPORA[@]}"; do
   echo ""

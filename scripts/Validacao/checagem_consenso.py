@@ -175,6 +175,9 @@ def main() -> None:
             except Exception as e:
                 log.error("Falha ao processar '%s/%s': %s", lote.name, pasta.name, e)
                 continue
+            if resumo.empty:
+                log.warning("Pasta '%s/%s' sem respostas ou sem falsos positivos, pulando.", lote.name, pasta.name)
+                continue
 
             nome_base = pasta.name.replace(" ", "_")
             pasta_saida = raiz_metricas / lote.name / "consenso"

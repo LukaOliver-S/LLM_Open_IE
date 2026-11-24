@@ -1,0 +1,317 @@
+
+# Extração de Relações Open Information Extraction (Open IE)
+
+## Objetivo
+
+Você receberá uma **lista de objetos JSON**, onde cada objeto contém uma sentença em português.
+
+```jsonl
+
+  {"sentence": "..."},
+  {"sentence": "..."},
+  {"sentence": "..."}
+
+```
+
+Cada objeto da lista deve ser processado de forma independente. Não deve haver mistura de informações entre sentenças diferentes e todas as sentenças devem ser analisadas.
+
+---
+
+Você receberá **sentenças em português**.
+
+Sua tarefa é extrair **todas** as relações Open Information Extraction (Open IE) presentes em cada sentença.
+
+Toda saída deve permanecer associada à **sentença original** da qual as relações foram extraídas. Todas as relações em `relations` devem corresponder exclusivamente à sentença armazenada em `sentence`.
+
+Cada relação deve ser representada por uma tripla no formato:
+
+```json
+{
+  "arg1": "...",
+  "rel": "...",
+  "arg2": "..."
+}
+```
+
+Uma sentença pode conter nenhuma, uma ou várias relações. Sempre que houver múltiplas relações válidas, extraia todas elas.
+
+Siga rigorosamente as regras abaixo.
+
+Nas regras, o argumento à esquerda da relação (argumento 0, arg0) corresponde ao campo `arg1` da tripla, e o argumento à direita da relação (argumento 1 ou argumento 2, conforme a regra) corresponde ao campo `arg2` da tripla.
+
+---
+
+# Regras de Extração Válida
+
+## Regra 1
+
+O argumento 0 (arg0) deve ser um sintagma nominal à esquerda do verbo, excluídos SN formados apenas por pronomes.
+
+**Exemplo**
+
+Sentença:
+`A diretora da escola abriu a biblioteca.`
+
+Saída:
+
+```json
+{"arg1": "A diretora da escola", "rel": "abriu", "arg2": "a biblioteca"}
+```
+
+---
+
+## Regra 2
+
+O argumento 1 deve estar à direita do verbo e pode ser (i) um sintagma nominal, como no exemplo (1) acima; (ii) uma sequência formada por um sintagma nominal e outro(s) sintagma(s) complemento(s) ou adjunto(s), como no exemplo (2), respeitada a contiguidade; (iii) ou uma sentença, como no exemplo (3).
+
+**Exemplo (1)**
+
+Sentença:
+`O museu comprou um quadro.`
+
+Saída:
+
+```json
+{"arg1": "O museu", "rel": "comprou", "arg2": "um quadro"}
+```
+
+**Exemplo (2)**
+
+Sentença:
+`Marta entregou o relatório ao diretor.`
+
+Saída:
+
+```json
+{"arg1": "Marta", "rel": "entregou", "arg2": "o relatório ao diretor"}
+```
+
+**Exemplo (3)**
+
+Sentença:
+`O engenheiro afirmou que a ponte cedeu durante a noite.`
+
+Saída:
+
+```json
+{"arg1": "O engenheiro", "rel": "afirmou", "arg2": "que a ponte cedeu durante a noite"}
+```
+
+---
+
+## Regra 3
+
+A relação deve conter pelo menos um verbo. Se houver uma preposição introduzindo o argumento 1, esta deve ser incluída na relação.
+
+**Exemplo**
+
+Sentença:
+`A pesquisadora falou sobre a seca no sertão.`
+
+Saída:
+
+```json
+{"arg1": "A pesquisadora", "rel": "falou sobre", "arg2": "a seca no sertão"}
+```
+
+---
+
+## Regra 4
+
+Se houver vários sintagmas complementos e adjuntos à direita do verbo, várias extrações foram feitas, com diferentes combinações dos elementos, respeitada a contiguidade.
+
+**Exemplo**
+
+Sentença:
+`Lia viajou para Recife com uma amiga.`
+
+Saída:
+
+```json
+[
+  {"arg1": "Lia", "rel": "viajou para", "arg2": "Recife"},
+  {"arg1": "Lia", "rel": "viajou para", "arg2": "Recife com uma amiga"},
+  {"arg1": "Lia", "rel": "viajou para Recife com", "arg2": "uma amiga"}
+]
+```
+
+---
+
+## Regra 5
+
+A negação, outros advérbios e pronomes átonos imediatamente pré-verbais devem ser incluídos na relação.
+
+**Exemplos**
+
+Sentença:
+`A empresa não renovou o contrato com a prefeitura.`
+
+Saída:
+
+```json
+{"arg1": "A empresa", "rel": "não renovou", "arg2": "o contrato com a prefeitura"}
+```
+
+Sentença:
+`Rafael se mudou para Curitiba.`
+
+Saída:
+
+```json
+{"arg1": "Rafael", "rel": "se mudou para", "arg2": "Curitiba"}
+```
+
+---
+
+## Regra 6
+
+A voz passiva permite diferentes extrações, com o particípio incluído na relação e no argumento 1.
+
+**Exemplos**
+
+Sentença:
+`A ponte foi construída em 1950.`
+
+Saída:
+
+```json
+{"arg1": "A ponte", "rel": "foi construída em", "arg2": "1950"}
+```
+
+Sentença:
+`Todas as janelas foram quebradas.`
+
+Saída:
+
+```json
+{"arg1": "Todas as janelas", "rel": "foram", "arg2": "quebradas"}
+```
+
+---
+
+# Regras de Extração Inválida
+
+Nos exemplos desta seção, a tripla marcada como inválida **não deve ser gerada**.
+
+## Regra 1
+
+Extrações cujos componentes fazem parte de orações diferentes são inválidas.
+
+**Exemplo**
+
+Sentença:
+`O prefeito disse que o engenheiro inspecionou a ponte.`
+
+Extração válida:
+
+```json
+{"arg1": "O prefeito", "rel": "disse", "arg2": "que o engenheiro inspecionou a ponte"}
+```
+
+Extração inválida:
+
+```json
+{"arg1": "O prefeito", "rel": "inspecionou", "arg2": "a ponte"}
+```
+
+---
+
+## Regra 2
+
+A extração é inválida se não há contiguidade entre os elementos internos que foram os argumentos da tripla.
+
+**Exemplo**
+
+Sentença:
+`Helena comprou o carro novo em março.`
+
+Extrações válidas:
+
+```json
+[
+  {"arg1": "Helena", "rel": "comprou", "arg2": "o carro novo"},
+  {"arg1": "Helena", "rel": "comprou", "arg2": "o carro novo em março"},
+  {"arg1": "Helena", "rel": "comprou o carro novo em", "arg2": "março"}
+]
+```
+
+Extração inválida (pula `o carro novo`):
+
+```json
+{"arg1": "Helena", "rel": "comprou em", "arg2": "março"}
+```
+
+---
+
+## Regra 3
+
+A extração é inválida se o argumento 0 não estiver à esquerda da relação e/ou se o argumento 2 não estiver à direita da relação.
+
+**Exemplo**
+
+Sentença:
+`Existem, em Minas Gerais e Goiás, reservas de ouro.`
+
+Extração inválida:
+
+```json
+{"arg1": "reservas de ouro", "rel": "existem em", "arg2": "Minas Gerais e Goiás"}
+```
+
+---
+
+## Regra 4
+
+A extração é inválida se algum dos argumentos for apenas um pronome.
+
+**Exemplo**
+
+Sentença:
+`Ela lhe entregou uma carta.`
+
+Extração inválida:
+
+```json
+{"arg1": "Ela", "rel": "lhe entregou", "arg2": "uma carta"}
+```
+
+---
+
+# Formato da Resposta
+
+Retorne exclusivamente um objeto JSON válido.
+
+O objeto deve possuir obrigatoriamente os campos:
+
+* **sentence:** exatamente a sentença de entrada, sem qualquer modificação, correção, normalização ou reescrita.
+* **relations:** um array contendo todas as relações extraídas.
+
+As relações devem aparecer, sempre que possível, na mesma ordem em que surgem na sentença.
+
+Caso nenhuma relação válida seja encontrada, retorne `relations` como array vazio.
+
+Não inclua explicações, comentários, Markdown ou qualquer texto adicional.
+
+Formato esperado:
+
+```json
+{
+  "sentence": "A prefeitura inaugurou a nova biblioteca.",
+  "relations": [
+    {
+      "arg1": "A prefeitura",
+      "rel": "inaugurou",
+      "arg2": "a nova biblioteca"
+    }
+  ]
+}
+```
+
+Caso não exista nenhuma relação Open IE válida:
+
+```json
+{
+  "sentence": "A prefeitura inaugurou a nova biblioteca.",
+  "relations": []
+}
+```
