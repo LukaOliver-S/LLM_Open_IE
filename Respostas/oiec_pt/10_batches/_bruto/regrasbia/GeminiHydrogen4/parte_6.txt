@@ -1,0 +1,11 @@
+{"sentence": "Ele disse no Andrew Marr Show da BBC: "Uma eleição legislativa é francamente a última coisa que o Governo quer."", "relations": [{"arg1": "Uma eleição legislativa", "rel": "é francamente", "arg2": "a última coisa que o Governo quer"}]}
+{"sentence": "É o sonho dele terminar a sua carreira aqui.", "relations": []}
+{"sentence": "Empatar um jogo que você dominou é simples de esquecer, mas fazê-lo três vezes em seguida sugere fraqueza.", "relations": [{"arg1": "Empatar um jogo que você dominou", "rel": "é", "arg2": "simples de esquecer"}]}
+{"sentence": "Estávamos tão desapontados porque perdemos seis pontos jogando em casa.", "relations": []}
+{"sentence": "Esse foi, sem dúvida, o caso de Andy quando enfrentou Benoît Paire, em Monte Carlo, em abril.", "relations": []}
+{"sentence": "Mas agora tudo está fora de questão e ele parece estar à procura de respostas a toda hora.", "relations": []}
+{"sentence": "Eu também penso se a Taça Davis desempenhou algum papel.", "relations": [{"arg1": "a Taça Davis", "rel": "desempenhou", "arg2": "algum papel"}]}
+{"sentence": "A pesquisa anual também revelou que as preocupações sobre assumir novos encargos financeiros têm disparado.", "relations": [{"arg1": "A pesquisa anual", "rel": "também revelou", "arg2": "que as preocupações sobre assumir novos encargos financeiros têm disparado"}]}
+{"sentence": "O senhor Hopley acrescentou: "O aumento do risco político não deve passar despercebido".", "relations": [{"arg1": "O senhor Hopley", "rel": "acrescentou", "arg2": ""O aumento do risco político não deve passar despercebido""}, {"arg1": "O aumento do risco político", "rel": "não deve passar", "arg2": "despercebido"}]}
+{"sentence": "A notícia da fraude da companhia - que tinha funcionado durante anos - limpou dezenas de bilhões de euros do valor da VW e custou ao executivo principal, Martin Winterkorn, o seu trabalho.", "relations": [{"arg1": "A notícia da fraude da companhia", "rel": "limpou", "arg2": "dezenas de bilhões de euros"}, {"arg1": "A notícia da fraude da companhia", "rel": "limpou", "arg2": "dezenas de bilhões de euros do valor da VW"}, {"arg1": "A notícia da fraude da companhia", "rel": "custou a", "arg2": "o executivo principal, Martin Winterkorn, o seu trabalho"}]}
+fim

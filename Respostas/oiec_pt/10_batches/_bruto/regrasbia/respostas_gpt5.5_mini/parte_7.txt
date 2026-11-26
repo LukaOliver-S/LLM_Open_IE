@@ -1,0 +1,177 @@
+
+# Extração de Relações Open Information Extraction (Open IE)
+
+## Objetivo
+
+Você receberá uma **lista de objetos JSON**, onde cada objeto contém uma sentença em português.
+
+```jsonl
+
+  {"sentence": "..."},
+  {"sentence": "..."},
+  {"sentence": "..."}
+
+```
+
+Cada objeto da lista deve ser processado de forma independente. Não deve haver mistura de informações entre sentenças diferentes e todas as sentenças devem ser analisadas.
+
+---
+
+Você receberá **sentenças em português**.
+
+Sua tarefa é extrair **todas** as relações Open Information Extraction (Open IE) presentes em cada sentença.
+
+Toda saída deve permanecer associada à **sentença original** da qual as relações foram extraídas. Todas as relações em `relations` devem corresponder exclusivamente à sentença armazenada em `sentence`.
+
+Cada relação deve ser representada por uma tripla no formato:
+
+```json
+{
+  "arg1": "...",
+  "rel": "...",
+  "arg2": "..."
+}
+```
+
+Uma sentença pode conter nenhuma, uma ou várias relações. Sempre que houver múltiplas relações válidas, extraia todas elas.
+
+Siga rigorosamente as regras abaixo.
+
+Nas regras, o argumento à esquerda da relação (argumento 0, arg0) corresponde ao campo `arg1` da tripla, e o argumento à direita da relação (argumento 1 ou argumento 2, conforme a regra) corresponde ao campo `arg2` da tripla.
+
+---
+
+# Regras de Extração Válida
+
+## Regra 1
+
+O argumento 0 (arg0) deve ser um sintagma nominal à esquerda do verbo, excluídos SN formados apenas por pronomes.
+
+## Regra 2
+
+O argumento 1 deve estar à direita do verbo e pode ser (i) um sintagma nominal, como no exemplo (1) acima; (ii) uma sequência formada por um sintagma nominal e outro(s) sintagma(s) complemento(s) ou adjunto(s), como no exemplo (2), respeitada a contiguidade; (iii) ou uma sentença, como no exemplo (3).
+
+## Regra 3
+
+A relação deve conter pelo menos um verbo. Se houver uma preposição introduzindo o argumento 1, esta deve ser incluída na relação.
+
+## Regra 4
+
+Se houver vários sintagmas complementos e adjuntos à direita do verbo, várias extrações foram feitas, com diferentes combinações dos elementos, respeitada a contiguidade.
+
+## Regra 5
+
+A negação, outros advérbios e pronomes átonos imediatamente pré-verbais devem ser incluídos na relação.
+
+## Regra 6
+
+A voz passiva permite diferentes extrações, com o particípio incluído na relação e no argumento 1.
+
+---
+
+# Regras de Extração Inválida
+
+## Regra 1
+
+Extrações cujos componentes fazem parte de orações diferentes são inválidas.
+
+## Regra 2
+
+A extração é inválida se não há contiguidade entre os elementos internos que foram os argumentos da tripla.
+
+## Regra 3
+
+A extração é inválida se o argumento 0 não estiver à esquerda da relação e/ou se o argumento 2 não estiver à direita da relação.
+
+## Regra 4
+
+A extração é inválida se algum dos argumentos for apenas um pronome.
+
+---
+
+# Formato da Resposta
+
+Retorne exclusivamente um objeto JSON válido.
+
+O objeto deve possuir obrigatoriamente os campos:
+
+* **sentence:** exatamente a sentença de entrada, sem qualquer modificação, correção, normalização ou reescrita.
+* **relations:** um array contendo todas as relações extraídas.
+
+As relações devem aparecer, sempre que possível, na mesma ordem em que surgem na sentença.
+
+Caso nenhuma relação válida seja encontrada, retorne `relations` como array vazio.
+
+Não inclua explicações, comentários, Markdown ou qualquer texto adicional.
+
+Formato esperado:
+
+```json
+{
+  "sentence": "A prefeitura inaugurou a nova biblioteca.",
+  "relations": [
+    {
+      "arg1": "A prefeitura",
+      "rel": "inaugurou",
+      "arg2": "a nova biblioteca"
+    }
+  ]
+}
+```
+
+Caso não exista nenhuma relação Open IE válida:
+
+```json
+{
+  "sentence": "A prefeitura inaugurou a nova biblioteca.",
+  "relations": []
+}
+```
+
+
+Processe as seguintes sentenças:
+[
+  {
+    "sentence": "Isso também abriu a VW para reivindicações e ações legais imensas, e viu elas levarem mais que €16 bilhões de provisões."
+  },
+  {
+    "sentence": "A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis."
+  },
+  {
+    "sentence": "Ele foi promovido a presidente em outubro de 2015, o mês seguinte ao escândalo ter sido descoberto."
+  },
+  {
+    "sentence": "As empresas esperavam começar a decrescer em julho, imediatamente após o voto do Brexit, mas em vez disso têm conseguido manter o crescimento constante."
+  },
+  {
+    "sentence": "Os negócios de varejo e atacado se expandiram, uma vez que os lojistas continuam otimistas e as companhias de serviço ao cliente também cresceram."
+  },
+  {
+    "sentence": "No entanto, haverá limites para a sua capacidade de gastar uma vez que o Governo ainda tem um grande déficit orçamental."
+  },
+  {
+    "sentence": "O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta."
+  },
+  {
+    "sentence": "A taxa fixa da Eon custa £760 e os clientes da Avro Energy pagariam cerca de £760 pela sua tarifa Simple and Select."
+  },
+  {
+    "sentence": "Ou é um classe cara ou uma tarifa de pré-pagamento?"
+  },
+  {
+    "sentence": "Um investidor com alguma sorte e £10,000 em títulos poderia esperar receber £125 em prêmios, por ano."
+  }
+]
+
+Formato de saída: JSONL, isto é, um objeto JSON por linha, sem colchetes envolvendo tudo e sem vírgula entre os objetos. Gere um objeto por sentença, na mesma ordem em que foram apresentadas. Cada objeto tem o campo "sentence", com a sentença de entrada copiada sem nenhuma alteração, e o campo "relations", uma lista de objetos com os campos "arg1", "rel" e "arg2". Se não houver nenhuma tripla, use "relations": []. Não escreva nenhum outro texto.
+
+{"sentence":"Isso também abriu a VW para reivindicações e ações legais imensas, e viu elas levarem mais que €16 bilhões de provisões.","relations":[{"arg1":"Isso","rel":"também abriu","arg2":"a VW para reivindicações e ações legais imensas"},{"arg1":"Isso","rel":"viu","arg2":"elas levarem mais que €16 bilhões de provisões"},{"arg1":"elas","rel":"levarem","arg2":"mais que €16 bilhões de provisões"}]}\
+{"sentence":"A sondagem começou em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess, que permanece na fabricante de automóveis.","relations":[{"arg1":"A sondagem","rel":"começou","arg2":"em junho"},{"arg1":"A sondagem","rel":"começou","arg2":"em junho, com foco no Sr. Winterkorn e no chefe de marca, Herbert Diess"},{"arg1":"Herbert Diess","rel":"permanece","arg2":"na fabricante de automóveis"}]}\
+{"sentence":"Ele foi promovido a presidente em outubro de 2015, o mês seguinte ao escândalo ter sido descoberto.","relations":[{"arg1":"Ele","rel":"foi promovido","arg2":"a presidente"},{"arg1":"Ele","rel":"foi promovido","arg2":"a presidente em outubro de 2015"},{"arg1":"o escândalo","rel":"ter sido descoberto","arg2":""}]}\
+{"sentence":"As empresas esperavam começar a decrescer em julho, imediatamente após o voto do Brexit, mas em vez disso têm conseguido manter o crescimento constante.","relations":[{"arg1":"As empresas","rel":"esperavam","arg2":"começar a decrescer em julho, imediatamente após o voto do Brexit"},{"arg1":"As empresas","rel":"começar a decrescer","arg2":"em julho, imediatamente após o voto do Brexit"},{"arg1":"As empresas","rel":"têm conseguido","arg2":"manter o crescimento constante"},{"arg1":"As empresas","rel":"manter","arg2":"o crescimento constante"}]}\
+{"sentence":"Os negócios de varejo e atacado se expandiram, uma vez que os lojistas continuam otimistas e as companhias de serviço ao cliente também cresceram.","relations":[{"arg1":"Os negócios de varejo e atacado","rel":"se expandiram","arg2":""},{"arg1":"os lojistas","rel":"continuam","arg2":"otimistas"},{"arg1":"as companhias de serviço ao cliente","rel":"também cresceram","arg2":""}]}\
+{"sentence":"No entanto, haverá limites para a sua capacidade de gastar uma vez que o Governo ainda tem um grande déficit orçamental.","relations":[{"arg1":"limites","rel":"haverá","arg2":"para a sua capacidade de gastar"},{"arg1":"o Governo","rel":"ainda tem","arg2":"um grande déficit orçamental"}]}\
+{"sentence":"O custo vai mudar mensalmente e é esperado que o preço aumente no inverno, tal como o uso aumenta.","relations":[{"arg1":"O custo","rel":"vai mudar","arg2":"mensalmente"},{"arg1":"O custo","rel":"é esperado","arg2":"que o preço aumente no inverno"},{"arg1":"o preço","rel":"aumente","arg2":"no inverno"},{"arg1":"o uso","rel":"aumenta","arg2":""}]}\
+{"sentence":"A taxa fixa da Eon custa £760 e os clientes da Avro Energy pagariam cerca de £760 pela sua tarifa Simple and Select.","relations":[{"arg1":"A taxa fixa da Eon","rel":"custa","arg2":"£760"},{"arg1":"os clientes da Avro Energy","rel":"pagariam","arg2":"cerca de £760 pela sua tarifa Simple and Select"},{"arg1":"os clientes da Avro Energy","rel":"pagariam","arg2":"cerca de £760"}]}\
+{"sentence":"Ou é um classe cara ou uma tarifa de pré-pagamento?","relations":[]}\
+{"sentence":"Um investidor com alguma sorte e £10,000 em títulos poderia esperar receber £125 em prêmios, por ano.","relations":[{"arg1":"Um investidor com alguma sorte e £10,000 em títulos","rel":"poderia esperar","arg2":"receber £125 em prêmios, por ano"},{"arg1":"Um investidor com alguma sorte e £10,000 em títulos","rel":"receber","arg2":"£125 em prêmios, por ano"}]}

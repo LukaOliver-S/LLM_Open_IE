@@ -1,12 +1,13 @@
-"""Corrige defeitos de formato em respostas .jsonl (uma sentença por linha) sem mexer no conteúdo.
+"""Corrige defeitos de formato em respostas .jsonl sem mexer no conteúdo.
 
-Defeitos tratados (só em linhas que começam com {"sentence"):
+Defeitos tratados:
   barra_final        `\\` solto no fim da linha (vem da cópia do chat)               -> removida
   barra_dupla        `\\"` (escape duplicado) dentro de textos                        -> vira `\\"` correto
   aspas_sem_escape   aspas internas sem escape em "sentence", "arg1", "rel" ou "arg2" -> escapadas
   objetos_juntos     dois ou mais registros na mesma linha (`}]}{"sentence":...`)     -> separados em linhas
   texto_extra        texto solto depois do JSON (ex.: "FIM")                           -> descartado
-Arquivos que não são de uma linha por sentença (JSON indentado em várias linhas) são ignorados.
+resposta copiada    JSON multilinha com `&#x20;` no recuo e `\\` ao fim das linhas   -> normalizada
+controle isolado    caractere de controle solto entre objetos                        -> removido
 Linhas que continuam inválidas depois da correção ficam como estavam e são listadas.
 O conteúdo das triplas e das sentenças não é alterado, só a pontuação/estrutura do JSON.
 
@@ -25,6 +26,7 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parents[2]
 INICIO = re.compile(r'^\{\s*"sentence"\s*:\s*"')     # aceita `{"sentence":"` e `{"sentence": "`
 FRAGMENTO = re.compile(r'^\s*"?arg1"\s*:.*\}\s*\]\s*\}\s*$')   # ex.: `arg1": "TASS", "rel": ..., "arg2": ...}]}`
+INICIO_FORMATADO = re.compile(r'^\{\s*\\\s*$')
 
 # Marcas estruturais (aspas que fazem parte da sintaxe JSON). Todas as outras aspas são conteúdo.
 # Todas toleram espaços ao redor de `:` e `,`, pois alguns arquivos não são compactos.
@@ -114,10 +116,66 @@ def corrigir_linha(linha: str) -> tuple[list[str], list[str]]:
     return saida, feitos
 
 
+def corrigir_bloco_formatado(texto: str) -> tuple[list[str], dict[str, int]] | None:
+    """Converte objetos multilinha copiados com entidades HTML e barras de continuação."""
+    linhas = texto.splitlines()
+    candidatas = [linha for linha in linhas if linha.strip()]
+    if not candidatas or not INICIO_FORMATADO.match(candidatas[0].strip()):
+        return None
+    if "&#x20;" not in texto:
+        return None
+    barras = sum(linha.rstrip().endswith("\\") for linha in candidatas)
+    if barras < 0.8 * len(candidatas):
+        return None
+
+    cont = {"entidade_espaco": texto.count("&#x20;"), "barra_continuacao": barras}
+    limpas = []
+    for linha in linhas:
+        linha = linha.replace("&#x20;", " ")
+        if linha.rstrip().endswith("\\"):
+            linha = linha.rstrip()[:-1]
+        if re.fullmatch(r"[\x00-\x1f\x7f]+", linha.strip()):
+            cont["controle_isolado"] = cont.get("controle_isolado", 0) + 1
+            continue
+        limpas.append(linha)
+
+    dec, pos, objs = json.JSONDecoder(), 0, []
+    combinado = "\n".join(limpas)
+    while pos < len(combinado):
+        while pos < len(combinado) and combinado[pos].isspace():
+            pos += 1
+        if pos >= len(combinado):
+            break
+        try:
+            obj, pos = dec.raw_decode(combinado, pos)
+        except json.JSONDecodeError:
+            return None
+        if not isinstance(obj, dict) or "sentence" not in obj:
+            return None
+        objs.append(obj)
+    if not objs:
+        return None
+    cont["json_multilinha"] = len(objs)
+    saida = [json.dumps(obj, ensure_ascii=False, separators=(",", ":")) for obj in objs]
+    return saida, cont
+
+
 def processar(caminho: Path, aplicar: bool) -> dict:
     texto = caminho.read_text(encoding="utf-8")
     linhas = texto.split("\n")
     candidatas = [l for l in linhas if l.strip()]
+    bloco_corrigido = corrigir_bloco_formatado(texto)
+    if bloco_corrigido is not None:
+        novas, cont = bloco_corrigido
+        mudou = novas != candidatas
+        if mudou and aplicar:
+            bak = caminho.with_name(caminho.name + ".pre_correcao.bak")
+            if not bak.exists():
+                bak.write_text(texto, encoding="utf-8", newline="")
+            caminho.write_text("\n".join(novas) + "\n", encoding="utf-8", newline="")
+        return {"ignorado": False, "linhas": len(candidatas), "linhas_depois": len(novas),
+                "corrigidos": cont, "mudou": mudou, "ainda_invalidas": []}
+
     if not candidatas or sum(bool(INICIO.match(l)) for l in candidatas) < 0.9 * len(candidatas):
         return {"ignorado": True}
     novas, cont, restantes = [], {}, []

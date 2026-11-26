@@ -46,19 +46,22 @@ plt.rcParams.update({
 })
 
 # ordem e rótulos dos prompts (a pasta vem do bootstrap_ic: "ExtrativoDPTO-IE", "SemRegras", ...)
-ORDEM_PROMPTS = ["SemRegras", "ExtrativoDPTO-IE", "ExtrativoOIEC-PT", "ExtrativoPTOIE-DP", "ExtrativoBIA-completo", "ExtrativoBIA"]
+ORDEM_PROMPTS = ["SemRegras", "ExtrativoDPTO-IE", "ExtrativoOIEC-PT", "ExtrativoOIEC-PT-simples", "ExtrativoPTOIE-DP",
+                 "ExtrativoBIA-completo", "ExtrativoBIA"]
 ROTULO = {
     "SemRegras": "Sem regras",
     "ExtrativoDPTO-IE": "DPTO-IE",
     "ExtrativoOIEC-PT": "OIEC-PT",
+    "ExtrativoOIEC-PT-simples": "OIEC-PT (simples)",
     "ExtrativoPTOIE-DP": "PTOIE-DP",
-    "ExtrativoBIA-completo": "BIA (completo)",
+    "ExtrativoBIA-completo": "BIA",
     "ExtrativoBIA": "BIA (simples)",
 }
 COR = {
     "SemRegras": "#9e9e9e",
     "ExtrativoDPTO-IE": "#4c78a8",
     "ExtrativoOIEC-PT": "#f58518",
+    "ExtrativoOIEC-PT-simples": "#f9c784",
     "ExtrativoPTOIE-DP": "#54a24b",
     "ExtrativoBIA-completo": "#b279a2",
     "ExtrativoBIA": "#e7a8d0",
@@ -142,6 +145,7 @@ def main() -> None:
     ap.add_argument("--corpus", nargs="*", default=["bia"])
     ap.add_argument("--metrica", choices=["lexical", "exact"], default="lexical")
     ap.add_argument("--entrada", default="Outputs/bootstrap")
+    ap.add_argument("--ignorar", nargs="*", default=["ExtrativoBIA"], help="pastas de prompt a deixar de fora (padrão: BIA simples)")
     a = ap.parse_args()
     for c in a.corpus:
         pasta = Path(a.entrada) / c
@@ -152,8 +156,13 @@ def main() -> None:
         saida = pasta / "graficos"
         saida.mkdir(parents=True, exist_ok=True)
         print(f"[{c}]")
-        grafico_f1(pd.read_csv(f_ic), c, a.metrica, saida)
-        grafico_efeito(pd.read_csv(f_pv) if f_pv.exists() else pd.DataFrame(), c, a.metrica, saida)
+        ic_df = pd.read_csv(f_ic)
+        ic_df = ic_df[~ic_df["pasta"].isin(a.ignorar)]
+        pv_df = pd.read_csv(f_pv) if f_pv.exists() else pd.DataFrame()
+        if len(pv_df):
+            pv_df = pv_df[~pv_df["prompt"].isin(a.ignorar)]
+        grafico_f1(ic_df, c, a.metrica, saida)
+        grafico_efeito(pv_df, c, a.metrica, saida)
 
 
 if __name__ == "__main__":

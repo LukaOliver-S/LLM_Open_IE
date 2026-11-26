@@ -38,7 +38,7 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[2]
 VAL = RAIZ / "scripts" / "Validacao"
-TAREFAS_CARB = ["abstractive", "dpto", "oiec", "ptoiedp", "semregras", "regrasbia", "regrasbiacompleto"]
+TAREFAS_CARB = ["abstractive", "dpto", "oiec", "ptoiedp", "semregras", "regrasbia", "regrasbiacompleto", "oiecsimples"]
 
 falhas: list[str] = []
 
@@ -88,10 +88,25 @@ def main() -> None:
         rodar(f"{c}: bootstrap_ic", [str(VAL / "bootstrap_ic.py"), "--corpus", c, "--lotes", L, "--B", str(a.B)])
         rodar(f"{c}: grafico_prompts_ic", [str(VAL / "grafico_prompts_ic.py"), "--corpus", c])
 
+        # análises que alimentam as abas do Excel
+        rodar(f"{c}: analise_pronomes_transitividade", [str(VAL / "analise_pronomes_transitividade.py"), "--corpus", c, "--lotes", L])
+        rodar(f"{c}: distribuicao_triplas_por_sentenca", [str(VAL / "distribuicao_triplas_por_sentenca.py"), "--corpus", c, "--lotes", L])
+        rodar(f"{c}: contagem_variantes", [str(VAL / "contagem_variantes.py"), "--corpus", c, "--lotes", L])
+        rodar(f"{c}: caracterizar_corpus", [str(VAL / "caracterizar_corpus.py"), "--corpus", c, "--lotes", L])
+        if c in ("bia", "oiec_pt"):        # precisam de prompts de regras e de SemRegras, que só existem nos corpora extrativos
+            rodar(f"{c}: correlacao_triplas_f1", [str(VAL / "correlacao_triplas_f1.py"), "--corpus", c, "--lotes", L])
+            rodar(f"{c}: concordancia_entre_sistemas", [str(VAL / "concordancia_entre_sistemas.py"), "--corpus", c, "--lotes", L])
+
         if a.carb:
             for t in TAREFAS_CARB:
                 rodar(f"{c}/{t}: rodar_carb", [str(VAL / "rodar_carb.py"), "--corpus", c, "--tarefa", t])
                 rodar(f"{c}/{t}: bootstrap_carb", [str(VAL / "bootstrap_carb.py"), "--corpus", c, "--tarefa", t])
+
+    if a.corpus:
+        # sem --corpus o exportar_excel usa os três corpora (bia, oiec_pt e oiec_pt_abs) com o que já estiver em Outputs/
+        extra = [] if set(a.corpus) == {"bia", "oiec_pt"} else ["--corpus", *a.corpus]
+        rodar("exportar_excel (valores numéricos)", [str(VAL / "exportar_excel.py"), *extra, "--lotes", str(a.lotes)])
+        rodar("gerar_planilha_comparativa (comparativo_extracoes)", [str(RAIZ / "gerar_planilha_comparativa.py"), "--todos", "--batch", str(a.lotes)])
 
     print("\n" + "=" * 60)
     if falhas:

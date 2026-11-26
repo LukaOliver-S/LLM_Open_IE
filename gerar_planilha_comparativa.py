@@ -408,6 +408,69 @@ def gerar_aba(wb: Workbook, nome_aba: str, gold_ordenado: List[dict],
     ws.auto_filter.ref = f"A1:{get_column_letter(len(cabecalho))}{len(gold_ordenado) + 1}"
 
 
+ROTULOS_ABA = {"SemRegras": "Sem regras", "ExtrativoDPTO-IE": "DPTO-IE", "ExtrativoOIEC-PT": "OIEC-PT",
+               "ExtrativoOIEC-PT-simples": "OIEC-PT simples", "ExtrativoPTOIE-DP": "PTOIE-DP", "ExtrativoBIA-completo": "BIA",
+               "SistemasExtrativos": "Extratores locais", "AbstractiveOpenIE": "Abstr. LLMs",
+               "SistemasAbstrativos": "Abstr. locais"}
+CORPORA_TODOS = ["bia", "oiec_pt", "oiec_pt_abs"]
+
+LEGENDA = [
+    ("Comparativo de extrações: gold e modelos lado a lado", "t"),
+    ("Cada aba é um prompt de um corpus (corpus | prompt). Cada linha é uma frase. As colunas são o gabarito e um modelo cada.", ""),
+    ("", ""),
+    ("Nas colunas dos modelos", "h"),
+    ("✓✓  casamento exato com uma tripla do gold", ""),
+    ("✓   casamento lexical (sobreposição de tokens maior que 0,5 em arg1, rel e arg2)", ""),
+    ("✗   falso positivo, não bateu com nada do gold", ""),
+    ("🟡  falso positivo que TODOS os modelos da aba geraram", ""),
+    ("🔷  falso positivo que só os LLMs geraram, sem nenhum extrator local", ""),
+    ("", ""),
+    ("Na coluna do gabarito", "h"),
+    ("⚠   tripla que nenhum modelo da aba recuperou", ""),
+    ("⭐  tripla que todos os modelos da aba recuperaram, cada um por conta própria", ""),
+    ("", ""),
+    ("O prompt BIA simples fica de fora. As métricas numéricas estão em resultados_consolidados.xlsx.", ""),
+]
+
+
+def aba_legenda(wb: Workbook) -> None:
+    ws = wb.active
+    ws.title = "Legenda"
+    for i, (txt, tipo) in enumerate(LEGENDA, start=1):
+        c = ws.cell(row=i, column=1, value=txt)
+        c.font = Font(name=FONTE, size=14 if tipo == "t" else 11 if tipo == "h" else 10, bold=tipo in ("t", "h"))
+        c.alignment = Alignment(wrap_text=True, vertical="top")
+    ws.column_dimensions["A"].width = 120
+
+
+def adicionar_abas_corpus(wb: Workbook, corpus: str, batch: str = "10", ignorar=(), limiar: float = 0.5,
+                          rotulos: Dict[str, str] | None = None, raiz: Path | None = None) -> List[Tuple[str, str]]:
+    """Acrescenta a `wb` uma aba por pasta de prompt do corpus (gold e modelos lado a lado), sem salvar nada.
+    Serve para juntar a planilha qualitativa ao Excel consolidado (scripts/Validacao/exportar_excel.py).
+
+    `ignorar` são nomes de pasta COM o prefixo 'Respostas ' (ex.: 'Respostas ExtrativoBIA').
+    `rotulos` traduz o nome da pasta (sem o prefixo) para o texto da aba. O título final é '<corpus> | <rótulo>'
+    (máx. 31 caracteres, limite do Excel). Devolve [(título da aba, nome da pasta)]."""
+    raiz = raiz or Path(__file__).resolve().parent
+    rotulos = rotulos or {}
+    cfg = resolver_corpus(corpus)
+    gold_ordenado = carregar_agrupado(raiz / cfg["gold"])
+    base = raiz / cfg["respostas"] / f"{batch}_batches"
+    criadas: List[Tuple[str, str]] = []
+    for pasta in descobrir_pastas_de_tarefa(base):
+        if pasta.name in ignorar:
+            continue
+        arquivos = sorted(pasta.glob("*.jsonl"))
+        if not arquivos:
+            continue
+        modelos = {a.stem: {normalizar_frase(x["sentence"]): x["relations"] for x in carregar_agrupado(a)} for a in arquivos}
+        curto = pasta.name.replace("Respostas ", "")
+        titulo = f"{corpus} | {rotulos.get(curto, curto)}"[:31]
+        gerar_aba(wb, titulo, gold_ordenado, modelos, limiar)
+        criadas.append((titulo, pasta.name))
+    return criadas
+
+
 # --------------------------------------------------------------------------- #
 # 4. DETECÇÃO AUTOMÁTICA DA ESTRUTURA DO PROJETO
 # --------------------------------------------------------------------------- #
@@ -510,10 +573,32 @@ def main():
     parser.add_argument("--limiar", type=float, default=0.5, help="Limiar de overlap lexical (default: 0.5)")
     parser.add_argument("--corpus", default=None, choices=list(CORPORA),
                          help="Atalho: define gold + pasta de respostas + saida pelo registro.")
-    
+    parser.add_argument("--ignorar", nargs="*", default=["Respostas ExtrativoBIA"],
+                         help="Nomes de pasta de tarefa a deixar de fora (padrão: o prompt BIA simples). "
+                              "Use --ignorar sem valores para incluir todas.")
+
+    parser.add_argument("--todos", action="store_true",
+                         help="Gera UM arquivo com os corpora bia, oiec_pt e oiec_pt_abs, uma aba por prompt "
+                              "(corpus | prompt). Saída padrão: Outputs/comparativo_extracoes.xlsx")
+
     args = parser.parse_args()
 
-    raiz = Path.cwd()
+    # Sem nenhum argumento de escolha, o padrão é o arquivo único com todos os corpora.
+    if args.todos or not (args.corpus or args.gold or args.pastas):
+        raiz_repo = Path(__file__).resolve().parent
+        wb = Workbook()
+        aba_legenda(wb)
+        for c in CORPORA_TODOS:
+            print(f"\n=== Corpus {c} ===")
+            for titulo, pasta in adicionar_abas_corpus(wb, c, args.batch or "10", args.ignorar, args.limiar, ROTULOS_ABA, raiz_repo):
+                print(f"📄 Aba: {titulo}  (pasta {pasta})")
+        saida_todos = Path(args.saida) if args.saida else raiz_repo / "Outputs" / "comparativo_extracoes.xlsx"
+        saida_todos.parent.mkdir(parents=True, exist_ok=True)
+        wb.save(saida_todos)
+        print(f"\n✅ Planilha salva em: {saida_todos.resolve()}")
+        return
+
+    raiz = Path(__file__).resolve().parent      # sempre a pasta deste script (raiz do repositório), não a pasta atual do terminal
 
 
     if args.corpus:
@@ -523,10 +608,10 @@ def main():
         args.gold = args.gold or cfg['gold']
         args.pastas = args.pastas or [str(p) for p in descobrir_pastas_de_tarefa(pasta_batch)]
         if args.saida is None:
-             args.saida = str(cfg["saida"]/pasta_batch.name/ "comparativo_extracoes.xlsx")
+             args.saida = str(raiz / cfg["saida"] / pasta_batch.name / "comparativo_extracoes.xlsx")
 
     if args.gold:
-        caminho_gold = Path(args.gold)
+        caminho_gold = Path(args.gold) if Path(args.gold).is_absolute() else raiz / args.gold
     else:
         caminho_gold = detectar_gold(raiz)
         if caminho_gold is None:
@@ -562,6 +647,9 @@ def main():
     wb.remove(wb.active)
 
     for pasta in pastas:
+        if pasta.name in args.ignorar:
+            print(f"ℹ️  Ignorando pasta (--ignorar): {pasta.name}")
+            continue
         if not pasta.exists():
             print(f"⚠️  Pasta não encontrada, pulando: {pasta}")
             continue
@@ -581,6 +669,10 @@ def main():
 
         gerar_aba(wb, pasta.name, gold_ordenado, modelos, args.limiar)
 
+    if not wb.sheetnames:
+        print("❌ Nenhuma aba foi gerada: não achei pastas 'Respostas *' com .jsonl a partir de "
+              f"'{raiz}'. Rode da raiz do repositório oficial, ou use --todos, ou --corpus bia|oiec_pt|oiec_pt_abs.")
+        sys.exit(1)
     wb.save(caminho_saida)
     print(f"\n✅ Planilha salva em: {caminho_saida.resolve()}")
     print("   Legenda: ✓✓ = casamento exato | ✓ = casamento lexical (>50%) | ✗ = falso positivo")

@@ -1,0 +1,10 @@
+{"sentence": "Apenas 50 eram mercados.", "relations": [{"arg1": "Apenas 50", "rel": "eram", "arg2": "mercados"}]}
+{"sentence": "O Agora foi apenas por convite, mas muitos destes mercados estão facilmente acessíveis se você souber como pesquisar, acrescenta o Dr. Lee.", "relations": [{"arg1": "O Agora", "rel": "foi apenas por", "arg2": "convite"}, {"arg1": "muitos destes mercados", "rel": "estão facilmente", "arg2": "acessíveis"}]}
+{"sentence": "Eles não os tinham no nosso tempo, e pessoas sem crianças se expressam através da sua desaprovação, o seu ódio pela parentalidade moderna.", "relations": [{"arg1": "pessoas sem crianças", "rel": "se expressam através de", "arg2": "a sua desaprovação"}, {"arg1": "pessoas sem crianças", "rel": "se expressam através de", "arg2": "a sua desaprovação, o seu ódio pela parentalidade moderna"}]}
+{"sentence": "Não o chamo de besta levemente.", "relations": []}
+{"sentence": "Dia três, eu estava de volta no EMicro.", "relations": []}
+{"sentence": "O mundo - e, por extensão, o Reino Unido - está enfrentando uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz.", "relations": [{"arg1": "O mundo - e, por extensão, o Reino Unido -", "rel": "está enfrentando", "arg2": "uma escassez de pessoas com as habilidades necessárias para montar uma defesa eficaz"}]}
+{"sentence": "As empresas podem tentar criar um firewall entre sistemas sensíveis e potências estrangeiras, mas nem sempre funciona.", "relations": [{"arg1": "As empresas", "rel": "podem tentar criar", "arg2": "um firewall"}, {"arg1": "As empresas", "rel": "podem tentar criar", "arg2": "um firewall entre sistemas sensíveis e potências estrangeiras"}]}
+{"sentence": "Mas eles podem pelo menos colocar armadilhas para confundir e impedir - um conceito conhecido como "defesa ativa".", "relations": []}
+{"sentence": "Depois de ter descoberto uma rica discussão na internet sobre o assunto, a minha lista cresceu muito e cobriu quase todos os estados da união.", "relations": [{"arg1": "a minha lista", "rel": "cobriu", "arg2": "quase todos os estados da união"}]}
+{"sentence": "Eu avistei algumas.", "relations": []}

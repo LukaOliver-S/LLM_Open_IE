@@ -45,6 +45,12 @@ TAREFAS = {
         "placeholder": None,
         "reforco": FORMATO_MINIMO,   # sem exemplos: o FORMATO_REFORCO traz exemplos que somariam regras às da BIA
     },
+    "oiecsimples": {
+        "prompt": RAIZ / "prompts" / "promptOIEC-PT_simples_extrativo.txt",
+        "categoria": "Respostas ExtrativoOIEC-PT-simples",
+        "placeholder": None,
+        "reforco": FORMATO_MINIMO,   # regras do OIEC-PT sem os exemplos embutidos e sem o reforço com exemplos
+    },
     "regrasbiacompleto": {
         "prompt": RAIZ / "prompts" / "promptBIA_completo_extrativo.txt",
         "categoria": "Respostas ExtrativoBIA-completo",
